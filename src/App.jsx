@@ -6,13 +6,13 @@ import { FaPlus } from "react-icons/fa6";
 function App() {
   return (
     <>
-      <h1 className="text-center  text-fontColor-900 font-custom text-xl font-extrabold ">
+      <h1 className="text-center  font-custom text-xl font-extrabold text-fontColor-900 ">
         Performance Management System
       </h1>
       <div className="flex justify-center ">
         <Button buttonText="Add Competency" icon={<FaPlus />} />
       </div>
-      <div className="flex justify-center mt-5 ">
+      <div className="mt-5 flex justify-center ">
         <Button buttonText="Add Competency" />
       </div>
     </>

@@ -5,7 +5,7 @@ const Button = (props) => {
     <>
       {/* Don't change  the html tag here. It will break everything */}
       <button
-        className={` text-fontColor-50 bg-buttonColor-baseColor text-buttonFontSize p-buttonPadding rounded-buttonRadius font-buttonWeight flex flex-row  items-center ${className}`}
+        className={`flex flex-row items-center rounded-buttonRadius bg-buttonColor-baseColor  p-buttonPadding text-buttonFontSize font-buttonWeight  text-fontColor-50 ${className}`}
         onClick={onClick}
         {...rest}
       >
