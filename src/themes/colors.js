@@ -1,5 +1,6 @@
 export default {
   buttonColor: {
+    baseColor: "#178CBF",
     50: "#dbf8ff",
     100: "#b4e6fb",
     200: "#88d4f3",

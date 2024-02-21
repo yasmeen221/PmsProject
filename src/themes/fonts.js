@@ -4,6 +4,11 @@ export default {
   },
 
   fontSize: {
+    buttonFontSize: "0.875rem", //14px
+    h1FontSize: "2rem", //32px
+    subTitle2Size: "1rem", //16px
+    body1Size: "0.875rem", //14px
+    captionRegSize: "0.75rem", //12px
     xs: "0.75rem", // Extra Small
     sm: "0.875rem", // Small
     base: "0.875rem", // Default/Base
@@ -16,11 +21,15 @@ export default {
     "6xl": "4rem", // 6 Extra Large
   },
   fontWeight: {
+    buttonWeight: 500,
+    h1FontWeight: 900,
+    subTitle2Weight: 600,
+    body1Weight: 600,
+    captionRegWeight: 400,
     hairline: 100,
     thin: 200,
     light: 300,
     normal: 400,
-    medium: 500,
     semibold: 600,
     bold: 700,
     extrabold: 800,
