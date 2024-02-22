@@ -1,7 +1,10 @@
 export default {
+  hoverColor:{
+    baseHoverColor:"#ded7da"
+  },
   buttonColor: {
     baseColor: "#178CBF",
-    50: "#dbf8ff",
+    50: "#178CBF",
     100: "#b4e6fb",
     200: "#88d4f3",
     300: "#5dc1ed",
@@ -13,6 +16,8 @@ export default {
     900: "#00131d",
   },
   fontColor: {
+    blackBaseColor:"#0C151E",
+    whiteBaseColor:"#FFFFFF",
     50: "#edf2f8",
     100: "#ccd8e4",
     200: "#abbed3",
@@ -37,7 +42,7 @@ export default {
     900: "#00121a",
   },
   deleteColor: {
-    50: "#ffe4e4",
+    50: "#DB1A1A",//base delete color
     100: "#fcb9b9",
     200: "#f38c8c",
     300: "#ed5e5e",
@@ -49,6 +54,7 @@ export default {
     900: "#1f0000",
   },
   borderColor: {
+    baseBorderColor:"#EFEFF5",
     50: "#feeff2",
     100: "#ded7d9",
     200: "#c2bebf",
