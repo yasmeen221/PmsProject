@@ -15,6 +15,9 @@ function App() {
       <div className="mt-5 flex justify-center ">
         <Button buttonText="Add Competency" />
       </div>
+
+ 
+
     </>
   );
 }
