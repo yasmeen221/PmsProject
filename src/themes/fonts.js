@@ -9,6 +9,7 @@ export default {
     subTitle2Size: "1rem", //16px
     body1Size: "0.875rem", //14px
     captionRegSize: "0.75rem", //12px
+    fromAndToSize:"0.600rem", //11px
     xs: "0.75rem", // Extra Small
     sm: "0.875rem", // Small
     base: "0.875rem", // Default/Base
@@ -26,6 +27,7 @@ export default {
     subTitle2Weight: 600,
     body1Weight: 600,
     captionRegWeight: 400,
+    fromAndToWeight:600,
     hairline: 100,
     thin: 200,
     light: 300,
