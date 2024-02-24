@@ -23,7 +23,7 @@ function App() {
     console.log(value)
   }
   return (
-    <div >
+    <div>
       <h1 className="text-center  text-fontColor-900 font-custom text-xl font-extrabold ">
         Performance Management System
       </h1>
@@ -36,7 +36,10 @@ function App() {
         <Button buttonText="Add Competency" onClick={() => console.log("hi")} />
       </div>
       <div className="flex justify-center mt-5 ">
-        <Button buttonText="Delete" className="bg-white border-borderColor-baseBorderColor border-2  text-red-500" />
+        <Button
+          buttonText="Delete"
+          className="bg-white border-borderColor-baseBorderColor border-2  text-red-500"
+        />
       </div>
       {/** test drop down menu */}
       <h1 className="text-center my-5">DropDown Test</h1>

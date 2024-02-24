@@ -17,7 +17,8 @@ export default {
   },
   fontColor: {
     blackBaseColor:"#0C151E",
-    whiteBaseColor:"#FFFFFF",
+    whiteBaseColor: "#FFFFFF",
+    fromAndToColor:"#949CA3",
     50: "#edf2f8",
     100: "#ccd8e4",
     200: "#abbed3",
