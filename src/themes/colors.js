@@ -31,7 +31,8 @@ export default {
     900: '#070d12',
   },
   drawerColor: {
-    50: '#e5f7ff',
+   
+    50: '#F5FCFF',
     100: '#bae7fb',
     200: '#8ed7f8',
     300: '#66c7f7',
@@ -39,7 +40,7 @@ export default {
     500: '#3da0dc',
     600: '#2f7cab',
     700: '#215879',
-    800: '#103549',
+    800: '#0D4D69',
     900: '#00121a',
   },
   deleteColor: {
@@ -56,11 +57,11 @@ export default {
   },
   borderColor: {
     baseBorderColor: '#EFEFF5',
-    50: '#feeff2',
-    100: '#ded7d9',
+    50: '#F6F6F6',
+    100: '#EFEFF5',
     200: '#c2bebf',
     300: '#a7a5a6',
-    400: '#8c8c8c',
+    400: '#636E78',
     500: '#737373',
     600: '#5a5959',
     700: '#423f40',
