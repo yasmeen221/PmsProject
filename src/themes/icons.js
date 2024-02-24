@@ -16,7 +16,8 @@ import {
     ArrowDownBlack,
     ArrowDownWhite,
     Notification,
-    SearchIcon
+    SearchIcon,
+    Organization
 } from "../assets/icons/icons"
 const Icons = {
     PlusIcon,
@@ -36,6 +37,7 @@ const Icons = {
     ArrowDownBlack,
     ArrowDownWhite,
     Notification,
-    SearchIcon
+    SearchIcon,
+    Organization
 }
 export default Icons;

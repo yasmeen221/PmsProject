@@ -1,61 +1,97 @@
-import DropDown from "./components/reusablecomponents/DropDown/DropDown";
-import Button from "./components/reusablecomponents/Button/Button";
-import Icons from "./themes/icons";
+// App.js
 
+
+import Accordion, { AccordionItem } from "./components/Accordion/Accordion";
+import icons from "../src/themes/icons";
+import TeamItem from "./components/Accordion/TeamItem";
 
 function App() {
   return (
-    <div >
-      <h1 className="text-center  text-fontColor-900 font-custom text-xl font-extrabold ">
-    
-        Performance Management System
-      </h1>
-      {/* test button */}
-      <h1 className="text-center my-3">Button Test</h1>
-      <div className="flex justify-center ">
-        <Button buttonText="Add Competency" iconLeft={<Icons.PlusIcon />} />
-      </div>
-      <div className="flex justify-center mt-5 ">
-        <Button buttonText="Add Competency" className="text-deleteColor-baseColor" />
-      </div>
-      <div className="flex justify-center mt-5 ">
-        <Button buttonText="Delete" className="bg-white border-borderColor-baseBorderColor border-2  text-red-500" />
-      </div>
-      {/** test drop down menu */}
-      <h1 className="text-center my-5">DropDown Test</h1>
-      <div className="w-100  flex flex-row justify-between mt-10  items-center ">
-        <DropDown DropDownText="New Feedback" arrowIcon >
-          <li className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor ">
-            Send Feedback
-          </li>
-          <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor ">
-            Request Feedback
-          </li>
-        </DropDown>
+    <div>
+      <main className="w-4/5">
+        <Accordion>
+          <AccordionItem
+            className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor"
+            value="1"
+            trigger="Organization Shared Competencies"
+            backgroundColor="bg-buttonColor-baseColor"
+            content={<icons.Organization />}
+          >
+            <TeamItem
+            title="Team Working"
+            description="Teamwork competency involves the ability to collaborate effectively with others, contributing positively to group efforts."
+            skills="Soft skills"
+            position="Senior, Manager"
+            />
+            <TeamItem
+            title="Public Speaking"
+              description="Public speaking competency is characterized by the ability to communicate ideas clearly and persuasively to an audience."
+              skills="Communication"
+              position="Senior, Manger"
+            />
+            <TeamItem
+              title="Research"
+              description="Research competency entails the capacity to systematically investigate and analyze information, synthesize findings."
+              skills="Analysis"
+              position="Junior, mid level,+1"
+            />
+          </AccordionItem>
 
-        <div className=" flex flex-row   items-center ">
-          <DropDown DropDownText="New Feedback" arrowIcon className="mx-1" >
-            <li className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor ">
-              Send Feedback
-            </li>
-            <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor ">
-              Request Feedback
-            </li>
-          </DropDown>
+          <AccordionItem
+            className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor"
+            value="2"
+            trigger="Product Design Team"
+            backgroundColor="bg-buttonColor-1000"
+            content="PD"
+          >
+          <TeamItem
+          title="Team Working"
+          description="Teamwork competency involves the ability to collaborate effectively with others, contributing positively to group efforts."
+          skills="Soft skills"
+          position="Senior, Manager"
+          />
+          <TeamItem
+          title="Public Speaking"
+            description="Public speaking competency is characterized by the ability to communicate ideas clearly and persuasively to an audience."
+            skills="Communication"
+            position="Senior, Manger"
+          />
+          <TeamItem
+            title="Research"
+            description="Research competency entails the capacity to systematically investigate and analyze information, synthesize findings."
+            skills="Analysis"
+            position="Junior, mid level,+1"
+          />
+          </AccordionItem>
 
-          <DropDown threeDotsIcon className=" bg-white " >
-            <li className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor ">
-              Send Feedback
-            </li>
-            <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor ">
-              Request Feedback
-            </li>
-          </DropDown>
-
-        </div>
-      </div>
-
-
+          <AccordionItem
+            className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor"
+            value="3"
+            trigger="Web Development Team"
+            backgroundColor="bg-buttonColor-1100"
+            content="WD"
+          >
+          <TeamItem
+          title="Team Working"
+          description="Teamwork competency involves the ability to collaborate effectively with others, contributing positively to group efforts."
+          skills="Soft skills"
+          position="Senior, Manager"
+          />
+          <TeamItem
+          title="Public Speaking"
+            description="Public speaking competency is characterized by the ability to communicate ideas clearly and persuasively to an audience."
+            skills="Communication"
+            position="Senior, Manger"
+          />
+          <TeamItem
+            title="Research"
+            description="Research competency entails the capacity to systematically investigate and analyze information, synthesize findings."
+            skills="Analysis"
+            position="Junior, mid level,+1"
+          />
+          </AccordionItem>
+        </Accordion>
+      </main>
     </div>
   );
 }

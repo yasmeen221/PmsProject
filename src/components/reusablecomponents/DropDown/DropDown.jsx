@@ -3,7 +3,8 @@ import Button from "../Button/Button";
 import Icons from "../../../themes/icons";
 
 const DropDown = (props) => {
-    const { DropDownText, onClick, className, arrowIcon, threeDotsIcon, children, ...rest } = props;
+    // eslint-disable-next-line react/prop-types
+    const { DropDownText, className, arrowIcon, threeDotsIcon, children } = props;
     const [position, setPosition] = useState("right")
     const [open, setOpen] = useState(false)
     const handleClick = (e) => {
