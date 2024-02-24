@@ -1,6 +1,5 @@
 import React from "react";
 import ButtonPopUpClose from "./ButtonPopUpClose";
-
 const HandelPopUp = ({
   isOpen,
   children,

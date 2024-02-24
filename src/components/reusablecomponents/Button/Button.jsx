@@ -12,13 +12,13 @@ const Button = ({
     <>
       {/* Don't change  the html tag here. It will break everything */}
       <button
-        className={` inline-flex items-center rounded-buttonRadius bg-buttonColor-baseColor p-buttonPadding text-buttonFontSize font-buttonWeight  text-fontColor-whiteBaseColor ${className}`}
+        className={` inline-flex items-center ${(!iconLeft&&!iconRight)? 'justify-center':'justify-between'} rounded-buttonRadius bg-buttonColor-baseColor p-buttonPadding text-buttonFontSize font-buttonWeight  text-fontColor-whiteBaseColor ${className}`}
         onClick={onClick}
         {...rest}
       >
-        {iconLeft && <span className="px-2"> {iconLeft}</span>}
+        {iconLeft && <div className="px-2"> {iconLeft}</div>}
         {buttonText}
-        {iconRight && <span className="px-2"> {iconRight}</span>}
+        {iconRight && <div className="px-2"> {iconRight}</div>}
       </button>
     </>
   );

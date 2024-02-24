@@ -4,6 +4,8 @@ import SelectFeedback from "./components/CardsPopUps/FeedbackCards/SelectFeedbac
 import TestDropDown from "./components/TestDropDown";
 import GiveNormalFeedback from "./components/CardsPopUps/FeedbackCards/GiveNormalFeedback";
 
+import AddCompetency from "./components/CardsPopUps/AddCompetencyCards/AddCompetency";
+
 function App() {
   return (
     <div>
@@ -27,6 +29,9 @@ function App() {
       <TestDropDown />
       <SelectFeedback />
       <GiveNormalFeedback />
+      <div className="my-3">
+        <AddCompetency />
+      </div>
     </div>
   );
 }
