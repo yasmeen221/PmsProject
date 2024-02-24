@@ -1,9 +1,14 @@
+
 import Button from './components/reusablecomponents/Button/Button';
 import Icons from './themes/icons';
 import SelectFeedback from './components/CardsPopUps/FeedbackCards/SelectFeedback';
 import TestDropDown from './components/TestDropDown';
 import SideBar from './components/sharedcomponent/sideBar/SideBar';
 import TopNav from './components/sharedcomponent/topNav/TopNav';
+
+import GiveNormalFeedback from "./components/CardsPopUps/FeedbackCards/GiveNormalFeedback";
+
+import AddCompetency from "./components/CardsPopUps/AddCompetencyCards/AddCompetency";
 
 function App() {
   return (
@@ -27,6 +32,11 @@ function App() {
     //   </div>
     //   <TestDropDown />
     //   <SelectFeedback />
+       
+     // <GiveNormalFeedback />
+     // <div className="my-3">
+       // <AddCompetency />
+      //  </div>
     // </div>
     <div className='flex'>
       <SideBar />
@@ -36,3 +46,7 @@ function App() {
 }
 
 export default App;
+
+
+  
+     
