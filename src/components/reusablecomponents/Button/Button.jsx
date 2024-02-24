@@ -1,6 +1,5 @@
-const Button = (props) => {
+const Button = ({ buttonText, onClick, className, iconLeft,iconRight, ...rest }) => {
   // eslint-disable-next-line react/prop-types
-  const { buttonText, onClick, className, iconLeft,iconRight, ...rest } = props;
   return (
     <>
       {/* Don't change  the html tag here. It will break everything */}
