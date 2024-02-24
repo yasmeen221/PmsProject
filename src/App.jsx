@@ -2,6 +2,7 @@ import Button from './components/reusablecomponents/Button/Button';
 import Icons from './themes/icons';
 import SelectFeedback from './components/CardsPopUps/FeedbackCards/SelectFeedback';
 import TestDropDown from './components/TestDropDown';
+import AddCompetency from './components/CardsPopUps/AddCompetencyCards/AddCompetency';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
       </div>
       <TestDropDown />
       <SelectFeedback />
+      <div className='my-3'>
+        <AddCompetency />
+      </div>
     </div>
   );
 }

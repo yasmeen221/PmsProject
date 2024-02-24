@@ -633,23 +633,23 @@ export const PopUpDeleteIcon = () => {
       <path
         d="M9.16992 14.8319L14.8299 9.17188"
         stroke="#828282"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M14.8299 14.8319L9.16992 9.17188"
         stroke="#828282"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M9 22H15C20 22 22 20 22 15V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22Z"
         stroke="#828282"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -702,17 +702,17 @@ export const RightFeedbackIcon = () => {
         d="M12.5 22C18 22 22.5 17.5 22.5 12C22.5 6.5 18 2 12.5 2C7 2 2.5 6.5 2.5 12C2.5 17.5 7 22 12.5 22Z"
         fill="white"
         stroke="#178CBF"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path d="M8.25 12.0019L11.08 14.8319L16.75 9.17188" fill="white" />
       <path
         d="M8.25 12.0019L11.08 14.8319L16.75 9.17188"
         stroke="#178CBF"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -756,16 +756,16 @@ export const GreenFeedback = () => {
       <path
         d="M17.9993 26.8346C22.5827 26.8346 26.3327 23.0846 26.3327 18.5013C26.3327 13.918 22.5827 10.168 17.9993 10.168C13.416 10.168 9.66602 13.918 9.66602 18.5013C9.66602 23.0846 13.416 26.8346 17.9993 26.8346Z"
         stroke="#329B5C"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M14.459 18.499L16.8173 20.8573L21.5423 16.1406"
         stroke="#329B5C"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -785,23 +785,23 @@ export const RedFeedback = () => {
       <path
         d="M17.9993 26.8346C22.5827 26.8346 26.3327 23.0846 26.3327 18.5013C26.3327 13.918 22.5827 10.168 17.9993 10.168C13.416 10.168 9.66602 13.918 9.66602 18.5013C9.66602 23.0846 13.416 26.8346 17.9993 26.8346Z"
         stroke="#DB1A1A"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M15.6426 20.8573L20.3592 16.1406"
         stroke="#DB1A1A"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M20.3592 20.8573L15.6426 16.1406"
         stroke="#DB1A1A"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

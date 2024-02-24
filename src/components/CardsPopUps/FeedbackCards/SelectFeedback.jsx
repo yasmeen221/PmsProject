@@ -35,7 +35,7 @@ const SelectFeedback = () => {
                 Select Feedback Type
               </h3>
 
-              <ButtonPopUpClose onClose={handleClosePopup} />
+              <ButtonPopUpClose onClick={handleClosePopup} />
             </div>
 
             <div

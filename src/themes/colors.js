@@ -19,6 +19,8 @@ export default {
     blackBaseColor: '#0C151E',
     whiteBaseColor: '#FFFFFF',
     fromAndToColor: '#949CA3',
+    placeHolderColor:"#B7BCC1",
+    outLineInputColor:"#EFEFF5",
     50: '#edf2f8',
     100: '#ccd8e4',
     200: '#abbed3',

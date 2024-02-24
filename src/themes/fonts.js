@@ -10,7 +10,7 @@ export default {
     body1Size: '0.875rem', //14px
     captionRegSize: '0.75rem', //12px
     fromAndToSize: '0.600rem', //11px
-    popUpSize: '1.5rem', //24px
+    popUpSize: '1.3rem', //24px
     xs: '0.75rem', // Extra Small
     sm: '0.875rem', // Small
     base: '0.875rem', // Default/Base
