@@ -231,6 +231,13 @@ export const Reviews = () => {
         stroke-linejoin="round"
       />
     </svg>
+
+    // <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    //   <path d="M13.3 8.11156L14.62 10.7516C14.8 11.1116 15.28 11.4716 15.68 11.5316L18.07 11.9316C19.6 12.1916 19.96 13.2916 18.86 14.3916L17 16.2516C16.69 16.5616 16.51 17.1716 16.61 17.6116L17.14 19.9216C17.56 21.7416 16.59 22.4516 14.98 21.5016L12.74 20.1716C12.33 19.9316 11.67 19.9316 11.26 20.1716L9.01996 21.5016C7.40996 22.4516 6.43995 21.7416 6.85995 19.9216L7.38998 17.6116C7.48998 17.1816 7.30997 16.5716 6.99997 16.2516L5.13998 14.3916C4.03998 13.2916 4.39996 12.1816 5.92996 11.9316L8.31997 11.5316C8.71997 11.4616 9.19997 11.1116 9.37997 10.7516L10.7 8.11156C11.41 6.68156 12.59 6.68156 13.3 8.11156Z" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    //   <path d="M6 9V2" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    //   <path d="M18 9V2" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    //   <path d="M12 4V2" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    // </svg>
   );
 };
 export const Surveys = () => {
@@ -540,7 +547,7 @@ export const ArrowDownBlack = () => {
     </svg>
   );
 };
-export const ArrowDownWhite = () => {
+export const ArrowDownWhite = ({ color = "#fff" }) => {
   return (
     <svg
       width="20"
@@ -551,7 +558,7 @@ export const ArrowDownWhite = () => {
     >
       <path
         d="M16.6004 7.45703L11.1671 12.8904C10.5254 13.532 9.47539 13.532 8.83372 12.8904L3.40039 7.45703"
-        stroke="white"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
@@ -743,7 +750,7 @@ export const MessageFeedbackIcon = () => {
     </svg>
   );
 };
-export const GreenFeedback = () => {
+export const GreenFeedback = ({ color = "#329B5C" }) => {
   return (
     <svg
       width="36"
@@ -755,14 +762,14 @@ export const GreenFeedback = () => {
       <rect y="0.5" width="36" height="36" rx="8" fill="#EBF5EF" />
       <path
         d="M17.9993 26.8346C22.5827 26.8346 26.3327 23.0846 26.3327 18.5013C26.3327 13.918 22.5827 10.168 17.9993 10.168C13.416 10.168 9.66602 13.918 9.66602 18.5013C9.66602 23.0846 13.416 26.8346 17.9993 26.8346Z"
-        stroke="#329B5C"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M14.459 18.499L16.8173 20.8573L21.5423 16.1406"
-        stroke="#329B5C"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -771,7 +778,7 @@ export const GreenFeedback = () => {
   );
 };
 
-export const RedFeedback = () => {
+export const RedFeedback = ({ color = "#DB1A1A" }) => {
   return (
     <svg
       width="36"
@@ -783,21 +790,21 @@ export const RedFeedback = () => {
       <rect y="0.5" width="36" height="36" rx="8" fill="#FBE8E8" />
       <path
         d="M17.9993 26.8346C22.5827 26.8346 26.3327 23.0846 26.3327 18.5013C26.3327 13.918 22.5827 10.168 17.9993 10.168C13.416 10.168 9.66602 13.918 9.66602 18.5013C9.66602 23.0846 13.416 26.8346 17.9993 26.8346Z"
-        stroke="#DB1A1A"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M15.6426 20.8573L20.3592 16.1406"
-        stroke="#DB1A1A"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M20.3592 20.8573L15.6426 16.1406"
-        stroke="#DB1A1A"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -821,6 +828,43 @@ export const ArrowRight = () => {
         stroke-miterlimit="10"
         stroke-linecap="round"
         stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+// <svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+//   <path d="M14.332 3.74172L8.35536 9.71839C7.64953 10.4242 7.64953 11.5792 8.35536 12.2851L14.332 18.2617" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+// </svg>
+//   );
+// }
+
+export const SortIcon = ({ color = "#292D32" }) => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M3 7H21"
+        stroke={`${color}`}
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <path
+        d="M6 12H18"
+        stroke={`${color}`}
+        stroke-width="1.5"
+        stroke-linecap="round"
+      />
+      <path
+        d="M10 17H14"
+        stroke={`${color}`}
+        stroke-width="1.5"
+        stroke-linecap="round"
       />
     </svg>
   );

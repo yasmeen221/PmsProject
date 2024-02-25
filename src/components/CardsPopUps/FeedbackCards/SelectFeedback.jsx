@@ -40,7 +40,7 @@ const SelectFeedback = () => {
             </div>
           </div>
 
-          <div className="  max-w-[50%] space-y-2 bg-drawerColor-bgFeedback rounded-buttonRadius  text-center border-2 border-buttonColor-baseColor  p-feedbackCard ">
+          <div className="max-w-[50%] space-y-2 bg-drawerColor-bgFeedback rounded-buttonRadius  text-center border-2 border-buttonColor-baseColor  p-feedbackCard ">
             <div className="pl-6 hidden md:block">
               <Icons.RightFeedbackIcon />
             </div>

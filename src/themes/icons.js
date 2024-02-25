@@ -25,8 +25,10 @@ import {
   GreenFeedback,
   ArrowRight,
   DrawerLeft,
+  SortIcon,
   DraweArrowRight,
 } from "../assets/icons/icons";
+
 const Icons = {
   PlusIcon,
   ThreeDotsIcon,
@@ -53,7 +55,10 @@ const Icons = {
   RedFeedback,
   GreenFeedback,
   ArrowRight,
+
   DrawerLeft,
   DraweArrowRight,
+
+  SortIcon,
 };
 export default Icons;

@@ -33,6 +33,7 @@ export default {
     900: "#070d12",
   },
   drawerColor: {
+    bgFeedback:"#E8F4F9",
     50: "#F5FCFF",
     100: "#bae7fb",
     200: "#8ed7f8",

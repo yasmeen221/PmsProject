@@ -2,7 +2,7 @@ import { useState } from "react";
 import Button from "../Button/Button";
 import Icons from "../../../themes/icons";
 
-const DropDown = ({ DropDownText, onClick, className, arrowIcon, threeDotsIcon, children, open,...rest }) => {
+const DropDown = ({ DropDownText, onClick, className, arrowIcon, threeDotsIcon, children, open,iconColor,...rest }) => {
     const [position, setPosition] = useState("right")
     const handleClick = (e) => {
         setPosition(e.clientX > window.innerWidth / 2 ? 'right' : 'left');
@@ -21,7 +21,7 @@ const DropDown = ({ DropDownText, onClick, className, arrowIcon, threeDotsIcon, 
                     className={`${className} ${threeDotsIcon ? "border-borderColor-baseBorderColor border-2" : ""} `}
                     onClick={(e)=>handleArrayEvents(e)}
                     buttonText={DropDownText}
-                    iconRight={arrowIcon ? <Icons.ArrowDownWhite />
+                    iconRight={arrowIcon ? <Icons.ArrowDownWhite color={iconColor} />
                         : threeDotsIcon ? <Icons.ThreeDotsIcon /> : null}
                 />
                 <div id="dropdown"

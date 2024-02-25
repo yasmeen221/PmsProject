@@ -7,7 +7,7 @@ import Icons from "../../themes/icons";
 const Card = ({ content, avatar, date, avatarName, avatarPosition }) => {
   return (
     <div className="container">
-      <div className=" w-95rem h-42.125rem p-6  bg-white border border-gray-200 rounded-lg hover:bg-borderColor-baseBorderColor">
+      <div className=" w-95rem min-h-42.125rem py-10 px-6  bg-white border border-gray-200 rounded-lg hover:bg-borderColor-baseBorderColor">
         {avatar && avatarPosition === "start" && (
           <div className="flex flex-row justify-between space-10 mb-11 ">
             <div className="flex flex-row gap-4">
