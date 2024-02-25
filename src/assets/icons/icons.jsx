@@ -195,15 +195,42 @@ export const Feedback = () => {
 };
 export const Reviews = () => {
   return (
-
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M13.3 8.11156L14.62 10.7516C14.8 11.1116 15.28 11.4716 15.68 11.5316L18.07 11.9316C19.6 12.1916 19.96 13.2916 18.86 14.3916L17 16.2516C16.69 16.5616 16.51 17.1716 16.61 17.6116L17.14 19.9216C17.56 21.7416 16.59 22.4516 14.98 21.5016L12.74 20.1716C12.33 19.9316 11.67 19.9316 11.26 20.1716L9.01996 21.5016C7.40996 22.4516 6.43995 21.7416 6.85995 19.9216L7.38998 17.6116C7.48998 17.1816 7.30997 16.5716 6.99997 16.2516L5.13998 14.3916C4.03998 13.2916 4.39996 12.1816 5.92996 11.9316L8.31997 11.5316C8.71997 11.4616 9.19997 11.1116 9.37997 10.7516L10.7 8.11156C11.41 6.68156 12.59 6.68156 13.3 8.11156Z" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M6 9V2" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M18 9V2" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M12 4V2" stroke="#0D4D69" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
-
-
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.3 8.11156L14.62 10.7516C14.8 11.1116 15.28 11.4716 15.68 11.5316L18.07 11.9316C19.6 12.1916 19.96 13.2916 18.86 14.3916L17 16.2516C16.69 16.5616 16.51 17.1716 16.61 17.6116L17.14 19.9216C17.56 21.7416 16.59 22.4516 14.98 21.5016L12.74 20.1716C12.33 19.9316 11.67 19.9316 11.26 20.1716L9.01996 21.5016C7.40996 22.4516 6.43995 21.7416 6.85995 19.9216L7.38998 17.6116C7.48998 17.1816 7.30997 16.5716 6.99997 16.2516L5.13998 14.3916C4.03998 13.2916 4.39996 12.1816 5.92996 11.9316L8.31997 11.5316C8.71997 11.4616 9.19997 11.1116 9.37997 10.7516L10.7 8.11156C11.41 6.68156 12.59 6.68156 13.3 8.11156Z"
+        stroke="#0D4D69"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M6 9V2"
+        stroke="#0D4D69"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M18 9V2"
+        stroke="#0D4D69"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M12 4V2"
+        stroke="#0D4D69"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
   );
 };
 export const Surveys = () => {
@@ -777,15 +804,82 @@ export const RedFeedback = () => {
       />
     </svg>
   );
+};
 
-}
 export const ArrowRight = () => {
   return (
-<svg width="23" height="22" viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M14.332 3.74172L8.35536 9.71839C7.64953 10.4242 7.64953 11.5792 8.35536 12.2851L14.332 18.2617" stroke="white" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+    <svg
+      width="18"
+      height="19"
+      viewBox="0 0 18 19"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M6.68164 15.4386L11.5716 10.5486C12.1491 9.97109 12.1491 9.02609 11.5716 8.44859L6.68164 3.55859"
+        stroke="#B7BCC1"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
   );
-}
+};
 
+export const DrawerLeft = () => {
+  return (
+    <svg
+      width="23"
+      height="22"
+      viewBox="0 0 23 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M14.332 3.74172L8.35536 9.71839C7.64953 10.4242 7.64953 11.5792 8.35536 12.2851L14.332 18.2617"
+        stroke="white"
+        stroke-width="1.5"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
 
-
+export const DraweArrowRight = () => {
+  return (
+    <svg
+      width="36"
+      height="36"
+      viewBox="0 0 36 36"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      transform="rotate(180)"
+    >
+      <rect
+        width="36"
+        height="36"
+        rx="18"
+        transform="matrix(1 0 0 -1 0 36)"
+        fill="#178CBF"
+      />
+      <path
+        d="M18.332 10.7417L12.3554 16.7184C11.6495 17.4242 11.6495 18.5792 12.3554 19.2851L18.332 25.2617"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M23.332 10.7417L17.3554 16.7184C16.6495 17.4242 16.6495 18.5792 17.3554 19.2851L23.332 25.2617"
+        stroke="white"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
