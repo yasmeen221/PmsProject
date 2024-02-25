@@ -24,7 +24,7 @@ export default function Inputs() {
   return (
     <div className='flex gap-3 w-full h-12   px-10 mt-6 font-custom font-normal'>
       <InputWithIcon icon={<Icons.SearchIcon />} placeholder="Search..." />
-      <DropDown DropDownText="Type" arrowIcon iconColor="#B7BCC1" open={dropDown1} onClick={() => { setOpen1(dopen => !dopen) }} className="  bg-white border h-12 border-borderColor-baseBorderColor text-gray-300">
+      <DropDown DropDownText="Type" arrowIcon iconColor="#B7BCC1" open={dropDown1} onClick={() => { setOpen1(dopen => !dopen) }} className="  bg-white border h-12 border-borderColor-baseBorderColor text-fontColor-placeHolderColor">
         <li className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor " onClick={() => dropdown1("send Feedback")}>
           Send Feedback
         </li>
@@ -32,7 +32,7 @@ export default function Inputs() {
           Request Feedback
         </li>
       </DropDown>
-      <DropDown DropDownText="Employee" arrowIcon iconColor="#B7BCC1" open={dropDown2} onClick={() => { setOpen2(dopen => !dopen) }} className="bg-white border h-12 border-borderColor-baseBorderColor text-gray-300" >
+      <DropDown DropDownText="Employee" arrowIcon iconColor="#B7BCC1" open={dropDown2} onClick={() => { setOpen2(dopen => !dopen) }} className="bg-white border h-12 border-borderColor-baseBorderColor text-fontColor-placeHolderColor" >
         <li className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor " onClick={() => dropdown2("send Feedback")}>
           Send Feedback
         </li>
@@ -40,7 +40,7 @@ export default function Inputs() {
           Request Feedback
         </li>
       </DropDown>
-      <DropDown DropDownText="Filter" arrowIcon iconColor="#B7BCC1" open={dropDown3} onClick={() => { setOpen3(dopen => !dopen) }} className="bg-white border h-12 border-borderColor-baseBorderColor text-gray-300" >
+      <DropDown DropDownText="Filter" arrowIcon iconColor="#B7BCC1" open={dropDown3} onClick={() => { setOpen3(dopen => !dopen) }} className="bg-white border h-12 border-borderColor-baseBorderColor text-fontColor-placeHolderColor" >
         <li className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor " onClick={() => dropdown3("send Feedback")}>
           Send Feedback
         </li>
@@ -48,7 +48,7 @@ export default function Inputs() {
           Request Feedback
         </li>
       </DropDown>
-      <Button iconLeft={<Icons.SortIcon />} className="bg-white border px-1.5 h-12 border-borderColor-baseBorderColor" />
+      <Button iconLeft={<Icons.SortIcon />} className="bg-white border px-1.5 h-12 border-borderColor-baseBorderColor text-fontColor-whiteBaseColor" />
 
     </div>
   )

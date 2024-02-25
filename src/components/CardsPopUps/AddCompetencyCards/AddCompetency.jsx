@@ -117,7 +117,7 @@ function AddCompetency({ open }) {
                     <Button buttonText="Add" className='px-10 py-2.5' onClick={handleClosePopup} />
                 </div>
             </HandelPopUp>
-            <Button buttonText="Add Competency" iconLeft={<Icons.PlusIcon />} onClick={handleOpenPopup} />
+            <Button buttonText="Add Competency" className="text-fontColor-whiteBaseColor" iconLeft={<Icons.PlusIcon />} onClick={handleOpenPopup} />
         </>
     )
 }

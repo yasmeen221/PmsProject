@@ -25,6 +25,7 @@ export default function ComponentTitle({currentList}) {
             DropDownText="New Feedback"
             arrowIcon
             open={dropDown1}
+            className="text-fontColor-whiteBaseColor"
             onClick={() => {
                 setOpen1((dopen) => !dopen);
             }}
@@ -67,7 +68,7 @@ export default function ComponentTitle({currentList}) {
         </div>
         :
         <div className='flex flex-row gap-x-2 items-center'>
-            <Button buttonText="Add Competency" iconLeft={<Icons.PlusIcon/>} />
+            <Button buttonText="Add Competency" className="text-fontColor-whiteBaseColor" iconLeft={<Icons.PlusIcon/>} />
             <DropDown threeDotsIcon className=" bg-white " >
                 <ThreeDotsDropDown Icon={<Icons.GoalsIcon/>} text="Manage Category"/>
                 <ThreeDotsDropDown Icon={<Icons.Feedback/>} text="Import"/>
