@@ -9,7 +9,7 @@ export default function FeedBack() {
   return (
     <div>
       <SubNav currentComponent="Feedbacks" />
-      <ComponentTitle currentList="Feedback List" />
+      <ComponentTitle currentList="Competencies FrameWork" />
       <Inputs />
       <Tabs />
     </div>

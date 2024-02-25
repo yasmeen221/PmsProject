@@ -9,6 +9,7 @@ import GiveNormalFeedback from "./components/CardsPopUps/FeedbackCards/GiveNorma
 
 import AddCompetency from "./components/CardsPopUps/AddCompetencyCards/AddCompetency";
 import FeedBack from "./pages/FeedBack";
+import RequestFeedback from "./components/CardsPopUps/FeedbackCards/RequestFeedback";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         </div>
       </div>
       <div className="my-8 mx-4 flex  space-x-4">
+        <RequestFeedback />
         <AddCompetency />
         <SelectFeedback />
         <GiveNormalFeedback />
