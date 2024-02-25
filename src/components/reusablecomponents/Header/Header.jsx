@@ -8,4 +8,4 @@ function Header({ text,className,...rest}) {
     )
 }
 
-export default Header
+export default Header;

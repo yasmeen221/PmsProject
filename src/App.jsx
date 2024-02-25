@@ -1,8 +1,10 @@
-import Button from './components/reusablecomponents/Button/Button';
-import Icons from './themes/icons';
-import SelectFeedback from './components/CardsPopUps/FeedbackCards/SelectFeedback';
-import TestDropDown from './components/TestDropDown';
-import AddCompetency from './components/CardsPopUps/AddCompetencyCards/AddCompetency';
+import Button from "./components/reusablecomponents/Button/Button";
+import Icons from "./themes/icons";
+import SelectFeedback from "./components/CardsPopUps/FeedbackCards/SelectFeedback";
+import TestDropDown from "./components/TestDropDown";
+import GiveNormalFeedback from "./components/CardsPopUps/FeedbackCards/GiveNormalFeedback";
+
+import AddCompetency from "./components/CardsPopUps/AddCompetencyCards/AddCompetency";
 
 function App() {
   return (
@@ -16,7 +18,7 @@ function App() {
         <Button buttonText="Add Competency" iconLeft={<Icons.PlusIcon />} />
       </div>
       <div className="mt-5 flex justify-center ">
-        <Button buttonText="Add Competency" onClick={() => console.log('hi')} />
+        <Button buttonText="Add Competency" onClick={() => console.log("hi")} />
       </div>
       <div className="mt-5 flex justify-center ">
         <Button
@@ -26,7 +28,8 @@ function App() {
       </div>
       <TestDropDown />
       <SelectFeedback />
-      <div className='my-3'>
+      <GiveNormalFeedback />
+      <div className="my-3">
         <AddCompetency />
       </div>
     </div>

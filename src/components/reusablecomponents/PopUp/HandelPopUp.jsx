@@ -1,7 +1,5 @@
 import React from "react";
-import ButtonPopUpClose from "../Button/ButtonPopUpClose";
-
-
+import ButtonPopUpClose from "./ButtonPopUpClose";
 const HandelPopUp = ({
   isOpen,
   children,

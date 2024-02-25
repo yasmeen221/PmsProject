@@ -1,5 +1,5 @@
-import React from 'react';
-import Icons from '../../../themes/icons';
+import React from "react";
+import Icons from "../../../themes/icons";
 
 const ButtonPopUpClose = ({ onClick }) => {
   return (
