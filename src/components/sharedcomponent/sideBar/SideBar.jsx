@@ -8,9 +8,9 @@ function SideBar() {
     <aside
       className={
         isOpen
-          ? `relative flex w-[16.25rem] justify-center bg-drawerColor-50 transition-all 
+          ? `relative flex w-[16.25rem] h-screen justify-center bg-drawerColor-50 transition-all 
       duration-500`
-          : `relative flex w-[6.5rem] justify-center bg-drawerColor-50 transition-all 
+          : `relative flex w-[6.5rem] h-screen  justify-center bg-drawerColor-50 transition-all 
       duration-500`
       }
     >

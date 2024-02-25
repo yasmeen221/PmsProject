@@ -6,12 +6,11 @@ import Tabs from '../components/Tabs'
 
 export default function FeedBack() {
   return (
-    <div className='min-h-full'>
+    <div >
         <SubNav currentComponent="Feedbacks"/>
         <ComponentTitle currentList="Feedback List"/>
         <Inputs/>
         <Tabs/>
-        
     </div>
   )
 }

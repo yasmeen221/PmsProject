@@ -41,7 +41,7 @@ function App() {
     // </div>
     <div className='flex'>
       <SideBar />
-      <div className='w-full h-full'>
+      <div className='w-full '>
       <TopNav />
       <FeedBack/>
       </div>
