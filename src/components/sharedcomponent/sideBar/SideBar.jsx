@@ -8,9 +8,9 @@ function SideBar() {
     <aside
       className={
         isOpen
-          ? `relative flex h-screen w-[16.25rem] justify-center bg-drawerColor-50 transition-all 
+          ? `relative flex w-[16.25rem] h-screen justify-center bg-drawerColor-50 transition-all 
       duration-500`
-          : `relative flex h-screen w-[6.5rem] justify-center bg-drawerColor-50 transition-all 
+          : `relative flex w-[6.5rem] h-screen  justify-center bg-drawerColor-50 transition-all 
       duration-500`
       }
     >
@@ -22,7 +22,6 @@ function SideBar() {
               alt="logo"
               className=" mx-auto mb-10 mt-[3.375rem]"
             />
-           
           ) : (
             <img
               src="logo.svg"
