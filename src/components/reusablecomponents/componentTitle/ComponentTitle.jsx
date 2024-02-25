@@ -44,7 +44,7 @@ export default function ComponentTitle({currentList}) {
         </DropDown>
            
             <DropDown
-            className=" bg-white "
+            className=" bg-white px-1.5 "
             threeDotsIcon
             open={dropDown2}
             onClick={() => {

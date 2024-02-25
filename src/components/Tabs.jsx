@@ -22,7 +22,7 @@ export default function Tabs() {
     <div className='mt-6 w-full  p-10 font-custom font-normal'>
         <div className='border w-full h-16 rounded-2xl p-2 flex gap-6 border-borderColor-baseBorderColor'>
             <Button buttonText="Feedbacks" onClick={handleFeedback}  className="bg-fontColor-whiteBaseColor text-black focus:bg-drawerColor-100 focus:text-drawerColor-600   " />
-            <Button buttonText="Pending" onClick={handlePending}className="bg-fontColor-whiteBaseColor text-black focus:bg-drawerColor-100 focus:text-drawerColor-600 "/>
+            <Button buttonText="Pending" onClick={handlePending} className="bg-fontColor-whiteBaseColor text-black focus:bg-drawerColor-100 focus:text-drawerColor-600 "/>
             <Button buttonText="My Requests" onClick={handleRequest} className="bg-fontColor-whiteBaseColor text-black focus:bg-drawerColor-100 focus:text-drawerColor-600 "/>
             
         </div>
