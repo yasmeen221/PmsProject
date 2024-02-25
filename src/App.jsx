@@ -9,6 +9,7 @@ import TopNav from './components/sharedcomponent/topNav/TopNav';
 import GiveNormalFeedback from "./components/CardsPopUps/FeedbackCards/GiveNormalFeedback";
 
 import AddCompetency from "./components/CardsPopUps/AddCompetencyCards/AddCompetency";
+import FeedBack from './pages/FeedBack';
 
 function App() {
   return (
@@ -40,7 +41,11 @@ function App() {
     // </div>
     <div className='flex'>
       <SideBar />
+      <div className='w-full h-full'>
       <TopNav />
+      <FeedBack/>
+      </div>
+      
     </div>
   );
 }
