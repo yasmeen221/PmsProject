@@ -22,7 +22,7 @@ function SideBarItem({ icon, title, isOpen }) {
 }
 
 SideBarItem.propTypes = {
-  icon: PropTypes.string.isRequired,
+  icon: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
   isOpen: PropTypes.bool.isRequired,
 };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HandelPopUp from "../../reusablecomponents/PopUp/HandelPopUp";
 import Icons from "../../../themes/icons";
 import Button from "../../reusablecomponents/Button/Button";
@@ -6,12 +6,21 @@ import {
   MessageFavFeedbackIcon,
   MessageFeedbackIcon,
 } from "../../../assets/icons/icons";
+import DropDown from "../../reusablecomponents/DropDown/DropDown";
+import { useDispatch } from "react-redux";
+import { changeDropDownValue } from "../../../Redux/store/slices/openPopUpSlice";
 
 const SelectFeedback = () => {
+  const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [dropDown1, setOpen1] = useState(false);
 
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
+  const dropdown1 = (value) => {
+    setOpen1((dropDown1) => !dropDown1);
+    dispatch(changeDropDownValue(value));
+    if (value == "send Feedback") {
+      setPopupOpen(true);
+    }
   };
 
   const handleClosePopup = () => {
@@ -56,12 +65,36 @@ const SelectFeedback = () => {
             </div>
           </div>
         </div>
-
         <div className="flex items-center justify-end  border-t border-gray-200 p-4 ">
-          <Button buttonText="continue" onClick={handleClosePopup} />
+          <Button
+            buttonText="continue"
+            className="text-fontColor-whiteBaseColor"
+            onClick={handleClosePopup}
+          />
         </div>
       </HandelPopUp>
-      <Button buttonText="Open Popup" onClick={handleOpenPopup} />
+      <DropDown
+        DropDownText="New Feedback"
+        arrowIcon
+        open={dropDown1}
+        className="text-fontColor-whiteBaseColor"
+        onClick={() => {
+          setOpen1((dopen) => !dopen);
+        }}
+      >
+        <li
+          className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor "
+          onClick={() => dropdown1("send Feedback")}
+        >
+          Send Feedback
+        </li>
+        <li
+          className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor "
+          onClick={() => dropdown1("Request Feedback")}
+        >
+          Request Feedback
+        </li>
+      </DropDown>
     </>
   );
 };

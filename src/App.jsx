@@ -1,12 +1,7 @@
-import Button from "./components/reusablecomponents/Button/Button";
-import Icons from "./themes/icons";
 import SelectFeedback from "./components/CardsPopUps/FeedbackCards/SelectFeedback";
-import TestDropDown from "./components/TestDropDown";
 import SideBar from "./components/sharedcomponent/sideBar/SideBar";
 import TopNav from "./components/sharedcomponent/topNav/TopNav";
-
 import GiveNormalFeedback from "./components/CardsPopUps/FeedbackCards/GiveNormalFeedback";
-
 import AddCompetency from "./components/CardsPopUps/AddCompetencyCards/AddCompetency";
 import FeedBack from "./pages/FeedBack";
 import RequestFeedback from "./components/CardsPopUps/FeedbackCards/RequestFeedback";

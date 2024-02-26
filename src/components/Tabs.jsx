@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import FeedBack from "../pages/FeedBack";
 import CardPending from "./CardPending";
 import CardRequest from "./CardRequest";
 import FeedbackCard from "./cards/FeedbackCard";
 
 export default function Tabs() {
   const [CardsRender, setCardsRender] = useState("FeedBack");
+  const [activeTab, setActiveTab] = useState(1);
   const handleFeedback = () => {
     setCardsRender("FeedBack");
   };
@@ -20,21 +20,27 @@ export default function Tabs() {
     <div className="mt-6 w-full  p-10 font-custom font-normal">
       <div className="border w-full h-16 rounded-2xl p-2 flex gap-6 border-borderColor-baseBorderColor">
         <button
-          onClick={handleFeedback}
-          //outline-non focus:border-b-2 focus:border-b-blue-500 focus:outline-none
-          className=" font-captionRegWeight text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor focus:bg-drawerColor-100 focus:text-buttonColor-baseColor focus:font-subTitle2Weight  "
+          onClick={() => {
+            handleFeedback(), setActiveTab(1);
+          }}
+          //outline-non border-b-2 border-b-blue-500 outline-none
+          className={`${activeTab == 1 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           Feedback
         </button>
         <button
-          onClick={handlePending}
-          className="font-captionRegWeight text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor focus:bg-drawerColor-100 focus:text-buttonColor-baseColor focus:font-subTitle2Weight  "
+          onClick={() => {
+            setActiveTab(2), handlePending();
+          }}
+          className={`${activeTab == 2 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           Pending
         </button>
         <button
-          onClick={handleRequest}
-          className="font-captionRegWeight text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor focus:bg-drawerColor-100 focus:text-buttonColor-baseColor focus:font-subTitle2Weight  "
+          onClick={() => {
+            setActiveTab(3), handleRequest();
+          }}
+          className={`${activeTab == 3 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           My Requests
         </button>

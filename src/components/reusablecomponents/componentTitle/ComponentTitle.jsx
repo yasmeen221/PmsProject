@@ -3,6 +3,7 @@ import Icons from "../../../themes/icons";
 import DropDown from "../DropDown/DropDown";
 import ThreeDotsDropDown from "./ThreeDotsDropDown";
 import AddCompetency from "../../CardsPopUps/AddCompetencyCards/AddCompetency";
+import SelectFeedback from "../../CardsPopUps/FeedbackCards/SelectFeedback";
 
 export default function ComponentTitle({ currentList }) {
   const [dropDown1, setOpen1] = useState(false);
@@ -11,49 +12,25 @@ export default function ComponentTitle({ currentList }) {
 
   const dropdown1 = (value) => {
     setOpen1((dropDown1) => !dropDown1);
-    console.log(value);
   };
   const dropdown2 = (value) => {
     setOpen2((dropDown2) => !dropDown2);
-    console.log(value);
   };
 
   const threeDotsDropDownFun = (value) => {
     setThreeDotsDropDown((threeDotsDropDown) => !threeDotsDropDown);
-    console.log(value);
   };
 
   return (
     <div className="w-full flex justify-between h-12  px-10 ">
-      <h2 className="font-black text-h1FontSize text-fontColor-1000">
+      <h2 className="font-black text-h1FontSize text-fontColor-1000 ">
         {currentList}
       </h2>
       {currentList == "Feedback List" ? (
         <div className=" flex flex-row gap-x-1   items-center ">
+          <SelectFeedback />
           <DropDown
-            DropDownText="New Feedback"
-            arrowIcon
-            open={dropDown1}
-            onClick={() => {
-              setOpen1((dopen) => !dopen);
-            }}
-          >
-            <li
-              className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor "
-              onClick={() => dropdown1("send Feedback")}
-            >
-              Send Feedback
-            </li>
-            <li
-              className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor "
-              onClick={() => dropdown1("Request Feedback")}
-            >
-              Request Feedback
-            </li>
-          </DropDown>
-
-          <DropDown
-            className=" bg-white px-1.5 "
+            className=" bg-white px-1.5   "
             threeDotsIcon
             open={dropDown2}
             onClick={() => {
@@ -75,8 +52,7 @@ export default function ComponentTitle({ currentList }) {
           </DropDown>
         </div>
       ) : (
-        <div className="flex flex-row gap-x-2 items-center">
-          {/* <Button buttonText="Add Competency" iconLeft={<Icons.PlusIcon />} /> */}
+        <div className="flex flex-row gap-x-2 items-center ">
           <AddCompetency />
           <DropDown
             threeDotsIcon

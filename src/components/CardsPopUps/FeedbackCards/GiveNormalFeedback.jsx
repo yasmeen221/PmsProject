@@ -114,13 +114,17 @@ const GiveNormalFeedback = () => {
         </div>
         <div className="flex items-center justify-end border-t border-gray-200 py-3 mx-1 ">
           <Button
-            className="px-10 py-2.5"
+            className="px-10 py-2.5 text-fontColor-whiteBaseColor"
             buttonText="Give Feedback"
             onClick={handleClosePopup}
           />
         </div>
       </HandelPopUp>
-      <Button buttonText="Formal feedback" onClick={handleOpenPopup} />
+      <Button
+        buttonText="Formal feedback"
+        className="text-fontColor-whiteBaseColor"
+        onClick={handleOpenPopup}
+      />
     </>
   );
 };

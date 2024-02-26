@@ -205,34 +205,32 @@ export const Reviews = () => {
       <path
         d="M13.3 8.11156L14.62 10.7516C14.8 11.1116 15.28 11.4716 15.68 11.5316L18.07 11.9316C19.6 12.1916 19.96 13.2916 18.86 14.3916L17 16.2516C16.69 16.5616 16.51 17.1716 16.61 17.6116L17.14 19.9216C17.56 21.7416 16.59 22.4516 14.98 21.5016L12.74 20.1716C12.33 19.9316 11.67 19.9316 11.26 20.1716L9.01996 21.5016C7.40996 22.4516 6.43995 21.7416 6.85995 19.9216L7.38998 17.6116C7.48998 17.1816 7.30997 16.5716 6.99997 16.2516L5.13998 14.3916C4.03998 13.2916 4.39996 12.1816 5.92996 11.9316L8.31997 11.5316C8.71997 11.4616 9.19997 11.1116 9.37997 10.7516L10.7 8.11156C11.41 6.68156 12.59 6.68156 13.3 8.11156Z"
         stroke="#0D4D69"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M6 9V2"
         stroke="#0D4D69"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18 9V2"
         stroke="#0D4D69"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12 4V2"
         stroke="#0D4D69"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
-
-
   );
 };
 export const Surveys = () => {
@@ -820,15 +818,13 @@ export const ArrowRight = () => {
       <path
         d="M6.68164 15.4386L11.5716 10.5486C12.1491 9.97109 12.1491 9.02609 11.5716 8.44859L6.68164 3.55859"
         stroke="#B7BCC1"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
 };
-
-
 
 export const SortIcon = ({ color = "#292D32" }) => {
   return (
@@ -842,20 +838,20 @@ export const SortIcon = ({ color = "#292D32" }) => {
       <path
         d="M3 7H21"
         stroke={`${color}`}
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
       <path
         d="M6 12H18"
         stroke={`${color}`}
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
       <path
         d="M10 17H14"
         stroke={`${color}`}
-        stroke-width="1.5"
-        stroke-linecap="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
       />
     </svg>
   );
@@ -873,10 +869,10 @@ export const DrawerLeft = () => {
       <path
         d="M14.332 3.74172L8.35536 9.71839C7.64953 10.4242 7.64953 11.5792 8.35536 12.2851L14.332 18.2617"
         stroke="white"
-        stroke-width="1.5"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -921,16 +917,31 @@ export const DraweArrowRight = () => {
 
 export const ReqFedMyself = () => {
   return (
-    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path opacity="0.4" d="M44 15.62V32.38C44 38 41.42 41.8599 36.88 43.3199C35.56 43.7799 34.04 44 32.38 44H15.62C13.96 44 12.44 43.7799 11.12 43.3199C6.58 41.8599 4 38 4 32.38V15.62C4 8.33999 8.33999 4 15.62 4H32.38C39.66 4 44 8.33999 44 15.62Z" fill="#178CBF"/>
-<path d="M36.8792 43.3214C35.5592 43.7814 34.0392 44.0015 32.3792 44.0015H15.6191C13.9591 44.0015 12.4391 43.7814 11.1191 43.3214C11.8191 38.0414 17.3391 33.9414 23.9991 33.9414C30.6591 33.9414 36.1791 38.0414 36.8792 43.3214Z" fill="#178CBF"/>
-<path d="M31.1599 23.16C31.1599 27.12 27.9598 30.34 23.9998 30.34C20.0398 30.34 16.8398 27.12 16.8398 23.16C16.8398 19.2 20.0398 16 23.9998 16C27.9598 16 31.1599 19.2 31.1599 23.16Z" fill="#178CBF"/>
-</svg>
+    <svg
+      width="48"
+      height="48"
+      viewBox="0 0 48 48"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        opacity="0.4"
+        d="M44 15.62V32.38C44 38 41.42 41.8599 36.88 43.3199C35.56 43.7799 34.04 44 32.38 44H15.62C13.96 44 12.44 43.7799 11.12 43.3199C6.58 41.8599 4 38 4 32.38V15.62C4 8.33999 8.33999 4 15.62 4H32.38C39.66 4 44 8.33999 44 15.62Z"
+        fill="#178CBF"
+      />
+      <path
+        d="M36.8792 43.3214C35.5592 43.7814 34.0392 44.0015 32.3792 44.0015H15.6191C13.9591 44.0015 12.4391 43.7814 11.1191 43.3214C11.8191 38.0414 17.3391 33.9414 23.9991 33.9414C30.6591 33.9414 36.1791 38.0414 36.8792 43.3214Z"
+        fill="#178CBF"
+      />
+      <path
+        d="M31.1599 23.16C31.1599 27.12 27.9598 30.34 23.9998 30.34C20.0398 30.34 16.8398 27.12 16.8398 23.16C16.8398 19.2 20.0398 16 23.9998 16C27.9598 16 31.1599 19.2 31.1599 23.16Z"
+        fill="#178CBF"
+      />
+    </svg>
+  );
+};
 
-  )
-}
-
-export const ReqFedPepople=()=>{
+export const ReqFedPepople = () => {
   return (
     <svg
       width="48"
@@ -969,4 +980,4 @@ export const ReqFedPepople=()=>{
       />
     </svg>
   );
-}
+};

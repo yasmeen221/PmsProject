@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HandelPopUp from "../../reusablecomponents/PopUp/HandelPopUp";
 import Icons from "../../../themes/icons";
 import {
@@ -6,31 +6,36 @@ import {
   MessageFeedbackIcon,
 } from "../../../assets/icons/icons";
 import Button from "../../reusablecomponents/Button/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { changeDropDownValue } from "../../../Redux/store/slices/openPopUpSlice";
 
 const RequestFeedback = () => {
+  const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
-
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-
+  const dropDownValue = useSelector((state) => state.openPopUpSlice.dropDown);
   const handleClosePopup = () => {
     setPopupOpen(false);
+    dispatch(changeDropDownValue(""));
   };
+  useEffect(() => {
+    if (dropDownValue == "Request Feedback") {
+      setPopupOpen(true);
+    }
+  }, [dropDownValue]);
   return (
     <>
       <HandelPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
-        TitlePopUp="Select Feedback"
+        TitlePopUp="Request Feedback"
       >
         <div className="flex items-center gap-7 max-w-[45vw] justify-center  rounded-buttonRadius py-5 ">
           <div className="  max-w-[50%] sm:flex-col rounded-buttonRadius text-center space-y-2  border-2 p-feedbackCard">
             <div className="hidden md:block opacity-0">
-              <Icons.ReqFedMyself />
+              <Icons.RightFeedbackIcon />
             </div>
             <div className="flex  flex-col justify-center items-center">
-              <MessageFavFeedbackIcon />
+              <Icons.ReqFedMyself />
               <p className="font-custom text-subTitle2Size font-buttonWeight text-fontColor-blackBaseColor ">
                 Myself
               </p>
@@ -43,10 +48,10 @@ const RequestFeedback = () => {
 
           <div className="max-w-[50%] space-y-2 bg-drawerColor-bgFeedback rounded-buttonRadius  text-center border-2 border-buttonColor-baseColor  p-feedbackCard ">
             <div className="pl-6 hidden md:block">
-              <Icons.ReqFedPepople />
+              <Icons.RightFeedbackIcon />
             </div>
             <div className="flex  flex-col justify-center items-center">
-              <MessageFeedbackIcon />
+              <Icons.ReqFedPepople />
               <p className="font-custom text-subTitle2Size font-buttonWeight text-buttonColor-baseColor  ">
                 Someone in my team
               </p>
@@ -59,10 +64,13 @@ const RequestFeedback = () => {
         </div>
 
         <div className="flex items-center justify-end  border-t border-gray-200 p-4 ">
-          <Button buttonText="continue" onClick={handleClosePopup} />
+          <Button
+            buttonText="continue"
+            className="text-fontColor-whiteBaseColor"
+            onClick={handleClosePopup}
+          />
         </div>
       </HandelPopUp>
-      <Button buttonText="Request" onClick={handleOpenPopup} />
     </>
   );
 };
