@@ -13,6 +13,8 @@ export default {
     700: "#005374",
     800: " #329B5C ",
     900: "#EBF5EF",
+    1000: "#142331",
+    1100: " #7B5C89",
   },
   fontColor: {
     blackBaseColor: "#0C151E",
@@ -31,6 +33,8 @@ export default {
     700: "#2c3f54",
     800: "#1b2633",
     900: "#070d12",
+    1000: " #636E78",
+    1100: "#091017",
   },
   drawerColor: {
     50: "#F5FCFF",
@@ -43,6 +47,7 @@ export default {
     700: "#215879",
     800: "#0D4D69",
     900: "#00121a",
+    1000: " #F5FCFF",
 
     bgFeedback: "#E8F4F9",
     50: "#F5FCFF",
