@@ -4,7 +4,7 @@ const ImageStyle = (props) => {
   return (
     <>
       <div className="flex-row">
-        <p className="text-formAndToSize mb-1 font-custom font-fromAndToWeight uppercase text-fontColor-fromAndToColor">
+        <p className="text-xs mb-1 font-custom font-fromAndToWeight uppercase text-fontColor-fromAndToColor">
           {caption}
         </p>
         <div className="flex ">
