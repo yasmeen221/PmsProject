@@ -12,7 +12,7 @@ const Button = ({
     <>
       {/* Don't change  the html tag here. It will break everything */}
       <button
-        className={` inline-flex items-center ${(!iconLeft&&!iconRight)? 'justify-center':'justify-between'} rounded-buttonRadius bg-buttonColor-baseColor p-buttonPadding text-buttonFontSize font-buttonWeight  text-fontColor-whiteBaseColor ${className}`}
+        className={` inline-flex items-center ${!iconLeft && !iconRight ? "justify-center" : "justify-between"} rounded-buttonRadius bg-buttonColor-baseColor p-buttonPadding text-buttonFontSize font-buttonWeight  ${className}`}
         onClick={onClick}
         {...rest}
       >

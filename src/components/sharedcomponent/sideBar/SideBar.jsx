@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import SideBarItem from './SideBarItem';
-import Icons from '../../../themes/icons';
+import { useState } from "react";
+import SideBarItem from "./SideBarItem";
+import Icons from "../../../themes/icons";
 
 function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,9 +8,9 @@ function SideBar() {
     <aside
       className={
         isOpen
-          ? `relative flex w-[16.25rem] h-screen justify-center bg-drawerColor-50 transition-all 
+          ? `relative flex w-[16.25rem]  justify-center bg-drawerColor-50 transition-all 
       duration-500`
-          : `relative flex w-[6.5rem] h-screen  justify-center bg-drawerColor-50 transition-all 
+          : `relative flex w-[6.5rem]   justify-center bg-drawerColor-50 transition-all 
       duration-500`
       }
     >
@@ -32,42 +32,42 @@ function SideBar() {
         </li>
 
         <SideBarItem
-          icon={<Icons.MainDachIcon/>}
+          icon={<Icons.MainDachIcon />}
           isOpen={isOpen}
           title="competencies"
         ></SideBarItem>
         <SideBarItem
-          icon={<Icons.GoalsIcon/>}
+          icon={<Icons.GoalsIcon />}
           isOpen={isOpen}
           title="goals"
-        ></SideBarItem>   
-          <SideBarItem
-            icon={<Icons.Feedback/>}
-            isOpen={isOpen}
-            title="feedback"
-          ></SideBarItem>
+        ></SideBarItem>
         <SideBarItem
-          icon={<Icons.Reviews/>}
+          icon={<Icons.Feedback />}
+          isOpen={isOpen}
+          title="feedback"
+        ></SideBarItem>
+        <SideBarItem
+          icon={<Icons.Reviews />}
           isOpen={isOpen}
           title="reviews"
         ></SideBarItem>
         <SideBarItem
-          icon={<Icons.Surveys/>}
+          icon={<Icons.Surveys />}
           isOpen={isOpen}
           title="surveys"
         ></SideBarItem>
         <SideBarItem
-          icon={<Icons.Learning/>}
+          icon={<Icons.Learning />}
           isOpen={isOpen}
           title="learning"
         ></SideBarItem>
         <SideBarItem
-          icon={<Icons.Compensation/>}
+          icon={<Icons.Compensation />}
           isOpen={isOpen}
           title="compensation"
         ></SideBarItem>
         <SideBarItem
-          icon={<Icons.Settings/>}
+          icon={<Icons.Settings />}
           isOpen={isOpen}
           title="settings"
         ></SideBarItem>
@@ -80,13 +80,7 @@ function SideBar() {
             : `absolute left-[80%] top-[50%] h-9  w-9 rounded-[50%] bg-buttonColor-baseColor transition-all duration-500 `
         }
       >
-        {isOpen ? (
-      
-          <Icons.DraweArrow/>
-          
-        ) : (
-          <Icons.ArrowRight/>
-        )}
+        {isOpen ? <Icons.DraweArrow /> : <Icons.DraweArrowRight />}
       </button>
     </aside>
   );

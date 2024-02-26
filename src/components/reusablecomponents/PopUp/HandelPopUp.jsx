@@ -12,7 +12,7 @@ const HandelPopUp = ({
     <>
       {isOpen && (
         <div
-          className={`fixed inset-0 bg-fontColor-blackBaseColor bg-opacity-50 flex items-center justify-center ${className}`}
+          className={`fixed inset-0 z-10 bg-fontColor-blackBaseColor bg-opacity-50 flex items-center justify-center ${className}`}
           {...rest}
         >
           <div

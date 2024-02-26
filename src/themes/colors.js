@@ -4,7 +4,6 @@ export default {
   },
   buttonColor: {
     baseColor: "#178CBF",
-
     100: "#b4e6fb",
     200: "#88d4f3",
     300: "#5dc1ed",
@@ -21,6 +20,7 @@ export default {
     fromAndToColor: "#949CA3",
     placeHolderColor: "#B7BCC1",
     outLineInputColor: "#EFEFF5",
+    TabColor: " #45525E",
     50: "#edf2f8",
     100: "#ccd8e4",
     200: "#abbed3",
@@ -33,20 +33,28 @@ export default {
     900: "#070d12",
   },
   drawerColor: {
+    50: "#F5FCFF",
+    100: "#bae7fb",
+    200: "#8ed7f8",
+    300: "#66c7f7",
+    400: "#4ab9f5",
+    500: "#3da0dc",
+    600: " #E8F4F9",
+    700: "#215879",
+    800: "#0D4D69",
+    900: "#00121a",
 
-   
-    50: '#F5FCFF',
-    100: '#bae7fb',
-    200: '#8ed7f8',
-    300: '#66c7f7',
-    400: '#4ab9f5',
-    500: '#3da0dc',
-    600: ' #E8F4F9',
-    
-    700: '#215879',
-    800: '#0D4D69',
-    900: '#00121a',
-
+    bgFeedback: "#E8F4F9",
+    50: "#F5FCFF",
+    100: "#bae7fb",
+    200: "#8ed7f8",
+    300: "#66c7f7",
+    400: "#4ab9f5",
+    500: "#3da0dc",
+    600: "#2f7cab",
+    700: "#215879",
+    800: "#0D4D69",
+    900: "#00121a",
   },
   deleteColor: {
     50: "#DB1A1A", //base delete color
@@ -61,19 +69,16 @@ export default {
     900: "#1f0000",
   },
   borderColor: {
-
-    baseBorderColor: '#EFEFF5',
-    50: '#F6F6F6',
-    100: '#EFEFF5',
-    200: '#c2bebf',
-    300: '#a7a5a6',
-    400: '#636E78',
-    500: '#737373',
-    600: '#5a5959',
-    700: '#423f40',
-    800: '#2a2526',
-    900: '#17080d',
-
-    
+    baseBorderColor: "#EFEFF5",
+    50: "#F6F6F6",
+    100: "#EFEFF5",
+    200: "#c2bebf",
+    300: "#a7a5a6",
+    400: "#636E78",
+    500: "#737373",
+    600: "#5a5959",
+    700: "#423f40",
+    800: "#2a2526",
+    900: "#17080d",
   },
 };
