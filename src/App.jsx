@@ -2,6 +2,7 @@ import SideBar from "./components/sideBar/SideBar";
 import TopNav from "./components/topNav/TopNav";
 import FeedBack from "./features/FeedBack";
 import Competencies from "./features/Competencies";
+import Users from "./features/ManageUsers/pages/Users";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <div className="w-full ">
           <TopNav />
           {/* <FeedBack /> */}
-          <Competencies />
+          {/* <Competencies /> */}
+          <Users/>
         </div>
       </div>
     </>

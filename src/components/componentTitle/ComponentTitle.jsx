@@ -5,6 +5,7 @@ import DropDown from '../../components/DropDown/DropDown'
 import ThreeDotsDropDown from '../../components/componentTitle/ThreeDotsDropDown'
 import Icons from "../../themes/icons"
 import AddCompetency from "../../features/Competencies/components/AddCompetencyCards/AddCompetency"
+import SelectLevel from "../../features/ManageUsers/components/CardsPopUp/SelectLevel";
 export default function ComponentTitle({ currentList }) {
   const [dropDown2, setOpen2] = useState(false);
   const [threeDotsDropDown, setThreeDotsDropDown] = useState(false);
@@ -23,7 +24,7 @@ export default function ComponentTitle({ currentList }) {
       <h2 className="font-black text-h1FontSize text-fontColor-blackBaseColor ">
         {currentList}
       </h2>
-      {currentList == "Feedback List" ? (
+      {currentList == "Feedback List" && (
         <div className=" flex flex-row gap-x-1   items-center ">
           <SelectFeedback />
           <RequestFeedback/>
@@ -51,7 +52,8 @@ export default function ComponentTitle({ currentList }) {
             />
           </DropDown>
         </div>
-      ) : (
+      ) }
+      {currentList== "Competencies Framework" && (
         <div className="flex flex-row gap-x-2 items-center ">
           <AddCompetency />
           <DropDown
@@ -101,6 +103,35 @@ export default function ComponentTitle({ currentList }) {
               Icon={<Icons.ComHelp />}
               text="Help"
               className="w-[15vw]"
+            />
+          </DropDown>
+        </div>
+      )}
+      {currentList =="User & Teams"&& (
+        <div className=" flex flex-row gap-x-1   items-center ">
+         <SelectLevel/>
+          <RequestFeedback/>
+          <DropDown
+            className=" bg-white px-1.5   "
+            threeDotsIcon
+            open={dropDown2}
+            onClick={() => {
+              setOpen2((dopen) => !dopen);
+            }}
+          >
+            <ThreeDotsDropDown
+              Icon={<Icons.ComExport />}
+              text="Export"
+              onClick={() => {
+                dropdown2("export");
+              }}
+            />
+            <ThreeDotsDropDown
+              Icon={<Icons.ComImport />}
+              text="Import"
+              onClick={() => {
+                dropdown2("import");
+              }}
             />
           </DropDown>
         </div>
