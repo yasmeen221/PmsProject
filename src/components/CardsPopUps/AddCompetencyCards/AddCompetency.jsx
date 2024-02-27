@@ -100,7 +100,7 @@ function AddCompetency({ open }) {
             </div>
           </div>
           {addToogle && (
-            <div className="relative my-2 ">
+            <div className="relative my-2 transition-all duration-1000 ">
               <select
                 onChange={(e) => setTeam((team) => e.target.value)}
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${team == "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}

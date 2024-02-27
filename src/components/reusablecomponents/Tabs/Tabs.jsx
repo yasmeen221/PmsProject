@@ -19,7 +19,7 @@ export default function Tabs() {
   };
 
   return (
-    <div className="mt-6 w-full  p-10 font-custom font-normal">
+    <div className="w-full  p-10 font-custom font-normal">
       <div className="border w-full h-16 rounded-2xl p-2 flex gap-6 border-borderColor-baseBorderColor">
         <button
           onClick={() => {

@@ -4,6 +4,7 @@ import RequestFeedback from "./components/CardsPopUps/FeedbackCards/RequestFeedb
 import Competencies from "./pages/Competencies";
 import FeedBack from "./pages/FeedBack";
 
+
 function App() {
   return (
     <>
@@ -11,12 +12,12 @@ function App() {
         <SideBar />
         <div className="w-full ">
           <TopNav />
-          <FeedBack />
+           <FeedBack />
           {/* <Competencies /> */}
         </div>
       </div>
 
-      <RequestFeedback />
+      
     </>
   );
 }

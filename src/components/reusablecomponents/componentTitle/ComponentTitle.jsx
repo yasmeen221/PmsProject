@@ -4,15 +4,13 @@ import DropDown from "../DropDown/DropDown";
 import ThreeDotsDropDown from "./ThreeDotsDropDown";
 import AddCompetency from "../../CardsPopUps/AddCompetencyCards/AddCompetency";
 import SelectFeedback from "../../CardsPopUps/FeedbackCards/SelectFeedback";
+import RequestFeedback from "../../CardsPopUps/FeedbackCards/RequestFeedback";
 
 export default function ComponentTitle({ currentList }) {
-  const [dropDown1, setOpen1] = useState(false);
   const [dropDown2, setOpen2] = useState(false);
   const [threeDotsDropDown, setThreeDotsDropDown] = useState(false);
 
-  const dropdown1 = (value) => {
-    setOpen1((dropDown1) => !dropDown1);
-  };
+
   const dropdown2 = (value) => {
     setOpen2((dropDown2) => !dropDown2);
   };
@@ -29,6 +27,7 @@ export default function ComponentTitle({ currentList }) {
       {currentList == "Feedback List" ? (
         <div className=" flex flex-row gap-x-1   items-center ">
           <SelectFeedback />
+          <RequestFeedback />
           <DropDown
             className=" bg-white px-1.5   "
             threeDotsIcon
@@ -37,18 +36,20 @@ export default function ComponentTitle({ currentList }) {
               setOpen2((dopen) => !dopen);
             }}
           >
-            <li
-              className="block px-dropItemXP py-dropItemYP  hover:bg-hoverColor-baseHoverColor "
-              onClick={() => dropdown2("send Feedback")}
-            >
-              Send Feedback
-            </li>
-            <li
-              className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor "
-              onClick={() => dropdown1("Request Feedback")}
-            >
-              Request Feedback
-            </li>
+            <ThreeDotsDropDown
+              Icon={<Icons.ComExport />}
+              text="Export"
+              onClick={() => {
+                dropdown2("export");
+              }}
+            />
+            <ThreeDotsDropDown
+              Icon={<Icons.ComImport />}
+              text="Import"
+              onClick={() => {
+                dropdown2("import");
+              }}
+            />
           </DropDown>
         </div>
       ) : (
@@ -60,32 +61,36 @@ export default function ComponentTitle({ currentList }) {
             onClick={() => {
               setThreeDotsDropDown((threeDotsDropDown) => !threeDotsDropDown);
             }}
-            className=" bg-white "
+            className=" bg-white px-1.5"
           >
             <ThreeDotsDropDown
-              Icon={<Icons.GoalsIcon />}
+              Icon={<Icons.ComManage />}
               text="Manage Category"
+              className="w-[15vw]"
               onClick={() => {
                 threeDotsDropDownFun("Mange Category");
               }}
             />
             <ThreeDotsDropDown
-              Icon={<Icons.Feedback />}
+              Icon={<Icons.ComImport />}
               text="Import"
+              className="w-[15vw]"
               onClick={() => {
                 threeDotsDropDownFun("Import");
               }}
             />
             <ThreeDotsDropDown
-              Icon={<Icons.CompentenciesIcon />}
+              Icon={<Icons.ComExport />}
               text="Export"
+              className="w-[15vw]"
               onClick={() => {
                 threeDotsDropDownFun("Export");
               }}
             />
             <ThreeDotsDropDown
-              Icon={<Icons.Learning />}
+              Icon={<Icons.ComFramework />}
               text="Generate Framework AI"
+              className="w-[15vw]"
               onClick={() => {
                 threeDotsDropDownFun("Generate Framework AI");
               }}
@@ -94,8 +99,9 @@ export default function ComponentTitle({ currentList }) {
               onClick={() => {
                 threeDotsDropDownFun("Help");
               }}
-              Icon={<Icons.Compensation />}
+              Icon={<Icons.ComHelp />}
               text="Help"
+              className="w-[15vw]"
             />
           </DropDown>
         </div>
