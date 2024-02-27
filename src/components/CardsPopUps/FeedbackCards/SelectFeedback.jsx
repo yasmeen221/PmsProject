@@ -33,7 +33,7 @@ const SelectFeedback = () => {
         ClosePop={handleClosePopup}
         TitlePopUp="Select Feedback"
       >
-        <div className="flex items-center gap-7 max-w-[45vw] justify-center  rounded-buttonRadius py-5 ">
+        <div className="flex  items-center gap-7 max-w-[45vw] justify-center  rounded-buttonRadius py-5 ">
           <div className="  max-w-[50%] sm:flex-col rounded-buttonRadius text-center space-y-2  border-2 p-feedbackCard">
             <div className="hidden md:block opacity-0">
               <Icons.RightFeedbackIcon />
