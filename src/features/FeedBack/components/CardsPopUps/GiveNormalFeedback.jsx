@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import TextInput from "../../../../components/TextInput/TextInput"
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp"
-import Button from "../../../../components/Button/Button"
-import Header from "../../../../components/Header/Header"
+import TextInput from "../../../../components/TextInput/TextInput";
+import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import Button from "../../../../components/Button/Button";
+import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
 const GiveNormalFeedback = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
