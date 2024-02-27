@@ -1,8 +1,7 @@
-import SideBar from "./components/sharedcomponent/sideBar/SideBar";
-import TopNav from "./components/sharedcomponent/topNav/TopNav";
-import RequestFeedback from "./components/CardsPopUps/FeedbackCards/RequestFeedback";
-import Competencies from "./pages/Competencies";
-import FeedBack from "./pages/FeedBack";
+import SideBar from "./components/sideBar/SideBar";
+import TopNav from "./components/topNav/TopNav";
+import FeedBack from "./features/FeedBack";
+import Competencies from "./features/Competencies";
 
 function App() {
   return (
