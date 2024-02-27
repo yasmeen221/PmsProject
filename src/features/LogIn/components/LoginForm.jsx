@@ -18,6 +18,7 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -26,6 +27,7 @@ const LoginForm = () => {
   const formSubmit = (values) => {
     console.log(values);
     setSuccessMessage("Your values has been sent Successfully");
+    reset();
   };
   return (
     <>
@@ -40,8 +42,8 @@ const LoginForm = () => {
             register={{ ...register("email") }}
             placeholder="Example123@.com"
           />
-          {errors.message ? <p>{errors.email.message}</p> : null}
         </div>
+        {errors.email ? <p>{errors.email.message}</p> : null}
         <div>
           <Header text="Password" />
           <TextInput
@@ -49,8 +51,8 @@ const LoginForm = () => {
             register={{ ...register("password") }}
             placeholder="enter password"
           />
-          {errors.message ? <p>{errors.email.message}</p> : null}
         </div>
+        {errors.password ? <p>{errors.password.message}</p> : null}
         <div className="flex items-center justify-end   py-3  ">
           <Button
             type="submit"

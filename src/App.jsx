@@ -13,7 +13,7 @@ function App() {
           <TopNav />
           <FeedBack />
           {/* <Competencies /> */}
-          {/* <LoginForm /> */}
+          <LoginForm />
         </div>
       </div>
     </>
