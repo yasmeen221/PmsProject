@@ -11,8 +11,8 @@ function App() {
         <SideBar />
         <div className="w-full ">
           <TopNav />
-          <FeedBack />
-          {/* <Competencies /> */}
+          {/* <FeedBack /> */}.
+          <Competencies />
         </div>
       </div>
 
