@@ -23,7 +23,7 @@ export default function ComponentTitle({ currentList }) {
 
   return (
     <div className="w-full flex justify-between h-12  px-10 ">
-      <h2 className="font-black text-h1FontSize text-fontColor-1000 ">
+      <h2 className="font-black text-h1FontSize text-fontColor-blackBaseColor ">
         {currentList}
       </h2>
       {currentList == "Feedback List" ? (

@@ -3,6 +3,7 @@ import Icons from "../../../themes/icons";
 import Button from "../Button/Button";
 import InputWithIcon from "../InputWithIcon/InputWithIcon";
 import DropDown from "../DropDown/DropDown";
+import TestAccording from "../../Accordion/AccordingContent";
 
 export default function Inputs() {
   const [dropDown1, setOpen1] = useState(false);

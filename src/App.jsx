@@ -1,10 +1,8 @@
-import SelectFeedback from "./components/CardsPopUps/FeedbackCards/SelectFeedback";
 import SideBar from "./components/sharedcomponent/sideBar/SideBar";
 import TopNav from "./components/sharedcomponent/topNav/TopNav";
-import GiveNormalFeedback from "./components/CardsPopUps/FeedbackCards/GiveNormalFeedback";
-import AddCompetency from "./components/CardsPopUps/AddCompetencyCards/AddCompetency";
-import FeedBack from "./pages/FeedBack";
 import RequestFeedback from "./components/CardsPopUps/FeedbackCards/RequestFeedback";
+import Competencies from "./pages/Competencies";
+import FeedBack from "./pages/FeedBack";
 
 function App() {
   return (
@@ -14,14 +12,11 @@ function App() {
         <div className="w-full ">
           <TopNav />
           <FeedBack />
+          {/* <Competencies /> */}
         </div>
       </div>
-      <div className="my-8 mx-4 flex  space-x-4">
-        <RequestFeedback />
-        <AddCompetency />
-        <SelectFeedback />
-        <GiveNormalFeedback />
-      </div>
+
+      <RequestFeedback />
     </>
   );
 }

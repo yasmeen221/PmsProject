@@ -29,6 +29,8 @@ import {
   DraweArrowRight,
   ReqFedMyself,
   ReqFedPepople,
+  thunderIcon,
+  Organization,
 } from "../assets/icons/icons";
 
 const Icons = {
@@ -62,5 +64,7 @@ const Icons = {
   SortIcon,
   ReqFedMyself,
   ReqFedPepople,
+  thunderIcon,
+  Organization,
 };
 export default Icons;
