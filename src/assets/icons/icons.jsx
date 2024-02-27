@@ -756,14 +756,14 @@ export const GreenFeedback = ({ color = "#329B5C" }) => {
         fill="white"
         d="M9.99935 18.8346C14.5827 18.8346 18.3327 15.0846 18.3327 10.5013C18.3327 5.91797 14.5827 2.16797 9.99935 2.16797C5.41602 2.16797 1.66602 5.91797 1.66602 10.5013C1.66602 15.0846 5.41602 18.8346 9.99935 18.8346Z"
         stroke="#329B5C"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M6.45898 10.499L8.81732 12.8573L13.5423 8.14062"
         stroke="#329B5C"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -785,21 +785,21 @@ export const RedFeedback = ({ color = "#DB1A1A" }) => {
         fill="white"
         d="M9.99935 18.8346C14.5827 18.8346 18.3327 15.0846 18.3327 10.5013C18.3327 5.91797 14.5827 2.16797 9.99935 2.16797C5.41602 2.16797 1.66602 5.91797 1.66602 10.5013C1.66602 15.0846 5.41602 18.8346 9.99935 18.8346Z"
         stroke={` ${color}`}
-        stroke-width="1.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M7.64258 12.8573L12.3592 8.14062"
         stroke={`${color}`}
-        stroke-width="1.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M12.3592 12.8573L7.64258 8.14062"
         stroke={`${color}`}
-        stroke-width="1.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -1069,6 +1069,55 @@ export const Organization = () => {
         d="M8.87078 17.9401C7.36078 18.9501 7.36078 20.6101 8.87078 21.6101C10.5908 22.7601 13.4108 22.7601 15.1308 21.6101C16.6408 20.6001 16.6408 18.9401 15.1308 17.9401C13.4208 16.7901 10.6008 16.7901 8.87078 17.9401Z"
         fill="white"
       />
+    </svg>
+  );
+};
+
+export const ComManage = () => {
+  return (
+    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18.3333 9.58366V3.91699C18.3333 2.66699 17.8 2.16699 16.475 2.16699H13.1083C11.7833 2.16699 11.25 2.66699 11.25 3.91699V9.58366C11.25 10.8337 11.7833 11.3337 13.1083 11.3337H16.475C17.8 11.3337 18.3333 10.8337 18.3333 9.58366Z" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M18.3333 17.083V15.583C18.3333 14.333 17.8 13.833 16.475 13.833H13.1083C11.7833 13.833 11.25 14.333 11.25 15.583V17.083C11.25 18.333 11.7833 18.833 13.1083 18.833H16.475C17.8 18.833 18.3333 18.333 18.3333 17.083Z" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.74935 11.417V17.0837C8.74935 18.3337 8.21602 18.8337 6.89102 18.8337H3.52435C2.19935 18.8337 1.66602 18.3337 1.66602 17.0837V11.417C1.66602 10.167 2.19935 9.66699 3.52435 9.66699H6.89102C8.21602 9.66699 8.74935 10.167 8.74935 11.417Z" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8.74935 3.91699V5.41699C8.74935 6.66699 8.21602 7.16699 6.89102 7.16699H3.52435C2.19935 7.16699 1.66602 6.66699 1.66602 5.41699V3.91699C1.66602 2.66699 2.19935 2.16699 3.52435 2.16699H6.89102C8.21602 2.16699 8.74935 2.66699 8.74935 3.91699Z" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+};
+export const ComImport = () => {
+  return (
+    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.6997 7.91699C16.6997 8.17533 17.9247 9.71699 17.9247 13.092V13.2003C17.9247 16.9253 16.4331 18.417 12.7081 18.417H7.28307C3.55807 18.417 2.06641 16.9253 2.06641 13.2003V13.092C2.06641 9.74199 3.27474 8.20033 6.22474 7.92533" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 2.16699V12.9003" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12.7923 11.042L10.0007 13.8337L7.20898 11.042" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+};
+export const ComExport = () => {
+  return (
+    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.6997 7.91699C16.6997 8.17533 17.9247 9.71699 17.9247 13.092V13.2003C17.9247 16.9253 16.4331 18.417 12.7081 18.417H7.28307C3.55807 18.417 2.06641 16.9253 2.06641 13.2003V13.092C2.06641 9.74199 3.27474 8.20033 6.22474 7.92533" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 12.9999V3.5166" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12.7923 5.37467L10.0007 2.58301L7.20898 5.37467" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+};
+export const ComFramework = () => {
+  return (
+    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.91719 17.5835C3.60885 18.2752 4.72552 18.2752 5.41719 17.5835L16.2505 6.7502C16.9422 6.05853 16.9422 4.94186 16.2505 4.2502C15.5589 3.55853 14.4422 3.55853 13.7505 4.2502L2.91719 15.0835C2.22552 15.7752 2.22552 16.8919 2.91719 17.5835Z" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M15.0078 7.99121L12.5078 5.49121" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M7.08398 2.53366L8.33398 2.16699L7.96732 3.41699L8.33398 4.66699L7.08398 4.30033L5.83398 4.66699L6.20065 3.41699L5.83398 2.16699L7.08398 2.53366Z" stroke="#178CBF" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M3.75 7.53366L5 7.16699L4.63333 8.41699L5 9.66699L3.75 9.30033L2.5 9.66699L2.86667 8.41699L2.5 7.16699L3.75 7.53366Z" stroke="#178CBF" strokeLinecap="round" strokeLinejoin="round"/>
+<path d="M16.25 11.6997L17.5 11.333L17.1333 12.583L17.5 13.833L16.25 13.4663L15 13.833L15.3667 12.583L15 11.333L16.25 11.6997Z" stroke="#178CBF" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+  );
+};
+export const ComHelp = () => {
+  return (
+    <svg width="20" height="21" viewBox="0 0 20 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.95742 2.5416C9.54076 2.04993 10.4824 2.04993 11.0491 2.5416L12.3658 3.6666C12.6158 3.87493 13.0908 4.04994 13.4241 4.04994H14.8408C15.7241 4.04994 16.4491 4.77493 16.4491 5.65827V7.07493C16.4491 7.40827 16.6241 7.87493 16.8324 8.12493L17.9574 9.4416C18.4491 10.0249 18.4491 10.9666 17.9574 11.5333L16.8324 12.8499C16.6241 13.0999 16.4491 13.5666 16.4491 13.8999V15.3166C16.4491 16.1999 15.7241 16.9249 14.8408 16.9249H13.4241C13.0908 16.9249 12.6241 17.0999 12.3741 17.3083L11.0574 18.4333C10.4741 18.9249 9.53242 18.9249 8.96576 18.4333L7.64909 17.3083C7.39909 17.0999 6.92409 16.9249 6.59909 16.9249H5.14076C4.25742 16.9249 3.53242 16.1999 3.53242 15.3166V13.8916C3.53242 13.5666 3.36576 13.0916 3.15742 12.8499L2.03242 11.5249C1.54909 10.9499 1.54909 10.0166 2.03242 9.4416L3.15742 8.1166C3.36576 7.8666 3.53242 7.39993 3.53242 7.07493V5.6666C3.53242 4.78327 4.25742 4.05827 5.14076 4.05827H6.58242C6.91576 4.05827 7.38242 3.88327 7.63242 3.67493L8.95742 2.5416Z" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M10 7.27539V11.3004" stroke="#178CBF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9.99609 13.833H10.0036" stroke="#178CBF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 };
