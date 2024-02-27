@@ -29,7 +29,7 @@ export default function Tabs() {
           className={`group ${activeTab == 1 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           Feedback
-          <div className="group-focus:block hidden  w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div>
+          {activeTab===1 && <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div> } 
         </button>
         <button
           onClick={() => {
@@ -38,7 +38,7 @@ export default function Tabs() {
           className={`group ${activeTab == 2 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           Pending
-          <div className=" group-focus:block hidden  w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div>
+          {activeTab===2 && <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div> } 
         </button>
         <button
           onClick={() => {
@@ -47,7 +47,7 @@ export default function Tabs() {
           className={`group ${activeTab == 3 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           My Requests
-          <div className=" group-focus:block hidden  w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div>
+          {activeTab===3 && <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div> } 
         </button>
       </div>
       <section>
