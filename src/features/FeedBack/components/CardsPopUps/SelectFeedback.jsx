@@ -1,15 +1,17 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import DropDown from "../../../../components/DropDown/DropDown";
 import { useDispatch } from "react-redux";
 import { changeDropDownValue } from "../../slices/openPopUpSlice";
 import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
+import PraiseFeedback from "./PraiseFeedback";
 
 const SelectFeedback = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [dropDown1, setOpen1] = useState(false);
+  const [praisePop, setPraisePop] = useState(false);
 
   const dropdown1 = (value) => {
     setOpen1((dropDown1) => !dropDown1);
@@ -22,6 +24,10 @@ const SelectFeedback = () => {
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
+  const handlePraise = () => {
+    setPraisePop(true);
+    setPopupOpen(false);
+  };
   return (
     <>
       <HandelPopUp
@@ -30,7 +36,12 @@ const SelectFeedback = () => {
         TitlePopUp="Select Feedback"
       >
         <div className="flex items-center gap-7 max-w-[45vw] justify-center  rounded-buttonRadius py-5 ">
-          <div className="  max-w-[50%] sm:flex-col rounded-buttonRadius text-center space-y-2  border-2 p-feedbackCard">
+          <div
+            onClick={() => {
+              handlePraise();
+            }}
+            className="  max-w-[50%] sm:flex-col rounded-buttonRadius text-center space-y-2  border-2 p-feedbackCard"
+          >
             <div className="hidden md:block opacity-0">
               <Icons.RightFeedbackIcon />
             </div>
@@ -91,6 +102,7 @@ const SelectFeedback = () => {
           Request Feedback
         </li>
       </DropDown>
+      {praisePop && <PraiseFeedback />}
     </>
   );
 };
