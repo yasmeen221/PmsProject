@@ -15,8 +15,6 @@ function App() {
           <Competencies />
         </div>
       </div>
-
-      <RequestFeedback />
     </>
   );
 }

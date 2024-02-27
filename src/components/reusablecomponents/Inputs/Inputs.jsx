@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Icons from "../../../themes/icons";
 import Button from "../Button/Button";
-import InputWithIcon from "../InputWithIcon/InputWithIcon";
 import DropDown from "../DropDown/DropDown";
 import TestAccording from "../../Accordion/AccordingContent";
+import TextInput from "../TextInput/TextInput";
 
 export default function Inputs() {
   const [dropDown1, setOpen1] = useState(false);
@@ -21,7 +21,13 @@ export default function Inputs() {
   };
   return (
     <div className="flex gap-3 w-full h-12    px-10 mt-6 font-custom font-normal">
-      <InputWithIcon icon={<Icons.SearchIcon />} placeholder="Search..." />
+      
+      <TextInput
+      placeholder="Search..."
+      className="max-w-56 h-12 "
+      type="text"
+      leftIcon={<Icons.SearchIcon />}
+      />
       <DropDown
         DropDownText="Type"
         arrowIcon

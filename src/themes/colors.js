@@ -37,19 +37,8 @@ export default {
     1100: "#091017",
   },
   drawerColor: {
-    50: "#F5FCFF",
-    100: "#bae7fb",
-    200: "#8ed7f8",
-    300: "#66c7f7",
-    400: "#4ab9f5",
-    500: "#3da0dc",
-    600: " #E8F4F9",
-    700: "#215879",
-    800: "#0D4D69",
-    900: "#00121a",
-    1000: " #F5FCFF",
-
     bgFeedback: "#E8F4F9",
+    bgSearchInput:"#F6F6F6",
     50: "#F5FCFF",
     100: "#bae7fb",
     200: "#8ed7f8",
@@ -60,6 +49,7 @@ export default {
     700: "#215879",
     800: "#0D4D69",
     900: "#00121a",
+    1000: " #F5FCFF"
   },
   deleteColor: {
     50: "#DB1A1A", //base delete color

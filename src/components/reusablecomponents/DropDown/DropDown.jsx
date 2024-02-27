@@ -41,7 +41,7 @@ const DropDown = ({
         />
         <div
           id="dropdown"
-          className={`z-10 ${open == false ? "hidden" : "block"} bg-white  rounded-lg shadow  mt-2  w-auto  absolute `}
+          className={`z-9 ${open == false ? "hidden" : "block"} bg-white  rounded-lg shadow  mt-2  w-auto  absolute `}
           style={{ [position]: 0 }}
         >
           <ul
