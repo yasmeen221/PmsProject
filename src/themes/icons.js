@@ -31,6 +31,12 @@ import {
   ReqFedPepople,
   thunderIcon,
   Organization,
+  ComManage,
+  ComImport,
+  ComExport,
+  ComFramework,
+  ComHelp
+ 
 } from "../assets/icons/icons";
 
 const Icons = {
@@ -66,5 +72,10 @@ const Icons = {
   ReqFedPepople,
   thunderIcon,
   Organization,
+  ComManage,
+  ComImport,
+  ComExport,
+  ComFramework,
+  ComHelp
 };
 export default Icons;
