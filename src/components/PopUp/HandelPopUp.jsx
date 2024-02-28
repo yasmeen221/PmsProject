@@ -4,6 +4,7 @@ import ImageStyle from "../ImageStyle/ImageStyle";
 const HandelPopUp = ({
   isOpen,
   children,
+  // eslint-disable-next-line react/prop-types
   className,
   TitlePopUp,
   ClosePop,
