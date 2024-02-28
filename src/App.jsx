@@ -2,6 +2,7 @@ import SideBar from "./components/sideBar/SideBar";
 import TopNav from "./components/topNav/TopNav";
 import FeedBack from "./features/FeedBack";
 import Competencies from "./features/Competencies";
+import LoginForm from "./features/LogIn/components/LoginForm";
 import Users from "./features/ManageUsers/pages/Users";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
           <TopNav />
           {/* <FeedBack /> */}
           {/* <Competencies /> */}
+          {/* <LoginForm /> */}
           <Users/>
         </div>
       </div>
