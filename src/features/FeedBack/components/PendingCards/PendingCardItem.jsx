@@ -1,6 +1,8 @@
 import React from "react";
 import Icons from "../../../../themes/icons";
-import PenndingButton from "../../../../components/Button/PenndingButton"
+import PenndingButton from "../../../../components/Button/PenndingButton";
+import ImageStyle from "../../../../components/ImageStyle/ImageStyle";
+import image1 from "../../../../assets/images/boy4.png";
 
 export default function PendingCardItem(image, name, date, text) {
   return (
@@ -8,10 +10,7 @@ export default function PendingCardItem(image, name, date, text) {
       <div className="flex justify-between  ">
         <div className=" items-center flex w-[60%] gap-x-1 ">
           <div className="  w-[25%]">
-            <img
-              src="../../../public/boy4.png"
-              className="w-8 h-8 rounded-full"
-            ></img>
+            <ImageStyle src={image1} />
           </div>
           <div className=" w-[75%]   ">
             <p className="font-md font-medium  text-sm w-[8.654rem]">
