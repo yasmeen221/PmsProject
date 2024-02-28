@@ -5,7 +5,7 @@ import Icons from "../../../themes/icons";
 import Header from "../../../components/Header/Header"
 import TextInput from "../../../components/TextInput/TextInput"
 import { useDispatch, useSelector } from "react-redux";
-import { dropDownTeamHandle } from "../slices/addTeam";
+import { dropDownTeamHandle } from "../slices/addTeamTogglePopUp";
 import { useForm } from "react-hook-form";
 function ManageTeamsForm({ open }) {
   const dispatch = useDispatch()

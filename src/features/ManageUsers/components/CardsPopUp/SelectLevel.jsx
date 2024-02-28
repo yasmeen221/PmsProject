@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
 import Button from "../../../../components/Button/Button";
 import { changeDropDownValue } from "../../../FeedBack/slices/openPopUpSlice";
-import {dropDownTeamHandle} from "../../../ManageTeams/slices/addTeam.js"
+import {dropDownTeamHandle} from "../../../ManageTeams/slices/addTeamTogglePopUp"
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
