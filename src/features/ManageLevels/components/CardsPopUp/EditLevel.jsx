@@ -7,6 +7,7 @@ import Icons from '../../../../themes/icons'
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import PenndingButton from '../../../../components/Button/PenndingButton'
 
 
 const schema = yup.object().shape({
@@ -68,6 +69,8 @@ export default function EditLevel({id,name}) {
         </form>
        
       </HandelPopUp>
+
+      
       <Button
         buttonText="Edit"
         className="text-fontColor-whiteBaseColor"
