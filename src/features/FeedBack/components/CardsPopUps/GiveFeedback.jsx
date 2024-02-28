@@ -14,10 +14,7 @@ export default function GiveFeedback() {
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
-  const rest = {
-    customIcon: <Icons.DraweArrow />,
-    customImg: img,
-  };
+
 
   return (
     <>
