@@ -1,5 +1,6 @@
 import React from "react";
-
+import ImageStyle from "../../../../components/ImageStyle/ImageStyle";
+import image2 from "../../../../assets/images/boy3.png";
 
 export default function RequestCardItem() {
   return (
@@ -11,10 +12,7 @@ export default function RequestCardItem() {
       <div className=" flex  justify-between">
         <div className="flex  items-center gap-2  w-[60%]  ">
           <div className="w-[30%]">
-            <img
-              src="../../../public/boy4.png"
-              className="w-8 h-8 rounded-full"
-            ></img>
+            <ImageStyle src={image2} />
           </div>
           <div className="w-[70%]">
             <p className="font-md font-medium  text-sm w-[8.654rem]">
@@ -26,7 +24,9 @@ export default function RequestCardItem() {
           </div>
         </div>
         <div className="flex items-center ">
-       <button className=" flex items-center justify-center bg-white px-2 py-4 w-[4.688rem] h-2 text-sm font-medium font-fontColor-900 rounded-md border  text- border-borderColor-200 hover:bg-green-100 active:bg-green-300">Cancel</button>
+          <button className=" flex items-center justify-center bg-white px-2 py-4 w-[4.688rem] h-2 text-sm font-medium font-fontColor-900 rounded-md border  text- border-borderColor-200 hover:bg-green-100 active:bg-green-300">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
