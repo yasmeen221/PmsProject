@@ -16,6 +16,10 @@ export default function UserTabs() {
   const handleTeams = () => {
     settableRender("team");
   };
+  const handgit = () => {
+    settableRender("team");
+  };
+
 
   return (
     <div className="w-full  p-10 font-custom font-normal">
