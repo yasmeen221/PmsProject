@@ -4,6 +4,7 @@ import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
+import image1 from "../../../../assets/images/girl2.png";
 const GiveNormalFeedback = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [addToogle, setAddToggle] = useState(false);
@@ -22,6 +23,9 @@ const GiveNormalFeedback = () => {
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Give Normal  FeedBack"
+        iconLeft={<Icons.ArrowLeftPop />}
+        personImage={image1}
+        personName="yasmeen"
       >
         <div
           className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"

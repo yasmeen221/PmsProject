@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import Icons from "../../themes/icons"
-import Button from "../../components/Button/Button"
-import DropDown from "../../components/DropDown/DropDown"
-import TextInput from "../../components/TextInput/TextInput"
+import Icons from "../../themes/icons";
+import Button from "../../components/Button/Button";
+import DropDown from "../../components/DropDown/DropDown";
+import TextInput from "../../components/TextInput/TextInput";
 export default function Inputs() {
   const [dropDown1, setOpen1] = useState(false);
   const [dropDown2, setOpen2] = useState(false);
@@ -19,12 +19,11 @@ export default function Inputs() {
   };
   return (
     <div className="flex gap-3 w-full h-12    px-10 mt-6 font-custom font-normal">
-      
       <TextInput
-      placeholder="Search..."
-      className="max-w-56 h-12 "
-      type="text"
-      leftIcon={<Icons.SearchIcon />}
+        placeholder="Search..."
+        className="max-w-56 h-12 "
+        type="text"
+        leftIcon={<Icons.SearchIcon />}
       />
       <DropDown
         DropDownText="Type"

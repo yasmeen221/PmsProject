@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
 import Button from "../../../../components/Button/Button";
 import { changeDropDownValue } from "../../../FeedBack/slices/openPopUpSlice";
+import {dropDownTeamHandle} from "../../../ManageTeams/slices/addTeam.js"
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 const schema = yup.object().shape({
   levelName: yup
   .string()
@@ -29,8 +29,12 @@ const SelectLevel = () => {
     dispatch(changeDropDownValue(value));
     if (value === "add level") {
       setPopupOpen(true);
+    }else if(value==="Add Teams"){
+      dispatch(dropDownTeamHandle(true))
     }
   };
+  
+  
 
   const handleClosePopup = () => {
     setPopupOpen(false);
@@ -81,7 +85,6 @@ const SelectLevel = () => {
           </div>
         </form>
       </HandelPopUp>
-
       <DropDown
         DropDownText="Action"
         arrowIcon
@@ -91,7 +94,9 @@ const SelectLevel = () => {
           setOpen1((dopen) => !dopen);
         }}
       >
-        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor">
+        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
+      
+        >
           Add User
         </li>
         <li
@@ -100,7 +105,7 @@ const SelectLevel = () => {
         >
           Add Level
         </li>
-        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor">
+        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor" onClick={()=>dropdown1("Add Teams")}>
           Add Teams
         </li>
       </DropDown>

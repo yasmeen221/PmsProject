@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp"
-import Button from "../../../../components/Button/Button"
+import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
-import Header from "../../../../components/Header/Header"
+import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
 function AddCompetency({ open }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -23,6 +23,7 @@ function AddCompetency({ open }) {
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Add New Competency"
+        iconLeft={<Icons.ArrowLeftPop />}
       >
         <div
           style={{

@@ -5,32 +5,37 @@ import FeedBack from "./features/FeedBack";
 import LoginForm from "./features/LogIn/components/LoginForm";
 import NotFound from "./components/NotFound";
 import Users from "./features/User&Teams/pages/Users";
+import ResetPassword from "./features/ResetPassword/pages/ResetPassword";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginForm/>
+    element: <LoginForm />,
   },
   {
-    path:"/dashboard", 
-    element:<Dashboard/>,
+    path: "/resetpassword",
+    element: <ResetPassword />
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
     children: [
       {
         path: "competencies",
-        element:<Competencies/>
+        element: <Competencies />,
       },
       {
         path: "feedback",
-        element:<FeedBack/>
+        element: <FeedBack />,
       },
       {
         path: "users&teams",
-        element:<Users/>
+        element: <Users/>,
       },
-  
-    ]
-  },{
-    path:"*",
-    element: <NotFound/>
-  }
-])
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
+  },
+]);
 export default router;
