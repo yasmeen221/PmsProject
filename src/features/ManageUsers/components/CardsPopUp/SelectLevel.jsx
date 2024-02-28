@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import DropDown from "../../../../components/DropDown/DropDown";
 import { useDispatch } from "react-redux";
@@ -9,7 +10,6 @@ import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
 const schema = yup.object().shape({
   levelName: yup
   .string()
@@ -30,6 +30,8 @@ const SelectLevel = () => {
       setPopupOpen(true);
     }
   };
+  
+  
 
   const handleClosePopup = () => {
     setPopupOpen(false);
@@ -76,7 +78,6 @@ const SelectLevel = () => {
           </div>
         </form>
       </HandelPopUp>
-
       <DropDown
         DropDownText="Action"
         arrowIcon
@@ -86,7 +87,9 @@ const SelectLevel = () => {
           setOpen1((dopen) => !dopen);
         }}
       >
-        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor">
+        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
+      
+        >
           Add User
         </li>
         <li
