@@ -35,8 +35,8 @@ import {
   ComImport,
   ComExport,
   ComFramework,
-  ComHelp
- 
+  ComHelp,
+  ArrowLeftPop,
 } from "../assets/icons/icons";
 
 const Icons = {
@@ -76,6 +76,7 @@ const Icons = {
   ComImport,
   ComExport,
   ComFramework,
-  ComHelp
+  ComHelp,
+  ArrowLeftPop,
 };
 export default Icons;

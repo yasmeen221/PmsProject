@@ -12,10 +12,6 @@ export default function RequestCardItem() {
       <div className=" flex  justify-between">
         <div className="flex  items-center gap-2  w-[60%]  ">
           <div className="w-[30%]">
-            {/* <img
-              src="../../../public/boy4.png"
-              className="w-8 h-8 rounded-full"
-            ></img> */}
             <ImageStyle src={image2} />
           </div>
           <div className="w-[70%]">

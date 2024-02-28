@@ -11,7 +11,6 @@ export default function PendingCardItem(image, name, date, text) {
         <div className=" items-center flex w-[60%] gap-x-1 ">
           <div className="  w-[25%]">
             <ImageStyle src={image1} />
-            {/* <img src={image1} className="w-8 h-8 rounded-full"></img> */}
           </div>
           <div className=" w-[75%]   ">
             <p className="font-md font-medium  text-sm w-[8.654rem]">

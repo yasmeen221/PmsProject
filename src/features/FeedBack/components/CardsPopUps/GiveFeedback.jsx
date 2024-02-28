@@ -25,7 +25,7 @@ export default function GiveFeedback() {
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp={"Give FeedBack for"}
-        {...rest}
+        iconLeft={<Icons.ArrowLeftPop />}
       >
         <div
           className="w-[45.02196193265007vw] max-h-[109.51638065522621vh] pb-4 overflow-y-auto"
