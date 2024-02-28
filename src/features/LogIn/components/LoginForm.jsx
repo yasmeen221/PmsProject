@@ -6,16 +6,27 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
+import cover from "../../../assets/images/cover2.svg";
+import logo from "../../../assets/images/logo/logo.png";
+import Icons from "../../../themes/icons";
+
 const schema = yup.object({
   email: yup
     .string()
-    .email("Email must be valid")
-    .required("Email is required"),
-  password: yup.string().required("Password is required"),
+    // .email("Email must be valid")
+    .required("Email is required")
+    .matches(/^\S+@\S+$/i, "Invalid email address"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
+      "Invalid password. It must contain at least 8 characters and max 20, small and capital letter,numbers, and special character.",
+    ),
 });
 
 const LoginForm = () => {
-  const [successMessage, setSuccessMessage] = useState("");
+  const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
 
   const {
@@ -29,28 +40,26 @@ const LoginForm = () => {
 
   const formSubmit = (values) => {
     console.log(values);
-    setSuccessMessage("Your values has been sent Successfully");
     reset();
     navigate("/dashboard/competencies");
   };
   return (
-    // <>
+    <section className="  text-fontColor-blackBaseColor flex items-center  justify-center mt-16">
+      <div
+        className=" flex w-[60%]  shadow-lg h-auto m-auto  bg-drawerColor-100 rounded flex-col md:flex-row "
+        style={{ paddingBottom: "50px" }}
+      >
+        <div className="md:w-[50%]  items-center space-y-1 flex flex-col w-full  ">
+          <div className=" self-start my-9  ml-4 ">
+            <img src={logo} />
+          </div>
 
-    // </>
-    <section className="h-screen bg-drawerColor-100   text-drawerColor-800 flex items-center  justify-center">
-      <div className=" flex w-[70%] h-[600px]  bg-drawerColor-50 rounded ">
-        <div className="w-[50%]  items-center space-y-6 flex flex-col justify-center ">
-          <h1 className="text-4xl ml-16  self-start  uppercase font-bold">Login</h1>
-          <p className="text-lg ml-16  capitalize self-start  ">
+          <p className="text-md ml-10 font-subTitle2Weight text-fontColor-800 capitalize self-start  ">
             welcome back! please login to tour account
           </p>
-
-          <form
-            className=" w-[80%]  space-y-8 ml-7  "
-            onSubmit={handleSubmit(formSubmit)}
-          >
+          <form className=" w-[80%] " onSubmit={handleSubmit(formSubmit)}>
             <div>
-              <Header text="Email" className="text-xl mb-4" />
+              <Header text="Email" className="text-lg mb-1 mt-3" />
               <TextInput
                 className="rounded"
                 type="text"
@@ -58,30 +67,41 @@ const LoginForm = () => {
                 placeholder="Example123@.com"
               />
             </div>
-            {errors.email ? <p>{errors.email.message}</p> : null}
-            <div>
-              <Header text="Password" className="mb-4 text-xl" />
+            {errors.email ? (
+              <p className="text-deleteColor-50">{errors.email.message}</p>
+            ) : null}
+            <div className="mt-1">
+              <Header text="Password" className="text-lg mb-1" />
               <TextInput
                 className="rounded"
-                type="password"
+                rightIcon={
+                  securePass ? <Icons.showPassword /> : <Icons.hidePassword />
+                }
+                rightIconClick={() => {
+                  setSecurePass((prev) => !prev);
+                }}
+                type={securePass ? "password" : "text"}
                 register={{ ...register("password") }}
                 placeholder="enter password"
               />
             </div>
-            {errors.password ? <p>{errors.password.message}</p> : null}
+            {errors.password ? (
+              <p className="text-deleteColor-50">{errors.password.message}</p>
+            ) : null}
 
-            <Button
-              type="submit"
-              className="w-full px-6 rounded  py-3.5 text-fontColor-whiteBaseColor"
-              buttonText="login"
-            />
+            <div className="mt-4">
+              <Button
+                type="submit"
+                className="w-full  rounded text-fontColor-whiteBaseColor"
+                buttonText="login"
+              />
+            </div>
           </form>
-          {setSuccessMessage && <p>{successMessage}</p>}
         </div>
         <div className="w-[50%] flex items-center justify-center  ">
           <img
-            src="../../../../public/cover2.svg"
-            className="object-contain w-[90%] "
+            src={cover}
+            className="object-contain md:w-[90%] hidden md:block "
           />
         </div>
       </div>
