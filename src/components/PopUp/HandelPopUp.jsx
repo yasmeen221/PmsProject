@@ -3,6 +3,7 @@ import ButtonPopUpClose from "../../components/PopUp/ButtonPopUpClose"
 const HandelPopUp = ({
   isOpen,
   children,
+  // eslint-disable-next-line react/prop-types
   className,
   TitlePopUp,
   ClosePop,

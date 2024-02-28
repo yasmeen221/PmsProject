@@ -1,6 +1,8 @@
 import { useState } from "react";
-import SideBarItem from "../../components/sideBar/SideBarItem"
-import Icons from "../../themes/icons"
+import SideBarItem from "../../components/sideBar/SideBarItem";
+import Icons from "../../themes/icons";
+import logo from "../../assets/images/logo/logo.png";
+import logoTwo from "../../assets/images/logo/logo.svg";
 
 function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +20,13 @@ function SideBar() {
         <li>
           {isOpen ? (
             <img
-              src="logo.png"
+              src={logo}
               alt="logo"
               className=" mx-auto mb-10 mt-[3.375rem]"
             />
           ) : (
             <img
-              src="logo.svg"
+              src={logoTwo}
               alt="logo"
               className="mx-auto mb-10 mt-[3.375rem] "
             />
@@ -35,6 +37,7 @@ function SideBar() {
           icon={<Icons.MainDachIcon />}
           isOpen={isOpen}
           title="competencies"
+          to="/dashboard/competencies"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.GoalsIcon />}
@@ -45,11 +48,13 @@ function SideBar() {
           icon={<Icons.Feedback />}
           isOpen={isOpen}
           title="feedback"
+          to="/dashboard/feedback"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Reviews />}
           isOpen={isOpen}
-          title="reviews"
+          title="users&teams"
+          to="/dashboard/users&teams"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Surveys />}
