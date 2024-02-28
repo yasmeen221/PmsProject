@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-
-
-import LevelTable from "../../features/ManageUsers/components/Tables/LevelTable";
-import UserTable from "../../features/ManageUsers/components/Tables/UserTable";
+import React, { useState } from "react";
+import LevelTable from "../../features/ManageLevels/components/Tables/LevelTable";
+import UserTable from "../../features/ManageLevels/components/Tables/UserTable";
 import TeamsTable from "../../features/ManageTeams"
 
 export default function UserTabs() {
