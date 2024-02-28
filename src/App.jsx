@@ -1,22 +1,11 @@
-import SideBar from "./components/sideBar/SideBar";
-import TopNav from "./components/topNav/TopNav";
-import FeedBack from "./features/FeedBack";
-import Competencies from "./features/Competencies";
-import ResetPassword from "./features/ResetPassword/pages/ResetPassword";
+
+import { RouterProvider } from "react-router-dom";
+import router from "./Routes";
 
 function App() {
   return (
-    <>
-      <div className="flex">
-        <SideBar />
-        <div className="w-full ">
-          <TopNav />
-          <FeedBack />
-          {/* <Competencies /> */}
-          <ResetPassword/>
-        </div>
-      </div>
-    </>
+    <RouterProvider router={router}/>
+
   );
 }
 
