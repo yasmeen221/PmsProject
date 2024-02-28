@@ -35,6 +35,7 @@ function SideBar() {
           icon={<Icons.MainDachIcon />}
           isOpen={isOpen}
           title="competencies"
+          to="/dashboard/competencies"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.GoalsIcon />}
@@ -45,11 +46,13 @@ function SideBar() {
           icon={<Icons.Feedback />}
           isOpen={isOpen}
           title="feedback"
+          to="/dashboard/feedback"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Reviews />}
           isOpen={isOpen}
-          title="reviews"
+          title="users&teams"
+          to="/dashboard/users&teams"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Surveys />}

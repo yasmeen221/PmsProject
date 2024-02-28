@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 
-function SideBarItem({ icon, title, isOpen }) {
+function SideBarItem({ icon, title, isOpen ,to}) {
   return (
-    <li
+    <NavLink
+    to={to}
       className={
         isOpen
           ? `hover:bg-buttonColor-50 flex w-[14.063rem] items-center mx-4 rounded-lg  px-6  py-4 text-center hover:text-fontColor-whiteBaseColor hover:bg-buttonColor-baseColor `
@@ -17,7 +19,7 @@ function SideBarItem({ icon, title, isOpen }) {
       ) : (
         <span>{icon}</span>
       )}
-    </li>
+    </NavLink>
   );
 }
 
