@@ -4,7 +4,8 @@ import Button from "../../../../components/Button/Button";
 export default function UserTable() {
   return (
     <>
-      <header className="font-bold text-lg  my-6">
+      <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
+        {" "}
         Users
       </header>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

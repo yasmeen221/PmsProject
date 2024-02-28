@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
+<<<<<<< HEAD
+import LevelTable from "../../features/ManageLevels/components/Tables/LevelTable";
+import UserTable from "../../features/ManageLevels/components/Tables/UserTable";
+import TeamsTable from "../../features/ManageLevels/components/Tables/TeamsTable";
+
+=======
 import FeedbackCards from "../../features/FeedBack/components/FeedbackCards/FeedBackCards"
 import PendingCards from "../../features/FeedBack/components/PendingCards/PendingCards"
 import RequestCards from "../../features/FeedBack/components/RequestCards/RequestCards"
 import LevelTable from "../../features/ManageUsers/components/Tables/LevelTable";
-import TeamsTable from "../../features/ManageUsers/components/Tables/TeamsTable";
 import UserTable from "../../features/ManageUsers/components/Tables/UserTable";
-
+import TeamsTable from "../../features/ManageTeams"
+>>>>>>> 554deb94d9362dce1c5da384f34529fedb82aafa
 export default function UserTabs() {
   const [tableRender, settableRender] = useState("user");
   const [activeTab, setActiveTab] = useState(1);
