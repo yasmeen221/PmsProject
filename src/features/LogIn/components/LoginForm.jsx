@@ -5,6 +5,7 @@ import Button from "../../../components/Button/Button";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "react-router-dom";
 const schema = yup.object({
   email: yup
     .string()
@@ -15,6 +16,8 @@ const schema = yup.object({
 
 const LoginForm = () => {
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();  // Add this line to get the navigate function
+
   const {
     register,
     handleSubmit,
@@ -28,6 +31,7 @@ const LoginForm = () => {
     console.log(values);
     setSuccessMessage("Your values has been sent Successfully");
     reset();
+    navigate("/dashboard/competencies");
   };
   return (
     <>
