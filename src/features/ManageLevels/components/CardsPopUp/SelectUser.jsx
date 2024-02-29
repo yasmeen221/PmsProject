@@ -14,41 +14,43 @@ import Icons from "../../../../themes/icons";
 const userSchema = yup.object({
   firstName: yup
     .string()
+    .required("Required")
     .min(2)
     .max(15)
     .matches(/^[A-Za-z]+$/, "Invalid characters")
-    .trim()
-    .required(),
+    .trim(),
   lastName: yup
     .string()
+    .required("Required")
     .min(2)
     .max(15)
     .matches(/^[A-Za-z]+$/, "Invalid characters")
-    .trim()
-    .required(),
+    .trim(),
+    
   username: yup
     .string()
+    .required("Required")
     .matches(/^[a-zA-Z0-9_]+$/, "Username must be alphanumeric")
     .min(3, "Username must be at least 3 characters")
-    .max(15, "Username can't exceed 15 characters")
-    .required("Username is required"),
-  email: yup.string().email().required(),
+    .max(15, "Username can't exceed 15 characters"),
+    
+  email: yup.string().email().required("Required"),
   position: yup
     .string()
+    .required("Required")
     .matches(/^[A-Za-z]+$/, "Invalid characters")
-    .trim()
-    .required(),
-  level: yup.string().required("Level is required"),
+    .trim(),
+  level: yup.string().required("Required"),
   role: yup
     .string()
+    .required("Required")
     .matches(/^[A-Za-z]+$/, "Invalid characters")
-    .trim()
-    .required(),
+    .trim(),
   team: yup
     .string()
+    .required("Required")
     .matches(/^[A-Za-z]+$/, "Invalid characters")
-    .trim()
-    .required(),
+    .trim(),
 });
 
 const SelectUser = () => {
