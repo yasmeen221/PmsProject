@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import DropDown from "../../../../components/DropDown/DropDown";
 import { useDispatch } from "react-redux";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import FormPopUp from "../../../../components/PopUp/FormPopUp.jsx";
 import Button from "../../../../components/Button/Button";
 import { changeDropDownValue } from "../../../FeedBack/slices/openPopUpSlice";
 import { dropDownTeamHandle } from "../../../ManageTeams/slices/addTeamTogglePopUp";
@@ -13,7 +13,7 @@ import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import SelectUser from "./SelectUser.jsx";
+import SelectUser from "../../../ManageUsers/components/CardsPopUps/SelectUser.jsx";
 const schema = yup.object().shape({
   levelName: yup
     .string()
@@ -35,7 +35,7 @@ const SelectLevel = () => {
     } else if (value === "Add Teams") {
       dispatch(dropDownTeamHandle(true));
     } else if (value === "Add User") {
-      setAddUserPopupOpen(true); 
+      setAddUserPopupOpen(true);
     }
   };
 
@@ -60,7 +60,7 @@ const SelectLevel = () => {
 
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp={"ADD Level"}
@@ -92,9 +92,9 @@ const SelectLevel = () => {
             />
           </div>
         </form>
-      </HandelPopUp>
+      </FormPopUp>
 
-      <HandelPopUp
+      <FormPopUp
         isOpen={isAddUserPopupOpen}
         ClosePop={() => setAddUserPopupOpen(false)}
         TitlePopUp={"ADD User"}
@@ -102,7 +102,7 @@ const SelectLevel = () => {
         <div>
           <SelectUser />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
 
       <DropDown
         DropDownText="Action"

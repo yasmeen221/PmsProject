@@ -3,9 +3,8 @@ import { useEffect } from "react";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import TextInput from "../../../../components/TextInput/TextInput";
-
 
 export default function PraiseFeedback() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -21,12 +20,11 @@ export default function PraiseFeedback() {
   };
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Give Praise"
         iconLeft={<Icons.ArrowLeftPop />}
-       
       >
         <div
           className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
@@ -80,7 +78,7 @@ export default function PraiseFeedback() {
             onClick={handleClosePopup}
           />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
     </>
   );
 }

@@ -39,10 +39,7 @@ export default function LevelTable() {
             <tbody>
               {levelData[0]
                 ? levelData.map((item, i) => (
-                    <tr
-                      key={i}
-                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 "
-                    >
+                    <tr key={i} className="odd:bg-gray even:bg-gray-50  ">
                       <td className="px-6 py-4">{item.firstName}</td>
                       <td className="px-6 py-4">
                         <EditLevel id={item.id} name={item.firstName} />

@@ -1,10 +1,11 @@
 // i want to get teams and put it in global state (to render li in drop down of add team or add user&&cash it)
 import React, { useEffect, useState } from "react";
-import Button from "../../../components/Button/Button";
-import ManageTeamsForm from "./MangTeamsForm";
+import Button from "../../../../components/Button/Button";
+import ManageTeamsForm from "../CardsPopUps/MangTeamsForm";
 import { useDispatch, useSelector } from "react-redux";
-import { editButtonTeamHandle } from "../slices/editTemTogglePopUp";
-import { dropDownTeamHandle } from "../slices/addTeamTogglePopUp";
+import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
+import { dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
+import Icons from "../../../../themes/icons";
 
 const TeamsTable = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
@@ -27,7 +28,7 @@ const TeamsTable = () => {
   //   };
 
   return (
-    <div>
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-center rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
@@ -52,13 +53,21 @@ const TeamsTable = () => {
                 <td className="px-6 py-4 ">{item.teamName}</td>
                 <td className="px-6 py-4">{item.teamLeader}</td>
                 <td className="px-6 py-4">{item.parentTeam}</td>
-                <td className="px-6 py-4">
+                <td className="px-6 py-4 inline-flex">
                   <Button
-                    buttonText="Edit"
-                    className="text-fontColor-whiteBaseColor"
+                    iconLeft={<Icons.EditUserPage />}
+                    className=" bg-transparent px-1"
                     onClick={() => {
                       dispatch(dropDownTeamHandle(true)), //add it to close the popup
                         dispatch(editButtonTeamHandle(item)); //to catch data from global items
+                    }}
+                  />
+                  <Button
+                    iconLeft={<Icons.DeleteUserPage />}
+                    className=" bg-transparent px-1"
+                    onClick={() => {
+                      // dispatch(dropDownTeamHandle(true)), //add it to close the popup
+                      //   dispatch(editButtonTeamHandle(item)); //to catch data from global items
                     }}
                   />
                 </td>

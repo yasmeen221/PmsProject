@@ -1,8 +1,8 @@
 import React from "react";
-import ComponentTitle from "../../../components/componentTitle/ComponentTitle"
-import Inputs from "../../../components/Inputs/Inputs"
-import SubNav from "../../../components/subNav/SubNav"
-import Tabs from "../../../components/Tabs/Tabs"
+import ComponentTitle from "../../../components/componentTitle/ComponentTitle";
+import Inputs from "../../../components/Inputs/Inputs";
+import SubNav from "../../../components/subNav/SubNav";
+import Tabs from "../../FeedBack/components/Tabs/Tabs";
 
 export default function FeedBack() {
   return (

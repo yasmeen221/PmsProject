@@ -1,16 +1,15 @@
 import React, { useState } from "react";
-import SelectFeedback from '../../features/FeedBack/components/CardsPopUps/SelectFeedback'
-import RequestFeedback from '../../features/FeedBack/components/CardsPopUps/RequestFeedback'
-import DropDown from '../../components/DropDown/DropDown'
-import ThreeDotsDropDown from '../../components/componentTitle/ThreeDotsDropDown'
-import Icons from "../../themes/icons"
-import AddCompetency from "../../features/Competencies/components/AddCompetencyCards/AddCompetency"
+import SelectFeedback from "../../features/FeedBack/components/CardsPopUps/SelectFeedback";
+import RequestFeedback from "../../features/FeedBack/components/CardsPopUps/RequestFeedback";
+import DropDown from "../../components/DropDown/DropDown";
+import ThreeDotsDropDown from "../../components/componentTitle/ThreeDotsDropDown";
+import Icons from "../../themes/icons";
+import AddCompetency from "../../features/Competencies/components/CardsPopUps/AddCompetency";
 import SelectLevel from "../../features/ManageLevels/components/CardsPopUp/SelectLevel";
-import ManageTeamsForm from "../../features/ManageTeams/components/MangTeamsForm";
+import ManageTeamsForm from "../../features/ManageTeams/components/CardsPopUps/MangTeamsForm";
 export default function ComponentTitle({ currentList }) {
   const [dropDown2, setOpen2] = useState(false);
   const [threeDotsDropDown, setThreeDotsDropDown] = useState(false);
-
 
   const dropdown2 = (value) => {
     setOpen2((dropDown2) => !dropDown2);
@@ -27,8 +26,10 @@ export default function ComponentTitle({ currentList }) {
       </h2>
       {currentList == "Feedback List" && (
         <div className=" flex flex-row gap-x-1   items-center ">
+          {/* this is PopUp opens */}
           <SelectFeedback />
-          <RequestFeedback/>
+          <RequestFeedback />
+          {/* end  of pop up*/}
           <DropDown
             className=" bg-white px-1.5   "
             threeDotsIcon
@@ -53,10 +54,12 @@ export default function ComponentTitle({ currentList }) {
             />
           </DropDown>
         </div>
-      ) }
-      {currentList== "Competencies Framework" && (
+      )}
+      {currentList == "Competencies Framework" && (
         <div className="flex flex-row gap-x-2 items-center ">
+          {/* this is the popUp of compentencis in routing of comemtencise page */}
           <AddCompetency />
+          {/* end of popup */}
           <DropDown
             threeDotsIcon
             open={threeDotsDropDown}
@@ -108,10 +111,12 @@ export default function ComponentTitle({ currentList }) {
           </DropDown>
         </div>
       )}
-      {currentList =="User & Teams"&& (
+      {currentList == "User & Teams" && (
         <div className=" flex flex-row gap-x-1   items-center ">
-         <SelectLevel/>
-         <ManageTeamsForm/>
+          {/* this is popUp in routing of Teams & Users Page */}
+          <SelectLevel />
+          <ManageTeamsForm />
+          {/* end of popups */}
 
           <DropDown
             className=" bg-white px-1.5   "

@@ -2,7 +2,7 @@ import React from "react";
 import ComponentTitle from "../../../components/componentTitle/ComponentTitle";
 import Inputs from "../../../components/Inputs/Inputs";
 import SubNav from "../../../components/subNav/SubNav";
-import UserTabs from "../../../components/UserTabs/UserTabs";
+import UserTabs from "../components/UserTabs/UserTabs";
 
 export default function Users() {
   return (
