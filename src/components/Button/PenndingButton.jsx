@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const PenndingButton = ({ icon, bgColor, hoverColor, className }) => {
+const PenndingButton = ({ icon, bgColor, hoverColor, className , onClick,  buttonText}) => {
   const [isHovered, setHovered] = useState(false);
   const [isClicked, setClicked] = useState(false);
 
@@ -33,6 +33,7 @@ const PenndingButton = ({ icon, bgColor, hoverColor, className }) => {
       onMouseEnter={handleButtonHover}
       onMouseLeave={handleButtonLeave}
     >
+    {onClick}
       {icon}
     </button>
   );

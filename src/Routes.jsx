@@ -4,7 +4,7 @@ import Dashboard from "../src/components/Dashboard";
 import FeedBack from "./features/FeedBack";
 import LoginForm from "./features/LogIn/components/LoginForm";
 import NotFound from "./components/NotFound";
-import Users from "./features/ManageUsers";
+import Users from "./features/User&Teams/pages/Users";
 import ResetPassword from "./features/ResetPassword/pages/ResetPassword";
 const router = createBrowserRouter([
   {
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "users&teams",
-        element: <Users />,
+        element: <Users/>,
       },
     ],
   },

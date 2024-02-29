@@ -1,10 +1,13 @@
 import React from "react";
+import PenndingButton from "../../../../components/Button/PenndingButton";
+import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 
 export default function UserTable() {
   return (
     <>
-      <header className="font-bold text-lg  my-6">
+      <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
+        {" "}
         Users
       </header>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -49,11 +52,18 @@ export default function UserTable() {
               <td className="px-6 py-4">senior</td>
               <td className="px-6 py-4">manager</td>
               <td className="px-6 py-4">
-                <Button
-                 buttonText="Edit"
-                  className="text-fontColor-whiteBaseColor text-md font-medium"
-                />
-
+              <div className="flex gap-1 w-[30%]">
+              <PenndingButton
+              icon={< Icons.ArrowLeftPop/>}
+              bgColor="#EBF5EF"
+              hoverColor=" #329B5C"
+             />
+             <PenndingButton
+             icon={< Icons.ArrowLeftPop/>}
+             bgColor="#FBE8E8"
+             hoverColor=" #DB1A1A"
+            />
+</div>
               </td>
             </tr>
             

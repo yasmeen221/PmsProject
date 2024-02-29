@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import FeedbackCards from "../../features/FeedBack/components/FeedbackCards/FeedBackCards"
-import PendingCards from "../../features/FeedBack/components/PendingCards/PendingCards"
-import RequestCards from "../../features/FeedBack/components/RequestCards/RequestCards"
-import LevelTable from "../../features/ManageUsers/components/Tables/LevelTable";
-import UserTable from "../../features/ManageUsers/components/Tables/UserTable";
+import React, { useState } from "react";
+import LevelTable from "../../features/ManageLevels/components/Tables/LevelTable";
+import UserTable from "../../features/ManageLevels/components/Tables/UserTable";
 import TeamsTable from "../../features/ManageTeams"
+
 export default function UserTabs() {
   const [tableRender, settableRender] = useState("user");
   const [activeTab, setActiveTab] = useState(1);

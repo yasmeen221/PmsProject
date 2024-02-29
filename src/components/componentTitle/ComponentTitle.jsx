@@ -5,7 +5,7 @@ import DropDown from '../../components/DropDown/DropDown'
 import ThreeDotsDropDown from '../../components/componentTitle/ThreeDotsDropDown'
 import Icons from "../../themes/icons"
 import AddCompetency from "../../features/Competencies/components/AddCompetencyCards/AddCompetency"
-import SelectLevel from "../../features/ManageUsers/components/CardsPopUp/SelectLevel";
+import SelectLevel from "../../features/ManageLevels/components/CardsPopUp/SelectLevel";
 import ManageTeamsForm from "../../features/ManageTeams/components/MangTeamsForm";
 export default function ComponentTitle({ currentList }) {
   const [dropDown2, setOpen2] = useState(false);
@@ -112,7 +112,7 @@ export default function ComponentTitle({ currentList }) {
         <div className=" flex flex-row gap-x-1   items-center ">
          <SelectLevel/>
          <ManageTeamsForm/>
-          <RequestFeedback/>
+
           <DropDown
             className=" bg-white px-1.5   "
             threeDotsIcon
