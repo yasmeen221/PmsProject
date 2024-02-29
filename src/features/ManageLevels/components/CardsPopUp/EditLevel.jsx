@@ -11,9 +11,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const schema = yup.object().shape({
   levelName: yup
     .string()
+    .required("Level name is required")
     .matches(/^[A-Za-z]+$/, "Level name must contain char only")
-    .trim()
-    .required("Level name is required"),
+    .trim(),
 });
 export default function EditLevel({ id, name }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
