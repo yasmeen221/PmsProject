@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 // import DropDown from "../../../../components/DropDown/DropDown";
 // import { useDispatch } from "react-redux";
-// import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+// import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
@@ -80,7 +80,7 @@ const SelectUser = () => {
   return (
     <>
       <form onSubmit={handleSubmit(formSubmit)}>
-        <div className="w-[800px] p-4 border rounded-md">
+        <div className="w-[800px] p-4 ">
           <div className="flex justify-between">
             <div className="w-[45%]">
               <div className="m-2">

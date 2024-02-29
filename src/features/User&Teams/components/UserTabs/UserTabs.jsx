@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import LevelTable from "../../features/ManageLevels/components/Tables/LevelTable";
-import UserTable from "../../features/ManageLevels/components/Tables/UserTable";
-import TeamsTable from "../../features/ManageTeams"
+import LevelTable from "../../../ManageLevels/components/Tables/LevelTable";
+import UserTable from "../../../ManageUsers/components/Table/UserTable";
+import TeamsTable from "../../../ManageTeams";
 
 export default function UserTabs() {
   const [tableRender, settableRender] = useState("user");
@@ -28,7 +28,9 @@ export default function UserTabs() {
           className={`group ${activeTab == 1 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           Users
-          {activeTab===1 && <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div> } 
+          {activeTab === 1 && (
+            <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div>
+          )}
         </button>
         <button
           onClick={() => {
@@ -37,7 +39,9 @@ export default function UserTabs() {
           className={`group ${activeTab == 2 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           Level
-          {activeTab===2 && <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div> } 
+          {activeTab === 2 && (
+            <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div>
+          )}
         </button>
         <button
           onClick={() => {
@@ -46,7 +50,9 @@ export default function UserTabs() {
           className={`group ${activeTab == 3 ? "text-buttonColor-baseColor rounded-buttonRadius  p-buttonPadding font-subTitle2Weight bg-drawerColor-100 " : "font-captionRegWeight  text-buttonFontSize font-custom rounded-buttonRadius  p-buttonPadding text-fontColor-TabColor"}   `}
         >
           Teams
-          {activeTab===3 && <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div> } 
+          {activeTab === 3 && (
+            <div className=" w-[50%] h-[2px] bg-buttonColor-baseColor m-auto pt-1 rounded-t-lg mt-1"></div>
+          )}
         </button>
       </div>
       <section>

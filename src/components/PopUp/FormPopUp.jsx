@@ -1,7 +1,7 @@
 import React from "react";
-import ButtonPopUpClose from "../../components/PopUp/ButtonPopUpClose";
+import ButtonPopUpClose from "./ButtonPopUpClose";
 import ImageStyle from "../ImageStyle/ImageStyle";
-const HandelPopUp = ({
+const FormPopUp = ({
   isOpen,
   children,
   // eslint-disable-next-line react/prop-types
@@ -46,4 +46,4 @@ const HandelPopUp = ({
   );
 };
 
-export default HandelPopUp;
+export default FormPopUp;
