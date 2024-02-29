@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import HandelPopUp from "../../../components/PopUp/HandelPopUp";
-import Button from "../../../components/Button/Button";
-import Icons from "../../../themes/icons";
-import Header from "../../../components/Header/Header";
-import TextInput from "../../../components/TextInput/TextInput";
+import FormPopUp from "../../../../components/PopUp/FormPopUp";
+import Button from "../../../../components/Button/Button";
+import Icons from "../../../../themes/icons";
+import Header from "../../../../components/Header/Header";
+import TextInput from "../../../../components/TextInput/TextInput";
 import { useDispatch, useSelector } from "react-redux";
-import { dropDownTeamHandle } from "../slices/addTeamTogglePopUp";
+import { dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
 import { useForm } from "react-hook-form";
-import { editButtonTeamHandle } from "../slices/editTemTogglePopUp";
+import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
 function ManageTeamsForm() {
   // do the slice  here to get data from store and
   //when edit  button is clicked it will show up in form with old data.and make it empty
@@ -64,7 +64,7 @@ function ManageTeamsForm() {
   };
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Add Team"
@@ -166,7 +166,7 @@ function ManageTeamsForm() {
             onClick={handleSubmit(onSubmit)}
           />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
     </>
   );
 }

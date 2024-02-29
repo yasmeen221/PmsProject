@@ -38,7 +38,9 @@ import {
   ComHelp,
   showPassword,
   hidePassword,
-  ArrowLeftPop
+  ArrowLeftPop,
+  EditUserPage,
+  DeleteUserPage,
 } from "../assets/icons/icons";
 
 const Icons = {
@@ -82,5 +84,7 @@ const Icons = {
   showPassword,
   hidePassword,
   ArrowLeftPop,
+  EditUserPage,
+  DeleteUserPage,
 };
 export default Icons;

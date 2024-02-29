@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextInput from "../../../../components/TextInput/TextInput";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
@@ -19,7 +19,7 @@ const GiveNormalFeedback = () => {
   };
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Give Normal  FeedBack"
@@ -123,7 +123,7 @@ const GiveNormalFeedback = () => {
             onClick={handleClosePopup}
           />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
       <Button
         buttonText="Formal feedback"
         className="text-fontColor-whiteBaseColor"

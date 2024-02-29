@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
@@ -19,7 +19,7 @@ function AddCompetency({ open }) {
   };
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Add New Competency"
@@ -144,7 +144,7 @@ function AddCompetency({ open }) {
             onClick={handleClosePopup}
           />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
       <Button
         buttonText="Add Competency"
         className="text-fontColor-whiteBaseColor"

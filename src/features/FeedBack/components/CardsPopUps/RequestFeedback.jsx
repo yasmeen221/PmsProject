@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
-import {changeDropDownValue} from "../../slices/openPopUpSlice"
+import { changeDropDownValue } from "../../slices/openPopUpSlice";
 
 const RequestFeedback = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const RequestFeedback = () => {
   }, [dropDownValue]);
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Request Feedback"
@@ -66,7 +66,7 @@ const RequestFeedback = () => {
             onClick={handleClosePopup}
           />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
     </>
   );
 };
