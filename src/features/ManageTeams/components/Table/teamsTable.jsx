@@ -66,8 +66,8 @@ const TeamsTable = () => {
                     iconLeft={<Icons.DeleteUserPage />}
                     className=" bg-transparent px-1"
                     onClick={() => {
-                      dispatch(dropDownTeamHandle(true)), //add it to close the popup
-                        dispatch(editButtonTeamHandle(item)); //to catch data from global items
+                      // dispatch(dropDownTeamHandle(true)), //add it to close the popup
+                      //   dispatch(editButtonTeamHandle(item)); //to catch data from global items
                     }}
                   />
                 </td>

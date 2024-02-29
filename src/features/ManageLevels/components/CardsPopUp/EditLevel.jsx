@@ -85,7 +85,6 @@ export default function EditLevel({ id, name }) {
       <Button
         iconLeft={<Icons.DeleteUserPage />}
         className="bg-transparent px-1"
-        onClick={handleOpenPopup}
       />
     </>
   );
