@@ -2,20 +2,20 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Button from "../../../../components/Button/Button";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import EditLevel from "../CardsPopUp/EditLevel";
 
 export default function LevelTable() {
   const [levelData, setLevelData] = useState([]);
 
   useEffect(() => {
-      getLevelData()
+    getLevelData();
   }, []);
- async function getLevelData(){
-    let {data}= await axios.get("https://dummyjson.com/users");
+  async function getLevelData() {
+    let { data } = await axios.get("https://dummyjson.com/users");
     console.log(data.users);
-    setLevelData(data.users)
- }
+    setLevelData(data.users);
+  }
 
   return (
     <>
@@ -37,13 +37,19 @@ export default function LevelTable() {
               </tr>
             </thead>
             <tbody>
-                {levelData[0]? levelData.map((item,i)=><tr key={i} className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 ">
-                <td className="px-6 py-4">{item.firstName}</td>
-                <td className="px-6 py-4">
-                  <EditLevel id={item.id} name={item.firstName}/>
-                </td>
-              </tr>):""}
-              
+              {levelData[0]
+                ? levelData.map((item, i) => (
+                    <tr
+                      key={i}
+                      className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 "
+                    >
+                      <td className="px-6 py-4">{item.firstName}</td>
+                      <td className="px-6 py-4">
+                        <EditLevel id={item.id} name={item.firstName} />
+                      </td>
+                    </tr>
+                  ))
+                : ""}
             </tbody>
           </table>
         </div>

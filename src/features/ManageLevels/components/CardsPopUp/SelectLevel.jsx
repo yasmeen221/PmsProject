@@ -1,40 +1,43 @@
-import React, { useEffect, useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from "react";
+// eslint-disable-next-line no-unused-vars
+import axios from "axios";
 import DropDown from "../../../../components/DropDown/DropDown";
 import { useDispatch } from "react-redux";
 import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
 import Button from "../../../../components/Button/Button";
 import { changeDropDownValue } from "../../../FeedBack/slices/openPopUpSlice";
-import {dropDownTeamHandle} from "../../../ManageTeams/slices/addTeamTogglePopUp"
+import { dropDownTeamHandle } from "../../../ManageTeams/slices/addTeamTogglePopUp";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import SelectUser from "./SelectUser.jsx";
 const schema = yup.object().shape({
   levelName: yup
-  .string()
-  .matches(/^[A-Za-z]+$/, "Level name must contain char only")
-  .trim()
-  .required("Level name is required"),
+    .string()
+    .matches(/^[A-Za-z]+$/, "Level name must contain char only")
+    .trim()
+    .required("Level name is required"),
 });
 
 const SelectLevel = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [dropDown1, setOpen1] = useState(false);
-  const [levelData,setLevelData] = useState({})
-
+  const [isAddUserPopupOpen, setAddUserPopupOpen] = useState(false);
   const dropdown1 = (value) => {
     setOpen1((dropDown1) => !dropDown1);
     dispatch(changeDropDownValue(value));
     if (value === "add level") {
       setPopupOpen(true);
-    }else if(value==="Add Teams"){
-      dispatch(dropDownTeamHandle(true))
+    } else if (value === "Add Teams") {
+      dispatch(dropDownTeamHandle(true));
+    } else if (value === "Add User") {
+      setAddUserPopupOpen(true); 
     }
   };
-  
-  
 
   const handleClosePopup = () => {
     setPopupOpen(false);
@@ -50,13 +53,10 @@ const SelectLevel = () => {
   });
 
   const formSubmit = (values) => {
-      setLevelData(values);
-      reset();
-      handleClosePopup();
+    console.log(values);
+    reset();
+    handleClosePopup();
   };
-  useEffect(() => {
-    console.log("Level Data:", levelData);
-  }, [levelData]);
 
   return (
     <>
@@ -64,15 +64,23 @@ const SelectLevel = () => {
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp={"ADD Level"}
-        
       >
         <form onSubmit={handleSubmit(formSubmit)}>
-          <div className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+          <div
+            className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
+            style={{ scrollbarWidth: "none" }}
+          >
             <div className="px-1">
               <div className="pt-4">
                 <Header text="Level Name" />
-                <TextInput type="text" register={register("levelName")} placeholder="Add Level Name" />
-                {errors.levelName && <p className="text-red-600">{errors.levelName.message}</p>}
+                <TextInput
+                  type="text"
+                  register={register("levelName")}
+                  placeholder="Add Level Name"
+                />
+                {errors.levelName && (
+                  <p className="text-red-600">{errors.levelName.message}</p>
+                )}
               </div>
             </div>
           </div>
@@ -85,6 +93,17 @@ const SelectLevel = () => {
           </div>
         </form>
       </HandelPopUp>
+
+      <HandelPopUp
+        isOpen={isAddUserPopupOpen}
+        ClosePop={() => setAddUserPopupOpen(false)}
+        TitlePopUp={"ADD User"}
+      >
+        <div>
+          <SelectUser />
+        </div>
+      </HandelPopUp>
+
       <DropDown
         DropDownText="Action"
         arrowIcon
@@ -94,8 +113,9 @@ const SelectLevel = () => {
           setOpen1((dopen) => !dopen);
         }}
       >
-        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
-      
+        <li
+          className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
+          onClick={() => dropdown1("Add User")}
         >
           Add User
         </li>
@@ -105,7 +125,10 @@ const SelectLevel = () => {
         >
           Add Level
         </li>
-        <li className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor" onClick={()=>dropdown1("Add Teams")}>
+        <li
+          className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
+          onClick={() => dropdown1("Add Teams")}
+        >
           Add Teams
         </li>
       </DropDown>
