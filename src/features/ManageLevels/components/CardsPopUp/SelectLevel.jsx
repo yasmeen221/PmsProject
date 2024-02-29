@@ -52,11 +52,24 @@ const SelectLevel = () => {
     resolver: yupResolver(schema),
   });
 
-  const formSubmit = (values) => {
-    console.log(values);
-    reset();
-    handleClosePopup();
+  const formSubmit = async (values) => {
+    try {
+      const response = await axios.post("https://reqres.in/api/users", values);
+  
+      console.log("Response:", response); 
+  
+      if (response.status === 200) {
+        setLevelData(values);
+        reset();
+        handleClosePopup();
+      } else {
+        throw new Error("Failed to add level");
+      }
+    } catch (error) {
+      console.error("Error adding level:", error);
+    }
   };
+  
 
   return (
     <>
