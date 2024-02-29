@@ -17,6 +17,7 @@ export default function Accordion({ children, value, onChange, ...rest }) {
       <AccordionContext.Provider value={{ selected, setSelected }}>
         {children}
       </AccordionContext.Provider>
+    
     </ul>
   );
 }
