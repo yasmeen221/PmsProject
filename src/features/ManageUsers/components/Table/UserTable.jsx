@@ -1,5 +1,4 @@
 import React from "react";
-import PenndingButton from "../../../../components/Button/PenndingButton";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 
@@ -43,7 +42,7 @@ export default function UserTable() {
             </tr>
           </thead>
           <tbody>
-            <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 ">
+            <tr className=" odd:bg-gray even:bg-gray-50 ">
               <td className="px-6 py-4 ">sama</td>
               <td className="px-6 py-4">ahmed</td>
               <td className="px-6 py-4">sama365</td>
@@ -51,23 +50,17 @@ export default function UserTable() {
               <td className="px-6 py-4">product owner</td>
               <td className="px-6 py-4">senior</td>
               <td className="px-6 py-4">manager</td>
-              <td className="px-6 py-4">
-              <div className="flex gap-1 w-[30%]">
-              <PenndingButton
-              icon={< Icons.ArrowLeftPop/>}
-              bgColor="#EBF5EF"
-              hoverColor=" #329B5C"
-             />
-             <PenndingButton
-             icon={< Icons.ArrowLeftPop/>}
-             bgColor="#FBE8E8"
-             hoverColor=" #DB1A1A"
-            />
-</div>
+              <td className="px-6 py-4 inline-flex">
+                <Button
+                  iconLeft={<Icons.EditUserPage />}
+                  className=" bg-transparent px-1"
+                />
+                <Button
+                  iconLeft={<Icons.DeleteUserPage />}
+                  className=" bg-transparent px-1"
+                />
               </td>
             </tr>
-            
-            
           </tbody>
         </table>
       </div>

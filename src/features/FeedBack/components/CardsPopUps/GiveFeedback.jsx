@@ -1,5 +1,5 @@
 import React from "react";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import { useState } from "react";
 import Header from "../../../../components/Header/Header";
 import Button from "../../../../components/Button/Button";
@@ -15,10 +15,9 @@ export default function GiveFeedback() {
     setPopupOpen(false);
   };
 
-
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp={"Give FeedBack for"}
@@ -100,7 +99,7 @@ export default function GiveFeedback() {
             onClick={handleClosePopup}
           />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
 
       <Button
         buttonText="Give feedback"
