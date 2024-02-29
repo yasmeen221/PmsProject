@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DropDown from "../../../../components/DropDown/DropDown";
 import { useDispatch } from "react-redux";
 import { changeDropDownValue } from "../../slices/openPopUpSlice";
-import HandelPopUp from "../../../../components/PopUp/HandelPopUp";
+import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 import PraiseFeedback from "./PraiseFeedback";
@@ -10,11 +10,11 @@ import PraiseFeedback from "./PraiseFeedback";
 const SelectFeedback = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [dropDown1, setOpen1] = useState(false);
+  const [dropDown1, setDropDown1] = useState(false);
   const [praisePop, setPraisePop] = useState(false);
 
   const dropdown1 = (value) => {
-    setOpen1((dropDown1) => !dropDown1);
+    setDropDown1((dropDown1) => !dropDown1);
     dispatch(changeDropDownValue(value));
     if (value == "send Feedback") {
       setPopupOpen(true);
@@ -30,7 +30,7 @@ const SelectFeedback = () => {
   };
   return (
     <>
-      <HandelPopUp
+      <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp="Select Feedback"
@@ -79,14 +79,15 @@ const SelectFeedback = () => {
             onClick={handleClosePopup}
           />
         </div>
-      </HandelPopUp>
+      </FormPopUp>
+      {/* that is the Button have DropDown To Open from the all popUps in FeedBack Page  */}
       <DropDown
         DropDownText="New Feedback"
         arrowIcon
         open={dropDown1}
         className="text-fontColor-whiteBaseColor"
         onClick={() => {
-          setOpen1((dopen) => !dopen);
+          setDropDown1((dopen) => !dopen);
         }}
       >
         <li
