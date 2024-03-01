@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Button from "../../../../components/Button/Button";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import EditLevel from "../CardsPopUp/EditLevel";
 import Icons from "../../../../themes/icons";
 import { useDispatch } from "react-redux";
 import { editLevel } from "../../slices/EditLevel";
