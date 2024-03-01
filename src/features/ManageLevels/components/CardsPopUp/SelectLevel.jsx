@@ -86,7 +86,7 @@ const SelectLevel = () => {
                 <Header text="Level Name" />
                 <TextInput
                   type="text"
-                  register={register("levelName")}
+                  register={{...register("levelName")}}
                   placeholder="Add Level Name"
                 />
                 {errors.levelName && (
