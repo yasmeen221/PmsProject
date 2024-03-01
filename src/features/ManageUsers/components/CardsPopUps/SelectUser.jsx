@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import DropDown from "../../../../components/DropDown/DropDown";
 // import { useDispatch } from "react-redux";
 // import FormPopUp from "../../../../components/PopUp/FormPopUp";
@@ -10,6 +10,10 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icons from "../../../../themes/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../slices/userSlice";
+import { editUser } from "../../slices/editUsersSlice";
+import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
 
 const userSchema = yup.object({
   firstName: yup
@@ -52,9 +56,13 @@ const userSchema = yup.object({
 });
 
 const SelectUser = () => {
-  const [, setPopupOpen] = useState(false);
-  // eslint-disable-next-line no-empty-pattern
-  const [] = useState(false);
+  const dispatch = useDispatch();
+  const userData=useSelector((store) => store.editUser.user);
+  const handleOpenPopUp=useSelector((store)=>store.openAddUserFormPopUp.open)
+  
+  // const [, setPopupOpen] = useState(false);
+  
+ 
   const {
     register,
     handleSubmit,
@@ -65,15 +73,35 @@ const SelectUser = () => {
     resolver: yupResolver(userSchema),
   });
 
+  useEffect(() => {
+    if (!handleOpenPopUp){
+      reset();
+    }
+    if(userData.username){
+      setValue("firstName", userData.firstName);
+      setValue("lastName", userData.lastName);
+      setValue("username", userData.username);
+      setValue("email", userData.email);
+      setValue("position", userData.position);
+      setValue("level", userData.level);
+      setValue("role", userData.role);
+      setValue("team", userData.team);
+    }
+  },[handleOpenPopUp]);
+
   const handleClosePopup = () => {
-    setPopupOpen(false);
+    // setPopupOpen(false);
+    dispatch(handleOpenAddUserFormPopUp(false));
+    dispatch(editUser({}));
   };
 
   const formSubmit = (values) => {
     console.log(values);
+    dispatch(addUser(values));
     reset();
     handleClosePopup();
   };
+
 
   return (
     <>
@@ -208,7 +236,7 @@ const SelectUser = () => {
             <Button
               type="submit"
               className="px-6 py-3.5 text-white bg-blue-500 rounded-md"
-              buttonText="Add User"
+              buttonText={userData.username?"Edit User": "Add User"}
             />
           </div>
         </div>
