@@ -13,7 +13,8 @@ import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import SelectUser from "../../../ManageUsers/components/CardsPopUps/SelectUser.jsx";
+import  { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
+
 const schema = yup.object().shape({
   levelName: yup
     .string()
@@ -26,7 +27,7 @@ const SelectLevel = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [dropDown1, setOpen1] = useState(false);
-  const [isAddUserPopupOpen, setAddUserPopupOpen] = useState(false);
+ 
   const dropdown1 = (value) => {
     setOpen1((dropDown1) => !dropDown1);
     dispatch(changeDropDownValue(value));
@@ -35,7 +36,7 @@ const SelectLevel = () => {
     } else if (value === "Add Teams") {
       dispatch(dropDownTeamHandle(true));
     } else if (value === "Add User") {
-      setAddUserPopupOpen(true);
+      dispatch(handleOpenAddUserFormPopUp(true));
     }
   };
 
@@ -52,24 +53,11 @@ const SelectLevel = () => {
     resolver: yupResolver(schema),
   });
 
-  const formSubmit = async (values) => {
-    try {
-      const response = await axios.post("https://reqres.in/api/users", values);
-  
-      console.log("Response:", response); 
-  
-      if (response.status === 200) {
-        setLevelData(values);
-        reset();
-        handleClosePopup();
-      } else {
-        throw new Error("Failed to add level");
-      }
-    } catch (error) {
-      console.error("Error adding level:", error);
-    }
+  const formSubmit = (values) => {
+    console.log(values);
+    reset();
+    handleClosePopup();
   };
-  
 
   return (
     <>
@@ -107,15 +95,6 @@ const SelectLevel = () => {
         </form>
       </FormPopUp>
 
-      <FormPopUp
-        isOpen={isAddUserPopupOpen}
-        ClosePop={() => setAddUserPopupOpen(false)}
-        TitlePopUp={"ADD User"}
-      >
-        <div>
-          <SelectUser />
-        </div>
-      </FormPopUp>
 
       <DropDown
         DropDownText="Action"
