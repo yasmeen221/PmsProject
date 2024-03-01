@@ -3,6 +3,8 @@ import ComponentTitle from "../../../components/componentTitle/ComponentTitle";
 import Inputs from "../../../components/Inputs/Inputs";
 import SubNav from "../../../components/subNav/SubNav";
 import Tabs from "../../FeedBack/components/Tabs/Tabs";
+import RequestFeedbackSomeOne from "../components/CardsPopUps/RequestFeedbackSomeOne";
+import GiveNormalFeedback from "../components/CardsPopUps/GiveNormalFeedback";
 
 export default function FeedBack() {
   return (
@@ -12,6 +14,8 @@ export default function FeedBack() {
       <ComponentTitle currentList="Feedback List" />
       <Inputs />
       <Tabs />
+      <RequestFeedbackSomeOne/>
+    
     </div>
   );
 }
