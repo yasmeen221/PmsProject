@@ -13,14 +13,19 @@ import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import openAddUserFormPopUp, { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
+
+import  { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
 
 const schema = yup.object().shape({
+
+import SelectUser from "../../../ManageUsers/components/CardsPopUps/SelectUser.jsx";
+const schema = yup.object({
+
   levelName: yup
     .string()
+    .required("Level name is required")
     .matches(/^[A-Za-z]+$/, "Level name must contain char only")
-    .trim()
-    .required("Level name is required"),
+    .trim(),
 });
 
 const SelectLevel = () => {
@@ -49,15 +54,26 @@ const SelectLevel = () => {
     handleSubmit,
     reset,
     formState: { errors },
+    
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const formSubmit = (values) => {
-    console.log(values);
-    reset();
-    handleClosePopup();
+  const formSubmit = async (values) => {
+        addLevel(values);
+        reset();
+        handleClosePopup();
+      
   };
+  async function addLevel(values){
+    try {
+      const response = await axios.post("https://reqres.in/api/users", values);
+  
+      console.log("Response:", response); 
+    }catch (error) {
+      console.error("Error adding level:", error);
+    }
+  }
 
   return (
     <>
@@ -80,7 +96,7 @@ const SelectLevel = () => {
                   placeholder="Add Level Name"
                 />
                 {errors.levelName && (
-                  <p className="text-red-600">{errors.levelName.message}</p>
+                  <p className="text-red-600" >{errors.levelName.message}</p>
                 )}
               </div>
             </div>
