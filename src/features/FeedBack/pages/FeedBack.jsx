@@ -12,11 +12,9 @@ export default function FeedBack() {
   return (
     <div>
       <SubNav currentComponent="Feedbacks" />
-      {/* Competencies FrameWork */}
       <ComponentTitle currentList="Feedback List" />
       <Inputs />
       <Tabs />
-      <RequestFeedbackSomeOne />
     </div>
   );
 }

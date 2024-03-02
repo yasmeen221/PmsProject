@@ -4,10 +4,15 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 import { changeDropDownValue } from "../../slices/openPopUpSlice";
+import RequestFeedbackSomeOne from "./RequestFeedbackSomeOne";
+import GiveFeedback from "./GiveFeedback";
 
 const RequestFeedback = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [someOnePopUp, setSomeOnePopUp] = useState(false);
+  const [myselfPopUp, setMyselfPopUp] = useState(false);
+
   const dropDownValue = useSelector((state) => state.openPopUpSlice.dropDown);
   const handleClosePopup = () => {
     setPopupOpen(false);
@@ -18,6 +23,14 @@ const RequestFeedback = () => {
       setPopupOpen(true);
     }
   }, [dropDownValue]);
+  const HandelSomeOnePopUp = () => {
+    setSomeOnePopUp(true);
+    setPopupOpen(false);
+  };
+  const HandelMyselfPopUp = () => {
+    setMyselfPopUp(true);
+    setPopupOpen(false);
+  };
   return (
     <>
       <FormPopUp
@@ -26,7 +39,9 @@ const RequestFeedback = () => {
         TitlePopUp="Request Feedback"
       >
         <div className="flex items-center gap-7 max-w-[45vw] justify-center  rounded-buttonRadius py-5 ">
-          <div className="  max-w-[50%] sm:flex-col rounded-buttonRadius text-center space-y-2  border-2 p-feedbackCard">
+          <div onClick={() => {
+            HandelMyselfPopUp()
+          }} className="  max-w-[50%] sm:flex-col rounded-buttonRadius text-center space-y-2  border-2 p-feedbackCard">
             <div className="hidden md:block opacity-0">
               <Icons.RightFeedbackIcon />
             </div>
@@ -42,7 +57,12 @@ const RequestFeedback = () => {
             </div>
           </div>
 
-          <div className="max-w-[50%] space-y-2 bg-drawerColor-bgFeedback rounded-buttonRadius  text-center border-2 border-buttonColor-baseColor  p-feedbackCard ">
+          <div
+            onClick={() => {
+              HandelSomeOnePopUp();
+            }}
+            className="max-w-[50%] space-y-2 bg-drawerColor-bgFeedback rounded-buttonRadius  text-center border-2 border-buttonColor-baseColor  p-feedbackCard "
+          >
             <div className="pl-6 hidden md:block">
               <Icons.RightFeedbackIcon />
             </div>
@@ -67,6 +87,8 @@ const RequestFeedback = () => {
           />
         </div>
       </FormPopUp>
+      {someOnePopUp && <RequestFeedbackSomeOne />}
+      {myselfPopUp && <GiveFeedback />}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import { useState } from "react";
 import Header from "../../../../components/Header/Header";
@@ -10,7 +10,9 @@ export default function GiveFeedback() {
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
-
+  useEffect(() => {
+    handleOpenPopup();
+  }, []);
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
@@ -24,7 +26,7 @@ export default function GiveFeedback() {
         iconLeft={<Icons.ArrowLeftPop />}
       >
         <div
-          className="w-[45.02196193265007vw] max-h-[109.51638065522621vh] pb-4 overflow-y-auto"
+          className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
           style={{ scrollbarWidth: "none" }}
         >
           <div className="px-1 ">
@@ -100,12 +102,6 @@ export default function GiveFeedback() {
           />
         </div>
       </FormPopUp>
-
-      <Button
-        buttonText="Give feedback"
-        className="text-fontColor-whiteBaseColor"
-        onClick={handleOpenPopup}
-      />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextInput from "../../../../components/TextInput/TextInput";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
@@ -13,6 +13,9 @@ const GiveNormalFeedback = () => {
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
+  useEffect(() => {
+    handleOpenPopup();
+  }, []);
 
   const handleClosePopup = () => {
     setPopupOpen(false);
@@ -124,11 +127,11 @@ const GiveNormalFeedback = () => {
           />
         </div>
       </FormPopUp>
-      <Button
+      {/* <Button
         buttonText="Formal feedback"
         className="text-fontColor-whiteBaseColor"
         onClick={handleOpenPopup}
-      />
+      /> */}
     </>
   );
 };

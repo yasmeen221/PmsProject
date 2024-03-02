@@ -7,8 +7,10 @@ import Icons from "../../../themes/icons";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo/logo.png";
 import coverPass from "../../../assets/images/coverrestpass.svg";
+import { useTitle } from "../../../components/Hooks/useTitle";
 
 const ResetPassword = () => {
+  useTitle("resetPassword");
   const navigate = useNavigate();
   const [securePass, setSecurePass] = useState(true);
   const [secureConfirmPass, setSecureConfirmPass] = useState(true);
