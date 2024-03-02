@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
@@ -8,10 +8,10 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp.jsx";
 import Button from "../../../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 
-import { handleOpenAddLevelPopUp } from '../../slices/OpenPopupLevel';
-import { editLevel } from '../../slices/EditLevel';
-import { addLevel } from '../../slices/LevelSlice';
-import { useCreateLevelMutation } from '../../slices/api/apiSlice';
+import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
+import { editLevel } from "../../slices/EditLevel";
+import { addLevel } from "../../slices/LevelSlice";
+import { useCreateLevelMutation } from "../../slices/api/apiLevelSlice.js";
 
 const schema = yup.object({
   levelName: yup
@@ -27,7 +27,7 @@ export default function ManageLevel() {
   const levelData = useSelector((store) => store.editLevel.level);
 
   const [isPopOpen, setPopOpen] = useState(false);
-  const [createLevel,{error}]=useCreateLevelMutation();
+  const [createLevel, { error }] = useCreateLevelMutation();
   const {
     register,
     handleSubmit,
@@ -55,7 +55,7 @@ export default function ManageLevel() {
     dispatch(editLevel({}));
   };
 
-  const formSubmit = async(values) => {
+  const formSubmit = async (values) => {
     try {
       const response = await createLevel(values.levelName).unwrap();
       console.log("Response:", response);
@@ -80,7 +80,10 @@ export default function ManageLevel() {
       TitlePopUp={"ADD Level"}
     >
       <form onSubmit={handleSubmit(formSubmit)}>
-        <div className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
+        <div
+          className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
+          style={{ scrollbarWidth: "none" }}
+        >
           <div className="px-1">
             <div className="pt-4">
               <Header text="Level Name" />
