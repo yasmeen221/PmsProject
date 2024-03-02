@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
@@ -8,6 +9,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+
 const schema = yup.object().shape({
   levelName: yup
     .string()
@@ -15,6 +17,7 @@ const schema = yup.object().shape({
     .matches(/^[A-Za-z]+$/, "Level name must contain char only")
     .trim(),
 });
+// eslint-disable-next-line react/prop-types, no-unused-vars
 export default function EditLevel({ id, name }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [updateLevel, setupdateLevel] = useState({});

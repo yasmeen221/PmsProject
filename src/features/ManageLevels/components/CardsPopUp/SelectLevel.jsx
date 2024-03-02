@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-// eslint-disable-next-line no-unused-vars
 import axios from "axios";
 import DropDown from "../../../../components/DropDown/DropDown";
 import { useDispatch } from "react-redux";
@@ -13,14 +12,10 @@ import Header from "../../../../components/Header/Header";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-
-import  { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
+import { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
+import SelectUser from "../../../ManageUsers/components/CardsPopUps/SelectUser.jsx";
 
 const schema = yup.object().shape({
-
-import SelectUser from "../../../ManageUsers/components/CardsPopUps/SelectUser.jsx";
-const schema = yup.object({
-
   levelName: yup
     .string()
     .required("Level name is required")
@@ -32,7 +27,7 @@ const SelectLevel = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [dropDown1, setOpen1] = useState(false);
- 
+
   const dropdown1 = (value) => {
     setOpen1((dropDown1) => !dropDown1);
     dispatch(changeDropDownValue(value));
@@ -54,23 +49,21 @@ const SelectLevel = () => {
     handleSubmit,
     reset,
     formState: { errors },
-    
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   const formSubmit = async (values) => {
-        addLevel(values);
-        reset();
-        handleClosePopup();
-      
+    await addLevel(values);
+    reset();
+    handleClosePopup();
   };
-  async function addLevel(values){
+
+  async function addLevel(values) {
     try {
       const response = await axios.post("https://reqres.in/api/users", values);
-  
-      console.log("Response:", response); 
-    }catch (error) {
+      console.log("Response:", response);
+    } catch (error) {
       console.error("Error adding level:", error);
     }
   }
