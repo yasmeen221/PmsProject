@@ -1,5 +1,8 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+// import DropDown from "../../../../components/DropDown/DropDown";
+// import { useDispatch } from "react-redux";
+// import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
@@ -7,6 +10,10 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icons from "../../../../themes/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../../slices/userSlice";
+import { editUser } from "../../slices/editUsersSlice";
+import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
 
 
 const userSchema = yup.object({
@@ -44,6 +51,13 @@ const userSchema = yup.object({
 const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
+  const dispatch = useDispatch();
+  const userData=useSelector((store) => store.editUser.user);
+  const handleOpenPopUp=useSelector((store)=>store.openAddUserFormPopUp.open)
+  
+  // const [, setPopupOpen] = useState(false);
+  
+ 
   const {
     register,
     handleSubmit,
@@ -54,16 +68,37 @@ const SelectUser = () => {
     resolver: yupResolver(userSchema),
   });
 
+  useEffect(() => {
+    if (!handleOpenPopUp){
+      reset();
+    }
+    if(userData.username){
+      setValue("firstName", userData.firstName);
+      setValue("lastName", userData.lastName);
+      setValue("username", userData.username);
+      setValue("email", userData.email);
+      setValue("position", userData.position);
+      setValue("level", userData.level);
+      setValue("role", userData.role);
+      setValue("team", userData.team);
+    }
+  },[handleOpenPopUp]);
+
   const handleClosePopup = () => {
       setPopupOpen(false);
+    // setPopupOpen(false);
+    dispatch(handleOpenAddUserFormPopUp(false));
+    dispatch(editUser({}));
   };
 
   const formSubmit = (values) => {
     console.log(values);
+    dispatch(addUser(values));
     reset();
     handleClosePopup();
   };
   
+
 
   return (
     <>
@@ -226,5 +261,3 @@ const SelectUser = () => {
 };
 
 export default SelectUser;
-
-

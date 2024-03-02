@@ -6,7 +6,9 @@ import ThreeDotsDropDown from "../../components/componentTitle/ThreeDotsDropDown
 import Icons from "../../themes/icons";
 import AddCompetency from "../../features/Competencies/components/CardsPopUps/AddCompetency";
 import SelectLevel from "../../features/ManageLevels/components/CardsPopUp/SelectLevel";
+import ManageLevel from "../../features/ManageLevels/components/CardsPopUp/ManageLevel";
 import ManageTeamsForm from "../../features/ManageTeams/components/CardsPopUps/MangTeamsForm";
+import AddUserFormStructure from "../../features/ManageUsers/components/CardsPopUps/AddUserFormStructure";
 export default function ComponentTitle({ currentList }) {
   const [dropDown2, setOpen2] = useState(false);
   const [threeDotsDropDown, setThreeDotsDropDown] = useState(false);
@@ -116,6 +118,8 @@ export default function ComponentTitle({ currentList }) {
           {/* this is popUp in routing of Teams & Users Page */}
           <SelectLevel />
           <ManageTeamsForm />
+          <AddUserFormStructure/>
+          <ManageLevel/>
           {/* end of popups */}
 
           <DropDown
