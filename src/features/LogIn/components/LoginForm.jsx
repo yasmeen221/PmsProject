@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import cover from "../../../assets/images/cover2.svg";
 import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
+import { useTitle } from "../../../components/Hooks/useTitle";
 
 const schema = yup.object({
   email: yup
@@ -27,6 +28,7 @@ const schema = yup.object({
 });
 
 const LoginForm = () => {
+  useTitle("LogIn");
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
 

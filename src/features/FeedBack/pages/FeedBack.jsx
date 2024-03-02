@@ -5,8 +5,10 @@ import SubNav from "../../../components/subNav/SubNav";
 import Tabs from "../../FeedBack/components/Tabs/Tabs";
 import RequestFeedbackSomeOne from "../components/CardsPopUps/RequestFeedbackSomeOne";
 import GiveNormalFeedback from "../components/CardsPopUps/GiveNormalFeedback";
+import { useTitle } from "../../../components/Hooks/useTitle";
 
 export default function FeedBack() {
+  useTitle("Feedback");
   return (
     <div>
       <SubNav currentComponent="Feedbacks" />
@@ -14,8 +16,7 @@ export default function FeedBack() {
       <ComponentTitle currentList="Feedback List" />
       <Inputs />
       <Tabs />
-      <RequestFeedbackSomeOne/>
-    
+      <RequestFeedbackSomeOne />
     </div>
   );
 }
