@@ -21,7 +21,7 @@ const schema = yup.object().shape({
     .matches(/^[A-Za-z]+$/, "Level name must contain char only")
     .trim(),
 });
-import  { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
+// import  { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 
 const SelectLevel = () => {
