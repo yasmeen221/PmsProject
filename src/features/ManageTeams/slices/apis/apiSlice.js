@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const URL = import.meta.env.VITE_API_URL;
 export const apiSlice = createApi({
-  reducerPath: "api",
+  reducerPath: "apiTeams",
   baseQuery: fetchBaseQuery({
     baseUrl: URL,
   }),
@@ -10,6 +10,11 @@ export const apiSlice = createApi({
     getTeams: builder.query({
       query: () => "/teams", //end point for get //true
       providesTags: ["Teams"],
+    }),
+    getTeamsName:builder.query({
+      query:()=>"/teams/teams-names",  //to use in drop down
+      providesTags:["Teams"],
+      
     }),
     addTeam: builder.mutation({
       query: (team) => ({
@@ -41,4 +46,6 @@ export const {
   useAddTeamMutation,
   useEditTeamMutation,
   useDeleteTeamMutation,
+  useGetTeamsNameQuery
+  
 } = apiSlice;
