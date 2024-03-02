@@ -8,9 +8,11 @@ export const apiSlice = createApi({
   tagTypes: ["Teams"],
   endpoints: (builder) => ({
     getTeams: builder.query({
-      query: () => "/teams", //end point for get //true
+      query: () => "/teams",
+      //end point for get //true
       providesTags: ["Teams"],
     }),
+
     addTeam: builder.mutation({
       query: (team) => ({
         url: "/teams/edit", //end point for add //true
@@ -42,3 +44,21 @@ export const {
   useEditTeamMutation,
   useDeleteTeamMutation,
 } = apiSlice;
+
+apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    addTeam: builder.query({
+      query: () => "api",
+      async onQueryStarted(_, { dispatch }, { extra }) {
+        // Do something before the query starts
+
+        // Access global data and use it
+        const globalData = extra.getState().global.globalData;
+        console.log("Global Data in Slice A:", globalData);
+
+        // Modify global data
+        dispatch(setGlobalData("New Global Data from Slice A"));
+      },
+    }),
+  }),
+});
