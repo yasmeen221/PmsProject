@@ -1,10 +1,12 @@
 import React from "react";
 import SubNav from "../../../components/subNav/SubNav";
-import AccordingContent from "../../../features/Competencies/components/Accordion/AccordingContent"
-import ComponentTitle from "../../../components/componentTitle/ComponentTitle"
-import Inputs from "../../../components/Inputs/Inputs"
+import AccordingContent from "../../../features/Competencies/components/Accordion/AccordingContent";
+import ComponentTitle from "../../../components/componentTitle/ComponentTitle";
+import Inputs from "../../../components/Inputs/Inputs";
+import { useTitle } from "../../../components/Hooks/useTitle";
 
 const Competencies = () => {
+  useTitle("Competencies");
   return (
     <>
       <SubNav currentComponent="Competencies" />

@@ -31,7 +31,7 @@ const SelectLevel = () => {
         DropDownText="Action"
         arrowIcon
         open={dropDown1}
-        className="text-fontColor-whiteBaseColor"
+        className="text-fontColor-whiteBaseColor "
         onClick={() => {
           setOpen1((dopen) => !dopen);
         }}

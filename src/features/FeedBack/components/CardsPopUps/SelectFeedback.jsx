@@ -6,12 +6,14 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 import PraiseFeedback from "./PraiseFeedback";
+import GiveNormalFeedback from "./GiveNormalFeedback";
 
 const SelectFeedback = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [dropDown1, setDropDown1] = useState(false);
   const [praisePop, setPraisePop] = useState(false);
+  const [normalPop, setNormalPop] = useState(false);
 
   const dropdown1 = (value) => {
     setDropDown1((dropDown1) => !dropDown1);
@@ -26,6 +28,10 @@ const SelectFeedback = () => {
   };
   const handlePraise = () => {
     setPraisePop(true);
+    setPopupOpen(false);
+  };
+  const handleNormal = () => {
+    setNormalPop(true);
     setPopupOpen(false);
   };
   return (
@@ -56,7 +62,12 @@ const SelectFeedback = () => {
             </div>
           </div>
 
-          <div className="max-w-[50%] space-y-2 bg-drawerColor-bgFeedback rounded-buttonRadius  text-center border-2 border-buttonColor-baseColor  p-feedbackCard ">
+          <div
+            onClick={() => {
+              handleNormal();
+            }}
+            className="max-w-[50%] space-y-2 bg-drawerColor-bgFeedback rounded-buttonRadius  text-center border-2 border-buttonColor-baseColor  p-feedbackCard "
+          >
             <div className="pl-6 hidden md:block">
               <Icons.RightFeedbackIcon />
             </div>
@@ -104,6 +115,7 @@ const SelectFeedback = () => {
         </li>
       </DropDown>
       {praisePop && <PraiseFeedback />}
+      {normalPop && <GiveNormalFeedback />}
     </>
   );
 };

@@ -57,7 +57,7 @@ export default function ManageLevel() {
 
   const formSubmit = async(values) => {
     try {
-      const response = await createLevel(values).unwrap();
+      const response = await createLevel(values.levelName).unwrap();
       console.log("Response:", response);
       reset();
       handleClosePopup();

@@ -5,7 +5,7 @@ import { createSlice } from '@reduxjs/toolkit';
     name: 'levels',
     initialState: {
       levels: [{
-        "levelName": "senior"
+        
       }],
     },
 reducers: {
