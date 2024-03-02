@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icons from "../../../../themes/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../../slices/userSlice";
+import { addUser, editUsersData } from "../../slices/userSlice";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
 
@@ -57,12 +57,12 @@ const userSchema = yup.object({
 
 const SelectUser = () => {
   const dispatch = useDispatch();
-  const userData=useSelector((store) => store.editUser.user);
-  const handleOpenPopUp=useSelector((store)=>store.openAddUserFormPopUp.open)
-  
+  const userData = useSelector((store) => store.editUser.user);
+  const handleOpenPopUp = useSelector((store) => store.openAddUserFormPopUp.open)
+
   // const [, setPopupOpen] = useState(false);
-  
- 
+
+
   const {
     register,
     handleSubmit,
@@ -74,10 +74,10 @@ const SelectUser = () => {
   });
 
   useEffect(() => {
-    if (!handleOpenPopUp){
+    if (!handleOpenPopUp) {
       reset();
     }
-    if(userData.username){
+    if (userData.username) {
       setValue("firstName", userData.firstName);
       setValue("lastName", userData.lastName);
       setValue("username", userData.username);
@@ -87,7 +87,7 @@ const SelectUser = () => {
       setValue("role", userData.role);
       setValue("team", userData.team);
     }
-  },[handleOpenPopUp]);
+  }, [handleOpenPopUp]);
 
   const handleClosePopup = () => {
     // setPopupOpen(false);
@@ -97,7 +97,13 @@ const SelectUser = () => {
 
   const formSubmit = (values) => {
     console.log(values);
-    dispatch(addUser(values));
+    if (userData.username) {
+      dispatch(editUsersData(values))
+    } else {
+      dispatch(addUser(values));
+
+    }
+
     reset();
     handleClosePopup();
   };
@@ -236,7 +242,7 @@ const SelectUser = () => {
             <Button
               type="submit"
               className="px-6 py-3.5 text-white bg-blue-500 rounded-md"
-              buttonText={userData.username?"Edit User": "Add User"}
+              buttonText={userData.username ? "Edit User" : "Add User"}
             />
           </div>
         </div>

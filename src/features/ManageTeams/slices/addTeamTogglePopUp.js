@@ -1,30 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   openPopUpTeam: false,
-  isLoading: false,
-  error: null
+  teams: []
 };
-export const addTeam = createAsyncThunk(
-  "openTeamPopUpSlice/addTeam",
-  async (teamData, thunkAPI) => {
-    const { rejectWithValue } = thunkAPI
-    try {
-      //axios code here
 
-      // const response = await fetch(`link/${id}`, { //كده بتبعتيلو الاي دي بتاع العنصر اللي هيمسحه
-      //     method: 'DELETE',
-      //     headers: {
-      //         'Content-Type': 'application/json; charset=UTF-8',
-      //     },
-      // })
-      // return id;
-      
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-
-  })
 const openTeamPopUpSlice = createSlice({
   name: "openTeamPopUpSlice",
   initialState: initialState,
@@ -32,28 +12,11 @@ const openTeamPopUpSlice = createSlice({
     dropDownTeamHandle: (state, action) => {
       state.openPopUpTeam = action.payload;
     },
+    setTeamsData: (state, action) => {
+      state.teams = action.payload //in case of the success of get in rtk query dispatch this action to set teams data to access it in all places
+    }
   },
-  extraReducers: (builder) => {
-    // Add reducers for additional action types here, and handle loading state as needed
-    builder.addCase(addTeam.pending, (state, action) => {
-      console.log("pending")
-      state.isLoading = true
-      state.error = null
-    }),
-      builder.addCase(addTeam.fulfilled, (state, action) => {
-        console.log("fulfilled")
-        state.isLoading = false
-        state.error = null
-
-      }),
-      builder.addCase(addTeam.rejected, (state, action) => {
-        console.log("rejected")
-        state.isLoading = false
-        state.error = action.payload
-
-      })
-  }
 });
-export const { dropDownTeamHandle } = openTeamPopUpSlice.actions;
+export const { dropDownTeamHandle,setTeamsData } = openTeamPopUpSlice.actions;
 
 export default openTeamPopUpSlice.reducer;

@@ -5,10 +5,12 @@ import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
 import { useDispatch, useSelector } from "react-redux";
-import { addTeam, dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
+import {  dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
 import { useForm } from "react-hook-form";
 import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
+import { useAddTeamMutation } from "../../slices/apis/apiSlice";
 function ManageTeamsForm() {
+  const [addTeam,{isLoading,isError,error,isSuccess}]=useAddTeamMutation() //to send team to the back end
   // do the slice  here to get data from store and
   //when edit  button is clicked it will show up in form with old data.and make it empty
   const itemToEdit = useSelector((state) => state.editTeamPopUpSlice.item);
@@ -61,10 +63,11 @@ function ManageTeamsForm() {
     handleClosePopup();
     reset();
     //send data to backend
-    // dispatch(addTeam(data))
-    //   .unwrap()
-    //   .then((data) => { console.log(data) })
-    //   .catch((err) => { console.log(err) })
+    // addTeam(data)
+   
+    addTeam(data)
+    console.log(isError)
+    console.log(error)
   };
   return (
     <>
