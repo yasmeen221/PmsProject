@@ -1,26 +1,11 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import axios from "axios";
 // eslint-disable-next-line no-unused-vars
 import DropDown from "../../../../components/DropDown/DropDown";
 import { useDispatch } from "react-redux";
 import { changeDropDownValue } from "../../../FeedBack/slices/openPopUpSlice";
 import { dropDownTeamHandle } from "../../../ManageTeams/slices/addTeamTogglePopUp";
-import TextInput from "../../../../components/TextInput/TextInput";
-import Header from "../../../../components/Header/Header";
-import * as yup from "yup";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
-import SelectUser from "../../../ManageUsers/components/CardsPopUps/SelectUser.jsx";
-
-const schema = yup.object().shape({
-  levelName: yup
-    .string()
-    .required("Level name is required")
-    .matches(/^[A-Za-z]+$/, "Level name must contain char only")
-    .trim(),
-});
 // import  { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 
@@ -39,40 +24,9 @@ const SelectLevel = () => {
       dispatch(handleOpenAddUserFormPopUp(true));
     }
   };
-
-  const handleClosePopup = () => {
-    setPopupOpen(false);
-  };
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const formSubmit = async (values) => {
-    await addLevel(values);
-    reset();
-    handleClosePopup();
-  };
-
-  async function addLevel(values) {
-    try {
-      const response = await axios.post("https://reqres.in/api/users", values);
-      console.log("Response:", response);
-    } catch (error) {
-      console.error("Error adding level:", error);
-    }
-  }
-  
-
+ 
   return (
     <>
-      
-
       <DropDown
         DropDownText="Action"
         arrowIcon
