@@ -15,12 +15,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { handleOpenAddUserFormPopUp } from "../../../ManageUsers/slices/openAddUserFormPopUp.jsx";
 
-const schema = yup.object({
+const schema = yup.object().shape({
   levelName: yup
     .string()
-    .required("Level name is required")
     .matches(/^[A-Za-z]+$/, "Level name must contain char only")
-    .trim(),
+    .trim()
+    .required("Level name is required"),
 });
 
 const SelectLevel = () => {
@@ -53,20 +53,11 @@ const SelectLevel = () => {
     resolver: yupResolver(schema),
   });
 
-  const formSubmit = async (values) => {
-    addLevel(values);
+  const formSubmit = (values) => {
+    console.log(values);
     reset();
     handleClosePopup();
   };
-  async function addLevel(values) {
-    try {
-      const response = await axios.post("https://reqres.in/api/users", values);
-
-      console.log("Response:", response);
-    } catch (error) {
-      console.error("Error adding level:", error);
-    }
-  }
 
   return (
     <>

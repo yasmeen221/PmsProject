@@ -60,7 +60,7 @@ const SelectUser = () => {
   const userData=useSelector((store) => store.editUser.user);
   const handleOpenPopUp=useSelector((store)=>store.openAddUserFormPopUp.open)
   
-  // const [, setPopupOpen] = useState(false);
+
   
  
   const {
@@ -90,7 +90,6 @@ const SelectUser = () => {
   },[handleOpenPopUp]);
 
   const handleClosePopup = () => {
-    // setPopupOpen(false);
     dispatch(handleOpenAddUserFormPopUp(false));
     dispatch(editUser({}));
   };
