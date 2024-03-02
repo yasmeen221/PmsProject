@@ -9,6 +9,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+
 const schema = yup.object().shape({
   levelName: yup
     .string()
@@ -16,6 +17,7 @@ const schema = yup.object().shape({
     .trim()
     .required("Level name is required"),
 });
+// eslint-disable-next-line react/prop-types, no-unused-vars
 export default function EditLevel({ id, name }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [updateLevel, setupdateLevel] = useState({});
