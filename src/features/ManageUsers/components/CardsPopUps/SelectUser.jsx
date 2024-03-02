@@ -90,7 +90,6 @@ const SelectUser = () => {
   }, [handleOpenPopUp]);
 
   const handleClosePopup = () => {
-    // setPopupOpen(false);
     dispatch(handleOpenAddUserFormPopUp(false));
     dispatch(editUser({}));
   };

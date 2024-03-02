@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Button from "../../../../components/Button/Button";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import EditLevel from "../CardsPopUp/EditLevel";
+import Icons from "../../../../themes/icons";
+import { useDispatch } from "react-redux";
+import { editLevel } from "../../slices/EditLevel";
+import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 
 export default function LevelTable() {
   const [levelData, setLevelData] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     getLevelData();
   }, []);
@@ -42,7 +44,18 @@ export default function LevelTable() {
                     <tr key={i} className="odd:bg-gray even:bg-gray-50  ">
                       <td className="px-6 py-4">{item.firstName}</td>
                       <td className="px-6 py-4">
-                        <EditLevel id={item.id} name={item.firstName} />
+                        <Button
+                          iconLeft={<Icons.EditUserPage />}
+                          className=" bg-transparent px-1"
+                          onClick={() => {
+                            dispatch(handleOpenAddLevelPopUp(true)),
+                              dispatch(editLevel(item));
+                          }}
+                        />
+                        <Button
+                          iconLeft={<Icons.DeleteUserPage />}
+                          className="bg-transparent px-1"
+                        />
                       </td>
                     </tr>
                   ))
