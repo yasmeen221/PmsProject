@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../slices/userSlice";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
+import { useAddUserMutation, useGetUsersQuery } from "../../slices/api/apiSlice";
 
 
 const userSchema = yup.object({
@@ -50,12 +51,12 @@ const userSchema = yup.object({
 
 const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
-
+  const[addUser]=useAddUserMutation()
   const dispatch = useDispatch();
   const userData=useSelector((store) => store.editUser.user);
   const handleOpenPopUp=useSelector((store)=>store.openAddUserFormPopUp.open)
   
-  // const [, setPopupOpen] = useState(false);
+
   
  
   const {
@@ -86,14 +87,15 @@ const SelectUser = () => {
 
   const handleClosePopup = () => {
       setPopupOpen(false);
-    // setPopupOpen(false);
+   
     dispatch(handleOpenAddUserFormPopUp(false));
     dispatch(editUser({}));
   };
 
   const formSubmit = (values) => {
     console.log(values);
-    dispatch(addUser(values));
+    // dispatch(addUser(values));
+    addUser(values);
     reset();
     handleClosePopup();
   };

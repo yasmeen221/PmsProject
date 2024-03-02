@@ -5,10 +5,11 @@ import { deleteUser, editUsersData} from '../../slices/userSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
+import { useGetUsersQuery } from "../../slices/api/apiSlice";
 
 export default function UserTable() {
   const dispatch = useDispatch();
-  const users = useSelector((store) => store.users.users);
+  // const users = useSelector((store) => store.users.users);
   const handleDeleteUser = (userUserName) => {
     dispatch(deleteUser(userUserName));
   };
@@ -17,6 +18,9 @@ export default function UserTable() {
     // dispatch(editUsersData(user));
     dispatch(handleOpenAddUserFormPopUp(true));
   }
+
+  const{data:users,isError,isSuccess,error}=useGetUsersQuery()
+
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
@@ -57,7 +61,7 @@ export default function UserTable() {
           </thead>
           <tbody>
             
-            {users.map((user, index) => (
+            {users?.map((user, index) => (
           <tr key={index} className={index % 2 === 0 ? 'even:bg-gray-50' : 'odd:bg-gray'}>
           <td className="px-6 py-4">{user?.firstName}</td>
           <td className="px-6 py-4">{user?.lastName}</td>
