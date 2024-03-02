@@ -41,6 +41,7 @@ import {
   ArrowLeftPop,
   EditUserPage,
   DeleteUserPage,
+  Loading
 } from "../assets/icons/icons";
 
 const Icons = {
@@ -86,5 +87,6 @@ const Icons = {
   ArrowLeftPop,
   EditUserPage,
   DeleteUserPage,
+  Loading
 };
 export default Icons;
