@@ -8,6 +8,7 @@ import editUsersSlice from "../features/ManageUsers/slices/editUsersSlice.jsx";
 import openAddUserFormPopUp from "../features/ManageUsers/slices/openAddUserFormPopUp.jsx";
 import openPopupAddLevel from "../features/ManageLevels/slices/OpenPopupLevel";
 import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
+<<<<<<< HEAD
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice.jsx"
 
 export const store = configureStore({
@@ -24,3 +25,19 @@ export const store = configureStore({
     openPopupAddLevel // Manage Levels slice
   },
 });
+=======
+import {apiSlice }from "../features/ManageTeams/slices/apis/apiSlice.js"
+export const store = configureStore({
+  reducer: {
+    openPopUpSlice,
+    openTeamPopUpSlice,
+    editTeamPopUpSlice,
+    users: usersReducer,
+    editUser: editUsersSlice,
+    openAddUserFormPopUp,
+    editLevelSlice,openPopupAddLevel,
+    [apiSlice.reducerPath]:apiSlice.reducer
+  },
+  middleware:(getDefaultMiddleware)=>getDefaultMiddleware().concat(apiSlice.middleware)
+})
+>>>>>>> c812a6bda2e94607b13ac6229bb4f99c6979a64d
