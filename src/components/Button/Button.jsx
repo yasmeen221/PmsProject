@@ -4,6 +4,7 @@ const Button = ({
   className,
   iconLeft,
   iconRight,
+  isLoading,
   ...rest
 }) => {
   // eslint-disable-next-line react/prop-types
@@ -17,7 +18,7 @@ const Button = ({
         {...rest}
       >
         {iconLeft && <div className="px-2"> {iconLeft}</div>}
-        {buttonText}
+        {isLoading?<div className="spinner-border" role="status"></div>:buttonText}
         {iconRight && <div className="px-2"> {iconRight}</div>}
       </button>
     </>

@@ -16,8 +16,6 @@ function AddUserFormStructure() {
     dispatch(editUser({}))
  }
   useEffect(()=>{
-     console.log(OpenAddUserFormPopUp)
-     console.log("hiiiiiiiiii")
      setAddUserPopupOpen(OpenAddUserFormPopUp)
   },[OpenAddUserFormPopUp])
   return (

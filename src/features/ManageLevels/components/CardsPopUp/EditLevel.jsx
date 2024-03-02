@@ -13,9 +13,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const schema = yup.object().shape({
   levelName: yup
     .string()
-    .required("Level name is required")
     .matches(/^[A-Za-z]+$/, "Level name must contain char only")
-    .trim(),
+    .trim()
+    .required("Level name is required"),
 });
 // eslint-disable-next-line react/prop-types, no-unused-vars
 export default function EditLevel({ id, name }) {
@@ -88,6 +88,7 @@ export default function EditLevel({ id, name }) {
       <Button
         iconLeft={<Icons.DeleteUserPage />}
         className="bg-transparent px-1"
+        onClick={handleOpenPopup}
       />
     </>
   );
