@@ -9,10 +9,10 @@ export const apiLevelSlice= createApi({
             providesTags:["Levels"],
         }),
         createLevel:builder.mutation({
-            query:(level)=>({
+            query:(levelName)=>({
                 url:"/api/v1/levels",
                 method:"POST",
-                body:{level}
+                body:{levelName}
             }),
             invalidatesTags:["Levels"],
         }),
