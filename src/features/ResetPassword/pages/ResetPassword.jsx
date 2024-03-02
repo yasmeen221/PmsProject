@@ -31,7 +31,7 @@ const ResetPassword = () => {
     navigate("/");
   };
   return (
-    <section className="  text-fontColor-blackBaseColor flex items-center  justify-center mt-16">
+    <section className="bg-gray-50 h-screen  text-fontColor-blackBaseColor flex items-center  justify-center ">
       <div
         className=" flex w-[60%] lg:h-auto  md:h-[70vh] shadow-lg h-auto m-auto  bg-drawerColor-100 rounded flex-col md:flex-row "
         style={{ paddingBottom: "24px" }}

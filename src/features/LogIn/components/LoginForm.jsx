@@ -47,7 +47,7 @@ const LoginForm = () => {
     navigate("/dashboard/competencies");
   };
   return (
-    <section className="  text-fontColor-blackBaseColor flex items-center  justify-center mt-16">
+    <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
       <div
         className=" flex w-[60%]  shadow-lg h-auto m-auto  bg-drawerColor-100 rounded flex-col md:flex-row "
         style={{ paddingBottom: "50px" }}
