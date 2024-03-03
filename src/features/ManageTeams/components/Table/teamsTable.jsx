@@ -10,6 +10,7 @@ import {
   useDeleteTeamMutation,
   useGetTeamsQuery,
 } from "../../slices/apis/apiSlice";
+import { useGetUsersQuery } from "../../../ManageUsers/slices/api/apiSlice";
 
 const TeamsTable = () => {
   // const [selectedTeam, setSelectedTeam] = useState(null);

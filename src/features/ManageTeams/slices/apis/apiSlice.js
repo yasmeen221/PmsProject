@@ -11,11 +11,11 @@ export const apiSlice = createApi({
     getTeams: builder.query({
       query: () => "/teams",
 
-      onSuccess: (data, { dispatch, getState }) => {
-        const globalData = getState().global.globalData;
-        dispatch(setTeamsData(globalData));
-        console.log("hhhh", globalData);
-      },
+      // onSuccess: (data, { dispatch, getState }) => {
+      //   const globalData = getState().global.globalData;
+      //   dispatch(setTeamsData(globalData));
+      //   console.log("hhhh", globalData);
+      // },
       //end point for get //true
       providesTags: ["Teams"],
     }),
