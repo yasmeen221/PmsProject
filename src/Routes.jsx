@@ -13,7 +13,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/resetpassword",
-    element: <ResetPassword />
+    element: <ResetPassword />,
   },
   {
     path: "/dashboard",
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "users&teams",
-        element: <Users/>,
+        element: <Users />,
       },
     ],
   },
