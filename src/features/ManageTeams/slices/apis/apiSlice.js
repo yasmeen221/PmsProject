@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setTeamsData } from "../addTeamTogglePopUp";
 const URL = import.meta.env.VITE_API_URL;
 export const apiSlice = createApi({
-  reducerPath: "api",
+  reducerPath: "apiTeams",
   baseQuery: fetchBaseQuery({
     baseUrl: URL,
   }),
@@ -9,7 +10,18 @@ export const apiSlice = createApi({
   endpoints: (builder) => ({
     getTeams: builder.query({
       query: () => "/teams",
+
+      onSuccess: (data, { dispatch, getState }) => {
+        const globalData = getState().global.globalData;
+        dispatch(setTeamsData(globalData));
+        console.log("hhhh", globalData);
+      },
       //end point for get //true
+      providesTags: ["Teams"],
+    }),
+
+    getTeamsName: builder.query({
+      query: () => "/teams/teams-names", //to use in drop down
       providesTags: ["Teams"],
     }),
 
@@ -43,22 +55,5 @@ export const {
   useAddTeamMutation,
   useEditTeamMutation,
   useDeleteTeamMutation,
+  useGetTeamsNameQuery,
 } = apiSlice;
-
-apiSlice.injectEndpoints({
-  endpoints: (builder) => ({
-    addTeam: builder.query({
-      query: () => "api",
-      async onQueryStarted(_, { dispatch }, { extra }) {
-        // Do something before the query starts
-
-        // Access global data and use it
-        const globalData = extra.getState().global.globalData;
-        console.log("Global Data in Slice A:", globalData);
-
-        // Modify global data
-        dispatch(setGlobalData("New Global Data from Slice A"));
-      },
-    }),
-  }),
-});

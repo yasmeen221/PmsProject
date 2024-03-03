@@ -14,8 +14,10 @@ export default function LevelTable() {
   const [levelData, setLevelData] = useState([{}]);
 
   const levels = useSelector((state) => state.levels.levels);
+  const teamss = useSelector((state) => state.openTeamPopUpSlice.teams);
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
+
   // Define functions to handle edit and delete actions
   const handleDeleteLevel = (levelName) => {
     dispatch(deleteLevel(levelName));
