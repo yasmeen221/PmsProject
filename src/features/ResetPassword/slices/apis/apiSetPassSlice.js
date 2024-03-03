@@ -7,11 +7,12 @@ export const apiRestPassSlice = createApi({
   }),
 
   endpoints: (builder) => ({
-    resetPassword: builder.mutation({
+    setPassword: builder.mutation({
       query: (pass) => ({
-        url: "/", //end point for add //true
+        url: `/auth/set-password/${pass.passwordSetToken}`, //end point for add //true
         method: "POST",
-        body: { pass }, //body of request
+        body: { password: pass.password,
+          confirmPassword: pass.confirmPassword }, //body of request
       }),
       
     }),
@@ -19,4 +20,4 @@ export const apiRestPassSlice = createApi({
    
   }),
 });
-export const {useResetPasswordMutation} = apiRestPassSlice;
+export const {useSetPasswordMutation} = apiRestPassSlice;

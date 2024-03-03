@@ -12,7 +12,7 @@ import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
 import { apiLoginSlice } from "../features/LogIn/slices/apis/apiLoginSlice.js";
-import { apiRestPassSlice } from "../features/ResetPassword/slices/apis/apiRestPassSlice.js";
+import { apiRestPassSlice } from "../features/ResetPassword/slices/apis/apiSetPassSlice.js";
 import { usersApiSlice } from "../features/ManageUsers/slices/api/apiSlice.js";
 export const store = configureStore({
   reducer: {
