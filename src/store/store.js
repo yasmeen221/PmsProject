@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import openPopUpSlice from "../features/FeedBack/slices/openPopUpSlice";
 import openTeamPopUpSlice from "../features/ManageTeams/slices/addTeamTogglePopUp";
 import editTeamPopUpSlice from "../features/ManageTeams/slices/editTemTogglePopUp";
+
 import usersReducer from "../features/ManageUsers/slices/userSlice";
 import editUsersSlice from "../features/ManageUsers/slices/editUsersSlice";
 import openAddUserFormPopUp from "../features/ManageUsers/slices/openAddUserFormPopUp";
@@ -10,7 +11,7 @@ import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
-
+import { usersApiSlice } from "../features/ManageUsers/slices/api/apiSlice.js";
 export const store = configureStore({
   reducer: {
     openPopUpSlice, // Feedback slice
@@ -24,9 +25,11 @@ export const store = configureStore({
     openPopupAddLevel, // Manage Levels slice
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
+    [usersApiSlice.reducerPath]: usersApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(apiSlice.middleware, apiLevelSlice.middleware),
+    getDefaultMiddleware().concat(apiSlice.middleware, apiLevelSlice.middleware,usersApiSlice.middleware),
 });
 
 export default store;
+
