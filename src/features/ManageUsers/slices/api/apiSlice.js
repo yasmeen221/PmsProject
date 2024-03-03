@@ -1,19 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-export const apiSlice = createApi({
-  reducerPath: "api",
+const URL = import.meta.env.VITE_API_URL
+export const usersApiSlice = createApi({
+  reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://innovapms.onrender.com/api/v1/user",
+    baseUrl: URL,
   }),
   tagTypes: ["Users"],
   endpoints: (builder) => ({
     getUsers: builder.query({
-      query: () => "/users",
+      query: () => "/user",
       providesTags: ["Users"],
     }),
     addUser: builder.mutation({
       query: (user) => ({
-        url: "/users",
+        url: "/user",
         method: "POST",
         body: user,
       }),
@@ -21,7 +21,7 @@ export const apiSlice = createApi({
     }),
     editUser: builder.mutation({
       query: (user) => ({
-        url: `/users/edit/${user.id}`,
+        url: `/user/edit/${user.id}`,
         method: "POST",
         body: user,
       }),
@@ -29,11 +29,20 @@ export const apiSlice = createApi({
     }),
     deleteUser: builder.mutation({
       query: (id) => ({
-        url: `/users/delete/${id}`,
+        url: `/user/delete/${id}`,
         method: "GET",
       }),
       invalidatesTags: ["Users"],
     }),
   }),
 });
-export const {useGetUsersQuery, useAddUserMutation ,useEditUserMutation , useDeleteUserMutation}=apiSlice
+export const {
+  // useGetUsersQuery,
+  // useAddUserMutation,
+  // useEditUserMutation,
+  // useDeleteUserMutation,
+  useGetUsersQuery,
+  useAddUserMutation,
+  useEditUserMutation,
+  useDeleteUserMutation
+} = usersApiSlice;
