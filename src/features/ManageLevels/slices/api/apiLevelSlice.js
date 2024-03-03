@@ -19,9 +19,7 @@ export const apiLevelSlice = createApi({
     }),
   
     updateLevel: builder.mutation({
-      query: ({ id, levelName }) => {
-        console.log(id);
-        console.log(levelName);
+      query: ( {levelName,id} ) => {
         return {
           url: `/levels/edit/${id}`, 
           method: "POST",

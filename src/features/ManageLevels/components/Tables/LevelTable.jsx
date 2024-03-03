@@ -4,7 +4,6 @@ import Icons from "../../../../themes/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { editLevel } from "../../slices/EditLevel";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
-import { deleteLevel, editLevels } from "../../slices/LevelSlice";
 import {
   useDeleteLevelMutation,
   useGetLevelQuery,
@@ -12,10 +11,14 @@ import {
 } from "../../slices/api/apiLevelSlice.js";
 import { useEffect } from "react";
 import { useState } from "react";
+import EditLevel from "../CardsPopUp/EditLevel";
+import ManageLevel from "../CardsPopUp/ManageLevel";
 
 export default function LevelTable() {
   const dispatch = useDispatch();
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [levelToEdit, setLevelToEdit] = useState(null);
   /* const levels = useSelector((state) => state.levels.levels);*/
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
@@ -31,20 +34,16 @@ export default function LevelTable() {
     }
   };
 
-  const handleEditLevel = async (id, updatedLevelName) => {
-    try {
-      const response = await updateLevel({ id, levelName: updatedLevelName });
-      console.log(response);
-      handleOpenAddLevelPopUp(true);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleEditLevel = async (id, updatedLevelName) => {
+  //   try {
+  //     const response = await updateLevel({ id, levelName: updatedLevelName });
+  //     console.log(response);
+  //     handleOpenAddLevelPopUp(true);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
-  useEffect(() => {
-    console.log(isLoading);
-    console.log(error);
-  }, []);
   // Render the table if levels is an array
   return (
     <>
@@ -96,9 +95,18 @@ export default function LevelTable() {
                       <Button
                         iconLeft={<Icons.EditUserPage />}
                         className="bg-transparent px-1"
+                        // onClick={() => {
+                        //   // handleOpenAddLevelPopUp(true);
+                        //   // dispatch(editLevel(level));
+                        //   // console.log("edit",level);
+                        //   // setEdit(true);
+
+                        //   {<EditLevel level={level}/>}
+                        // }}
                         onClick={() => {
-                          handleEditLevel(level._id, level.levelName);
-                          dispatch(editLevel());
+                          setLevelToEdit(level);
+                          setIsEditing(true);
+                          // console.log("edddit")
                         }}
                       />
 
@@ -114,6 +122,15 @@ export default function LevelTable() {
           </table>
         </div>
       </div>
+      {isEditing && (
+        <EditLevel
+          level={levelToEdit}
+          onClose={() => {
+            setIsEditing(false);
+            setLevelToEdit(null);
+          }}
+        />
+      )}
     </>
   );
 }

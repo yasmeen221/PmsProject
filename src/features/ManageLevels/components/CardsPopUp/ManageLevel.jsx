@@ -42,14 +42,14 @@ export default function ManageLevel() {
 
   useEffect(() => {
     setPopOpen(handleOpen);
-    if (!handleOpen && levelData?.levelName) {
+    if (!handleOpen ) {
       dispatch(editLevel({}));
       reset();
     }
     if (levelData?.levelName) {
       setValue("levelName", levelData.levelName);
     }
-  }, [handleOpen, levelData, dispatch, reset, setValue]);
+  }, [handleOpen]);
 
   const handleClosePopup = () => {
     setPopOpen(false);
