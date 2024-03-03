@@ -4,32 +4,43 @@ import Icons from "../../../../themes/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { editLevel } from "../../slices/EditLevel";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
-import { deleteLevel, editLevels } from "../../slices/LevelSlice";
-import { useGetLevelQuery } from "../../slices/api/apiLevelSlice.js";
+import { useDeleteLevelMutation, useGetLevelQuery,useUpdateLevelMutation } from "../../slices/api/apiLevelSlice.js";
 import { useEffect } from "react";
 import { useState } from "react";
+import EditLevel from "../CardsPopUp/EditLevel";
+import ManageLevel from "../CardsPopUp/ManageLevel";
+
 
 export default function LevelTable() {
   const dispatch = useDispatch();
-  const [levelData, setLevelData] = useState([{}]);
-
-  const levels = useSelector((state) => state.levels.levels);
+ 
+  const [isEditing, setIsEditing] = useState(false);
+  const [levelToEdit, setLevelToEdit] = useState(null);
+ /* const levels = useSelector((state) => state.levels.levels);*/
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
-  // Define functions to handle edit and delete actions
-  const handleDeleteLevel = (levelName) => {
-    dispatch(deleteLevel(levelName));
-  };
+  const [deleteLevel, { isError: deleteError }] = useDeleteLevelMutation();
+  const [updateLevel, { isError: updateError }] = useUpdateLevelMutation();
 
-  const handleEditLevel = (level) => {
-    dispatch(editLevel(level));
-    dispatch(editLevels(level));
-    dispatch(handleOpenAddLevelPopUp(true));
+  // Define functions to handle edit and delete actions
+  const handleDeleteLevel = async (id) => {
+    try {
+      await deleteLevel(id);
+    } catch (error) {
+      console.error("Error deleting level:", error);
+    }
   };
-  useEffect(() => {
-    console.log(isLoading);
-    console.log(error);
-  }, []);
+ 
+  // const handleEditLevel = async (id, updatedLevelName) => {
+  //   try {
+  //     const response = await updateLevel({ id, levelName: updatedLevelName });
+  //     console.log(response);
+  //     handleOpenAddLevelPopUp(true);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
   // Render the table if levels is an array
   return (
     <>
@@ -78,23 +89,46 @@ export default function LevelTable() {
                   >
                     <td className="px-6 py-4">{level.levelName}</td>
                     <td className="px-6 py-4">
-                      <Button
-                        iconLeft={<Icons.EditUserPage />}
-                        className="bg-transparent px-1"
-                        onClick={() => handleEditLevel(level)}
-                      />
-                      <Button
-                        iconLeft={<Icons.DeleteUserPage />}
-                        className="bg-transparent px-1"
-                        onClick={() => handleDeleteLevel(level.levelName)}
-                      />
+                   
+                  
+                    <Button
+                    iconLeft={<Icons.EditUserPage />}
+                    className="bg-transparent px-1"
+                    // onClick={() => {
+                    //   // handleOpenAddLevelPopUp(true);
+                    //   // dispatch(editLevel(level));
+                    //   // console.log("edit",level);
+                    //   // setEdit(true);
+                      
+                    //   {<EditLevel level={level}/>}
+                    // }}
+                    onClick={() => {
+                      setLevelToEdit(level);
+                      setIsEditing(true);
+                      // console.log("edddit")
+                    }}
+                  />
+                  
+                  <Button
+                    iconLeft={<Icons.DeleteUserPage />}
+                    className="bg-transparent px-1"
+                    onClick={() => handleDeleteLevel(level._id)}
+                  />
                     </td>
+                    
                   </tr>
                 ))}
             </tbody>
           </table>
         </div>
+      
       </div>
+      {isEditing && (
+        <EditLevel level={levelToEdit} onClose={() => {
+          setIsEditing(false);
+          setLevelToEdit(null);
+        }}/>)}
+        
     </>
   );
 }

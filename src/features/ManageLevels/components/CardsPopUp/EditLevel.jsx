@@ -8,24 +8,28 @@ import Icons from "../../../../themes/icons";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
+import { useUpdateLevelMutation } from "../../slices/api/apiLevelSlice";
 
 
 const schema = yup.object().shape({
   levelName: yup
     .string()
-    .matches(/^[A-Za-z]+$/, "Level name must contain char only")
-    .trim()
-    .required("Level name is required"),
+    .required("Level name is required")
+    .matches(/^[A-Za-z]+$/, "Level name must contain characters only")
+    .trim(),
 });
 // eslint-disable-next-line react/prop-types, no-unused-vars
-export default function EditLevel({ id, name }) {
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const [updateLevel, setupdateLevel] = useState({});
+export default function EditLevel({ level,onClose }) {
+  const [isPopupOpen, setPopupOpen] = useState(true);
+  // const [updateLevel, setupdateLevel] = useState({});
+  const [updateLevel,{error}]=useUpdateLevelMutation();
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
 
   const handleClosePopup = () => {
+    onClose()
     setPopupOpen(false);
   };
   const {
@@ -38,11 +42,20 @@ export default function EditLevel({ id, name }) {
   });
 
   const formSubmit = (values) => {
-    setupdateLevel(values);
+    // setupdateLevel(values);
+    const levelObj={levelName:values.levelName,id: level._id}
+    try{
+      // console.log(level._id);
+      updateLevel(levelObj)
+    }catch(err){console.log("error",error)}
     reset();
+    onClose();
     handleClosePopup();
-    console.log(values);
+    // console.log(values);
+   
   };
+  useEffect(()=>{
+  },[])
   return (
     <>
       <FormPopUp
@@ -59,7 +72,7 @@ export default function EditLevel({ id, name }) {
               <div className="pt-4 text-left">
                 <Header text="Level Name" />
                 <TextInput
-                  defaultValue={`${name}`}
+                  defaultValue={`${level.levelName}`}
                   type="text"
                   register={register("levelName")}
                   placeholder="Edit Level Name"
@@ -75,21 +88,13 @@ export default function EditLevel({ id, name }) {
               type="submit"
               className="px-12 py-2.5 text-fontColor-whiteBaseColor"
               buttonText="Edit Level"
+              
             />
           </div>
         </form>
       </FormPopUp>
 
-      <Button
-        iconLeft={<Icons.EditUserPage />}
-        className="px-1 bg-transparent"
-        onClick={handleOpenPopup}
-      />
-      <Button
-        iconLeft={<Icons.DeleteUserPage />}
-        className="bg-transparent px-1"
-        onClick={handleOpenPopup}
-      />
+      
     </>
   );
 }
