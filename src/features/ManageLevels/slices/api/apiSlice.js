@@ -16,6 +16,14 @@ export const apiLevelSlice= createApi({
             }),
             invalidatesTags:["Levels"],
         }),
+        updateLevel:builder.mutation({
+            query:({levelName,id})=>({
+                url:`/api/v1/levels/edit/${id}`,
+                method:"POST",
+                body:{levelName}
+            }),
+            invalidatesTags:["Levels"],
+        }),
     })
 })
-export const {useGetLevelQuery, useCreateLevelMutation}= apiLevelSlice
+export const {useGetLevelQuery, useCreateLevelMutation,useUpdateLevelMutation}= apiLevelSlice
