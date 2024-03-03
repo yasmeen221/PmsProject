@@ -31,6 +31,7 @@ const ResetPassword = () => {
     console.log(data);
     reset();
     navigate("/");
+    //send data to back
   };
   return (
     <section className="bg-gray-50 h-screen  text-fontColor-blackBaseColor flex items-center  justify-center ">

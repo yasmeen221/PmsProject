@@ -11,7 +11,7 @@ import { useDeleteTeamMutation, useGetTeamsQuery } from "../../slices/apis/apiSl
 const TeamsTable = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const { data: teams, isError, error, isLoading, isSuccess } = useGetTeamsQuery() //calling for teams from back
+  const { data: teams, isError, error, isLoading, isSuccess  } = useGetTeamsQuery() //calling for teams from back
   const [clicked, setClicked] = useState(false);
   const [deleteTeam, { error: deleteError, isError: isDeleteError }] = useDeleteTeamMutation();
 

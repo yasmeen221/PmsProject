@@ -10,7 +10,8 @@ import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
-
+import { apiLoginSlice } from "../features/LogIn/slices/apis/apiLoginSlice.js";
+import { apiRestPassSlice } from "../features/ResetPassword/slices/apis/apiRestPassSlice.js";
 export const store = configureStore({
   reducer: {
     openPopUpSlice, // Feedback slice
@@ -24,10 +25,14 @@ export const store = configureStore({
     openPopupAddLevel, // Manage Levels slice
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
+    [apiLoginSlice.reducerPath]:apiLoginSlice.reducer,
+    [apiRestPassSlice.reducerPath]:apiRestPassSlice.reducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       apiSlice.middleware,
       apiLevelSlice.middleware,
+      apiLoginSlice.middleware,
+      apiRestPassSlice.middleware
     ),
 });
