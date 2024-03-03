@@ -26,8 +26,7 @@ export const store = configureStore({
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
-      apiSlice.middleware,
-      apiLevelSlice.middleware,
-    ),
+    getDefaultMiddleware().concat(apiSlice.middleware, apiLevelSlice.middleware),
 });
+
+export default store;

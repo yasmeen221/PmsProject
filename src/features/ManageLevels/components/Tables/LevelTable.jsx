@@ -5,29 +5,42 @@ import { useSelector, useDispatch } from "react-redux";
 import { editLevel } from "../../slices/EditLevel";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 import { deleteLevel, editLevels } from "../../slices/LevelSlice";
-import { useGetLevelQuery } from "../../slices/api/apiLevelSlice.js";
+import {
+  useDeleteLevelMutation,
+  useGetLevelQuery,
+  useUpdateLevelMutation,
+} from "../../slices/api/apiLevelSlice.js";
 import { useEffect } from "react";
 import { useState } from "react";
 
 export default function LevelTable() {
   const dispatch = useDispatch();
-  const [levelData, setLevelData] = useState([{}]);
 
-  const levels = useSelector((state) => state.levels.levels);
-  const teamss = useSelector((state) => state.openTeamPopUpSlice.teams);
+  /* const levels = useSelector((state) => state.levels.levels);*/
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
+  const [deleteLevel, { isError: deleteError }] = useDeleteLevelMutation();
+  const [updateLevel, { isError: updateError }] = useUpdateLevelMutation();
 
   // Define functions to handle edit and delete actions
-  const handleDeleteLevel = (levelName) => {
-    dispatch(deleteLevel(levelName));
+  const handleDeleteLevel = async (id) => {
+    try {
+      await deleteLevel(id);
+    } catch (error) {
+      console.error("Error deleting level:", error);
+    }
   };
 
-  const handleEditLevel = (level) => {
-    dispatch(editLevel(level));
-    dispatch(editLevels(level));
-    dispatch(handleOpenAddLevelPopUp(true));
+  const handleEditLevel = async (id, updatedLevelName) => {
+    try {
+      const response = await updateLevel({ id, levelName: updatedLevelName });
+      console.log(response);
+      handleOpenAddLevelPopUp(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   useEffect(() => {
     console.log(isLoading);
     console.log(error);
@@ -83,12 +96,16 @@ export default function LevelTable() {
                       <Button
                         iconLeft={<Icons.EditUserPage />}
                         className="bg-transparent px-1"
-                        onClick={() => handleEditLevel(level)}
+                        onClick={() => {
+                          handleEditLevel(level._id, level.levelName);
+                          dispatch(editLevel());
+                        }}
                       />
+
                       <Button
                         iconLeft={<Icons.DeleteUserPage />}
                         className="bg-transparent px-1"
-                        onClick={() => handleDeleteLevel(level.levelName)}
+                        onClick={() => handleDeleteLevel(level._id)}
                       />
                     </td>
                   </tr>

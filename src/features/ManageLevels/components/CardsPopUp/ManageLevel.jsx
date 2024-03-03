@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 import { editLevel } from "../../slices/EditLevel";
 import { addLevel } from "../../slices/LevelSlice";
-import { useCreateLevelMutation } from "../../slices/api/apiLevelSlice.js";
+import { useCreateLevelMutation, useUpdateLevelMutation } from "../../slices/api/apiLevelSlice.js";
 
 const schema = yup.object({
   levelName: yup
@@ -28,6 +28,8 @@ export default function ManageLevel() {
 
   const [isPopOpen, setPopOpen] = useState(false);
   const [createLevel, { error }] = useCreateLevelMutation();
+  const [updateLevel] = useUpdateLevelMutation(); // Add this line
+
   const {
     register,
     handleSubmit,
@@ -57,20 +59,22 @@ export default function ManageLevel() {
 
   const formSubmit = async (values) => {
     try {
-      const response = await createLevel(values.levelName).unwrap();
-      console.log("Response:", response);
+      if (levelData?.levelName) {
+        const response = await updateLevel({
+          id: levelData.id,
+          levelName: values.levelName,
+        }).unwrap();
+        console.log("Response:", response);
+      } else {
+        const response = await createLevel(values.levelName).unwrap();
+        console.log("Response:", response);
+      }
       reset();
       handleClosePopup();
     } catch (error) {
-      console.error("Error creating level:", error);
+      console.error("Error:", error);
       // Handle error state, display error message to user, etc.
     }
-    console.log(values);
-    // dispatch(addLevel(values));
-    // createLevel(values);
-    // console.log(error)
-    // reset();
-    // handleClosePopup();
   };
 
   return (
