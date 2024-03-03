@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import cover from "../../../assets/images/cover2.svg";
 import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
+import { useTitle } from "../../../components/Hooks/useTitle";
 
 const schema = yup.object({
   email: yup
@@ -27,6 +28,7 @@ const schema = yup.object({
 });
 
 const LoginForm = () => {
+  useTitle("LogIn");
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
 
@@ -45,7 +47,7 @@ const LoginForm = () => {
     navigate("/dashboard/competencies");
   };
   return (
-    <section className="  text-fontColor-blackBaseColor flex items-center  justify-center mt-16">
+    <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
       <div
         className=" flex w-[60%]  shadow-lg h-auto m-auto  bg-drawerColor-100 rounded flex-col md:flex-row "
         style={{ paddingBottom: "50px" }}

@@ -22,12 +22,14 @@ export default function UserTable() {
     deleteUser(id)
   };
   const handleEditUser = (user) => {
+
+   
     // dispatch(editUser(user));
+
     // dispatch(editUsersData(user));
     editUser(user)
     dispatch(handleOpenAddUserFormPopUp(true));
   };
-
 
   return (
     <>
@@ -68,6 +70,7 @@ export default function UserTable() {
             </tr>
           </thead>
           <tbody>
+
           
             {isLoading &&
             <tr >
@@ -109,6 +112,7 @@ export default function UserTable() {
             </tr>
             )
           })}
+
           </tbody>
         </table>
       </div>

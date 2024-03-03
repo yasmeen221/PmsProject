@@ -18,7 +18,7 @@ export default function Inputs() {
     setOpen3((dropDown3) => !dropDown3);
   };
   return (
-    <div className="flex gap-3 w-full h-12    px-10 mt-6 font-custom font-normal">
+    <div className="flex gap-3 w-full h-12  px-10 mt-6 font-custom font-normal">
       <TextInput
         placeholder="Search..."
         className="max-w-56 h-12 "

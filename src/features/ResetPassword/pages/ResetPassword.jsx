@@ -7,8 +7,10 @@ import Icons from "../../../themes/icons";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo/logo.png";
 import coverPass from "../../../assets/images/coverrestpass.svg";
+import { useTitle } from "../../../components/Hooks/useTitle";
 
 const ResetPassword = () => {
+  useTitle("resetPassword");
   const navigate = useNavigate();
   const [securePass, setSecurePass] = useState(true);
   const [secureConfirmPass, setSecureConfirmPass] = useState(true);
@@ -31,7 +33,7 @@ const ResetPassword = () => {
     navigate("/");
   };
   return (
-    <section className="  text-fontColor-blackBaseColor flex items-center  justify-center mt-16">
+    <section className="bg-gray-50 h-screen  text-fontColor-blackBaseColor flex items-center  justify-center ">
       <div
         className=" flex w-[60%] lg:h-auto  md:h-[70vh] shadow-lg h-auto m-auto  bg-drawerColor-100 rounded flex-col md:flex-row "
         style={{ paddingBottom: "24px" }}

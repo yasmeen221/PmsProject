@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-const initialState= {
-  level: {}
-}
+
 const editLevelSlice= createSlice({
   name: "editLevel",
-  initialState: initialState,
+  initialState: {
+    level: {},
+  },
   reducers: {
     editLevel: (state, action) => {
       state.level = action.payload;
@@ -14,3 +14,4 @@ const editLevelSlice= createSlice({
 
 export const { editLevel } = editLevelSlice.actions;
 export default editLevelSlice.reducer;
+

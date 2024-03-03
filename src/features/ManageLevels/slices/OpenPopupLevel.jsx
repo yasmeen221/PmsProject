@@ -8,7 +8,6 @@ const openPopupAddLevel = createSlice({
   reducers: {
     handleOpenAddLevelPopUp: (state,action) => {
       state.open = action.payload;
-
     },
     
   },
