@@ -17,20 +17,18 @@ export const apiLevelSlice = createApi({
       }),
       invalidatesTags: ["Levels"],
     }),
-  
+
     updateLevel: builder.mutation({
-      query: ( {levelName,id} ) => {
+      query: ({ levelName, id }) => {
         return {
-          url: `/levels/edit/${id}`, 
+          url: `/levels/edit/${id}`,
           method: "POST",
-          body: { levelName }, 
+          body: { levelName },
         };
       },
       invalidatesTags: ["Levels"],
     }),
-    
-    
-    
+
     deleteLevel: builder.mutation({
       query: (id) => ({
         url: `/levels/delete/${id}`,
@@ -40,5 +38,9 @@ export const apiLevelSlice = createApi({
     }),
   }),
 });
-export const { useGetLevelQuery, useCreateLevelMutation, useDeleteLevelMutation ,useUpdateLevelMutation} = apiLevelSlice;
-
+export const {
+  useGetLevelQuery,
+  useCreateLevelMutation,
+  useDeleteLevelMutation,
+  useUpdateLevelMutation,
+} = apiLevelSlice;

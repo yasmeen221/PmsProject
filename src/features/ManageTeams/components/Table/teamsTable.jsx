@@ -10,20 +10,20 @@ import {
   useDeleteTeamMutation,
   useGetTeamsQuery,
 } from "../../slices/apis/apiSlice";
-import { useGetUsersQuery } from "../../../ManageUsers/slices/api/apiSlice";
 
 const TeamsTable = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const { data: teams, isError, error, isLoading, isSuccess  } = useGetTeamsQuery() //calling for teams from back
+  const {
+    data: teams,
+    isError,
+    error,
+    isLoading,
+    isSuccess,
+  } = useGetTeamsQuery(); //calling for teams from back
   const [clicked, setClicked] = useState(false);
-<<<<<<< HEAD
   const [deleteTeam, { error: deleteError, isError: isDeleteError }] =
     useDeleteTeamMutation();
-
-=======
-  const [deleteTeam, { error: deleteError, isError: isDeleteError }] = useDeleteTeamMutation();
->>>>>>> e3f53e1a3962d101f3a1d60159f60ba8b8a50c96
   const handleDelete = (id) => {
     try {
       deleteTeam(id);
@@ -113,7 +113,7 @@ const TeamsTable = () => {
         </tbody>
       </table>
 
-      {/* {isPopupOpen && <ManageTeamsForm selectedTeam={selectedTeam} />} */}
+      {isPopupOpen && <ManageTeamsForm selectedTeam={selectedTeam} />}
     </div>
   );
 };

@@ -22,12 +22,12 @@ export default function UserTable() {
     deleteUser(id)
   };
   const handleEditUser = (user) => {
-
+console.log(user)
    
     // dispatch(editUser(user));
 
     // dispatch(editUsersData(user));
-    editUser(user)
+    editUser(user._id)
     dispatch(handleOpenAddUserFormPopUp(true));
   };
 

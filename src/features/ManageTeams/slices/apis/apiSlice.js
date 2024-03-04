@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setTeamsData } from "../addTeamTogglePopUp";
 const URL = import.meta.env.VITE_API_URL;
 export const apiSlice = createApi({
   reducerPath: "apiTeams",
@@ -9,35 +8,30 @@ export const apiSlice = createApi({
   tagTypes: ["Teams"],
   endpoints: (builder) => ({
     getTeams: builder.query({
-      query: () => "/teams",
-
-      // onSuccess: (data, { dispatch, getState }) => {
-      //   const globalData = getState().global.globalData;
-      //   dispatch(setTeamsData(globalData));
-      //   console.log("hhhh", globalData);
-      // },
-      //end point for get //true
+      query: () => "/teams", //end point for get //true
       providesTags: ["Teams"],
     }),
-
     getTeamsName: builder.query({
       query: () => "/teams/teams-names", //to use in drop down
       providesTags: ["Teams"],
     }),
-
     addTeam: builder.mutation({
       query: (team) => ({
-        url: "/teams/edit", //end point for add //true
+        url: "/teams", //end point for add //true
         method: "POST",
-        body: { team }, //body of request
+        body: team, //body of request
       }),
       invalidatesTags: ["Teams"],
     }),
     editTeam: builder.mutation({
-      query: (id) => ({
-        url: `/teams/edit/${id}`,
+      query: (data) => ({
+        url: `/teams/edit/${data._id}`,
         method: "POST",
-        body: { team },
+        body: {
+          teamName: data.teamName,
+          teamLeader: data.teamLeader,
+          parentTeam: data.parentTeam,
+        },
       }),
       invalidatesTags: ["Teams"],
     }),

@@ -15,7 +15,8 @@ import { addUser } from "../../slices/userSlice";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
 import {
-  useAddUserMutation
+  useAddUserMutation,
+  useEditUserMutation,
 } from "../../slices/api/apiSlice.js";
 
 const userSchema = yup.object({
@@ -52,7 +53,9 @@ const userSchema = yup.object({
 
 const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [addUser,{isLoading,isError,error,isSuccess}] = useAddUserMutation();
+  const [addUser, { isLoading, isError, error, isSuccess }] =
+    useAddUserMutation();
+  const [editUser] = useEditUserMutation();
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.editUser.user);
   const handleOpenPopUp = useSelector(
@@ -92,22 +95,34 @@ const SelectUser = () => {
     dispatch(editUser({}));
   };
 
-  const formSubmit = (values) => {
-    console.log(values);
-    // dispatch(addUser(values));
-    const obj={
-      firstName:values.firstName,
-      lastName:values.lastName,
-      username:values.username,
-      email:values.email,
-      position:values.position,
-      level:"65e0dd8b0cc3db3333f44c22",
-      role:values.role,
-      team:"65e139409bdf31421e7dae95"
+  const formSubmit = async (values) => {
+    try {
+      if (userData.username) {
+        editUser({ id: userData._id, ...values });
+        console.log(values);
+      } else {
+        addUser(values);
+      }
+      reset();
+      handleClosePopup();
+    } catch (error) {
+      console.log(error);
     }
-    addUser(obj);
-    reset();
-    handleClosePopup();
+    // console.log(values);
+    // dispatch(addUser(values));
+    // const obj = {
+    //   firstName: values.firstName,
+    //   lastName: values.lastName,
+    //   username: values.username,
+    //   email: values.email,
+    //   position: values.position,
+    //   level: "65e0dd8b0cc3db3333f44c22",
+    //   role: values.role,
+    //   team: "65e139409bdf31421e7dae95",
+    // };
+    // addUser(obj);
+    // reset();
+    // handleClosePopup();
   };
 
   return (
