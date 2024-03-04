@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SelectFeedback from "../../features/FeedBack/components/CardsPopUps/SelectFeedback";
 import RequestFeedback from "../../features/FeedBack/components/CardsPopUps/RequestFeedback";
 import DropDown from "../../components/DropDown/DropDown";
@@ -9,10 +9,20 @@ import SelectLevel from "../../features/ManageLevels/components/CardsPopUp/Selec
 import ManageLevel from "../../features/ManageLevels/components/CardsPopUp/ManageLevel";
 import ManageTeamsForm from "../../features/ManageTeams/components/CardsPopUps/MangTeamsForm";
 import AddUserFormStructure from "../../features/ManageUsers/components/CardsPopUps/AddUserFormStructure";
+import { jwtDecode } from "jwt-decode";
+import Cookies from "universal-cookie";
 export default function ComponentTitle({ currentList }) {
   const [dropDown2, setOpen2] = useState(false);
   const [threeDotsDropDown, setThreeDotsDropDown] = useState(false);
-
+  const [userData,setUserData]=useState()
+  useEffect(()=>{
+    const cookie = new Cookies();
+    let token = cookie.get("userToken");
+    if (token) {
+      const decodedUserToken = jwtDecode(token);
+      setUserData(decodedUserToken)
+    }
+  },[])
   const dropdown2 = (value) => {
     setOpen2((dropDown2) => !dropDown2);
   };
@@ -60,57 +70,60 @@ export default function ComponentTitle({ currentList }) {
       {currentList == "Competencies Framework" && (
         <div className="flex flex-row gap-x-2 items-center ">
           {/* this is the popUp of compentencis in routing of comemtencise page */}
-          <AddCompetency />
+          {userData?.role == "superAdmin" || userData?.role == "admin" ? <>
+            <AddCompetency />
+            <DropDown
+              threeDotsIcon
+              open={threeDotsDropDown}
+              onClick={() => {
+                setThreeDotsDropDown((threeDotsDropDown) => !threeDotsDropDown);
+              }}
+              className=" bg-white px-1.5"
+            >
+              <ThreeDotsDropDown
+                Icon={<Icons.ComManage />}
+                text="Manage Category"
+                className="w-[15vw]"
+                onClick={() => {
+                  threeDotsDropDownFun("Mange Category");
+                }}
+              />
+              <ThreeDotsDropDown
+                Icon={<Icons.ComImport />}
+                text="Import"
+                className="w-[15vw]"
+                onClick={() => {
+                  threeDotsDropDownFun("Import");
+                }}
+              />
+              <ThreeDotsDropDown
+                Icon={<Icons.ComExport />}
+                text="Export"
+                className="w-[15vw]"
+                onClick={() => {
+                  threeDotsDropDownFun("Export");
+                }}
+              />
+              <ThreeDotsDropDown
+                Icon={<Icons.ComFramework />}
+                text="Generate Framework AI"
+                className="w-[15vw]"
+                onClick={() => {
+                  threeDotsDropDownFun("Generate Framework AI");
+                }}
+              />
+              <ThreeDotsDropDown
+                onClick={() => {
+                  threeDotsDropDownFun("Help");
+                }}
+                Icon={<Icons.ComHelp />}
+                text="Help"
+                className="w-[15vw]"
+              />
+            </DropDown>
+          </> : ""}
           {/* end of popup */}
-          <DropDown
-            threeDotsIcon
-            open={threeDotsDropDown}
-            onClick={() => {
-              setThreeDotsDropDown((threeDotsDropDown) => !threeDotsDropDown);
-            }}
-            className=" bg-white px-1.5"
-          >
-            <ThreeDotsDropDown
-              Icon={<Icons.ComManage />}
-              text="Manage Category"
-              className="w-[15vw]"
-              onClick={() => {
-                threeDotsDropDownFun("Mange Category");
-              }}
-            />
-            <ThreeDotsDropDown
-              Icon={<Icons.ComImport />}
-              text="Import"
-              className="w-[15vw]"
-              onClick={() => {
-                threeDotsDropDownFun("Import");
-              }}
-            />
-            <ThreeDotsDropDown
-              Icon={<Icons.ComExport />}
-              text="Export"
-              className="w-[15vw]"
-              onClick={() => {
-                threeDotsDropDownFun("Export");
-              }}
-            />
-            <ThreeDotsDropDown
-              Icon={<Icons.ComFramework />}
-              text="Generate Framework AI"
-              className="w-[15vw]"
-              onClick={() => {
-                threeDotsDropDownFun("Generate Framework AI");
-              }}
-            />
-            <ThreeDotsDropDown
-              onClick={() => {
-                threeDotsDropDownFun("Help");
-              }}
-              Icon={<Icons.ComHelp />}
-              text="Help"
-              className="w-[15vw]"
-            />
-          </DropDown>
+
         </div>
       )}
       {currentList == "User & Teams" && (
@@ -118,8 +131,8 @@ export default function ComponentTitle({ currentList }) {
           {/* this is popUp in routing of Teams & Users Page */}
           <SelectLevel />
           <ManageTeamsForm />
-          <AddUserFormStructure/>
-          <ManageLevel/>
+          <AddUserFormStructure />
+          <ManageLevel />
           {/* end of popups */}
 
           <DropDown
