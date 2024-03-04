@@ -64,7 +64,6 @@ const LoginForm = () => {
         if (res.data.status == "success") {
           console.log(res.data);
           cookie.set("userToken", res.data.accesToken);
-
           // dispatch(changeUserDataValue(res.data.accesToken));
           login(objToSend);
           navigate("/competencies", { replace: true });
