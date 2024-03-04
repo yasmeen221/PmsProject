@@ -12,43 +12,29 @@ import RequireAuth from "./components/Auth/RequireAuth";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
-    children: [
-      {
-        path: "competencies",
-        element: (
-          <RequireAuth>
-            <Competencies />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "feedback",
-        element: (
-          <RequireAuth>
-            <FeedBack />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "users&teams",
-        element: (
-          <RequireAuth>
-            <Users />
-          </RequireAuth>
-        ),
-        // element: <Users />,
-      },
-    ],
+    element: <LogInPage />,
   },
-
   {
     path: "/setpassword/:token",
     element: <ResetPassword />,
   },
   {
-    path: "/login",
-    element: <LogInPage />,
+    path: "/dashboard",
+    element: <Dashboard />,
+    children: [
+      {
+        path: "competencies",
+        element: <Competencies />,
+      },
+      {
+        path: "feedback",
+        element: <FeedBack />,
+      },
+      {
+        path: "users&teams",
+        element: <Users />,
+      },
+    ],
   },
   {
     path: "*",
@@ -57,33 +43,47 @@ const router = createBrowserRouter([
 ]);
 export default router;
 
-//  {
-//     path: "/",
-//     element: <LogInPage />,
-//   },
-//   {
-//     path: "/setpassword/:token",
-//     element: <ResetPassword />,
-//   },
-//   {
-//     path: "/dashboard",
-//     element: <Dashboard />,
-//     children: [
-//       {
-//         path: "competencies",
-//         element: <Competencies />,
-//       },
-//       {
-//         path: "feedback",
-//         element: <FeedBack />,
-//       },
-//       {
-//         path: "users&teams",
-//         element: <Users />,
-//       },
-//     ],
-//   },
-//   {
-//     path: "*",
-//     element: <NotFound />,
-//   },
+// {
+//   path: "/",
+//   element: <Dashboard />,
+//   children: [
+//     {
+//       path: "competencies",
+//       element: (
+//         <RequireAuth>
+//           <Competencies />
+//         </RequireAuth>
+//       ),
+//     },
+//     {
+//       path: "feedback",
+//       element: (
+//         <RequireAuth>
+//           <FeedBack />
+//         </RequireAuth>
+//       ),
+//     },
+//     {
+//       path: "users&teams",
+//       element: (
+//         <RequireAuth>
+//           <Users />
+//         </RequireAuth>
+//       ),
+//       // element: <Users />,
+//     },
+//   ],
+// },
+
+// {
+//   path: "/setpassword/:token",
+//   element: <ResetPassword />,
+// },
+// {
+//   path: "/login",
+//   element: <LogInPage />,
+// },
+// {
+//   path: "*",
+//   element: <NotFound />,
+// },

@@ -5,8 +5,12 @@ import { jwtDecode } from "jwt-decode";
 import ProtectedRouting from "./ProtectedRouting";
 
 // Lazy-loaded components
-const ResetPassword = lazy(() => import("./features/ResetPassword/pages/ResetPassword"));
-const Competencies = lazy(() => import("./features/Competencies/pages/Competencies"));
+const ResetPassword = lazy(
+  () => import("./features/ResetPassword/pages/ResetPassword"),
+);
+const Competencies = lazy(
+  () => import("./features/Competencies/pages/Competencies"),
+);
 const FeedBack = lazy(() => import("./features/FeedBack/pages/FeedBack"));
 const Users = lazy(() => import("./features/User&Teams/pages/Users"));
 const LogInPage=lazy(()=>import("./features/LogIn/pages/LogInPage"))
@@ -16,9 +20,9 @@ const NotFound=lazy(()=>import("./components/NotFound"))
 function App() {
   const [userData, setUserData] = useState(null);
 
-  const saveUserData =(data)=>{
-    setUserData(data)
-  }
+  const saveUserData = (data) => {
+    setUserData(data);
+  };
   useEffect(() => {
     const cookie = new Cookies();
     let token = cookie.get("userToken");
@@ -34,12 +38,40 @@ function App() {
     <Router>
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
-          <Route  path="/"   element={<LogInPage saveUserData={saveUserData} />} />
+          <Route path="/" element={<LogInPage saveUserData={saveUserData} />} />
           <Route path="/setpassword/:token" element={<ResetPassword />} />
-          <Route path="/dashboard" element={ <ProtectedRouting><Dashboard /></ProtectedRouting> }>
-            <Route path="competencies" element={ <ProtectedRouting><Competencies /> </ProtectedRouting> } />
-            <Route path="feedback" element={<ProtectedRouting><FeedBack /></ProtectedRouting>} />
-            <Route path="users&teams" element={<ProtectedRouting><Users /></ProtectedRouting>} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRouting>
+                <Dashboard />
+              </ProtectedRouting>
+            }
+          >
+            <Route
+              path="competencies"
+              element={
+                <ProtectedRouting>
+                  <Competencies />{" "}
+                </ProtectedRouting>
+              }
+            />
+            <Route
+              path="feedback"
+              element={
+                <ProtectedRouting>
+                  <FeedBack />
+                </ProtectedRouting>
+              }
+            />
+            <Route
+              path="users&teams"
+              element={
+                <ProtectedRouting>
+                  <Users />
+                </ProtectedRouting>
+              }
+            />
           </Route>
           <Route path="*" element={<NotFound />} />
         </Routes>
