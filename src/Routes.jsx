@@ -6,6 +6,7 @@ import NotFound from "./components/NotFound";
 import Users from "./features/User&Teams/pages/Users";
 import ResetPassword from "./features/ResetPassword/pages/ResetPassword";
 import LogInPage from "./features/LogIn/pages/LogInPage";
+
 import RequireAuth from "./components/Auth/RequireAuth";
 
 const router = createBrowserRouter([
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
             <Users />
           </RequireAuth>
         ),
+        // element: <Users />,
       },
     ],
   },
