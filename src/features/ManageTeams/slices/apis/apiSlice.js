@@ -18,17 +18,19 @@ export const apiSlice = createApi({
     }),
     addTeam: builder.mutation({
       query: (team) => ({
-        url: "/teams/edit", //end point for add //true
+        url: "/teams", //end point for add //true
         method: "POST",
-        body: { team }, //body of request
+        body:  team , //body of request
       }),
       invalidatesTags: ["Teams"],
     }),
     editTeam: builder.mutation({
-      query: (id) => ({
-        url: `/teams/edit/${id}`,
+      query: (data) => ({
+        url: `/teams/edit/${data._id}`,
         method: "POST",
-        body: { team },
+        body:  {teamName:data.teamName,
+        teamLeader: data.teamLeader,
+        parentTeam: data.parentTeam} ,
       }),
       invalidatesTags: ["Teams"],
     }),
