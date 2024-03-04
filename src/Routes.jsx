@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     element: <LogInPage />,
   },
   {
-    path: "/resetpassword",
+    path: "/setpassword/:token",
     element: <ResetPassword />,
   },
   {
