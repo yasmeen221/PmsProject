@@ -5,32 +5,33 @@ import { deleteUser, editUsersData } from "../../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
-import { useDeleteUserMutation, useEditUserMutation, useGetUsersQuery } from "../../slices/api/apiSlice.js";
+import { useDeleteUserMutation, useEditRemoteUserMutation, useGetUsersQuery } from "../../slices/api/apiSlice.js";
+
+
 
 
 export default function UserTable() {
   const dispatch = useDispatch();
   // const users = useSelector((store) => store.users.users);
-
+  
 
   const { data: users, isError,isSuccess,isLoading,error } = useGetUsersQuery();
-  console.log(users)
+
   const[deleteUser]=useDeleteUserMutation()
-   const[editUser]=useEditUserMutation()
+   const[editRemoteUser]=useEditRemoteUserMutation()
 
   const handleDeleteUser = (id) => {
     deleteUser(id)
   };
+  
+  
   const handleEditUser = (user) => {
-
-   
-    // dispatch(editUser(user));
-
-    // dispatch(editUsersData(user));
-    editUser(user)
+    dispatch(editUser(user));
+    dispatch(editUsersData(user));
+    // editRemoteUser(user)
     dispatch(handleOpenAddUserFormPopUp(true));
   };
-
+  
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">

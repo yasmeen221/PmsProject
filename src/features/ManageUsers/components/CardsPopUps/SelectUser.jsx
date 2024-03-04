@@ -14,9 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../slices/userSlice";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
-import {
-  useAddUserMutation
-} from "../../slices/api/apiSlice.js";
+import { useAddUserMutation } from "../../slices/api/apiSlice.js";
+import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice.js";
+import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice.js";
 
 const userSchema = yup.object({
   firstName: yup
@@ -52,9 +52,30 @@ const userSchema = yup.object({
 
 const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [addUser,{isLoading,isError,error,isSuccess}] = useAddUserMutation();
+  const [addUser, { isLoading, isError, error, isSuccess }] =
+    useAddUserMutation();
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.editUser.user);
+
+
+  const {
+    data: levels,
+    isError: isLevelError,
+    isSuccess: isLevelSuccess,
+    isLoading: isLevelLoading,
+    error: LevelError,
+  } = useGetLevelQuery();
+
+
+  const {
+    data: teamsNames,
+    isError: isTeamsNameError,
+    isSuccess: isTeamsNameSuccess,
+    isLoading: isTeamsNameLoading,
+    error: TeamsNameError,
+  } = useGetTeamsNameQuery();
+  console.log(teamsNames);
+
   const handleOpenPopUp = useSelector(
     (store) => store.openAddUserFormPopUp.open,
   );
@@ -87,28 +108,19 @@ const SelectUser = () => {
 
   const handleClosePopup = () => {
     setPopupOpen(false);
-
     dispatch(handleOpenAddUserFormPopUp(false));
     dispatch(editUser({}));
   };
 
-  const formSubmit = (values) => {
-    console.log(values);
-    // dispatch(addUser(values));
-    const obj={
-      firstName:values.firstName,
-      lastName:values.lastName,
-      username:values.username,
-      email:values.email,
-      position:values.position,
-      level:"65e0dd8b0cc3db3333f44c22",
-      role:values.role,
-      team:"65e139409bdf31421e7dae95"
-    }
-    addUser(obj);
-    reset();
-    handleClosePopup();
-  };
+
+    const formSubmit = (values) => {
+      console.log(values);
+      addUser(values)
+      reset();
+      handleClosePopup();
+    };
+  
+
 
   return (
     <>
@@ -195,9 +207,15 @@ const SelectUser = () => {
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.level ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
                     <option value="">Select Level</option>
-                    <option value="1">Fresh</option>
-                    <option value="2">Junior</option>
-                    <option value="3">Senior</option>
+                    {!isLevelLoading &&
+                      !isLevelError &&
+                      levels.data.levels.map((level, index) => {
+                        return (
+                          <option key={level._id} value={level._id}>
+                            {level.levelName}
+                          </option>
+                        );
+                      })}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />
@@ -241,10 +259,18 @@ const SelectUser = () => {
                     onChange={(e) => setValue("team", e.target.value)}
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.team ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
-                    <option value="">Select Team</option>
-                    <option value="front">Front End</option>
-                    <option value="back">Back End</option>
-                    <option value="ui">UI UX</option>
+                     <option value="">Select Team</option>
+                    {!isTeamsNameLoading &&
+                      !isTeamsNameError &&
+                      teamsNames.data.teamsNames.map((teamName, index) => {
+                        return (
+                          <option key={teamName._id} value={teamName._id}>
+                            {teamName.teamName}
+                          </option>
+                        );
+                      })}
+                   
+                   
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />
