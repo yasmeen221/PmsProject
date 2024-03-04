@@ -1,10 +1,8 @@
 import React from "react";
 import LoginForm from "../components/LoginForm";
 
-
-const LogInPage = ({saveUserData}) => {
-  return <LoginForm saveUserData={saveUserData}/>;
-
+const LogInPage = () => {
+  return <LoginForm />;
 };
 
 export default LogInPage;

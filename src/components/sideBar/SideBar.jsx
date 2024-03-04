@@ -1,27 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SideBarItem from "../../components/sideBar/SideBarItem";
 import Icons from "../../themes/icons";
 import logo from "../../assets/images/logo/logo.png";
 import logoTwo from "../../assets/images/logo/logo.svg";
 
-import { useAuth } from "../Auth/auth";
-import { jwtDecode } from "jwt-decode";
-import Cookies from "universal-cookie";
-
-
 function SideBar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [userData,setUserData]=useState()
-  useEffect(()=>{
-    const cookie = new Cookies();
-    let token = cookie.get("userToken");
-    if (token) {
-      const decodedUserToken = jwtDecode(token);
-      setUserData(decodedUserToken)
-     
-    }
-  },[])
-  
   return (
     <aside
       className={
@@ -53,17 +37,6 @@ function SideBar() {
           icon={<Icons.MainDachIcon />}
           isOpen={isOpen}
           title="competencies"
-
-          to="competencies"
-        ></SideBarItem>
-        {!isLoggedIn && (
-          <SideBarItem
-            icon={<Icons.GoalsIcon />}
-            isOpen={isOpen}
-            title="Goals"
-          ></SideBarItem>
-        )}
-
           to="/dashboard/competencies"
         ></SideBarItem>
         <SideBarItem
@@ -71,23 +44,18 @@ function SideBar() {
           isOpen={isOpen}
           title="goals"
         ></SideBarItem>
-
         <SideBarItem
           icon={<Icons.Feedback />}
           isOpen={isOpen}
           title="feedback"
-
-          to="feedback"
-
+          to="/dashboard/feedback"
         ></SideBarItem>
-        {userData?.role=="superAdmin"?<SideBarItem
+        <SideBarItem
           icon={<Icons.Reviews />}
           isOpen={isOpen}
           title="users&teams"
-
-          to="users&teams"
-        ></SideBarItem>:""}
-
+          to="/dashboard/users&teams"
+        ></SideBarItem>
         <SideBarItem
           icon={<Icons.Surveys />}
           isOpen={isOpen}

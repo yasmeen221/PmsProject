@@ -11,10 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 import { editLevel } from "../../slices/EditLevel";
 import { addLevel } from "../../slices/LevelSlice";
-import {
-  useCreateLevelMutation,
-  useUpdateLevelMutation,
-} from "../../slices/api/apiLevelSlice.js";
+import { useCreateLevelMutation, useUpdateLevelMutation } from "../../slices/api/apiLevelSlice.js";
 
 const schema = yup.object({
   levelName: yup
@@ -45,7 +42,7 @@ export default function ManageLevel() {
 
   useEffect(() => {
     setPopOpen(handleOpen);
-    if (!handleOpen) {
+    if (!handleOpen ) {
       dispatch(editLevel({}));
       reset();
     }

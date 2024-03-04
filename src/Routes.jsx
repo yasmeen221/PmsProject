@@ -12,10 +12,8 @@ const router = createBrowserRouter([
     element: <LogInPage />,
   },
   {
-
-    path: "/setpassword/:token",
-    element: <ResetPassword />,
-
+    path: "/resetpassword",
+    element: <ResetPassword />
   },
   {
     path: "/dashboard",
@@ -31,9 +29,7 @@ const router = createBrowserRouter([
       },
       {
         path: "users&teams",
-
-        element: <Users />,
-
+        element: <Users/>,
       },
     ],
   },
@@ -43,50 +39,3 @@ const router = createBrowserRouter([
   },
 ]);
 export default router;
-
-
-// {
-//   path: "/",
-//   element: <Dashboard />,
-//   children: [
-//     {
-//       path: "competencies",
-//       element: (
-//         <RequireAuth>
-//           <Competencies />
-//         </RequireAuth>
-//       ),
-//     },
-//     {
-//       path: "feedback",
-//       element: (
-//         <RequireAuth>
-//           <FeedBack />
-//         </RequireAuth>
-//       ),
-//     },
-//     {
-//       path: "users&teams",
-//       element: (
-//         <RequireAuth>
-//           <Users />
-//         </RequireAuth>
-//       ),
-//       // element: <Users />,
-//     },
-//   ],
-// },
-
-// {
-//   path: "/setpassword/:token",
-//   element: <ResetPassword />,
-// },
-// {
-//   path: "/login",
-//   element: <LogInPage />,
-// },
-// {
-//   path: "*",
-//   element: <NotFound />,
-// },
-

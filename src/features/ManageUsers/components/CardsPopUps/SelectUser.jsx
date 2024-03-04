@@ -14,11 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../slices/userSlice";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
-
 import { useAddUserMutation, useEditRemoteUserMutation } from "../../slices/api/apiSlice.js";
 import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice.js";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice.js";
-
 
 const userSchema = yup.object({
   firstName: yup
@@ -56,9 +54,7 @@ const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [addUser, { isLoading, isError, error, isSuccess }] =
     useAddUserMutation();
-
   const [editRemoteUser]=useEditRemoteUserMutation()
-
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.editUser.user);
   const handleOpenPopUp = useSelector(
@@ -116,7 +112,6 @@ const SelectUser = () => {
     dispatch(handleOpenAddUserFormPopUp(false));
     dispatch(editUser({}));
   };
-
 
 
     const formSubmit = (values) => {
