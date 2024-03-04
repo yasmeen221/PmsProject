@@ -39,27 +39,26 @@ function SideBar() {
           icon={<Icons.MainDachIcon />}
           isOpen={isOpen}
           title="competencies"
-          to="/competencies"
+          to="competencies"
         ></SideBarItem>
         {!isLoggedIn && (
           <SideBarItem
             icon={<Icons.GoalsIcon />}
             isOpen={isOpen}
-            title="login"
-            to="/login"
+            title="goal"
           ></SideBarItem>
         )}
         <SideBarItem
           icon={<Icons.Feedback />}
           isOpen={isOpen}
           title="feedback"
-          to="/feedback"
+          to="feedback"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Reviews />}
           isOpen={isOpen}
           title="users&teams"
-          to="/users&teams"
+          to="users&teams"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Surveys />}

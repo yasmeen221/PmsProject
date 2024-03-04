@@ -32,7 +32,7 @@ const schema = yup.object({
     ),
 });
 
-const LoginForm = () => {
+const LoginForm = ({saveUserData}) => {
   useTitle("LogIn");
 
   const dispatch = useDispatch();
@@ -55,27 +55,37 @@ const LoginForm = () => {
   const formSubmit = (values) => {
     const objToSend = {
       username: values.email,
-      password: values.password,
-    };
-    console.log(objToSend);
-    loginUser(objToSend)
-      .then((res) => {
-        console.log(res);
-        if (res.data.status == "success") {
+      password: values.password
+    }
+    loginUser(objToSend).unwrap().then((res) => {
+      // if (res.status == "success") {
+        // console.log(res.data)
+        // cookie.set('userToken', res.data.accesToken);
+        // reset();
+        // navigate("/dashboard/competencies");
+        //
+          if (res.status == "success") {
           console.log(res.data);
+          const cookie = new Cookies((null, { path: "/" }));
           cookie.set("userToken", res.data.accesToken);
-
-          // dispatch(changeUserDataValue(res.data.accesToken));
-          login(objToSend);
-          navigate("/competencies", { replace: true });
+          cookie.set("refreshToken",res.data.refreshToken)
+          saveUserData(res.data)
+          navigate("/dashboard/competencies", { replace: true });
           reset();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+          // }
+      } else {
+        console.log(res)
+      }
+    })
 
+    // if (!isLoading && !isError) {
+    //   reset();
+    //   navigate("/dashboard/competencies");
+
+    // }
+
+    //send data to back
+  };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
       <div
@@ -92,12 +102,12 @@ const LoginForm = () => {
           </p>
           <form className=" w-[80%] " onSubmit={handleSubmit(formSubmit)}>
             <div>
-              <Header text="Email" className="text-lg mb-1 mt-3" />
+              <Header text="User Name" className="text-lg mb-1 mt-3" />
               <TextInput
                 className="rounded"
                 type="text"
                 register={{ ...register("email") }}
-                placeholder="Example123@.com"
+                placeholder="Enter User Name"
               />
             </div>
             {errors.email ? (
@@ -127,6 +137,7 @@ const LoginForm = () => {
                 type="submit"
                 className="w-full  rounded text-fontColor-whiteBaseColor"
                 buttonText="login"
+                isLoading={isLoading}
               />
             </div>
           </form>
