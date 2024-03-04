@@ -226,15 +226,18 @@ const SelectUser = () => {
                 <Header text="Level" />
                 <div className="relative mt-2">
                   <select
-                    onChange={(e) => setValue("level", e.target.value)}
+                    // onChange={(e) => setValue("level", e.target.value)}
+                    name="level"
+                    {...register("level")}
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.level ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
+                   
                   >
                     <option value="">Select Level</option>
                     {!isLevelLoading &&
                       !isLevelError &&
                       levels.data.levels.map((level, index) => {
                         return (
-                          <option key={level._id} value={level._id}>
+                          <option key={index} value={level._id}>
                             {level.levelName}
                           </option>
                         );
@@ -257,7 +260,9 @@ const SelectUser = () => {
                 <Header text="Role" />
                 <div className="relative mt-2">
                   <select
-                    onChange={(e) => setValue("role", e.target.value)}
+                    // onChange={(e) => setValue("role", e.target.value)}
+                    name="role"
+                    {...register("role")}
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.role ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
                     <option value="">Select Role</option>
@@ -279,7 +284,9 @@ const SelectUser = () => {
                 <Header text="Team" />
                 <div className="relative mt-2">
                   <select
-                    onChange={(e) => setValue("team", e.target.value)}
+                    // onChange={(e) => setValue("team", e.target.value)}
+                    name="team"
+                    {...register("team")}
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.team ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
                      <option value="">Select Team</option>
@@ -287,7 +294,7 @@ const SelectUser = () => {
                       !isTeamsNameError &&
                       teamsNames.data.teamsNames.map((teamName, index) => {
                         return (
-                          <option key={teamName._id} value={teamName._id}>
+                          <option key={index} value={teamName._id}>
                             {teamName.teamName}
                           </option>
                         );
