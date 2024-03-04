@@ -18,9 +18,9 @@ import { useDispatch } from "react-redux";
 import { changeUserDataValue } from "../slices/login";
 
 const schema = yup.object({
-  email: yup
+  username: yup
     .string()
-    // .email("Email must be valid")
+    // .username("username must be valid")
     .required("user name is required")
     .matches(/^[A-Za-z\s\d]+$/, "Invalid user name"),
   password: yup
@@ -32,7 +32,7 @@ const schema = yup.object({
     ),
 });
 
-const LoginForm = ({saveUserData}) => {
+const LoginForm = ({ saveUserData }) => {
   useTitle("LogIn");
 
   const dispatch = useDispatch();
@@ -54,29 +54,31 @@ const LoginForm = ({saveUserData}) => {
 
   const formSubmit = (values) => {
     const objToSend = {
-      username: values.email,
-      password: values.password
-    }
-    loginUser(objToSend).unwrap().then((res) => {
-      // if (res.status == "success") {
+      username: values.username,
+      password: values.password,
+    };
+    loginUser(objToSend)
+      .unwrap()
+      .then((res) => {
+        // if (res.status == "success") {
         // console.log(res.data)
         // cookie.set('userToken', res.data.accesToken);
         // reset();
         // navigate("/dashboard/competencies");
         //
-          if (res.status == "success") {
+        if (res.status == "success") {
           console.log(res.data);
           const cookie = new Cookies((null, { path: "/" }));
           cookie.set("userToken", res.data.accesToken);
-          cookie.set("refreshToken",res.data.refreshToken)
-          saveUserData(res.data)
+          cookie.set("refreshToken", res.data.refreshToken);
+          saveUserData(res.data);
           navigate("/dashboard/competencies", { replace: true });
           reset();
           // }
-      } else {
-        console.log(res)
-      }
-    })
+        } else {
+          console.log(res);
+        }
+      });
 
     // if (!isLoading && !isError) {
     //   reset();
@@ -106,12 +108,12 @@ const LoginForm = ({saveUserData}) => {
               <TextInput
                 className="rounded"
                 type="text"
-                register={{ ...register("email") }}
+                register={{ ...register("username") }}
                 placeholder="Enter User Name"
               />
             </div>
-            {errors.email ? (
-              <p className="text-deleteColor-50">{errors.email.message}</p>
+            {errors.username ? (
+              <p className="text-deleteColor-50">{errors.username.message}</p>
             ) : null}
             <div className="mt-1">
               <Header text="Password" className="text-lg mb-1" />
