@@ -17,13 +17,7 @@ const TeamsTable = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const { data: teams, isError, error, isLoading, isSuccess  } = useGetTeamsQuery() //calling for teams from back
   const [clicked, setClicked] = useState(false);
-<<<<<<< HEAD
-  const [deleteTeam, { error: deleteError, isError: isDeleteError }] =
-    useDeleteTeamMutation();
-
-=======
   const [deleteTeam, { error: deleteError, isError: isDeleteError }] = useDeleteTeamMutation();
->>>>>>> e3f53e1a3962d101f3a1d60159f60ba8b8a50c96
   const handleDelete = (id) => {
     try {
       deleteTeam(id);
