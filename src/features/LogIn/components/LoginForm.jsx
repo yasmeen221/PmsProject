@@ -12,6 +12,10 @@ import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
+import Cookies from 'universal-cookie';
+import { useDispatch } from "react-redux";
+import { changeUserDataValue } from "../slices/login";
+
 
 const schema = yup.object({
   email: yup
@@ -30,9 +34,11 @@ const schema = yup.object({
 
 const LoginForm = () => {
   useTitle("LogIn");
+  const dispatch = useDispatch()
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
   const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation()
+  const cookie = new Cookies((null, { path: '/' }))
 
   const {
     register,
@@ -44,21 +50,22 @@ const LoginForm = () => {
   });
 
   const formSubmit = (values) => {
-    // console.log(values);
     const objToSend = {
       username: values.email,
       password: values.password
     }
-    console.log(objToSend)
-    loginUser(objToSend)
-      .then((res) => {
+    loginUser(objToSend).unwrap().then((res) => {
+      if (res.status == "success") {
+        console.log(res.data)
+        cookie.set('userToken', res.data.accesToken);
+        //////////////////////////////////////
+         dispatch(changeUserDataValue(res.data.accesToken))
+        reset();
+        navigate("/dashboard/competencies");
+      } else {
         console.log(res)
-        if(res.data.status=="success"){
-          navigate("/dashboard/competencies")
-          reset();
-        }
       }
-      ).catch((err) => { console.log(err) })
+    })
 
     // if (!isLoading && !isError) {
     //   reset();

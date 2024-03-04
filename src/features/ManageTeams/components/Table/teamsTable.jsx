@@ -14,7 +14,6 @@ const TeamsTable = () => {
   const { data: teams, isError, error, isLoading, isSuccess  } = useGetTeamsQuery() //calling for teams from back
   const [clicked, setClicked] = useState(false);
   const [deleteTeam, { error: deleteError, isError: isDeleteError }] = useDeleteTeamMutation();
-
   const handleDelete = (id) => {
     try {
       deleteTeam(id)

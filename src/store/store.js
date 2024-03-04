@@ -9,6 +9,8 @@ import openAddUserFormPopUp from "../features/ManageUsers/slices/openAddUserForm
 import openPopupAddLevel from "../features/ManageLevels/slices/OpenPopupLevel";
 import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
+import userDataReducer from "../features/LogIn/slices/login.js";
+
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
 import { apiLoginSlice } from "../features/LogIn/slices/apis/apiLoginSlice.js";
@@ -25,6 +27,7 @@ export const store = configureStore({
     openAddUserFormPopUp, // Manage Users slice
     editLevel: editLevelSlice, // Manage Levels slice
     openPopupAddLevel, // Manage Levels slice
+    userDataReducer,
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]:apiLoginSlice.reducer,
