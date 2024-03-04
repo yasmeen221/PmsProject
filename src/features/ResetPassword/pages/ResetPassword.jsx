@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../../../components/Header/Header";
 import TextInput from "../../../components/TextInput/TextInput";
 import Button from "../../../components/Button/Button";
 import { useForm } from "react-hook-form";
 import Icons from "../../../themes/icons";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/logo/logo.png";
 import coverPass from "../../../assets/images/coverrestpass.svg";
 import { useTitle } from "../../../components/Hooks/useTitle";
-import { useSetPasswordMutation } from "../slices/apis/apiSetPassSlice";
 
 const ResetPassword = () => {
   useTitle("resetPassword");
-  let { token } = useParams();
   const navigate = useNavigate();
   const [securePass, setSecurePass] = useState(true);
   const [secureConfirmPass, setSecureConfirmPass] = useState(true);
-  const [setPassword, { isLoading, isError,error,isSuccess }] = useSetPasswordMutation()
-  
+
   const {
     register,
     handleSubmit,
@@ -30,25 +27,10 @@ const ResetPassword = () => {
       confirmPassword: "",
     },
   });
-
   const onSubmit = (data) => {
     console.log(data);
-    //send data to back
-    const objToSend = {
-      passwordSetToken: token,////////from url,
-      password: data.password,
-      confirmPassword: data.confirmPassword
-
-    }
-    setPassword(objToSend).then((res)=>{
-      if(res.data.status=="success"){
-        navigate("/")
-        reset();
-      }
-    }).catch((err)=>{console.log(err)})
-    
-    
-
+    reset();
+    navigate("/");
   };
   return (
     <section className="bg-gray-50 h-screen  text-fontColor-blackBaseColor flex items-center  justify-center ">
@@ -88,7 +70,7 @@ const ResetPassword = () => {
                 }}
               />
             </div>
-            <div>
+            <p>
               {errors.password?.type === "required" ? (
                 <p className="text-deleteColor-50">password required</p>
               ) : errors.password?.type === "pattern" ? (
@@ -103,7 +85,7 @@ const ResetPassword = () => {
               ) : (
                 ""
               )}
-            </div>
+            </p>
             <div className="mt-1">
               <Header
                 text="Confirm New Pssword"
@@ -141,7 +123,7 @@ const ResetPassword = () => {
                 }}
               />
             </div>
-            <div>
+            <p>
               {errors.confirmPassword?.type === "required" ? (
                 <p className="text-deleteColor-50">confirm password required</p>
               ) : errors.confirmPassword?.type === "pattern" ? (
@@ -158,13 +140,12 @@ const ResetPassword = () => {
               ) : (
                 ""
               )}
-            </div>
+            </p>
             <div className="mt-4">
               <Button
                 className="w-full  rounded text-fontColor-whiteBaseColor"
                 buttonText="Done"
                 type="submit"
-                isLoading={isLoading}
               />
             </div>
           </form>

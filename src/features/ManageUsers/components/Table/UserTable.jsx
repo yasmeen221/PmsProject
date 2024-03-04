@@ -28,7 +28,6 @@ export default function UserTable() {
   const handleEditUser = (user) => {
     dispatch(editUser(user));
     dispatch(editUsersData(user));
-    // editRemoteUser(user)
     dispatch(handleOpenAddUserFormPopUp(true));
   };
   

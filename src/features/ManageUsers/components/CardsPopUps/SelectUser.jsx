@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../slices/userSlice";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
-import { useAddUserMutation } from "../../slices/api/apiSlice.js";
+import { useAddUserMutation, useEditRemoteUserMutation } from "../../slices/api/apiSlice.js";
 import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice.js";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice.js";
 
@@ -54,9 +54,12 @@ const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [addUser, { isLoading, isError, error, isSuccess }] =
     useAddUserMutation();
+  const [editRemoteUser]=useEditRemoteUserMutation()
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.editUser.user);
-
+  const handleOpenPopUp = useSelector(
+    (store) => store.openAddUserFormPopUp.open,
+  );
 
   const {
     data: levels,
@@ -76,9 +79,7 @@ const SelectUser = () => {
   } = useGetTeamsNameQuery();
   console.log(teamsNames);
 
-  const handleOpenPopUp = useSelector(
-    (store) => store.openAddUserFormPopUp.open,
-  );
+  
 
   const {
     register,
@@ -114,10 +115,32 @@ const SelectUser = () => {
 
 
     const formSubmit = (values) => {
-      console.log(values);
-      addUser(values)
-      reset();
-      handleClosePopup();
+      // try {
+      // console.log(values);
+      // editRemoteUser(values)
+      // addUser(values)
+      // reset();
+      // } catch (error) {
+      //   console.log(error)
+      // }
+      // handleClosePopup();
+      try {
+        if (userData.username) {
+          editRemoteUser({ ...values, _id: userData._id });
+          console.log({ ...values, _id: userData._id });
+          console.log("edit");
+        }
+        else{
+          addUser(values);
+          console.log(values)
+          console.log("add");
+        }
+        reset();
+        handleClosePopup();
+      } catch (error) {
+        console.log(error);
+      }
+ 
     };
   
 
