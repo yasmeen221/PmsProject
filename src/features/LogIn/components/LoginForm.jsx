@@ -12,6 +12,7 @@ import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
+import { useAuth } from "../../../components/Auth/auth";
 
 const schema = yup.object({
   email: yup
@@ -30,9 +31,11 @@ const schema = yup.object({
 
 const LoginForm = () => {
   useTitle("LogIn");
+  const { login } = useAuth();
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
-  const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation()
+  const [loginUser, { isLoading, isError, error, isSuccess }] =
+    useLoginUserMutation();
 
   const {
     register,
@@ -47,18 +50,21 @@ const LoginForm = () => {
     // console.log(values);
     const objToSend = {
       username: values.email,
-      password: values.password
-    }
-    console.log(objToSend)
+      password: values.password,
+    };
+    console.log(objToSend);
     loginUser(objToSend)
       .then((res) => {
-        console.log(res)
-        if(res.data.status=="success"){
-          navigate("/dashboard/competencies")
+        console.log(res);
+        if (res.data.status == "success") {
+          login(objToSend);
+          navigate("/competencies", { replace: true });
           reset();
         }
-      }
-      ).catch((err) => { console.log(err) })
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     // if (!isLoading && !isError) {
     //   reset();

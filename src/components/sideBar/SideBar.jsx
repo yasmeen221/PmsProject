@@ -3,8 +3,10 @@ import SideBarItem from "../../components/sideBar/SideBarItem";
 import Icons from "../../themes/icons";
 import logo from "../../assets/images/logo/logo.png";
 import logoTwo from "../../assets/images/logo/logo.svg";
+import { useAuth } from "../Auth/auth";
 
 function SideBar() {
+  const { isLoggedIn } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   return (
     <aside
@@ -37,24 +39,27 @@ function SideBar() {
           icon={<Icons.MainDachIcon />}
           isOpen={isOpen}
           title="competencies"
-          to="/dashboard/competencies"
+          to="/competencies"
         ></SideBarItem>
-        <SideBarItem
-          icon={<Icons.GoalsIcon />}
-          isOpen={isOpen}
-          title="goals"
-        ></SideBarItem>
+        {!isLoggedIn && (
+          <SideBarItem
+            icon={<Icons.GoalsIcon />}
+            isOpen={isOpen}
+            title="login"
+            to="/login"
+          ></SideBarItem>
+        )}
         <SideBarItem
           icon={<Icons.Feedback />}
           isOpen={isOpen}
           title="feedback"
-          to="/dashboard/feedback"
+          to="/feedback"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Reviews />}
           isOpen={isOpen}
           title="users&teams"
-          to="/dashboard/users&teams"
+          to="/users&teams"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Surveys />}
