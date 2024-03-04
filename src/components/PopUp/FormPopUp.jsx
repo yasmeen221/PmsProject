@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import ButtonPopUpClose from "./ButtonPopUpClose";
 import ImageStyle from "../ImageStyle/ImageStyle";
 const FormPopUp = ({
@@ -11,6 +11,7 @@ const FormPopUp = ({
   iconLeft,
   personName,
   personImage,
+
   ...rest
 }) => {
   return (
