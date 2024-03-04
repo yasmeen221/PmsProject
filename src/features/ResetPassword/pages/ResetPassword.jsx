@@ -40,13 +40,13 @@ const ResetPassword = () => {
       confirmPassword: data.confirmPassword
 
     }
-    setPassword(objToSend)
-    if(!isLoading&&isSuccess){
-      navigate("/")
-      reset();
-
-    }
-    console.log(isSuccess,isError,error)
+    setPassword(objToSend).then((res)=>{
+      if(res.data.status=="success"){
+        navigate("/")
+        reset();
+      }
+    }).catch((err)=>{console.log(err)})
+    
     
 
   };

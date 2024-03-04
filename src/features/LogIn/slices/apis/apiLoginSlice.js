@@ -9,9 +9,9 @@ export const apiLoginSlice = createApi({
   endpoints: (builder) => ({
     loginUser: builder.mutation({
       query: (user) => ({
-        url: "/", //end point for add //true
+        url: "auth/login", //end point for add //true
         method: "POST",
-        body: { user }, //body of request
+        body:  user, //body of request
       }),
     }),
   }),
