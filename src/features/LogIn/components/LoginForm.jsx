@@ -34,9 +34,6 @@ const schema = yup.object({
 
 const LoginForm = ({ saveUserData }) => {
   useTitle("LogIn");
-
-  const dispatch = useDispatch();
-  const { login } = useAuth();
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
   const [loginUser, { isLoading, isError, error, isSuccess }] =
@@ -60,12 +57,6 @@ const LoginForm = ({ saveUserData }) => {
     loginUser(objToSend)
       .unwrap()
       .then((res) => {
-        // if (res.status == "success") {
-        // console.log(res.data)
-        // cookie.set('userToken', res.data.accesToken);
-        // reset();
-        // navigate("/dashboard/competencies");
-        //
         if (res.status == "success") {
           console.log(res.data);
           const cookie = new Cookies((null, { path: "/" }));
@@ -74,19 +65,10 @@ const LoginForm = ({ saveUserData }) => {
           saveUserData(res.data);
           navigate("/dashboard/competencies", { replace: true });
           reset();
-          // }
         } else {
           console.log(res);
         }
       });
-
-    // if (!isLoading && !isError) {
-    //   reset();
-    //   navigate("/dashboard/competencies");
-
-    // }
-
-    //send data to back
   };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">

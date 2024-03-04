@@ -1,11 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState, lazy, Suspense } from "react";
-
 import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
-import NotFound from "./components/NotFound";
-import Dashboard from "./components/Dashboard";
-import LogInPage from "./features/LogIn/pages/LogInPage";
 import ProtectedRouting from "./ProtectedRouting";
 
 // Lazy-loaded components
@@ -17,6 +13,9 @@ const Competencies = lazy(
 );
 const FeedBack = lazy(() => import("./features/FeedBack/pages/FeedBack"));
 const Users = lazy(() => import("./features/User&Teams/pages/Users"));
+const LogInPage=lazy(()=>import("./features/LogIn/pages/LogInPage"))
+const Dashboard=lazy(()=>import("./components/Dashboard"))
+const NotFound=lazy(()=>import("./components/NotFound"))
 
 function App() {
   const [userData, setUserData] = useState(null);
