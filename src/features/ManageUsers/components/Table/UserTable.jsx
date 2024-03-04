@@ -26,6 +26,7 @@ export default function UserTable() {
   
   
   const handleEditUser = (user) => {
+
     dispatch(editUser(user));
     dispatch(editUsersData(user));
     dispatch(handleOpenAddUserFormPopUp(true));
@@ -95,7 +96,8 @@ export default function UserTable() {
               <td className="px-6 py-4">{user?.username}</td>
               <td className="px-6 py-4">{user?.email}</td>
               <td className="px-6 py-4">{user?.position} </td>
-              {/* <td className="px-6 py-4"> {user?.level} </td> */}
+              <td className="px-6 py-4"> {user?.level.levelName
+              } </td> 
               <td className="px-6 py-4"> {user?.role}</td>
               <td className="px-6 py-4 inline-flex">
                 <Button

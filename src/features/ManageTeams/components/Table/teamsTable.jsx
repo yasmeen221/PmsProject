@@ -6,14 +6,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
 import { dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
 import Icons from "../../../../themes/icons";
-import { useDeleteTeamMutation, useGetTeamsQuery } from "../../slices/apis/apiSlice";
+
+import {
+  useDeleteTeamMutation,
+  useGetTeamsQuery,
+} from "../../slices/apis/apiSlice";
+
 
 const TeamsTable = () => {
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const { data: teams, isError, error, isLoading, isSuccess } = useGetTeamsQuery() //calling for teams from back
+
+  const {
+    data: teams,
+    isError,
+    error,
+    isLoading,
+    isSuccess,
+  } = useGetTeamsQuery(); //calling for teams from back
   const [clicked, setClicked] = useState(false);
-  const [deleteTeam, { error: deleteError, isError: isDeleteError }] = useDeleteTeamMutation();
+  const [deleteTeam, { error: deleteError, isError: isDeleteError }] =
+    useDeleteTeamMutation();
+
   const handleDelete = (id) => {
     try {
       deleteTeam(id)

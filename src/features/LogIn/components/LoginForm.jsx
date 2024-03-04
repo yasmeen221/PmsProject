@@ -27,7 +27,7 @@ const schema = yup.object({
     ),
 });
 
-const LoginForm = () => {
+const LoginForm = ({saveUserData}) => {
   useTitle("LogIn");
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
@@ -42,9 +42,26 @@ const LoginForm = () => {
   });
 
   const formSubmit = (values) => {
-    console.log(values);
-    reset();
-    navigate("/dashboard/competencies");
+
+    const objToSend = {
+      username: values.email,
+      password: values.password
+    }
+    loginUser(objToSend).unwrap().then((res) => {
+          if (res.status == "success") {
+          console.log(res.data);
+          const cookie = new Cookies((null, { path: "/" }));
+          cookie.set("userToken", res.data.accesToken);
+          cookie.set("refreshToken",res.data.refreshToken)
+          saveUserData(res.data)
+          navigate("/dashboard/competencies", { replace: true });
+          reset();
+          // }
+      } else {
+        console.log(res)
+      }
+    })
+
   };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
@@ -62,12 +79,12 @@ const LoginForm = () => {
           </p>
           <form className=" w-[80%] " onSubmit={handleSubmit(formSubmit)}>
             <div>
-              <Header text="Email" className="text-lg mb-1 mt-3" />
+              <Header text="User Name" className="text-lg mb-1 mt-3" />
               <TextInput
                 className="rounded"
                 type="text"
                 register={{ ...register("email") }}
-                placeholder="Example123@.com"
+                placeholder="Enter User Name"
               />
             </div>
             {errors.email ? (
@@ -97,6 +114,7 @@ const LoginForm = () => {
                 type="submit"
                 className="w-full  rounded text-fontColor-whiteBaseColor"
                 buttonText="login"
+                isLoading={isLoading}
               />
             </div>
           </form>

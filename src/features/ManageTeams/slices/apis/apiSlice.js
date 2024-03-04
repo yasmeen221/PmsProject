@@ -11,24 +11,29 @@ export const apiSlice = createApi({
       query: () => "/teams", //end point for get //true
       providesTags: ["Teams"],
     }),
-    getTeamsName:builder.query({
-      query:()=>"/teams/teams-names",  //to use in drop down
-      providesTags:["Teams"],
-      
+
+    getTeamsName: builder.query({
+      query: () => "/teams/teams-names", //to use in drop down
+      providesTags: ["Teams"],
+
     }),
     addTeam: builder.mutation({
       query: (team) => ({
-        url: "/teams/edit", //end point for add //true
+        url: "/teams", //end point for add //true
         method: "POST",
-        body: { team }, //body of request
+        body: team, //body of request
       }),
       invalidatesTags: ["Teams"],
     }),
     editTeam: builder.mutation({
-      query: (id) => ({
-        url: `/teams/edit/${id}`,
+      query: (data) => ({
+        url: `/teams/edit/${data._id}`,
         method: "POST",
-        body: { team },
+        body: {
+          teamName: data.teamName,
+          teamLeader: data.teamLeader,
+          parentTeam: data.parentTeam,
+        },
       }),
       invalidatesTags: ["Teams"],
     }),
