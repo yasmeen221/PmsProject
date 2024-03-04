@@ -12,10 +12,10 @@ import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
-import Cookies from 'universal-cookie';
+import { useAuth } from "../../../components/Auth/auth";
+import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { changeUserDataValue } from "../slices/login";
-
 
 const schema = yup.object({
   email: yup
@@ -34,11 +34,14 @@ const schema = yup.object({
 
 const LoginForm = ({saveUserData}) => {
   useTitle("LogIn");
-  const dispatch = useDispatch()
+
+  const dispatch = useDispatch();
+  const { login } = useAuth();
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
-  const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation()
-  const cookie = new Cookies((null, { path: '/' }))
+  const [loginUser, { isLoading, isError, error, isSuccess }] =
+    useLoginUserMutation();
+  const cookie = new Cookies((null, { path: "/" }));
 
   const {
     register,
@@ -149,5 +152,4 @@ const LoginForm = ({saveUserData}) => {
     </section>
   );
 };
-
 export default LoginForm;

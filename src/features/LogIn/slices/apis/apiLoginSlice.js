@@ -13,10 +13,7 @@ export const apiLoginSlice = createApi({
         method: "POST",
         body:  user, //body of request
       }),
-      
     }),
- 
-   
   }),
 });
-export const {useLoginUserMutation} = apiLoginSlice;
+export const { useLoginUserMutation } = apiLoginSlice;
