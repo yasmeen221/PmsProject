@@ -20,10 +20,20 @@ export const usersApiSlice = createApi({
       invalidatesTags: ["Users"],
     }),
     editRemoteUser: builder.mutation({
-      query: (user,...updateData) => ({
+      query: (user) => ({
         url: `/user/edit/${user._id}`,
         method: "POST",
-        body: updateData
+        body: {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          userName: user.userName,
+          email: user.email,
+          position: user.position,
+          level: user.level,
+          role: user.role,
+          team: user.team,
+        },
+        
       }),
       invalidatesTags: ["Users"],
     }),
