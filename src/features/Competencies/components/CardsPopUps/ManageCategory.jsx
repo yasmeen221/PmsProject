@@ -29,6 +29,9 @@ export default function ManageCategory({ onClose }) {
   const handleCloseEditPopup = () => {
     setEditPopupOpen(false);
   };
+ 
+
+
 
   return (
     <>
