@@ -6,16 +6,17 @@ import NotFound from "./components/NotFound";
 import Users from "./features/User&Teams/pages/Users";
 import ResetPassword from "./features/ResetPassword/pages/ResetPassword";
 import LogInPage from "./features/LogIn/pages/LogInPage";
+
+import RequireAuth from "./components/Auth/RequireAuth";
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <LogInPage />,
   },
   {
-
     path: "/setpassword/:token",
     element: <ResetPassword />,
-
   },
   {
     path: "/dashboard",
@@ -31,9 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "users&teams",
-
         element: <Users />,
-
       },
     ],
   },
@@ -43,7 +42,6 @@ const router = createBrowserRouter([
   },
 ]);
 export default router;
-
 
 // {
 //   path: "/",
@@ -89,4 +87,3 @@ export default router;
 //   path: "*",
 //   element: <NotFound />,
 // },
-

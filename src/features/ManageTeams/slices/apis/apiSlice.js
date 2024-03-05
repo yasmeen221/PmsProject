@@ -11,11 +11,9 @@ export const apiSlice = createApi({
       query: () => "/teams", //end point for get //true
       providesTags: ["Teams"],
     }),
-
     getTeamsName: builder.query({
       query: () => "/teams/teams-names", //to use in drop down
       providesTags: ["Teams"],
-
     }),
     addTeam: builder.mutation({
       query: (team) => ({
@@ -51,6 +49,5 @@ export const {
   useAddTeamMutation,
   useEditTeamMutation,
   useDeleteTeamMutation,
-  useGetTeamsNameQuery
-  
+  useGetTeamsNameQuery,
 } = apiSlice;

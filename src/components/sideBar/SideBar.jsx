@@ -3,13 +3,12 @@ import SideBarItem from "../../components/sideBar/SideBarItem";
 import Icons from "../../themes/icons";
 import logo from "../../assets/images/logo/logo.png";
 import logoTwo from "../../assets/images/logo/logo.svg";
-
 import { useAuth } from "../Auth/auth";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "universal-cookie";
 
-
 function SideBar() {
+  const { isLoggedIn } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const [userData,setUserData]=useState()
   useEffect(()=>{
@@ -53,7 +52,6 @@ function SideBar() {
           icon={<Icons.MainDachIcon />}
           isOpen={isOpen}
           title="competencies"
-
           to="competencies"
         ></SideBarItem>
         {!isLoggedIn && (
@@ -63,31 +61,18 @@ function SideBar() {
             title="Goals"
           ></SideBarItem>
         )}
-
-          to="/dashboard/competencies"
-        ></SideBarItem>
-        <SideBarItem
-          icon={<Icons.GoalsIcon />}
-          isOpen={isOpen}
-          title="goals"
-        ></SideBarItem>
-
         <SideBarItem
           icon={<Icons.Feedback />}
           isOpen={isOpen}
           title="feedback"
-
           to="feedback"
-
         ></SideBarItem>
         {userData?.role=="superAdmin"||userData?.role=="admin"?<SideBarItem
           icon={<Icons.Reviews />}
           isOpen={isOpen}
           title="users&teams"
-
           to="users&teams"
         ></SideBarItem>:""}
-
         <SideBarItem
           icon={<Icons.Surveys />}
           isOpen={isOpen}

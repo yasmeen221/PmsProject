@@ -11,13 +11,18 @@ import cover from "../../../assets/images/cover2.svg";
 import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
+import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
+import { useAuth } from "../../../components/Auth/auth";
+import Cookies from "universal-cookie";
+import { useDispatch } from "react-redux";
+import { changeUserDataValue } from "../slices/login";
 
 const schema = yup.object({
   email: yup
     .string()
     // .email("Email must be valid")
-    .required("Email is required")
-    .matches(/^\S+@\S+$/i, "Invalid email address"),
+    .required("user name is required")
+    .matches(/^[A-Za-z\s\d]+$/, "Invalid user name"),
   password: yup
     .string()
     .required("Password is required")
@@ -31,6 +36,9 @@ const LoginForm = ({saveUserData}) => {
   useTitle("LogIn");
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
+  const [loginUser, { isLoading, isError, error, isSuccess }] =
+    useLoginUserMutation();
+  const cookie = new Cookies((null, { path: "/" }));
 
   const {
     register,
@@ -42,7 +50,6 @@ const LoginForm = ({saveUserData}) => {
   });
 
   const formSubmit = (values) => {
-
     const objToSend = {
       username: values.email,
       password: values.password
@@ -61,7 +68,6 @@ const LoginForm = ({saveUserData}) => {
         console.log(res)
       }
     })
-
   };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
@@ -129,5 +135,4 @@ const LoginForm = ({saveUserData}) => {
     </section>
   );
 };
-
 export default LoginForm;
