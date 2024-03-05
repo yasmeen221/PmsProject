@@ -83,6 +83,9 @@ const TeamsTable = () => {
           {!isLoading &&
             !isError &&
             teams.data.teams?.map((item, index) => {
+
+              console.log(item);
+
               return (
                 <tr className=" odd:bg-gray even:bg-gray-50 " key={index}>
                   <td className="px-6 py-4 ">{item?.teamName}</td>

@@ -10,17 +10,16 @@ import Cookies from "universal-cookie";
 function SideBar() {
   const { isLoggedIn } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [userData,setUserData]=useState()
-  useEffect(()=>{
+  const [userData, setUserData] = useState();
+  useEffect(() => {
     const cookie = new Cookies();
     let token = cookie.get("userToken");
     if (token) {
       const decodedUserToken = jwtDecode(token);
-      setUserData(decodedUserToken)
-     
+      setUserData(decodedUserToken);
     }
-  },[])
-  
+  }, []);
+
   return (
     <aside
       className={
@@ -67,12 +66,18 @@ function SideBar() {
           title="feedback"
           to="feedback"
         ></SideBarItem>
-        {userData?.role=="superAdmin"?<SideBarItem
-          icon={<Icons.Reviews />}
-          isOpen={isOpen}
-          title="users&teams"
-          to="users&teams"
-        ></SideBarItem>:""}
+
+        {userData?.role == "superAdmin" || userData?.role == "admin" ? (
+          <SideBarItem
+            icon={<Icons.Reviews />}
+            isOpen={isOpen}
+            title="users&teams"
+            to="users&teams"
+          ></SideBarItem>
+        ) : (
+          ""
+        )}
+
         <SideBarItem
           icon={<Icons.Surveys />}
           isOpen={isOpen}
