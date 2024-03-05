@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useEffect, useState, lazy, Suspense } from "react";
 import Cookies from "universal-cookie";
@@ -78,6 +79,7 @@ function App() {
         </Routes>
       </Suspense>
     </Router>
+
   );
 }
 
