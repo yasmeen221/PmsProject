@@ -1,10 +1,14 @@
-import React from 'react'
-import FeedBack from './pages/FeedBack'
+import React from "react";
+import FeedBack from "./pages/FeedBack";
+import ConfirmDelete from "../../components/Delete/ConfirmDelete";
 
 const index = () => {
   return (
-    <FeedBack/>
-  )
-}
+    <>
+      {" "}
+      <FeedBack />
+    </>
+  );
+};
 
-export default index
+export default index;

@@ -10,10 +10,17 @@ import {
   useDeleteTeamMutation,
   useGetTeamsQuery,
 } from "../../slices/apis/apiSlice";
+import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
+import { HandelOpenPopUpDelete } from "../../slices/HandelOpenDelete";
 
 const TeamsTable = () => {
+  const oPenPopUp = useSelector(
+    (state) => state.openPopUpConfirmDeleteSlice.open,
+  );
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isPopupOpenDelete, setPopupOpenDelete] = useState(false);
+
   const {
     data: teams,
     isError,
@@ -27,6 +34,7 @@ const TeamsTable = () => {
   const handleDelete = (id) => {
     try {
       deleteTeam(id);
+      setPopupOpenDelete(false);
     } catch (err) {
       console.log(err);
     }
@@ -80,9 +88,17 @@ const TeamsTable = () => {
             teams.data.teams?.map((item, index) => {
               return (
                 <tr className=" odd:bg-gray even:bg-gray-50 " key={index}>
-                  <td className="px-6 py-4 ">{!(item?.teamName)?"not exist":item.teamName}</td>
-                  <td className="px-6 py-4">{!(item?.teamLeader)?"not exist":item.teamLeader.firstName}</td>
-                  <td className="px-6 py-4">{!(item?.parentTeam)?"not exist":item.parentTeam.teamName}</td>
+                  <td className="px-6 py-4 ">
+                    {!item?.teamName ? "not exist" : item.teamName}
+                  </td>
+                  <td className="px-6 py-4">
+                    {!item?.teamLeader
+                      ? "not exist"
+                      : item.teamLeader.firstName}
+                  </td>
+                  <td className="px-6 py-4">
+                    {!item?.parentTeam ? "not exist" : item.parentTeam.teamName}
+                  </td>
 
                   <td className="px-6 py-4 inline-flex">
                     <Button
@@ -93,11 +109,14 @@ const TeamsTable = () => {
                           dispatch(editButtonTeamHandle(item)); //to catch data from global items
                       }}
                     />
+
                     <Button
                       iconLeft={<Icons.DeleteUserPage />}
                       className=" bg-transparent px-1"
                       onClick={() => {
-                        handleDelete(item._id)
+                        // handleDelete(item._id);
+                        console.log("eeeeee");
+                        dispatch(HandelOpenPopUpDelete(true));
                       }}
                     />
                   </td>
@@ -108,6 +127,11 @@ const TeamsTable = () => {
       </table>
 
       {isPopupOpen && <ManageTeamsForm selectedTeam={selectedTeam} />}
+      {oPenPopUp && (
+        <ConfirmDelete
+          deleteFunction={(() => handleDelete(item._id), console.log("gggggg"))}
+        />
+      )}
     </div>
   );
 };
