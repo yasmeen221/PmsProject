@@ -76,6 +76,7 @@ export default function ComponentTitle({ currentList }) {
               className="w-[15vw]"
               onClick={() => {
                 threeDotsDropDownFun("Mange Category");
+                
               }}
             />
             <ThreeDotsDropDown

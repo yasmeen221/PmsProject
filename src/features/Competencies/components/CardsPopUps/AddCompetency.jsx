@@ -4,6 +4,22 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+const schema = yup.object({
+  name: yup
+  .string()
+  .required("Level Name is required")
+  .min(3, "Level Name should have at least 3 characters")
+  .max(100, "Level Name should have at most 100 characters")
+  .matches(/^[A-Za-z\s\d]+$/, "Level Name should contain only letters, spaces, or digits"),
+  defaultDescription:yup.string().required(),
+  seniorityLevels:yup.array(),
+  category:yup.string().required(),
+  teamsAssigned:yup.array().of(yup.string().required("Item is required")),
+});
 function AddCompetency({ open }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [catogery, setCatogery] = useState("");
@@ -13,10 +29,22 @@ function AddCompetency({ open }) {
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
-
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+const formSubmit=(values)=>{
+  console.log(values)
+  handleClosePopup()
+}
+ 
   return (
     <>
       <FormPopUp
@@ -39,12 +67,15 @@ function AddCompetency({ open }) {
             <div className="mt-2 w-full ">
               <TextInput
                 onChange={(e) => console.log(e.target.value)}
+                register={register("name")}
                 placeholder="Enter Competency Name"
                 id="name"
                 name="name"
                 type="text"
                 required
               />
+              {errors.name && <p className="text-red-600">{errors.name.message}</p>}
+              
             </div>
           </div>
           <div className="my-2 w-full">
@@ -70,12 +101,14 @@ function AddCompetency({ open }) {
               <textarea
                 rows={4}
                 placeholder="Enter Default Description"
+                register={register("defaultDescription")}
                 wrap="soft"
                 id="describtion"
                 name="describtion"
                 onChange={(e) => console.log(e.target.value)}
                 className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
               />
+              {errors.defaultDescription && <p className="text-red-600">{errors.defaultDescription.message}</p>}
             </div>
           </div>
           <div className="w-full inline-flex justify-between   items-center my-2">
@@ -140,8 +173,9 @@ function AddCompetency({ open }) {
         <div className="mt-2 w-full inline-flex justify-end px-1 ">
           <Button
             buttonText="Add"
+            type="submit"
             className="px-10 py-2.5 text-fontColor-whiteBaseColor"
-            onClick={handleClosePopup}
+            onClick={handleSubmit(formSubmit)}
           />
         </div>
       </FormPopUp>

@@ -7,10 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormPopUp from "../../../../components/PopUp/FormPopUp.jsx";
 import Button from "../../../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
-import { editLevel } from "../../slices/EditLevel";
-import { addLevel } from "../../slices/LevelSlice";
 import { useCreateLevelMutation, useUpdateLevelMutation } from "../../slices/api/apiLevelSlice.js";
 
 const schema = yup.object({
@@ -24,51 +21,32 @@ const schema = yup.object({
 export default function ManageLevel() {
   const dispatch = useDispatch();
   const handleOpen = useSelector((store) => store.openPopupAddLevel.open);
-  const levelData = useSelector((store) => store.editLevel.level);
-
   const [isPopOpen, setPopOpen] = useState(false);
   const [createLevel, { error }] = useCreateLevelMutation();
-  const [updateLevel] = useUpdateLevelMutation(); // Add this line
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
   useEffect(() => {
     setPopOpen(handleOpen);
-    if (!handleOpen ) {
-      dispatch(editLevel({}));
-      reset();
-    }
-    if (levelData?.levelName) {
-      setValue("levelName", levelData.levelName);
-    }
+    
   }, [handleOpen]);
 
   const handleClosePopup = () => {
     setPopOpen(false);
     dispatch(handleOpenAddLevelPopUp(false));
-    dispatch(editLevel({}));
   };
 
   const formSubmit = async (values) => {
     try {
-      if (levelData?.levelName) {
-        const response = await updateLevel({
-          id: levelData.id,
-          levelName: values.levelName,
-        }).unwrap();
+          const response = await createLevel(values.levelName).unwrap();
         console.log("Response:", response);
-      } else {
-        const response = await createLevel(values.levelName).unwrap();
-        console.log("Response:", response);
-      }
       reset();
       handleClosePopup();
     } catch (error) {

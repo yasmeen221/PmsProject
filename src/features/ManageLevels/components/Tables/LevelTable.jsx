@@ -4,7 +4,7 @@ import Icons from "../../../../themes/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { editLevel } from "../../slices/EditLevel";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
-import { useDeleteLevelMutation, useGetLevelQuery,useUpdateLevelMutation } from "../../slices/api/apiLevelSlice.js";
+import { useDeleteLevelMutation, useGetLevelQuery} from "../../slices/api/apiLevelSlice.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import EditLevel from "../CardsPopUp/EditLevel";
@@ -20,8 +20,7 @@ export default function LevelTable() {
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
   const [deleteLevel, { isError: deleteError }] = useDeleteLevelMutation();
-  const [updateLevel, { isError: updateError }] = useUpdateLevelMutation();
-
+ 
   // Define functions to handle edit and delete actions
   const handleDeleteLevel = async (id) => {
     try {
