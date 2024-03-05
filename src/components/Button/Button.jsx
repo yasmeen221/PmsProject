@@ -1,3 +1,5 @@
+import Icons from "../../themes/icons";
+
 const Button = ({
   buttonText,
   onClick,
@@ -18,7 +20,7 @@ const Button = ({
         {...rest}
       >
         {iconLeft && <div className="px-2"> {iconLeft}</div>}
-        {isLoading?<div className="spinner-border" role="status"></div>:buttonText}
+        {isLoading?<Icons.Loading />:buttonText}
         {iconRight && <div className="px-2"> {iconRight}</div>}
       </button>
     </>

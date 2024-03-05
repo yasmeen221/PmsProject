@@ -4,19 +4,21 @@ import Icons from "../../../../themes/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { editLevel } from "../../slices/EditLevel";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
-import { useDeleteLevelMutation, useGetLevelQuery} from "../../slices/api/apiLevelSlice.js";
+import {
+  useDeleteLevelMutation,
+  useGetLevelQuery,
+} from "../../slices/api/apiLevelSlice.js";
 import { useEffect } from "react";
 import { useState } from "react";
 import EditLevel from "../CardsPopUp/EditLevel";
 import ManageLevel from "../CardsPopUp/ManageLevel";
 
-
 export default function LevelTable() {
   const dispatch = useDispatch();
- 
+
   const [isEditing, setIsEditing] = useState(false);
   const [levelToEdit, setLevelToEdit] = useState(null);
- /* const levels = useSelector((state) => state.levels.levels);*/
+  /* const levels = useSelector((state) => state.levels.levels);*/
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
   const [deleteLevel, { isError: deleteError }] = useDeleteLevelMutation();
@@ -29,7 +31,7 @@ export default function LevelTable() {
       console.error("Error deleting level:", error);
     }
   };
- 
+
   // const handleEditLevel = async (id, updatedLevelName) => {
   //   try {
   //     const response = await updateLevel({ id, levelName: updatedLevelName });
@@ -88,46 +90,45 @@ export default function LevelTable() {
                   >
                     <td className="px-6 py-4">{level.levelName}</td>
                     <td className="px-6 py-4">
-                   
-                  
-                    <Button
-                    iconLeft={<Icons.EditUserPage />}
-                    className="bg-transparent px-1"
-                    // onClick={() => {
-                    //   // handleOpenAddLevelPopUp(true);
-                    //   // dispatch(editLevel(level));
-                    //   // console.log("edit",level);
-                    //   // setEdit(true);
-                      
-                    //   {<EditLevel level={level}/>}
-                    // }}
-                    onClick={() => {
-                      setLevelToEdit(level);
-                      setIsEditing(true);
-                      // console.log("edddit")
-                    }}
-                  />
-                  
-                  <Button
-                    iconLeft={<Icons.DeleteUserPage />}
-                    className="bg-transparent px-1"
-                    onClick={() => handleDeleteLevel(level._id)}
-                  />
+                      <Button
+                        iconLeft={<Icons.EditUserPage />}
+                        className="bg-transparent px-1"
+                        // onClick={() => {
+                        //   // handleOpenAddLevelPopUp(true);
+                        //   // dispatch(editLevel(level));
+                        //   // console.log("edit",level);
+                        //   // setEdit(true);
+
+                        //   {<EditLevel level={level}/>}
+                        // }}
+                        onClick={() => {
+                          setLevelToEdit(level);
+                          setIsEditing(true);
+                          // console.log("edddit")
+                        }}
+                      />
+
+                      <Button
+                        iconLeft={<Icons.DeleteUserPage />}
+                        className="bg-transparent px-1"
+                        onClick={() => handleDeleteLevel(level._id)}
+                      />
                     </td>
-                    
                   </tr>
                 ))}
             </tbody>
           </table>
         </div>
-      
       </div>
       {isEditing && (
-        <EditLevel level={levelToEdit} onClose={() => {
-          setIsEditing(false);
-          setLevelToEdit(null);
-        }}/>)}
-        
+        <EditLevel
+          level={levelToEdit}
+          onClose={() => {
+            setIsEditing(false);
+            setLevelToEdit(null);
+          }}
+        />
+      )}
     </>
   );
 }
