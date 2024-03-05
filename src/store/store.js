@@ -10,6 +10,7 @@ import openPopupAddLevel from "../features/ManageLevels/slices/OpenPopupLevel";
 import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import userDataReducer from "../features/LogIn/slices/login.js";
+import openPopUpConfirmDeleteSlice from "../features/ManageTeams/slices/HandelOpenDelete";
 
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
@@ -18,6 +19,7 @@ import { apiRestPassSlice } from "../features/ResetPassword/slices/apis/apiSetPa
 import { usersApiSlice } from "../features/ManageUsers/slices/api/apiSlice.js";
 export const store = configureStore({
   reducer: {
+    openPopUpConfirmDeleteSlice,
     openPopUpSlice, // Feedback slice
     openTeamPopUpSlice, // Manage Teams slice
     editTeamPopUpSlice, // Manage Teams slice
@@ -30,8 +32,8 @@ export const store = configureStore({
     userDataReducer,
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
-    [apiLoginSlice.reducerPath]:apiLoginSlice.reducer,
-    [apiRestPassSlice.reducerPath]:apiRestPassSlice.reducer,
+    [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,
+    [apiRestPassSlice.reducerPath]: apiRestPassSlice.reducer,
     [usersApiSlice.reducerPath]: usersApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -40,13 +42,8 @@ export const store = configureStore({
       apiLevelSlice.middleware,
       apiLoginSlice.middleware,
       apiRestPassSlice.middleware,
-      usersApiSlice.middleware
+      usersApiSlice.middleware,
     ),
-
-    
-  },
-)
-
+});
 
 export default store;
-
