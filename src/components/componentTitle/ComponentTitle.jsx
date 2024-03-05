@@ -11,10 +11,13 @@ import ManageTeamsForm from "../../features/ManageTeams/components/CardsPopUps/M
 import AddUserFormStructure from "../../features/ManageUsers/components/CardsPopUps/AddUserFormStructure";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "universal-cookie";
+import ManageCategory from "../../features/Competencies/components/CardsPopUps/ManageCategory";
 export default function ComponentTitle({ currentList }) {
   const [dropDown2, setOpen2] = useState(false);
   const [threeDotsDropDown, setThreeDotsDropDown] = useState(false);
   const [userData,setUserData]=useState()
+  const [isthreeDot, setthreeDot] = useState("");
+
   useEffect(()=>{
     const cookie = new Cookies();
     let token = cookie.get("userToken");
@@ -80,14 +83,12 @@ export default function ComponentTitle({ currentList }) {
               }}
               className=" bg-white px-1.5"
             >
-              <ThreeDotsDropDown
-                Icon={<Icons.ComManage />}
-                text="Manage Category"
-                className="w-[15vw]"
-                onClick={() => {
-                  threeDotsDropDownFun("Mange Category");
-                }}
-              />
+            <ThreeDotsDropDown
+            Icon={<Icons.ComManage />}
+            text="Manage Category"
+            className="w-[15vw]"
+            onClick={()=>{setthreeDot("Manage Category")}}
+          />
               <ThreeDotsDropDown
                 Icon={<Icons.ComImport />}
                 text="Import"
@@ -120,7 +121,11 @@ export default function ComponentTitle({ currentList }) {
                 text="Help"
                 className="w-[15vw]"
               />
-            </DropDown>
+            </DropDown> 
+            {isthreeDot=="Manage Category"&& <ManageCategory onClose={() => {
+              setthreeDot("");
+            }}  />}
+
           </> : ""}
           {/* end of popup */}
 
