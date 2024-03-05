@@ -8,6 +8,8 @@ import EditCatgory from './EditCatgory';
 export default function ManageCategory({ onClose }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isEditPopupOpen, setEditPopupOpen] = useState(false);
+  const URL=import.meta.env.VITE_API_URL;
+  
 
   useEffect(() => {
     setPopupOpen(true);
