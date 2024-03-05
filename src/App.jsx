@@ -14,9 +14,9 @@ const Competencies = lazy(
 );
 const FeedBack = lazy(() => import("./features/FeedBack/pages/FeedBack"));
 const Users = lazy(() => import("./features/User&Teams/pages/Users"));
-const LogInPage=lazy(()=>import("./features/LogIn/pages/LogInPage"))
-const Dashboard=lazy(()=>import("./components/Dashboard"))
-const NotFound=lazy(()=>import("./components/NotFound"))
+const LogInPage = lazy(() => import("./features/LogIn/pages/LogInPage"));
+const Dashboard = lazy(() => import("./components/Dashboard"));
+const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
   const [userData, setUserData] = useState(null);
@@ -33,11 +33,17 @@ function App() {
       console.log("nnnnnnn", decodedUserToken);
       console.log(token);
     }
-  }, [new Cookies().get("userToken")]); //to ensure ypu get the updated role of user 
+  }, [new Cookies().get("userToken")]); //to ensure ypu get the updated role of user
 
   return (
     <Router>
-      <Suspense fallback={<div className=" w-full h-full inline-flex  items-center justify-center"><Icons.Loading/></div>}>
+      <Suspense
+        fallback={
+          <div className=" w-full h-full inline-flex  items-center justify-center">
+            <Icons.Loading />
+          </div>
+        }
+      >
         <Routes>
           <Route path="/" element={<LogInPage saveUserData={saveUserData} />} />
           <Route path="/setpassword/:token" element={<ResetPassword />} />
@@ -66,7 +72,11 @@ function App() {
               }
             />
             <Route
-              path={userData?.role=="superAdmin"?"users&teams":"notfound"} //notfound will go to * so that it will render not found page
+              path={
+                userData?.role == "superAdmin" || userData?.role == "admin"
+                  ? "users&teams"
+                  : "notfound"
+              } //notfound will go to * so that it will render not found page
               element={
                 <ProtectedRouting role={userData?.role}>
                   <Users />

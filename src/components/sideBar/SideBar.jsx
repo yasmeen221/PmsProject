@@ -66,7 +66,7 @@ function SideBar() {
           title="feedback"
           to="feedback"
         ></SideBarItem>
-        {userData?.role == "superAdmin" ? (
+        {userData?.role == "superAdmin" || userData?.role == "admin" ? (
           <SideBarItem
             icon={<Icons.Reviews />}
             isOpen={isOpen}

@@ -5,32 +5,32 @@ import { deleteUser, editUsersData } from "../../slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
-import { useDeleteUserMutation, useEditUserMutation, useGetUsersQuery } from "../../slices/api/apiSlice.js";
+import { useDeleteUserMutation, useEditRemoteUserMutation, useGetUsersQuery } from "../../slices/api/apiSlice.js";
+
+
 
 
 export default function UserTable() {
   const dispatch = useDispatch();
   // const users = useSelector((store) => store.users.users);
-
+  
 
   const { data: users, isError,isSuccess,isLoading,error } = useGetUsersQuery();
-  console.log(users)
+
   const[deleteUser]=useDeleteUserMutation()
-   const[editUser]=useEditUserMutation()
+   const[editRemoteUser]=useEditRemoteUserMutation()
 
   const handleDeleteUser = (id) => {
     deleteUser(id)
   };
+  
+  
   const handleEditUser = (user) => {
-console.log(user)
-   
-    // dispatch(editUser(user));
-
-    // dispatch(editUsersData(user));
-    editUser(user._id)
+    dispatch(editUser(user));
+    dispatch(editUsersData(user));
     dispatch(handleOpenAddUserFormPopUp(true));
   };
-
+  
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
@@ -95,8 +95,7 @@ console.log(user)
               <td className="px-6 py-4">{user?.username}</td>
               <td className="px-6 py-4">{user?.email}</td>
               <td className="px-6 py-4">{user?.position} </td>
-              <td className="px-6 py-4"> {user?.level.levelName
-              } </td> 
+              {/* <td className="px-6 py-4"> {user?.level} </td> */}
               <td className="px-6 py-4"> {user?.role}</td>
               <td className="px-6 py-4 inline-flex">
                 <Button
