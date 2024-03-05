@@ -12,7 +12,6 @@ import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
-import { useAuth } from "../../../components/Auth/auth";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { changeUserDataValue } from "../slices/login";
@@ -32,7 +31,7 @@ const schema = yup.object({
     ),
 });
 
-const LoginForm = ({saveUserData}) => {
+const LoginForm = ({ saveUserData }) => {
   useTitle("LogIn");
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
@@ -52,22 +51,24 @@ const LoginForm = ({saveUserData}) => {
   const formSubmit = (values) => {
     const objToSend = {
       username: values.email,
-      password: values.password
-    }
-    loginUser(objToSend).unwrap().then((res) => {
-          if (res.status == "success") {
+      password: values.password,
+    };
+    loginUser(objToSend)
+      .unwrap()
+      .then((res) => {
+        if (res.status == "success") {
           console.log(res.data);
           const cookie = new Cookies((null, { path: "/" }));
           cookie.set("userToken", res.data.accesToken);
-          cookie.set("refreshToken",res.data.refreshToken)
-          saveUserData(res.data)
+          cookie.set("refreshToken", res.data.refreshToken);
+          saveUserData(res.data);
           navigate("/dashboard/competencies", { replace: true });
           reset();
           // }
-      } else {
-        console.log(res)
-      }
-    })
+        } else {
+          console.log(res);
+        }
+      });
   };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
