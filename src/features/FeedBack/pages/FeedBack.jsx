@@ -6,7 +6,6 @@ import Tabs from "../../FeedBack/components/Tabs/Tabs";
 import RequestFeedbackSomeOne from "../components/CardsPopUps/RequestFeedbackSomeOne";
 import GiveNormalFeedback from "../components/CardsPopUps/GiveNormalFeedback";
 import { useTitle } from "../../../components/Hooks/useTitle";
-import ConfirmDelete from "../../../components/Delete/ConfirmDelete";
 
 export default function FeedBack() {
   useTitle("Feedback");
@@ -16,7 +15,6 @@ export default function FeedBack() {
       <ComponentTitle currentList="Feedback List" />
       <Inputs />
       <Tabs />
-      <ConfirmDelete />
     </div>
   );
 }
