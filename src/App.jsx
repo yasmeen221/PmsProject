@@ -33,6 +33,7 @@ function App() {
       console.log("nnnnnnn", decodedUserToken);
       console.log(token);
     }
+
   }, [new Cookies().get("userToken")]); //to ensure ypu get the updated role of user
 
   return (
@@ -44,6 +45,8 @@ function App() {
           </div>
         }
       >
+
+
         <Routes>
           <Route path="/" element={<LogInPage saveUserData={saveUserData} />} />
           <Route path="/setpassword/:token" element={<ResetPassword />} />
@@ -72,11 +75,13 @@ function App() {
               }
             />
             <Route
+
               path={
                 userData?.role == "superAdmin" || userData?.role == "admin"
                   ? "users&teams"
                   : "notfound"
               } //notfound will go to * so that it will render not found page
+
               element={
                 <ProtectedRouting role={userData?.role}>
                   <Users />

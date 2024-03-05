@@ -3,7 +3,7 @@ import openPopUpSlice from "../features/FeedBack/slices/openPopUpSlice";
 import openTeamPopUpSlice from "../features/ManageTeams/slices/addTeamTogglePopUp";
 import editTeamPopUpSlice from "../features/ManageTeams/slices/editTemTogglePopUp";
 
-import usersReducer from "../features/ManageUsers/slices/userSlice";
+import usersReducer from "../features/ManageUsers/slices/userSlice.jsx";
 import editUsersSlice from "../features/ManageUsers/slices/editUsersSlice";
 import openAddUserFormPopUp from "../features/ManageUsers/slices/openAddUserFormPopUp";
 import openPopupAddLevel from "../features/ManageLevels/slices/OpenPopupLevel";
