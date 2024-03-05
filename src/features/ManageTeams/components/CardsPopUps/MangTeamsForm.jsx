@@ -6,13 +6,36 @@ import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
 import { useDispatch, useSelector } from "react-redux";
-import {  dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
+import { dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
 import { useForm } from "react-hook-form";
 import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
-import { useAddTeamMutation, useGetTeamsNameQuery } from "../../slices/apis/apiSlice";
+import {
+  useAddTeamMutation,
+  useEditTeamMutation,
+  useGetTeamsNameQuery,
+} from "../../slices/apis/apiSlice";
+import { useGetUsersQuery } from "../../../ManageUsers/slices/api/apiSlice";
 function ManageTeamsForm() {
-  const [addTeam,{isLoading,isError,error,isSuccess}]=useAddTeamMutation() //to send team to the back end
-  const {data:teamsData,isLoading:teamsDropDownLoading,isError:teamsDropDownIsError,error:teamsDropDownError,isSuccess:teamDropDownSuccess} = useGetTeamsNameQuery();
+  const [addTeam, { isLoading, isError, error, isSuccess }] =
+    useAddTeamMutation(); //to send team to the back end
+  const {
+    data: teamsData,
+    isLoading: teamsDropDownLoading,
+    isError: teamsDropDownIsError,
+    error: teamsDropDownError,
+    isSuccess: teamDropDownSuccess,
+  } = useGetTeamsNameQuery();
+  const {
+    data: users,
+    isUsersError,
+    isUsersSuccess,
+    isUsersLoading,
+    usersError,
+  } = useGetUsersQuery();
+  const [
+    editTeam,
+    { isLoadingEditTeam, isErrorEditTeam, errorEditTeam, isSuccessEditTeam },
+  ] = useEditTeamMutation();
 
   // do the slice  here to get data from store and
   //when edit  button is clicked it will show up in form with old data.and make it empty
@@ -27,7 +50,6 @@ function ManageTeamsForm() {
     { teamName: "ui/ux", teamLeader: "esraa", parentTeam: "soft" },
     { teamName: "ui/ux", teamLeader: "ali", parentTeam: "test" },
   ]);
-
   const {
     register,
     handleSubmit,
@@ -62,22 +84,25 @@ function ManageTeamsForm() {
     dispatch(editButtonTeamHandle({}));
   };
   const onSubmit = (data) => {
-    console.log(data);
+    // console.log(data,"kkkkkkkk");
     handleClosePopup();
     reset();
     //send data to backend
     // addTeam(data)
-   
-    addTeam(data)
-    console.log(isError)
-    console.log(error)
+    itemToEdit.teamName
+      ? editTeam({ _id: itemToEdit._id, ...data })
+      : addTeam(data).then((data) => {
+          console.log(data);
+        });
+    console.log(isError);
+    console.log(error);
   };
   return (
     <>
       <FormPopUp
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
-        TitlePopUp="Add Team"
+        TitlePopUp={itemToEdit.teamName ? "Edit Team" : "Add Team"}
       >
         <div
           style={{
@@ -127,13 +152,15 @@ function ManageTeamsForm() {
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.teamLeader?.type == "required" || !touchedFields.teamLeader ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
               >
                 <option value="">Select Team Leader</option>
-                { teams.map((team, index) => {
-                  return (
-                    <option key={index} value={team.teamLeader}>
-                      {team.teamLeader}
-                    </option>
-                  );
-                })}
+                {!isUsersLoading &&
+                  !isUsersError &&
+                  users?.data.users.map((team, index) => {
+                    return (
+                      <option key={index} value={team._id}>
+                        {team.username}
+                      </option>
+                    );
+                  })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <Icons.ArrowDownBlack />
@@ -152,13 +179,15 @@ function ManageTeamsForm() {
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.parentTeam?.type == "required" || !touchedFields.parentTeam ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
               >
                 <option value="">Select Parent Team</option>
-                {!teamsDropDownLoading&&!teamsDropDownIsError&&teamsData.data.teamsNames?.map((item, index) => {
-                  return (
-                    <option key={index} value={item._id}>
-                      {item.teamName}
-                    </option>
-                  );
-                })}
+                {!teamsDropDownLoading &&
+                  !teamsDropDownIsError &&
+                  teamsData.data.teamsNames?.map((item, index) => {
+                    return (
+                      <option key={index} value={item._id}>
+                        {item.teamName}
+                      </option>
+                    );
+                  })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <Icons.ArrowDownBlack />
@@ -171,7 +200,7 @@ function ManageTeamsForm() {
         </div>
         <div className="mt-2 w-full inline-flex justify-end px-1 ">
           <Button
-            buttonText="Add"
+            buttonText={itemToEdit.teamName ? "Edit" : "Add"}
             className="px-10 py-2.5 text-fontColor-whiteBaseColor"
             onClick={handleSubmit(onSubmit)}
           />
