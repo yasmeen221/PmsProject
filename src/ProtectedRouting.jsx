@@ -4,18 +4,25 @@ import { Navigate } from 'react-router-dom';
 import Cookies from "universal-cookie";
 
 export default function ProtectedRouting(props) {
-    const cookie = new Cookies();
-    let token = cookie.get("userToken");
-    if(token){
-        console.log(token);
-        const decodedUserToken = jwtDecode(token);
-        console.log("nnjjnjnjjnj",decodedUserToken.role);
-        console.log(props.children)
+  const { role } = props
+  const cookie = new Cookies();
+  let token = cookie.get("userToken");
+  if (token) {
+    console.log(token);
+    const decodedUserToken = jwtDecode(token);
+    console.log("nnjjnjnjjnj", decodedUserToken.role);
+    if (role) {
+      if (role == "superAdmin") {
         return props.children;
-        } else {
-        console.log('elseeeeeee');
-        return <Navigate to='/'/>; // Added return statement here
+      }
+
+    } else {
+      return props.children;
     }
+
+  } else {
+    return <Navigate to='/' />; // Added return statement here
+  }
 }
 
 
