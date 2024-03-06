@@ -23,6 +23,7 @@ const AccordingContent = () => {
                 description="Teamwork competency involves the ability to collaborate effectively with others, contributing positively to group efforts."
                 skills="Soft skills"
                 position="Senior, Manager"
+                onClick={()=> {setDetails(true)}}
               />
 
               <hr></hr>

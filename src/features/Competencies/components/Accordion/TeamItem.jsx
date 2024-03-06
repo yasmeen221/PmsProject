@@ -7,12 +7,13 @@ const TeamItem = (props) => {
   // eslint-disable-next-line react/prop-types
   const { title, description, skills, position } = props;
   const [isHovered, setIsHovered] = useState(false);
-
+  
   return (
     <div
       className={`flex justify-around items-center py-4 ${isHovered ? "hovered:text-blue-500 transition duration-500 ease-in-out hover:bg-drawerColor-1000 rounded-2xl" : ""}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      
     >
       <div className="flex items-start flex-row w-[35%] mr-10">
         <div>
@@ -47,6 +48,7 @@ const TeamItem = (props) => {
       <div>
         <Icons.ThreeDotsIcon />
       </div>
+      
     </div>
   );
 };

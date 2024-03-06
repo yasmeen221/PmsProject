@@ -87,7 +87,7 @@ export default function ManageLevel() {
             type="submit"
             className="px-12 py-2.5 text-fontColor-whiteBaseColor"
             buttonText="Add Level"
-            isLoading={isLoading}
+            // isLoading={isLoading}
           />
         </div>
       </form>
