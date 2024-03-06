@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import { updateData } from '../../slices/Api/catgoryapi';
 
 const schema = Yup.object().shape({
+  categoryId:Yup.string().required(),
   categoryName: Yup.string()
     .required('Category name is required')
     .matches(/^[A-Za-z ]+$/, 'Category name must contain only letters and spaces')
@@ -18,7 +19,7 @@ const schema = Yup.object().shape({
     .max(30, 'Category name must not exceed 30 characters'),
 });
 
-export default function EditCategory({ onClose, category }) {
+export default function EditCatgory({ onClose, category }) {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(schema),
   });
