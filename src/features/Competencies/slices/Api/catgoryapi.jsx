@@ -22,11 +22,12 @@ export const createData = async (categoryName) => {
 };
 
 // to  update existing data
-export const updateData = async (id, editedCategory) => {
+export const updateData = async (id, categoryName) => {
   //will know from back use post or  put
   try {
+    // console.log("Eeeeeeeeateg",categoryName)
     const request = await axiosInstance.post(`/category/edit/${id}`, 
-      {editedCategory},
+      {categoryName},
     );
     return request.data;
   } catch (error) {

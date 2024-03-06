@@ -128,7 +128,6 @@ export default function ComponentTitle({ currentList }) {
 
           </> : ""}
           {/* end of popup */}
-
         </div>
       )}
       {currentList == "User & Teams" && (
