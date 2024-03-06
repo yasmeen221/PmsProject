@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 import { deleteUser, editUsersData } from "../../slices/userSlice";
@@ -10,10 +10,16 @@ import {
   useEditRemoteUserMutation,
   useGetUsersQuery,
 } from "../../slices/api/apiSlice.js";
+import ConfirmDelete from "../../../../components/Delete/ConfirmDelete.jsx";
+import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete.js";
 
 export default function UserTable() {
   const dispatch = useDispatch();
-  // const users = useSelector((store) => store.users.users);
+  const oPenPopUp = useSelector(
+    (state) => state.openPopUpConfirmDeleteSlice.open,
+  );
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const {
     data: users,
@@ -27,7 +33,15 @@ export default function UserTable() {
   const [editRemoteUser] = useEditRemoteUserMutation();
 
   const handleDeleteUser = (id) => {
-    deleteUser(id);
+    try {
+      if (selectedUser) {
+        deleteUser(selectedUser._id);
+        dispatch(HandelOpenPopUpDelete(false));
+        console.log("delettt");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleEditUser = (user) => {
@@ -120,7 +134,10 @@ export default function UserTable() {
                         className="bg-transparent px-1"
                       />
                       <Button
-                        onClick={() => handleDeleteUser(user._id)}
+                        onClick={() => {
+                          setSelectedUser(user),
+                            dispatch(HandelOpenPopUpDelete(true));
+                        }}
                         iconLeft={<Icons.DeleteUserPage />}
                         className="bg-transparent px-1"
                       />
@@ -130,6 +147,7 @@ export default function UserTable() {
               })}
           </tbody>
         </table>
+        {oPenPopUp && <ConfirmDelete onConfirm={handleDeleteUser} />}
       </div>
     </>
   );

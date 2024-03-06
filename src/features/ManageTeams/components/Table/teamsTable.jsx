@@ -14,12 +14,12 @@ import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import { HandelOpenPopUpDelete } from "../../slices/HandelOpenDelete";
 
 const TeamsTable = () => {
+  const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
   );
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [isPopupOpenDelete, setPopupOpenDelete] = useState(false);
 
   const {
     data: teams,
@@ -28,18 +28,19 @@ const TeamsTable = () => {
     isLoading,
     isSuccess,
   } = useGetTeamsQuery(); //calling for teams from back
-  const [clicked, setClicked] = useState(false);
   const [deleteTeam, { error: deleteError, isError: isDeleteError }] =
     useDeleteTeamMutation();
-  const handleDelete = (id) => {
+  // make handel delete with popup confirm
+  const handleDelete = () => {
     try {
-      deleteTeam(id);
-      setPopupOpenDelete(false);
+      if (selectedTeam) {
+        deleteTeam(selectedTeam._id);
+        dispatch(HandelOpenPopUpDelete(false));
+      }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
-  const dispatch = useDispatch();
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -114,8 +115,7 @@ const TeamsTable = () => {
                       iconLeft={<Icons.DeleteUserPage />}
                       className=" bg-transparent px-1"
                       onClick={() => {
-                        // handleDelete(item._id);
-                        console.log("eeeeee");
+                        setSelectedTeam(item);
                         dispatch(HandelOpenPopUpDelete(true));
                       }}
                     />
@@ -127,11 +127,7 @@ const TeamsTable = () => {
       </table>
 
       {isPopupOpen && <ManageTeamsForm selectedTeam={selectedTeam} />}
-      {oPenPopUp && (
-        <ConfirmDelete
-          deleteFunction={(() => handleDelete(item._id), console.log("gggggg"))}
-        />
-      )}
+      {oPenPopUp && <ConfirmDelete onConfirm={handleDelete} />}
     </div>
   );
 };
