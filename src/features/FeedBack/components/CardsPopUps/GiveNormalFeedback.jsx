@@ -7,7 +7,7 @@ import Icons from "../../../../themes/icons";
 import image1 from "../../../../assets/images/girl2.png";
 const GiveNormalFeedback = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
+  const [addToogle, setAddToggle] = useState(false);
   const [team, setTeam] = useState("");
 
   const handleOpenPopup = () => {
@@ -93,7 +93,7 @@ const GiveNormalFeedback = () => {
                     value=""
                     className="sr-only peer"
                     onChange={(e) => {
-                      setTeamsBtnChecked(e.target.checked);
+                      setAddToggle(e.target.checked);
                     }}
                   />
                   <div className="relative w-11 h-6  peer-focus:outline-none rounded-full peer dark:bg-fontColor-placeHolderColor peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-buttonColor-baseColor"></div>
@@ -101,7 +101,7 @@ const GiveNormalFeedback = () => {
               </div>
             </div>
             {/* dropdown */}
-            {teamsBtnChecked && (
+            {addToogle && (
               <div className="relative my-2 ">
                 <select
                   onChange={(e) => setTeam((team) => e.target.value)}

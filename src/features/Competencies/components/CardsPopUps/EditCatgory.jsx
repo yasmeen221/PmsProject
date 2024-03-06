@@ -29,16 +29,20 @@ export default function EditCategory({ onClose, category }) {
 
   const onSubmit = async (data) => {
     try {
-      
-      await updateData(category._id, data.categoryName);
-      // console.log('Category updated successfully',data);
+      const updatedCategory = { categoryName: data.categoryName };
+      await updateData(category._id, updatedCategory);
+      console.log('Category updated successfully');
       handleClosePopup();
     } catch (err) {
       console.error('Error updating category:', err);
     }
   };
 
+  useEffect(() => {
   
+    setValue('categoryName', category.categoryName);
+  }, [category, setValue]);
+
   return (
     <FormPopUp
       isOpen={true} 
@@ -60,10 +64,11 @@ export default function EditCategory({ onClose, category }) {
             <Header text="Name" htmlFor="name" />
             <div className="mt-2 w-full ">
               <TextInput
-                defaultValue={`${category.categoryName}`}
-                register={register('categoryName')}
+              defaultValue={`${category.categoryName}`}
+                {...register('categoryName')}
                 placeholder="Enter Category Name"
-                
+                id="name"
+                name="name"
                 type="text"
               />
               {errors.categoryName && <p className="text-red-600">{errors.categoryName.message}</p>}
