@@ -19,7 +19,7 @@ const schema = Yup.object().shape({
     .max(30, 'Category name must not exceed 30 characters'),
 });
 
-export default function EditCatgory({ onClose, category }) {
+export default function EditCategory({ onClose, category }) {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     resolver: yupResolver(schema),
   });
