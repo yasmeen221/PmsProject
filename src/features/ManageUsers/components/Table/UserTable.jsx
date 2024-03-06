@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 import { deleteUser, editUsersData } from "../../slices/userSlice";
@@ -10,10 +10,16 @@ import {
   useEditRemoteUserMutation,
   useGetUsersQuery,
 } from "../../slices/api/apiSlice.js";
+import ConfirmDelete from "../../../../components/Delete/ConfirmDelete.jsx";
+import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete.js";
 
 export default function UserTable() {
   const dispatch = useDispatch();
-  // const users = useSelector((store) => store.users.users);
+  const oPenPopUp = useSelector(
+    (state) => state.openPopUpConfirmDeleteSlice.open,
+  );
+
+  const [selectedUser, setSelectedUser] = useState(null);
 
   const {
     data: users,
@@ -27,15 +33,24 @@ export default function UserTable() {
   const [editRemoteUser] = useEditRemoteUserMutation();
 
   const handleDeleteUser = (id) => {
-    deleteUser(id);
+    try {
+      if (selectedUser) {
+        deleteUser(selectedUser._id);
+        dispatch(HandelOpenPopUpDelete(false));
+        console.log("delettt");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
-
+  
+  
   const handleEditUser = (user) => {
     dispatch(editUser(user));
     dispatch(editUsersData(user));
     dispatch(handleOpenAddUserFormPopUp(true));
   };
-
+  
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
@@ -75,12 +90,19 @@ export default function UserTable() {
             </tr>
           </thead>
           <tbody>
-            {isLoading && (
+
+          
+            {isLoading &&
+            <tr >
+              <td colSpan="4" className=" px-6 py-3 " > <div className="inline-flex items-center justify-center"><Icons.Loading /></div></td>
+            </tr>}
+            
+            {!isLoading && !isError && users.data.users.length == 0 && (
               <tr>
                 <td colSpan="4" className=" px-6 py-3 ">
                   {" "}
                   <div className="inline-flex items-center justify-center">
-                    <Icons.Loading />
+                    <p>There is No Users Exist</p>
                   </div>
                 </td>
               </tr>
@@ -98,7 +120,7 @@ export default function UserTable() {
             )}
             {!isLoading &&
               !isError &&
-              users.data.users.map((user, index) => {
+              users?.data.users.map((user, index) => {
                 return (
                   <tr
                     key={user?._id}
@@ -111,7 +133,7 @@ export default function UserTable() {
                     <td className="px-6 py-4">{user?.username}</td>
                     <td className="px-6 py-4">{user?.email}</td>
                     <td className="px-6 py-4">{user?.position} </td>
-                    <td className="px-6 py-4"> {user?.level.levelName} </td>
+                    <td className="px-6 py-4"> {user?.level?.levelName} </td>
                     <td className="px-6 py-4"> {user?.role}</td>
                     <td className="px-6 py-4 inline-flex">
                       <Button
@@ -120,7 +142,10 @@ export default function UserTable() {
                         className="bg-transparent px-1"
                       />
                       <Button
-                        onClick={() => handleDeleteUser(user._id)}
+                        onClick={() => {
+                          setSelectedUser(user),
+                            dispatch(HandelOpenPopUpDelete(true));
+                        }}
                         iconLeft={<Icons.DeleteUserPage />}
                         className="bg-transparent px-1"
                       />
@@ -130,6 +155,7 @@ export default function UserTable() {
               })}
           </tbody>
         </table>
+        {oPenPopUp && <ConfirmDelete onConfirm={handleDeleteUser} />}
       </div>
     </>
   );

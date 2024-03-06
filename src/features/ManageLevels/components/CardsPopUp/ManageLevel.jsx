@@ -15,6 +15,8 @@ const schema = yup.object({
     .string()
     .required("Level name is required")
     .matches(/^[A-Za-z]+$/, "Level name must contain characters only")
+    .min(3,"level name must be at least 3 characters")
+    .max(30,"level name can't exceed 30 characters")
     .trim(),
 });
 
@@ -85,6 +87,7 @@ export default function ManageLevel() {
             type="submit"
             className="px-12 py-2.5 text-fontColor-whiteBaseColor"
             buttonText="Add Level"
+            isLoading={isLoading}
           />
         </div>
       </form>

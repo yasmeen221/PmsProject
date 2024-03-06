@@ -45,11 +45,6 @@ function ManageTeamsForm() {
     (state) => state.openTeamPopUpSlice.openPopUpTeam,
   );
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [teams] = useState([
-    { teamName: "ui/ux", teamLeader: "yasmeen", parentTeam: "db" },
-    { teamName: "ui/ux", teamLeader: "esraa", parentTeam: "soft" },
-    { teamName: "ui/ux", teamLeader: "ali", parentTeam: "test" },
-  ]);
   const {
     register,
     handleSubmit,
@@ -72,6 +67,7 @@ function ManageTeamsForm() {
     // to check the data not empty and in page the teamsTable
     // add in button table the dispatch to  open pop up and return values that i want edit in it
     if (itemToEdit.teamName) {
+      // console.log(itemToEdit.teamLeader?.firstName)
       setValue("teamName", itemToEdit.teamName);
       setValue("teamLeader", itemToEdit.teamLeader);
       setValue("parentTeam", itemToEdit.parentTeam);
@@ -124,7 +120,7 @@ function ManageTeamsForm() {
                 register={{
                   ...register("teamName", {
                     required: true,
-                    pattern: /^[A-za-z]+$/,
+                    pattern: /^[A-Za-z\s\d]+$/,
                     minLength: 5,
                     maxLength: 20,
                   }),
@@ -135,7 +131,7 @@ function ManageTeamsForm() {
               {errors.teamName?.type == "required"
                 ? "requird"
                 : errors.teamName?.type == "pattern"
-                  ? "must string only"
+                  ? "must string and spaces only"
                   : errors.teamName?.type == "minLength"
                     ? "must at least 5 charcters"
                     : errors.teamName?.type == "maxLength"
@@ -148,7 +144,7 @@ function ManageTeamsForm() {
             <div className="relative mt-2">
               <select
                 name="teamLeader"
-                {...register("teamLeader", { required: true })}
+                {...register("teamLeader", { required: true,pattern:/^[a-zA-Z0-9_]+$/ })}
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.teamLeader?.type == "required" || !touchedFields.teamLeader ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
               >
                 <option value="">Select Team Leader</option>
@@ -167,7 +163,7 @@ function ManageTeamsForm() {
               </div>
             </div>
             <p className="text-deleteColor-50">
-              {errors.teamLeader?.type == "required" ? "requird" : ""}
+              {errors.teamLeader?.type == "required" ? "requird" : errors.teamLeader?.type=="pattern"?"team leader name can contain letters and digits,underscores only":""}
             </p>
           </div>
           <div className="my-2 w-full">
@@ -175,7 +171,7 @@ function ManageTeamsForm() {
             <div className="relative mt-2">
               <select
                 name="parentTeam"
-                {...register("parentTeam", {})}
+                {...register("parentTeam", {pattern:/^[a-zA-Z0-9_]+$/})}
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.parentTeam?.type == "required" || !touchedFields.parentTeam ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
               >
                 <option value="">Select Parent Team</option>
@@ -194,7 +190,7 @@ function ManageTeamsForm() {
               </div>
             </div>
             <p className="text-deleteColor-50">
-              {errors.parentTeam?.type == "required" ? "required" : ""}
+              {errors.parentTeam?.type == "required" ? "required" : errors.parentTeam?.type=="pattern"?"parent team can contain letters and digits,underscores only":""}
             </p>
           </div>
         </div>
