@@ -1,53 +1,49 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
-import { set, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
 import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice";
 import Select from 'react-select'
 import axiosInstance from "../../../../components/GeneralApi/generalApi";
-import { data } from "autoprefixer";
+
+import { getAllData } from "../../slices/Api/catgoryapi";
+
 function AddCompetency() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
   const [teamsAssigned, setTeamsAssigned] = useState([]); 
   const [formlevels,setFormLevels] = useState([]); 
   const [descriptions, setDescriptions] = useState([]);
- 
+  const [categories, setCategories] = useState([]);
   const seniorityLevels = formlevels?.map((level, index) => ({
     level,
     description: descriptions[index],
   }));
+  const[isHidden,setIsHidden]=useState(false)
  
   const schema = yup
     .object({
       name: yup.string().required("Name is required"),
       category: yup.string().required("Category is required"),
-      defaultDescription: yup.string().required("Description is required"),
+      defaultDescription: yup.string()
     })
     .required();
 
     const {
       data: teamsNames,
-      isError: isTeamsNameError,
-      isSuccess: isTeamsNameSuccess,
-      isLoading: isTeamsNameLoading,
-      error: TeamsNameError,
     } = useGetTeamsNameQuery();
     const teamsArray = teamsNames?.data?.teamsNames ;
     const teamsOptions = teamsArray?.map(team => ({ value: team._id, label: team.teamName }));
 
     const {
       data: levels,
-      isError: isLevelError,
-      isSuccess: isLevelSuccess,
-      isLoading: isLevelLoading,
-      error: LevelError,
+
     } = useGetLevelQuery();
 
     const levelsArray = levels?.data?.levels ;
@@ -73,6 +69,7 @@ function AddCompetency() {
 
   const formSubmit = async (values) => {
     try {
+       if (teamsAssigned.length === 0 && seniorityLevels.length === 0) return
       const dataToSend = {
         ...values,
         seniorityLevels,
@@ -108,6 +105,19 @@ function AddCompetency() {
     setDescriptions(newDescriptions);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllData();
+        setCategories(data.data.categories);
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
 
   return (
     <>
@@ -151,9 +161,13 @@ function AddCompetency() {
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none  `}
               >
                 <option value="">select category</option>
-                <option value="65e0e9f2947a4445e6fabfe2">Option 1</option>
-                <option value="65e0e9f2947a4445e6fabfe2">Option 2</option>
-                <option value="65e0e9f2947a4445e6fabfe2">Option 3</option>
+                {categories.map((category, index) => {
+                  return (
+                    <option key={index} value={category._id}>
+                      {category.categoryName}
+                    </option>
+                  );
+                })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <Icons.ArrowDownBlack />
@@ -204,34 +218,15 @@ function AddCompetency() {
             </div>
           </div>
           {teamsBtnChecked && (
-            // <div className="relative my-2 transition-all duration-1000 ">
-            //   <select
-            //     {...register("team")}
-              
-            //     className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none  `}
-            //   >
-            //     <option value="">select team</option>
-            //     {!isTeamsNameLoading &&
-            //           !isTeamsNameError &&
-            //           teamsNames.data.teamsNames.map((teamName, index) => {
-            //             return (
-            //               <option key={index} value={teamName._id}>
-            //                 {teamName.teamName}
-            //               </option>
-            //             );
-            //        })}
-            //   </select>
-            //   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            //     <Icons.ArrowDownBlack />
-            //   </div>
-            // </div>
+     
             <div>
                <Select
                 options={teamsOptions}
                 onChange={handleTeamChange}
                 isMulti
-                  closeMenuOnSelect={false} // Keep the dropdown open after selection
+                  closeMenuOnSelect={false} 
                    />
+                   {teamsAssigned?.length === 0  && <p className="text-red-500">Please add teams first</p>}
             </div>
           )}
 
@@ -241,43 +236,26 @@ function AddCompetency() {
               Select Levels to customize competency descriptions for each career
               path level.
             </p>
-            <div className="relative mt-2">
-              {/* <select
-                {...register("level")}
-                name="level"
-                className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none  `}
-              >
-                <option value="">select level</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <Icons.ArrowDownBlack />
-              </div>
-              {errors.level && (
-                <p className="text-red-500">{errors.level.message}</p>
-              )} */}
-                   <div>
+            <div className="relative mt-2">   
                <Select
                 options={levelsOptions}
                 onChange={handleLevelChange}
                 isMulti
                   closeMenuOnSelect={false} // Keep the dropdown open after selection
                    />
-            </div>
+                  
+                   {formlevels?.length === 0 && <p className="text-red-500">Please add levels first</p>}
             </div>
           </div>
 
           {formlevels.length!==0 && levelsArray?.map((level, index) => {
             return(
-              <>
               
-            <div key={index} className="relative my-2 transition-all duration-1000 " >
+            <div key={index} className={`${isHidden?"hidden":""}relative my-2 transition-all duration-1000 `} >
               <div className="my-2">
                 <div className="flex items-center justify-between">
                   <Header text={level?.levelName} htmlFor="levelDescription" />
-                  <div className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500"  onClick={() => handleRemoveDescription(index)} >
+                  <div className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500"  onClick={ () => setIhidden(true) } >
                     -
                   </div>
                 </div>
@@ -295,7 +273,7 @@ function AddCompetency() {
               </div>
             </div>
           
-              </>
+             
             )
           })}
 
