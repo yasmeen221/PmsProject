@@ -10,10 +10,17 @@ import {
   useDeleteTeamMutation,
   useGetTeamsQuery,
 } from "../../slices/apis/apiSlice";
+import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
+import { HandelOpenPopUpDelete } from "../../slices/HandelOpenDelete";
 
 const TeamsTable = () => {
+  const oPenPopUp = useSelector(
+    (state) => state.openPopUpConfirmDeleteSlice.open,
+  );
   const [selectedTeam, setSelectedTeam] = useState(null);
   const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isPopupOpenDelete, setPopupOpenDelete] = useState(false);
+
   const {
     data: teams,
     isError,
@@ -27,6 +34,7 @@ const TeamsTable = () => {
   const handleDelete = (id) => {
     try {
       deleteTeam(id);
+      setPopupOpenDelete(false);
     } catch (err) {
       console.log(err);
     }
@@ -103,6 +111,7 @@ const TeamsTable = () => {
                           dispatch(editButtonTeamHandle(item)); //to catch data from global items
                       }}
                     />
+
                     <Button
                       iconLeft={<Icons.DeleteUserPage />}
                       className=" bg-transparent px-1"
@@ -118,6 +127,11 @@ const TeamsTable = () => {
       </table>
 
       {isPopupOpen && <ManageTeamsForm selectedTeam={selectedTeam} />}
+      {oPenPopUp && (
+        <ConfirmDelete
+          deleteFunction={(() => handleDelete(item._id), console.log("gggggg"))}
+        />
+      )}
     </div>
   );
 };

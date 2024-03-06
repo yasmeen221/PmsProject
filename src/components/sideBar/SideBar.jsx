@@ -3,24 +3,21 @@ import SideBarItem from "../../components/sideBar/SideBarItem";
 import Icons from "../../themes/icons";
 import logo from "../../assets/images/logo/logo.png";
 import logoTwo from "../../assets/images/logo/logo.svg";
-import { useAuth } from "../Auth/auth";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "universal-cookie";
 
 function SideBar() {
-  const { isLoggedIn } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
-  const [userData,setUserData]=useState()
-  useEffect(()=>{
+  const [userData, setUserData] = useState();
+  useEffect(() => {
     const cookie = new Cookies();
     let token = cookie.get("userToken");
     if (token) {
       const decodedUserToken = jwtDecode(token);
-      setUserData(decodedUserToken)
-     
+      setUserData(decodedUserToken);
     }
-  },[])
-  
+  }, []);
+
   return (
     <aside
       className={
@@ -54,25 +51,31 @@ function SideBar() {
           title="competencies"
           to="competencies"
         ></SideBarItem>
-        {!isLoggedIn && (
-          <SideBarItem
-            icon={<Icons.GoalsIcon />}
-            isOpen={isOpen}
-            title="Goals"
-          ></SideBarItem>
-        )}
+
+        <SideBarItem
+          icon={<Icons.GoalsIcon />}
+          isOpen={isOpen}
+          title="Goals"
+        ></SideBarItem>
+
         <SideBarItem
           icon={<Icons.Feedback />}
           isOpen={isOpen}
           title="feedback"
           to="feedback"
         ></SideBarItem>
-        {userData?.role=="superAdmin"||userData?.role=="admin"?<SideBarItem
-          icon={<Icons.Reviews />}
-          isOpen={isOpen}
-          title="users&teams"
-          to="users&teams"
-        ></SideBarItem>:""}
+
+        {userData?.role == "superAdmin" || userData?.role == "admin" ? (
+          <SideBarItem
+            icon={<Icons.Reviews />}
+            isOpen={isOpen}
+            title="users&teams"
+            to="users&teams"
+          ></SideBarItem>
+        ) : (
+          ""
+        )}
+
         <SideBarItem
           icon={<Icons.Surveys />}
           isOpen={isOpen}

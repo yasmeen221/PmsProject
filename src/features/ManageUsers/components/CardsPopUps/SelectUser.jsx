@@ -55,6 +55,7 @@ const SelectUser = () => {
   const [addUser, { isLoading, isError, error, isSuccess }] =
     useAddUserMutation();
   const [editRemoteUser,{isLoading:isEditLoading}]=useEditRemoteUserMutation()
+
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.editUser.user);
   const handleOpenPopUp = useSelector(
@@ -126,8 +127,9 @@ const SelectUser = () => {
       // handleClosePopup();
       try {
         if (userData.username) {
-          editRemoteUser({ ...values, _id: userData._id });
-          console.log({ ...values, _id: userData._id });
+          editRemoteUser({_id:userData._id,...values});
+          console.log("ddd"+JSON.stringify(values));
+          console.log(values)
           console.log("edit");
         }
         else{
@@ -266,9 +268,9 @@ const SelectUser = () => {
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.role ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
                     <option value="">Select Role</option>
-                    <option value="superAdmin">User</option>
+                    <option value="user">User</option>
                     <option value="admin">Admin</option>
-                    <option value="user">Super Admin</option>
+                    <option value="superAdmin">Super Admin</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />

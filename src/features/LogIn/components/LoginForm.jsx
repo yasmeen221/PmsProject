@@ -12,7 +12,6 @@ import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
-import { useAuth } from "../../../components/Auth/auth";
 import Cookies from "universal-cookie";
 import { useDispatch } from "react-redux";
 import { changeUserDataValue } from "../slices/login";
