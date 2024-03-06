@@ -21,11 +21,12 @@ function AddCompetency() {
   const [formlevels,setFormLevels] = useState([]); 
   const [descriptions, setDescriptions] = useState([]);
   const [categories, setCategories] = useState([]);
+ 
   const seniorityLevels = formlevels?.map((level, index) => ({
     level,
     description: descriptions[index],
   }));
-  const[isHidden,setIsHidden]=useState(false)
+
  
   const schema = yup
     .object({
@@ -244,18 +245,18 @@ function AddCompetency() {
                   closeMenuOnSelect={false} // Keep the dropdown open after selection
                    />
                   
-                   {formlevels?.length === 0 && <p className="text-red-500">Please add levels first</p>}
+                   {formlevels?.length === 0  &&  <p className="text-red-500">Please add levels first</p>}
             </div>
           </div>
 
-          {formlevels.length!==0 && levelsArray?.map((level, index) => {
+          {formlevels.length!==0  && levelsArray?.map((level, index) => {
             return(
               
-            <div key={index} className={`${isHidden?"hidden":""}relative my-2 transition-all duration-1000 `} >
+            <div key={index} className= "relative my-2 transition-all duration-1000 " >
               <div className="my-2">
                 <div className="flex items-center justify-between">
                   <Header text={level?.levelName} htmlFor="levelDescription" />
-                  <div className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500"  onClick={ () => setIhidden(true) } >
+                  <div className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500" >
                     -
                   </div>
                 </div>
