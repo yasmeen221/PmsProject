@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import * as yup from 'yup';
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
@@ -7,7 +6,7 @@ import Icons from "../../../../themes/icons";
 import Header from '../../../../components/Header/Header';
 import TextInput from '../../../../components/TextInput/TextInput';
 
-export default function AddNewCategory() {
+export default function AddNewCatgory({ handleAddCategory }) {
     const [isPopupOpen, setPopupOpen] = useState(false);
     const [errors, setErrors] = useState({}); // State to hold validation errors
 
@@ -21,27 +20,40 @@ export default function AddNewCategory() {
 
     // Yup schema for form validation
     const schema = yup.object().shape({
-        categoryName: yup.string().trim().required().matches(/^[A-Za-z ]+$/, 'Category name must contain characters only').min(3, 'Category name must be at least 3 characters').max(30, 'Category name must not exceed 30 characters'),
-        competenciesId: yup.array().of(yup.string())
+        categoryName: yup.string().trim()
+        .required()
+        .matches(/^[A-Za-z ]+$/, 'Category name must contain characters only')
+        .min(3, 'Category name must be at least 3 characters')
+        .max(30, 'Category name must not exceed 30 characters'),
+      
     });
 
-    // Function to handle form submission
     const handleSubmit = async (values) => {
         try {
-            // Validate form data using Yup schema
+          
             await schema.validate(values, { abortEarly: false });
-            // Handle form submission here
+            
             console.log('Form submitted successfully:', values);
             handleClosePopup();
-        } catch (error) {
             
-            setErrors(error.inner.reduce((acc, currentError) => {
-                acc[currentError.path] = currentError.message;
-                return acc;
-            }, {}));
-            console.error('Validation Error:', error.errors);
+            handleAddCategory(values.categoryName);
+        } catch (error) {
+            if (error.inner) {
+                
+                setErrors(
+                    error.inner.reduce((acc, currentError) => {
+                        acc[currentError.path] = currentError.message;
+                        return acc;
+                    }, {})
+                );
+            } else {
+                
+                console.error('Validation Error:', error.message);
+            }
         }
     };
+    
+    
 
     return (
         <>
@@ -55,7 +67,7 @@ export default function AddNewCategory() {
                     e.preventDefault();
                     const formData = {
                         categoryName: e.target.categoryName.value,
-                        competenciesId: [/* Add competenciesId values here */]
+                       
                     };
                     handleSubmit(formData);
                 }}>

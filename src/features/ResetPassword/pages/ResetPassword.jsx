@@ -16,8 +16,9 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const [securePass, setSecurePass] = useState(true);
   const [secureConfirmPass, setSecureConfirmPass] = useState(true);
-  const [setPassword, { isLoading, isError,error,isSuccess }] = useSetPasswordMutation()
-  
+  const [setPassword, { isLoading, isError, error, isSuccess }] = useSetPasswordMutation()
+  const [resetPassError, setResetPassError] = useState()
+
   const {
     register,
     handleSubmit,
@@ -40,14 +41,20 @@ const ResetPassword = () => {
       confirmPassword: data.confirmPassword
 
     }
-    setPassword(objToSend).then((res)=>{
-      if(res.data.status=="success"){
+    setPassword(objToSend).then((res) => {
+      if (res.data.status == "success") {
         navigate("/")
         reset();
       }
-    }).catch((err)=>{console.log(err)})
-    
-    
+    }).catch((err) => {
+      if (err.status == 500) {
+        setResetPassError("internal server error")
+      } else {
+        setResetPassError("some thing went wrong")
+      }
+    })
+
+
 
   };
   return (

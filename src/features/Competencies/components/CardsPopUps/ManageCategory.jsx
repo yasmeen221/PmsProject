@@ -4,17 +4,26 @@ import Button from '../../../../components/Button/Button';
 import Icons from '../../../../themes/icons';
 import AddNewCatgory from './AddNewCatgory';
 import EditCatgory from './EditCatgory';
+import { getAllData, deleteData, createData, updateData } from '../../slices/Api/catgoryapi';
 
 export default function ManageCategory({ onClose }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isEditPopupOpen, setEditPopupOpen] = useState(false);
+  const [category, setCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
+    fetchData();
     setPopupOpen(true);
-  }, []);
+  }, [category]);
 
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
+  const fetchData = async () => {
+    try {
+      const response = await getAllData();
+      setCategory(response.data.categories);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   const handleClosePopup = () => {
@@ -22,16 +31,45 @@ export default function ManageCategory({ onClose }) {
     onClose();
   };
 
-  const handleOpenEditPopup = () => {
+  const handleOpenEditPopup = (category) => {
+    setSelectedCategory(category);
     setEditPopupOpen(true);
   };
 
   const handleCloseEditPopup = () => {
     setEditPopupOpen(false);
   };
- 
 
+  const handleDeleteCategory = async (id) => {
+    try {
+      const res = await deleteData(id);
+      const updatedCategories = category.filter(cat => cat._id !== id);
+      setCategory(updatedCategories);
+      console.log('Category deleted successfully');
+    } catch (error) {
+      console.error('Error deleting category:', error);
+    }
+  };
 
+  const handleAddCategory = async (categoryName) => {
+    try {
+      const res = await createData(categoryName);
+      console.log('Category added successfully:', res);
+      
+    } catch (error) {
+      console.error('Error adding category:', error);
+    }
+  };
+
+  const handleEditCategory = async (editedCategory) => {
+    try {
+      const res = await updateData(selectedCategory._id, editedCategory);
+      console.log('Category edited successfully:', res);
+     
+    } catch (error) {
+      console.error('Error editing category:', error);
+    }
+  };
 
   return (
     <>
@@ -40,38 +78,34 @@ export default function ManageCategory({ onClose }) {
         ClosePop={handleClosePopup}
         TitlePopUp="Manage Category"
       >
-        {/* Your category list with edit and delete buttons */}
         <div style={{ width: '30.75vw', maxHeight: '69.73478939157566vh' }} className="px-1">
-          {/* Example Category */}
-          <div className='flex justify-between my-3'>
-            <div>
-              <h3 className='font-semibold text-lg'>Soft Skills</h3>
-              <p className='font-normal text-gray-500'>Has 5 competencies</p>
+          {category.map((cat) => (
+            <div key={cat._id} className='flex justify-between my-3'>
+              <div>
+                <h3 className='font-semibold text-lg'>{cat.categoryName}</h3>
+                <p className='font-normal text-gray-500'>Has {cat.competenciesId?.length} competencies</p>
+              </div>
+              <div>
+                <Button
+                  iconLeft={<Icons.EditUserPage />}
+                  className="bg-transparent px-1"
+                  onClick={() => handleOpenEditPopup(cat)}
+                />
+                <Button
+                  iconLeft={<Icons.DeleteUserPage />}
+                  className="bg-transparent px-1"
+                  onClick={() => handleDeleteCategory(cat._id)}
+                />
+              </div>
             </div>
-            <div>
-              <Button
-                iconLeft={<Icons.EditUserPage />}
-                className="bg-transparent px-1"
-                onClick={handleOpenEditPopup} // Open Edit Category popup when clicking on edit icon
-              />
-              <Button
-                iconLeft={<Icons.DeleteUserPage />}
-                className="bg-transparent px-1"
-                onClick={() => { /* Add delete functionality */ }}
-              />
-            </div>
-          </div>
-          {/* Add more category entries as needed */}
-          {/* Your other category entries */}
+          ))}
           <hr />
           <div className="mt-2 w-full inline-flex justify-end px-1">
-            <AddNewCatgory />
+            <AddNewCatgory handleAddCategory={handleAddCategory} />
           </div>
         </div>
       </FormPopUp>
-
-      {/* Edit Category Popup */}
-      {isEditPopupOpen && <EditCatgory onClose={handleCloseEditPopup} />}
+      {isEditPopupOpen && <EditCatgory onClose={handleCloseEditPopup} category={selectedCategory} handleEditCategory={handleEditCategory} />}
     </>
   );
 }
