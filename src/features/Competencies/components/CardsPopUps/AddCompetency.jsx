@@ -10,6 +10,8 @@ import * as yup from "yup";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
 import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice";
 import Select from 'react-select'
+import axiosInstance from "../../../../components/GeneralApi/generalApi";
+import { data } from "autoprefixer";
 function AddCompetency() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
@@ -17,8 +19,8 @@ function AddCompetency() {
   const [formlevels,setFormLevels] = useState([]); 
   const [descriptions, setDescriptions] = useState([]);
  
-  const seniorityLevels = formlevels?.map((levelId, index) => ({
-    levelId,
+  const seniorityLevels = formlevels?.map((level, index) => ({
+    level,
     description: descriptions[index],
   }));
  
@@ -69,13 +71,20 @@ function AddCompetency() {
     resolver: yupResolver(schema),
   });
 
-  const formSubmit = (values) => {
-    console.log({
-      ...values,
-      seniorityLevels,
-      teamsAssigned,
-    });
-    setPopupOpen(false);
+  const formSubmit = async (values) => {
+    try {
+      const dataToSend = {
+        ...values,
+        seniorityLevels,
+        teamsAssigned,
+      };
+      console.log('Data to send:', dataToSend)
+      const response = await axiosInstance.post('/competency', dataToSend);
+      console.log('Backend response:', response.data);
+      setPopupOpen(false);
+    } catch (error) {
+      console.error('Error sending data to the backend:', error);
+    }
   };
 
   const handleOpenPopup = () => {
@@ -142,9 +151,9 @@ function AddCompetency() {
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none  `}
               >
                 <option value="">select category</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+                <option value="65e0e9f2947a4445e6fabfe2">Option 1</option>
+                <option value="65e0e9f2947a4445e6fabfe2">Option 2</option>
+                <option value="65e0e9f2947a4445e6fabfe2">Option 3</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <Icons.ArrowDownBlack />
