@@ -15,7 +15,7 @@ export default function ViewDetails() {
         isOpen={isPopupOpen}
         ClosePop={handleClosePopup}
         TitlePopUp=""
-        iconLeft={<Icons.ArrowLeftPop />}
+        
       >
 
       </FormPopUp>
