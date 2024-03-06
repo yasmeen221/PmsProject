@@ -17,13 +17,15 @@ const schema = yup.object().shape({
     .string()
     .required("Level name is required")
     .matches(/^[A-Za-z]+$/, "Level name must contain characters only")
+    .min(3,"level name must be at least 3 characters")
+    .max(30,"level name can't exceed 30 characters")
     .trim(),
 });
 // eslint-disable-next-line react/prop-types, no-unused-vars
 export default function EditLevel({ level,onClose }) {
   const [isPopupOpen, setPopupOpen] = useState(true);
   // const [updateLevel, setupdateLevel] = useState({});
-  const [updateLevel,{error}]=useUpdateLevelMutation();
+  const [updateLevel,{error,isLoading}]=useUpdateLevelMutation();
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
@@ -88,6 +90,7 @@ export default function EditLevel({ level,onClose }) {
               type="submit"
               className="px-12 py-2.5 text-fontColor-whiteBaseColor"
               buttonText="Edit Level"
+              isLoading={isLoading}
               
             />
           </div>

@@ -43,13 +43,14 @@ export default function UserTable() {
       console.log(error);
     }
   };
-
+  
+  
   const handleEditUser = (user) => {
     dispatch(editUser(user));
     dispatch(editUsersData(user));
     dispatch(handleOpenAddUserFormPopUp(true));
   };
-
+  
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
@@ -89,12 +90,19 @@ export default function UserTable() {
             </tr>
           </thead>
           <tbody>
-            {isLoading && (
+
+          
+            {isLoading &&
+            <tr >
+              <td colSpan="4" className=" px-6 py-3 " > <div className="inline-flex items-center justify-center"><Icons.Loading /></div></td>
+            </tr>}
+            
+            {!isLoading && !isError && users.data.users.length == 0 && (
               <tr>
                 <td colSpan="4" className=" px-6 py-3 ">
                   {" "}
                   <div className="inline-flex items-center justify-center">
-                    <Icons.Loading />
+                    <p>There is No Users Exist</p>
                   </div>
                 </td>
               </tr>
@@ -112,7 +120,7 @@ export default function UserTable() {
             )}
             {!isLoading &&
               !isError &&
-              users.data.users.map((user, index) => {
+              users?.data.users.map((user, index) => {
                 return (
                   <tr
                     key={user?._id}
@@ -125,7 +133,7 @@ export default function UserTable() {
                     <td className="px-6 py-4">{user?.username}</td>
                     <td className="px-6 py-4">{user?.email}</td>
                     <td className="px-6 py-4">{user?.position} </td>
-                    {/* <td className="px-6 py-4"> {user?.level.levelName} </td> */}
+                    <td className="px-6 py-4"> {user?.level?.levelName} </td>
                     <td className="px-6 py-4"> {user?.role}</td>
                     <td className="px-6 py-4 inline-flex">
                       <Button

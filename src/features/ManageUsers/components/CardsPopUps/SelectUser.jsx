@@ -24,37 +24,38 @@ const userSchema = yup.object({
     .required("Required")
     .min(2)
     .max(15)
-    .matches(/^[A-Za-z]+$/, "Invalid characters")
+    .matches(/^[A-za-z ]+$/, "first name can contain uppercase letters,lowercase letters,and spaces")
     .trim(),
   lastName: yup
     .string()
     .required("Required")
     .min(2)
     .max(15)
-    .matches(/^[A-Za-z]+$/, "Invalid characters")
+    .matches(/^[A-za-z ]+$/, "last name can contain uppercase letters,lowercase letters,and spaces")
     .trim(),
   username: yup
     .string()
     .required("Required")
-    .matches(/^[a-zA-Z0-9_]+$/, "Username must be alphanumeric")
+    .matches(/^[a-zA-Z0-9_]+$/, "username  can contain letters and digits,underscores only")
     .min(3, "Username must be at least 3 characters")
     .max(15, "Username can't exceed 15 characters"),
   email: yup.string().email().required("Required"),
   position: yup
     .string()
     .required("Required")
-    .matches(/^[A-Za-z]+$/, "Invalid characters")
+    .matches(/^[A-Za-z _-]+$/, "position can contain uppercase letters,lowercase letters,spaces,underscores,orhyphens(-). ")
     .trim(),
-  level: yup.string().required("Required"),
-  role: yup.string().required("Required"),
-  team: yup.string().required("Required"),
+  level: yup.string().required("Required").matches(/^[a-zA-Z0-9_]+$/,"level can contain letters and digits,underscores only"),
+  role: yup.string().required("Required").matches(/^[A-Za-z ]+$/,"role can contain uppercase  letters ,lowercase letters and spaces"),
+  team: yup.string().required("Required").matches(/^[a-zA-Z0-9_]+$/,"team  can contain letters and digits,underscores only"),
 });
 
 const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [addUser, { isLoading, isError, error, isSuccess }] =
     useAddUserMutation();
-  const [editRemoteUser]=useEditRemoteUserMutation()
+  const [editRemoteUser,{isLoading:isEditLoading}]=useEditRemoteUserMutation()
+
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.editUser.user);
   const handleOpenPopUp = useSelector(
@@ -126,8 +127,9 @@ const SelectUser = () => {
       // handleClosePopup();
       try {
         if (userData.username) {
-          editRemoteUser({ ...values, _id: userData._id });
-          console.log({ ...values, _id: userData._id });
+          editRemoteUser({_id:userData._id,...values});
+          console.log("ddd"+JSON.stringify(values));
+          console.log(values)
           console.log("edit");
         }
         else{
@@ -266,9 +268,9 @@ const SelectUser = () => {
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.role ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
                     <option value="">Select Role</option>
-                    <option value="superAdmin">User</option>
+                    <option value="user">User</option>
                     <option value="admin">Admin</option>
-                    <option value="user">Super Admin</option>
+                    <option value="superAdmin">Super Admin</option>
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />
@@ -317,7 +319,8 @@ const SelectUser = () => {
             <Button
               type="submit"
               className="px-6 py-3.5 text-white bg-blue-500 rounded-md"
-              buttonText="Add User"
+              buttonText={userData.username?"Edit User":"Add User"}
+              isLoading={userData.username?isEditLoading:isLoading}
             />
           </div>
         </div>

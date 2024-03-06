@@ -73,6 +73,16 @@ const TeamsTable = () => {
               </td>
             </tr>
           )}
+          {!isLoading && !isError && teams.data.teams.length == 0 && (
+            <tr>
+              <td colSpan="4" className=" px-6 py-3 ">
+                {" "}
+                <div className="inline-flex items-center justify-center">
+                  <p>There is No Team Exist</p>
+                </div>
+              </td>
+            </tr>
+          )}
           {!isLoading && isError ? (
             <tr>
               <td colSpan="4" className=" px-6 py-3  ">
