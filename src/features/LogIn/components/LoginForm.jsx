@@ -21,7 +21,7 @@ const schema = yup.object({
     .string()
     // .email("Email must be valid")
     .required("user name is required")
-    .matches(/^[A-Za-z\s\d]+$/, "Invalid user name"),
+    .matches(/^[a-zA-Z0-9_]+$/, "username  can contain letters and digits,underscores only"),
   password: yup
     .string()
     .required("Password is required")
@@ -37,8 +37,7 @@ const LoginForm = ({ saveUserData }) => {
   const navigate = useNavigate(); // Add this line to get the navigate function
   const [loginUser, { isLoading, isError, error, isSuccess }] =
     useLoginUserMutation();
-  const cookie = new Cookies((null, { path: "/" }));
-
+  const [loginError, setLoginError] = useState()
   const {
     register,
     handleSubmit,
@@ -51,24 +50,29 @@ const LoginForm = ({ saveUserData }) => {
   const formSubmit = (values) => {
     const objToSend = {
       username: values.email,
-      password: values.password,
-    };
-    loginUser(objToSend)
-      .unwrap()
-      .then((res) => {
+      password: values.password
+    }
+      loginUser(objToSend).unwrap().then((res) => {
         if (res.status == "success") {
           console.log(res.data);
           const cookie = new Cookies((null, { path: "/" }));
-          cookie.set("userToken", res.data.accesToken);
-          cookie.set("refreshToken", res.data.refreshToken);
-          saveUserData(res.data);
+          cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
+          cookie.set("refreshToken", res.data.refreshToken)
+          saveUserData(res.data)
           navigate("/dashboard/competencies", { replace: true });
           reset();
-          // }
-        } else {
-          console.log(res);
+          setLoginError("")
         }
-      });
+      }).catch((err) => {
+        if (err.data.data.message == "username or password is incorrect") {
+          setLoginError("username or password is incorrect")
+        } else if (err.status == 500) {
+          setLoginError("internal server error")
+        } else {
+          setLoginError("some thing went wrong")
+        }
+      })
+    
   };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
@@ -114,6 +118,9 @@ const LoginForm = ({ saveUserData }) => {
             </div>
             {errors.password ? (
               <p className="text-deleteColor-50">{errors.password.message}</p>
+            ) : null}
+            {loginError ? (
+              <p className="text-deleteColor-50">{loginError}</p>
             ) : null}
 
             <div className="mt-4">

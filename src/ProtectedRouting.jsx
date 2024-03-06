@@ -10,7 +10,6 @@ export default function ProtectedRouting(props) {
   const cookie = new Cookies();
   let token = cookie.get("userToken");
   if (token) {
-    console.log(token);
     const decodedUserToken = jwtDecode(token);
     console.log("nnjjnjnjjnj", decodedUserToken.role);
     if (role) {

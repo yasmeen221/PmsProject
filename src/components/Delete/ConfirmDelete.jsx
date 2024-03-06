@@ -1,50 +1,49 @@
 import React, { useState } from "react";
 import FormPopUp from "../PopUp/FormPopUp";
-import Icons from "../../themes/icons";
-
-import Button from "../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { HandelOpenPopUpDelete } from "../../features/ManageTeams/slices/HandelOpenDelete";
+import Button from "../Button/Button";
 
-const ConfirmDelete = ({ deleteFunction }) => {
+const ConfirmDelete = ({ onClose, onConfirm }) => {
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
   );
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-
   const handleClosePopup = () => {
-    // setPopupOpen(false);
     dispatch(HandelOpenPopUpDelete(false));
+    if (onClose) {
+      onClose();
+    }
   };
-
   const handleConfirmDelete = () => {
-    deleteFunction();
+    if (onConfirm) {
+      onConfirm();
+    }
     handleClosePopup();
   };
+
   return (
     <>
       <FormPopUp
         isOpen={oPenPopUp}
         ClosePop={handleClosePopup}
-        TitlePopUp="confirm delete"
+        TitlePopUp="  Are You Sure Delete It?!"
       >
-        <div className="flex mt-6 justify-between ">
-          <p className="font-custom text-fontColor-blackBaseColor text-buttonFontSize font-popUpWeight">
-            Are You Sure Delete It?!
-          </p>
-          <Icons.DeleteUserPage onClick={handleConfirmDelete} />
+        <div className="justify-between ">
+          <div className="flex justify-around mt-5 mb-5">
+            <Button
+              onClick={handleConfirmDelete}
+              buttonText="Delete"
+              className="bg-deleteColor-50 text-fontColor-whiteBaseColor px-7"
+            />
+            <Button
+              onClick={handleClosePopup}
+              buttonText="Cancel"
+              className=" text-fontColor-whiteBaseColor px-7 "
+            />
+          </div>
         </div>
       </FormPopUp>
-      {/* <Button
-        buttonText="confirm delete"
-        className="text-fontColor-whiteBaseColor"
-        iconLeft={<Icons.PlusIcon />}
-        onClick={handleOpenPopup}
-      /> */}
     </>
   );
 };
