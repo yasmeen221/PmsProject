@@ -14,10 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../slices/userSlice";
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
-import {
-  useAddUserMutation,
-  useEditUserMutation,
-} from "../../slices/api/apiSlice.js";
+import { useAddUserMutation, useEditRemoteUserMutation } from "../../slices/api/apiSlice.js";
+import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice.js";
+import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice.js";
 
 const userSchema = yup.object({
   firstName: yup
@@ -25,42 +24,62 @@ const userSchema = yup.object({
     .required("Required")
     .min(2)
     .max(15)
-    .matches(/^[A-Za-z]+$/, "Invalid characters")
+    .matches(/^[A-za-z ]+$/, "first name can contain uppercase letters,lowercase letters,and spaces")
     .trim(),
   lastName: yup
     .string()
     .required("Required")
     .min(2)
     .max(15)
-    .matches(/^[A-Za-z]+$/, "Invalid characters")
+    .matches(/^[A-za-z ]+$/, "last name can contain uppercase letters,lowercase letters,and spaces")
     .trim(),
   username: yup
     .string()
     .required("Required")
-    .matches(/^[a-zA-Z0-9_]+$/, "Username must be alphanumeric")
+    .matches(/^[a-zA-Z0-9_]+$/, "username  can contain letters and digits,underscores only")
     .min(3, "Username must be at least 3 characters")
     .max(15, "Username can't exceed 15 characters"),
   email: yup.string().email().required("Required"),
   position: yup
     .string()
     .required("Required")
-    .matches(/^[A-Za-z]+$/, "Invalid characters")
+    .matches(/^[A-Za-z _-]+$/, "position can contain uppercase letters,lowercase letters,spaces,underscores,orhyphens(-). ")
     .trim(),
-  level: yup.string().required("Required"),
-  role: yup.string().required("Required"),
-  team: yup.string().required("Required"),
+  level: yup.string().required("Required").matches(/^[a-zA-Z0-9_]+$/,"level can contain letters and digits,underscores only"),
+  role: yup.string().required("Required").matches(/^[A-Za-z ]+$/,"role can contain uppercase  letters ,lowercase letters and spaces"),
+  team: yup.string().required("Required").matches(/^[a-zA-Z0-9_]+$/,"team  can contain letters and digits,underscores only"),
 });
 
 const SelectUser = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [addUser, { isLoading, isError, error, isSuccess }] =
     useAddUserMutation();
-  const [editUser] = useEditUserMutation();
+  const [editRemoteUser,{isLoading:isEditLoading}]=useEditRemoteUserMutation()
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.editUser.user);
   const handleOpenPopUp = useSelector(
     (store) => store.openAddUserFormPopUp.open,
   );
+
+  const {
+    data: levels,
+    isError: isLevelError,
+    isSuccess: isLevelSuccess,
+    isLoading: isLevelLoading,
+    error: LevelError,
+  } = useGetLevelQuery();
+
+
+  const {
+    data: teamsNames,
+    isError: isTeamsNameError,
+    isSuccess: isTeamsNameSuccess,
+    isLoading: isTeamsNameLoading,
+    error: TeamsNameError,
+  } = useGetTeamsNameQuery();
+  console.log(teamsNames);
+
+  
 
   const {
     register,
@@ -90,40 +109,41 @@ const SelectUser = () => {
 
   const handleClosePopup = () => {
     setPopupOpen(false);
-
     dispatch(handleOpenAddUserFormPopUp(false));
     dispatch(editUser({}));
   };
 
-  const formSubmit = async (values) => {
-    try {
-      if (userData.username) {
-        editUser({ id: userData._id, ...values });
-        console.log(values);
-      } else {
-        addUser(values);
+
+    const formSubmit = (values) => {
+      // try {
+      // console.log(values);
+      // editRemoteUser(values)
+      // addUser(values)
+      // reset();
+      // } catch (error) {
+      //   console.log(error)
+      // }
+      // handleClosePopup();
+      try {
+        if (userData.username) {
+          editRemoteUser({ ...values, _id: userData._id });
+          console.log({ ...values, _id: userData._id });
+          console.log("edit");
+        }
+        else{
+          addUser(values);
+          console.log(values)
+          console.log("add");
+        }
+        reset();
+        handleClosePopup();
+      } catch (error) {
+        console.log(error);
       }
-      reset();
-      handleClosePopup();
-    } catch (error) {
-      console.log(error);
-    }
-    // console.log(values);
-    // dispatch(addUser(values));
-    // const obj = {
-    //   firstName: values.firstName,
-    //   lastName: values.lastName,
-    //   username: values.username,
-    //   email: values.email,
-    //   position: values.position,
-    //   level: "65e0dd8b0cc3db3333f44c22",
-    //   role: values.role,
-    //   team: "65e139409bdf31421e7dae95",
-    // };
-    // addUser(obj);
-    // reset();
-    // handleClosePopup();
-  };
+ 
+    };
+  
+
 
   return (
     <>
@@ -206,13 +226,22 @@ const SelectUser = () => {
                 <Header text="Level" />
                 <div className="relative mt-2">
                   <select
-                    onChange={(e) => setValue("level", e.target.value)}
+                    // onChange={(e) => setValue("level", e.target.value)}
+                    name="level"
+                    {...register("level")}
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.level ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
+                   
                   >
                     <option value="">Select Level</option>
-                    <option value="1">Fresh</option>
-                    <option value="2">Junior</option>
-                    <option value="3">Senior</option>
+                    {!isLevelLoading &&
+                      !isLevelError &&
+                      levels.data.levels.map((level, index) => {
+                        return (
+                          <option key={index} value={level._id}>
+                            {level.levelName}
+                          </option>
+                        );
+                      })}
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />
@@ -231,7 +260,9 @@ const SelectUser = () => {
                 <Header text="Role" />
                 <div className="relative mt-2">
                   <select
-                    onChange={(e) => setValue("role", e.target.value)}
+                    // onChange={(e) => setValue("role", e.target.value)}
+                    name="role"
+                    {...register("role")}
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.role ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
                     <option value="">Select Role</option>
@@ -253,13 +284,23 @@ const SelectUser = () => {
                 <Header text="Team" />
                 <div className="relative mt-2">
                   <select
-                    onChange={(e) => setValue("team", e.target.value)}
+                    // onChange={(e) => setValue("team", e.target.value)}
+                    name="team"
+                    {...register("team")}
                     className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.team ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
                   >
-                    <option value="">Select Team</option>
-                    <option value="front">Front End</option>
-                    <option value="back">Back End</option>
-                    <option value="ui">UI UX</option>
+                     <option value="">Select Team</option>
+                    {!isTeamsNameLoading &&
+                      !isTeamsNameError &&
+                      teamsNames.data.teamsNames.map((teamName, index) => {
+                        return (
+                          <option key={index} value={teamName._id}>
+                            {teamName.teamName}
+                          </option>
+                        );
+                      })}
+                   
+                   
                   </select>
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />
@@ -276,7 +317,8 @@ const SelectUser = () => {
             <Button
               type="submit"
               className="px-6 py-3.5 text-white bg-blue-500 rounded-md"
-              buttonText="Add User"
+              buttonText={userData.username?"Edit User":"Add User"}
+              isLoading={userData.username?isEditLoading:isLoading}
             />
           </div>
         </div>

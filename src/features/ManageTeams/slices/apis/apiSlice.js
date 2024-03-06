@@ -1,9 +1,22 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const URL = import.meta.env.VITE_API_URL;
+import Cookies from "universal-cookie";
+
 export const apiSlice = createApi({
   reducerPath: "apiTeams",
   baseQuery: fetchBaseQuery({
     baseUrl: URL,
+    prepareHeaders: (headers, { getState }) => {
+      const cookie = new Cookies();
+      let token = cookie.get("userToken");
+
+      // If we have a token set in state, let's assume that we should be passing it.
+      if (token) {
+        headers.set('authorization', `Bearer ${token}`)
+      }
+      console.log(headers.get("authorization"))
+      return headers
+    },
   }),
   tagTypes: ["Teams"],
   endpoints: (builder) => ({

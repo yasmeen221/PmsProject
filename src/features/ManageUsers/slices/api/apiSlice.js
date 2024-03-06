@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-const URL = import.meta.env.VITE_API_URL;
+const URL = import.meta.env.VITE_API_URL
 export const usersApiSlice = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
@@ -15,15 +15,15 @@ export const usersApiSlice = createApi({
       query: (user) => ({
         url: "/user",
         method: "POST",
-        body: {user},
+        body: user,
       }),
       invalidatesTags: ["Users"],
     }),
-    editUser: builder.mutation({
-      query: ({id, ...updateData }) => ({
-        url: `/user/edit/${id}`,
+    editRemoteUser: builder.mutation({
+      query: (user,...updateData) => ({
+        url: `/user/edit/${user._id}`,
         method: "POST",
-        body: updateData,
+        body: updateData
       }),
       invalidatesTags: ["Users"],
     }),
@@ -43,6 +43,6 @@ export const {
   // useDeleteUserMutation,
   useGetUsersQuery,
   useAddUserMutation,
-  useEditUserMutation,
-  useDeleteUserMutation,
+  useEditRemoteUserMutation,
+  useDeleteUserMutation
 } = usersApiSlice;

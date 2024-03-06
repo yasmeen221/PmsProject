@@ -9,6 +9,7 @@ function AddUserFormStructure() {
   const dispatch=useDispatch()
   const [isAddUserPopupOpen, setAddUserPopupOpen] = useState(false);
   const OpenAddUserFormPopUp=useSelector((store)=>store.openAddUserFormPopUp.open)
+  const userData = useSelector((store) => store.editUser.user);
 
  function handleClosePopup(){
     setAddUserPopupOpen(false)
@@ -23,7 +24,7 @@ function AddUserFormStructure() {
     <FormPopUp
     isOpen={isAddUserPopupOpen}
     ClosePop={() => handleClosePopup()}
-    TitlePopUp={"ADD User"}
+    TitlePopUp={userData.username?"Edit User":"Add User"}
   >
     
       <SelectUser/>

@@ -74,6 +74,16 @@ export default function LevelTable() {
                   </td>
                 </tr>
               )}
+              {!isLoading && !isError && data.data.levels.length==0&& (
+                <tr>
+                  <td colSpan="2" className=" px-6 py-3 ">
+                    {" "}
+                    <div className="inline-flex items-center justify-center">
+                    <p>There is No level Exist</p>
+                    </div>
+                  </td>
+                </tr>
+              )}
               {!isLoading && isError && (
                 <tr>
                   <td colSpan="2" className=" px-6 py-3 ">
@@ -85,7 +95,7 @@ export default function LevelTable() {
                 </tr>
               )}
               {isSuccess &&
-                data.data.levels.map((level, i) => (
+                data?.data.levels.map((level, i) => (
                   <tr
                     key={i}
                     className={i % 2 === 0 ? "even:bg-gray-50" : "odd:bg-gray"}

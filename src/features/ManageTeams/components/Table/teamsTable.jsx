@@ -32,11 +32,6 @@ const TeamsTable = () => {
     }
   };
   const dispatch = useDispatch();
-  // const [teams] = useState([
-  //   { teamName: "ui/ux", teamLeader: "yasmeen", parentTeam: "test" },
-  //   { teamName: "front end", teamLeader: "esraa", parentTeam: "soft" },
-  //   { teamName: "back end", teamLeader: "ali", parentTeam: "db" },
-  // ]);
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -69,6 +64,16 @@ const TeamsTable = () => {
               </td>
             </tr>
           )}
+          {!isLoading && !isError && teams.data.teams.length == 0 && (
+            <tr>
+              <td colSpan="4" className=" px-6 py-3 ">
+                {" "}
+                <div className="inline-flex items-center justify-center">
+                  <p>There is No Team Exist</p>
+                </div>
+              </td>
+            </tr>
+          )}
           {!isLoading && isError ? (
             <tr>
               <td colSpan="4" className=" px-6 py-3  ">
@@ -85,9 +90,9 @@ const TeamsTable = () => {
             teams.data.teams?.map((item, index) => {
               return (
                 <tr className=" odd:bg-gray even:bg-gray-50 " key={index}>
-                  <td className="px-6 py-4 ">{item?.teamName}</td>
-                  <td className="px-6 py-4">{item?.teamLeader}</td>
-                  <td className="px-6 py-4">{item?.parentTeam}</td>
+                  <td className="px-6 py-4 ">{!(item?.teamName) ? "not exist" : item.teamName}</td>
+                  <td className="px-6 py-4">{!(item?.teamLeader) ? "not exist" : item.teamLeader.firstName}</td>
+                  <td className="px-6 py-4">{!(item?.parentTeam) ? "not exist" : item.parentTeam.teamName}</td>
 
                   <td className="px-6 py-4 inline-flex">
                     <Button
@@ -102,8 +107,7 @@ const TeamsTable = () => {
                       iconLeft={<Icons.DeleteUserPage />}
                       className=" bg-transparent px-1"
                       onClick={() => {
-                        handleDelete(item._id),
-                          console.log(deleteError, isDeleteError, item._id);
+                        handleDelete(item._id)
                       }}
                     />
                   </td>
