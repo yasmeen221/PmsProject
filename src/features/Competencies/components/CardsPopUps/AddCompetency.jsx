@@ -21,7 +21,8 @@ function AddCompetency() {
   const [formlevels,setFormLevels] = useState([]); 
   const [descriptions, setDescriptions] = useState([]);
   const [categories, setCategories] = useState([]);
- 
+  const [levelErrorMsg, setLevelErrorMsg] = useState(false);
+  const [teamsErrorMsg, setTeamsErrorMsg] = useState(false);
   const seniorityLevels = formlevels?.map((level, index) => ({
     level,
     description: descriptions[index],
@@ -70,7 +71,22 @@ function AddCompetency() {
 
   const formSubmit = async (values) => {
     try {
-       if (teamsAssigned.length === 0 && seniorityLevels.length === 0) return
+
+      console.log(formlevels.length)
+
+      if (formlevels.length === 0) {
+        setLevelErrorMsg(true)
+        console.log('Please add levels first')
+      
+      } 
+
+      if (teamsAssigned.length === 0 && teamsBtnChecked) {
+        setTeamsErrorMsg(true)
+        console.log('Please add teams first')
+        
+      }
+      
+       if (teamsAssigned.length === 0 && seniorityLevels.length === 0 && formlevels.length===0) return
       const dataToSend = {
         ...values,
         seniorityLevels,
@@ -227,7 +243,7 @@ function AddCompetency() {
                 isMulti
                   closeMenuOnSelect={false} 
                    />
-                   {teamsAssigned?.length === 0  && <p className="text-red-500">Please add teams first</p>}
+                   {teamsErrorMsg  && <p className="text-red-500">Please add teams first</p>}
             </div>
           )}
 
@@ -245,7 +261,7 @@ function AddCompetency() {
                   closeMenuOnSelect={false} // Keep the dropdown open after selection
                    />
                   
-                   {formlevels?.length === 0  &&  <p className="text-red-500">Please add levels first</p>}
+                   {levelErrorMsg  &&  <p className="text-red-500">Please add levels first</p>}
             </div>
           </div>
 

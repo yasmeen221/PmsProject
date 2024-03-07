@@ -30,10 +30,15 @@ const GiveNormalFeedback = () => {
     name: yup.string().required(),
     feedback: yup.string().required(),
     visibility: yup.string().required(),
-    team: yup.string()
-
+    // team: yup.string().when('teamsBtnChecked', {
+    //   is: true,
+    //   then: yup.string().required('team is required'),
+    //   otherwise: yup.string().notRequired()
+      
+    // })
+     
   })
-  .required()
+  
 
   const {
     register,
@@ -43,8 +48,9 @@ const GiveNormalFeedback = () => {
     resolver: yupResolver(schema),
   })
 
-  const formSubmit = async (values) => {
-    console.log("hiiiiiiii")
+  const formSubmit = (values) => {
+   if(teamsBtnChecked && values.team === "" ) return
+     
     console.log(values);
   };
 
@@ -142,6 +148,7 @@ const GiveNormalFeedback = () => {
                 <select
                    {...register("team")}
                    name="team"
+                  onChange={(e) => setTeam(e.target.value)}
                   className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${team == "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"}`}
                 >
                   <option value="">select team</option>
@@ -152,8 +159,8 @@ const GiveNormalFeedback = () => {
                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                   <Icons.ArrowDownBlack />
                 </div>
-                {errors.team&& (
-                <p className="text-red-500">{errors.team.message}</p>
+                {teamsBtnChecked && team==="" && (
+                <p className="text-red-500">team is required</p>
               )}
               </div>
             )}
