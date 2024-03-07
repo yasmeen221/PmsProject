@@ -6,6 +6,7 @@ import Button from "../../../../components/Button/Button";
 import { changeDropDownValue } from "../../slices/openPopUpSlice";
 import RequestFeedbackSomeOne from "./RequestFeedbackSomeOne";
 import GiveFeedback from "./GiveFeedback";
+import RequestFeedbackForMyself from "./RequestFeedbackForMyself";
 
 
 const RequestFeedback = () => {
@@ -94,7 +95,9 @@ const RequestFeedback = () => {
         </div>
       </FormPopUp>
       {someOnePopUp && <RequestFeedbackSomeOne />}
-      {myselfPopUp && <GiveFeedback />}
+      {myselfPopUp && <RequestFeedbackForMyself onClose={() => {
+        
+      }}   />}
     </>
   );
 };
