@@ -5,7 +5,6 @@ import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import TextInput from "../../../../components/TextInput/TextInput";
-
 export default function PraiseFeedback() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const handleOpenPopup = () => {
