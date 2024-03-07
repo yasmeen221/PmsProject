@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
-function AddCompetency({ open }) {
-  const [isPopupOpen, setPopupOpen] = useState(false);
+import {  useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
+import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice";
+import Select from 'react-select'
+import axiosInstance from "../../../../components/GeneralApi/generalApi";
 
+import { getAllData } from "../../slices/Api/catgoryapi";
+
+function AddCompetency() {
+  const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
   const [teamsAssigned, setTeamsAssigned] = useState([]); 
   const [formlevels,setFormLevels] = useState([]); 
@@ -92,7 +101,6 @@ function AddCompetency({ open }) {
     }
   };
 
-
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
@@ -100,6 +108,34 @@ function AddCompetency({ open }) {
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
+
+
+  const handleDescriptionChange = (index, value) => {
+    const newDescriptions = [...descriptions];
+    newDescriptions[index] = value;
+    setDescriptions(newDescriptions);
+  };
+
+  const handleRemoveDescription = (index) => {
+    const newDescriptions = [...descriptions];
+    newDescriptions.splice(index, 1);
+    setDescriptions(newDescriptions);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllData();
+        setCategories(data.data.categories);
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+  
+
   return (
     <>
       <FormPopUp
@@ -108,57 +144,73 @@ function AddCompetency({ open }) {
         TitlePopUp="Add New Competency"
         iconLeft={<Icons.ArrowLeftPop />}
       >
-        <div
+        <form
+          onSubmit={handleSubmit(formSubmit)}
           style={{
             width: "35vw",
             maxHeight: "65vh",
             overflowY: "auto",
             scrollbarWidth: "none",
           }}
-          className="px-1"
+          className="px-1 "
         >
           <div className="my-2  w-full">
             <Header text="Name" htmlFor="name" />
             <div className="mt-2 w-full ">
               <TextInput
-                onChange={(e) => console.log(e.target.value)}
+                register={{ ...register("name") }}
                 placeholder="Enter Competency Name"
                 id="name"
                 name="name"
                 type="text"
-                required
               />
+              {errors.name && (
+                <p className="text-red-500">{errors.name.message}</p>
+              )}
             </div>
           </div>
           <div className="my-2 w-full">
             <Header text="Category" />
             <div className="relative mt-2">
               <select
-                onChange={(e) => setCatogery((catogery) => e.target.value)}
-                className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${catogery == "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
+                {...register("category")}
+                name="category"
+                className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none  `}
               >
                 <option value="">select category</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+                {categories.map((category, index) => {
+                  return (
+                    <option key={index} value={category._id}>
+                      {category.categoryName}
+                    </option>
+                  );
+                })}
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                 <Icons.ArrowDownBlack />
               </div>
+              {errors.category && (
+                <p className="text-red-500">{errors.category.message}</p>
+              )}
             </div>
           </div>
           <div className="my-2">
-            <Header text="Default Description" htmlFor="describtion" />
+            <Header text="Default Description" htmlFor="defaultDescription" />
             <div className="mt-2">
               <textarea
+                {...register("defaultDescription")}
                 rows={4}
                 placeholder="Enter Default Description"
                 wrap="soft"
-                id="describtion"
-                name="describtion"
-                onChange={(e) => console.log(e.target.value)}
+                id="defaultDescription"
+                name="defaultDescription"
                 className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
               />
+              {errors.defaultDescription && (
+                <p className="text-red-500">
+                  {errors.defaultDescription.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="w-full inline-flex justify-between   items-center my-2">
@@ -175,14 +227,13 @@ function AddCompetency({ open }) {
                   value=""
                   className="sr-only peer"
                   onChange={(e) => {
-                    setAddToggle(e.target.checked);
+                    setTeamsBtnChecked(e.target.checked);
                   }}
                 />
                 <div className="relative w-11 h-6  peer-focus:outline-none rounded-full peer dark:bg-fontColor-placeHolderColor peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-buttonColor-baseColor"></div>
               </label>
             </div>
           </div>
-
           {teamsBtnChecked && (
      
             <div>
@@ -193,16 +244,15 @@ function AddCompetency({ open }) {
                   closeMenuOnSelect={false} 
                    />
                    {teamsErrorMsg  && <p className="text-red-500">Please add teams first</p>}
-
             </div>
           )}
+
           <div className="my-2">
             <Header text="Levels" />
             <p className="text-fontColor-placeHolderColor  text-body1Size">
               Select Levels to customize competency descriptions for each career
               path level.
             </p>
-
             <div className="relative mt-2">   
                <Select
                 options={levelsOptions}
@@ -237,18 +287,21 @@ function AddCompetency({ open }) {
                   />
                  
                 </div>
-
               </div>
             </div>
+          
+             
+            )
+          })}
+
+          <div className="mt-2 w-full inline-flex justify-end px-1 ">
+            <Button
+              buttonText="Add"
+              className="px-10 py-2.5 text-fontColor-whiteBaseColor"
+              // onClick={handleClosePopup}
+            />
           </div>
-        </div>
-        <div className="mt-2 w-full inline-flex justify-end px-1 ">
-          <Button
-            buttonText="Add"
-            className="px-10 py-2.5 text-fontColor-whiteBaseColor"
-            onClick={handleClosePopup}
-          />
-        </div>
+        </form>
       </FormPopUp>
       <Button
         buttonText="Add Competency"

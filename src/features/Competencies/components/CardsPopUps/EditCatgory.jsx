@@ -29,10 +29,8 @@ export default function EditCategory({ onClose, category }) {
 
   const onSubmit = async (data) => {
     try {
-
-     /* const updatedCategory = { categoryName: data.categoryName };*/
-      await updateData(category._id,data.categoryName);
-
+      const updatedCategory = { categoryName: data.categoryName };
+      await updateData(category._id, updatedCategory);
       console.log('Category updated successfully');
       handleClosePopup();
     } catch (err) {
@@ -67,12 +65,10 @@ export default function EditCategory({ onClose, category }) {
             <div className="mt-2 w-full ">
               <TextInput
               defaultValue={`${category.categoryName}`}
-
-      
-              register={register('categoryName')}
+                {...register('categoryName')}
                 placeholder="Enter Category Name"
-              
-
+                id="name"
+                name="name"
                 type="text"
               />
               {errors.categoryName && <p className="text-red-600">{errors.categoryName.message}</p>}

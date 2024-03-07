@@ -17,6 +17,7 @@ import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice
 import { apiLoginSlice } from "../features/LogIn/slices/apis/apiLoginSlice.js";
 import { apiRestPassSlice } from "../features/ResetPassword/slices/apis/apiSetPassSlice.js";
 import { usersApiSlice } from "../features/ManageUsers/slices/api/apiSlice.js";
+import sidebarReducer from "../components/sideBar/slice/sidebarSlice.js";
 export const store = configureStore({
   reducer: {
     openPopUpConfirmDeleteSlice,
@@ -30,6 +31,7 @@ export const store = configureStore({
     editLevel: editLevelSlice, // Manage Levels slice
     openPopupAddLevel, // Manage Levels slice
     userDataReducer,
+    sidebar: sidebarReducer,
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,
