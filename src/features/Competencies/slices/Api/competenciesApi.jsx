@@ -62,6 +62,6 @@ export const searchCompetencies = async (searchTerm) => {
     );
     return request.data;
   } catch (error) {
-    console.error("Error searching competencies:", error);
+    console.log("Error searching competencies:", error);
   }
 };

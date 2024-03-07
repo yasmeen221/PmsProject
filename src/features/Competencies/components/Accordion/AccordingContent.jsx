@@ -36,13 +36,19 @@ const AccordingContent = ({ searchTerm }) => {
 
   useEffect(() => {
     if (searchTerm) {
-      searchCompetencies(searchTerm)
-        .then((fetchedDataSearch) => {
-          setSearchResults(fetchedDataSearch);
-        })
-        .catch((error) => {
-          console.error("Error fetching data:", error);
-        });
+      try {
+        searchCompetencies(searchTerm)
+          .then((fetchedDataSearch) => {
+            setSearchResults(fetchedDataSearch);
+            console.log(fetchedDataSearch)
+          })
+          .catch((error) => {
+
+            console.log("Error fetching data:", error);
+          });
+      } catch (err) {
+        console.log(err)
+      }
     } else {
       setSearchResults([]);
     }
@@ -133,7 +139,7 @@ const AccordingContent = ({ searchTerm }) => {
               ))}
             </AccordionItem>}
             {searchTerm && searchResults && searchResults.data ? (
-              searchResults.data.map((itemm, index) => (
+              searchResults?.data.competencies.map((itemm, index) => (
                 <TeamItem
                   key={itemm._id}
                   title={itemm.name}
