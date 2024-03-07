@@ -1,8 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import Cookies from "universal-cookie";
 const URL = import.meta.env.VITE_API_URL;
 export const apiLevelSlice = createApi({
   reducerPath: "apilevel",
-  baseQuery: fetchBaseQuery({ baseUrl: URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: URL,
+    prepareHeaders: (headers, { getState }) => {
+    const cookie = new Cookies();
+    let token = cookie.get("userToken");
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+    console.log(headers.get("authorization"))
+    return headers
+  }, }),
   tagTypes: ["Levels"],
   endpoints: (builder) => ({
     getLevel: builder.query({

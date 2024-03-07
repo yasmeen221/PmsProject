@@ -10,10 +10,18 @@ export const getAllData = async () => {
   }
 };
 
+export const getAllDataById = async (id) => {
+  try {
+    const request = await axiosInstance.get(`/category/${id}`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get by id", error);
+  }
+};
 //to insert new data
 export const createData = async (categoryName) => {
   try {
-    const request = await axiosInstance.post(`/category`, {categoryName}  );
+    const request = await axiosInstance.post(`/category`, { categoryName });
     console.log(request);
   } catch (error) {
     console.log("error from create", error);

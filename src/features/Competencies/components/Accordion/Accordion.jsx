@@ -5,7 +5,7 @@ import Icons from "../../../../themes/icons";
 const AccordionContext = createContext();
 
 // eslint-disable-next-line react/prop-types
-export default function Accordion({ children, value, onChange, ...rest }) {
+export default function Accordion({ children, value, onChange,...rest }) {
   const [selected, setSelected] = useState(value);
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export function AccordionItem({
   value,
   paragraph,
   trigger,
+  onOpenClick,
   ...props
 }) {
   const { selected, setSelected } = useContext(AccordionContext);
@@ -65,7 +66,8 @@ export function AccordionItem({
         </div>
         <ChevronDown
           size={18}
-          className={`mr-5 transition-transform ${open ? "rotate-180" : ""}`}
+          className={`mr-5  transition-transform ${open ? "rotate-180" : ""}`}
+          onClick={!open?onOpenClick:null}
         />
       </header>
       <div
