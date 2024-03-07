@@ -7,6 +7,7 @@ import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 import {
   useDeleteLevelMutation,
   useGetLevelQuery,
+  useUpdateLevelMutation,
 } from "../../slices/api/apiLevelSlice.js";
 import { useState } from "react";
 import EditLevel from "../CardsPopUp/EditLevel";
@@ -24,6 +25,7 @@ export default function LevelTable() {
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
   const [deleteLevel, { isError: deleteError }] = useDeleteLevelMutation();
+  const [updateLevel, { isError: updateError }] = useUpdateLevelMutation();
   const [selectLevel, setSelectLevel] = useState(null);
 
   // Define functions to handle edit and delete actions

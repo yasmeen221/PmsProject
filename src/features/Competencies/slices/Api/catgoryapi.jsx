@@ -9,6 +9,7 @@ export const getAllData = async () => {
     console.log("error from get", error);
   }
 };
+
 export const getAllDataById = async (id) => {
   try {
     const request = await axiosInstance.get(`/category/${id}`);
@@ -32,7 +33,6 @@ export const createData = async (categoryName) => {
 export const updateData = async (id, categoryName) => {
   //will know from back use post or  put
   try {
-    // console.log("Eeeeeeeeateg",categoryName)
     const request = await axiosInstance.post(`/category/edit/${id}`, {
       categoryName,
     });
