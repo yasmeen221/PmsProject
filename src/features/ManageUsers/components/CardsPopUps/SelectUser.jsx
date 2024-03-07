@@ -237,7 +237,7 @@ const SelectUser = () => {
                     <option value="">Select Level</option>
                     {!isLevelLoading &&
                       !isLevelError &&
-                      levels?.data.levels.map((level, index) => {
+                      levels.data.levels.map((level, index) => {
                         return (
                           <option key={index} value={level._id}>
                             {level.levelName}
@@ -294,7 +294,7 @@ const SelectUser = () => {
                      <option value="">Select Team</option>
                     {!isTeamsNameLoading &&
                       !isTeamsNameError &&
-                      teamsNames?.data.teamsNames.map((teamName, index) => {
+                      teamsNames.data.teamsNames.map((teamName, index) => {
                         return (
                           <option key={index} value={teamName._id}>
                             {teamName.teamName}
