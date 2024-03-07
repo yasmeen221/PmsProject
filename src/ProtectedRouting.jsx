@@ -2,9 +2,11 @@ import { jwtDecode } from "jwt-decode";
 import React from "react";
 import { Navigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { changeUserDataValue } from "./features/LogIn/slices/login";
+import { useDispatch } from "react-redux";
 
 export default function ProtectedRouting(props) {
-
+  const dispatch = useDispatch()
   const { role } = props;
 
   const cookie = new Cookies();
@@ -21,6 +23,7 @@ export default function ProtectedRouting(props) {
       return props.children;
     }
   } else {
+    dispatch(changeUserDataValue(""))
     return <Navigate to="/" />; // Added return statement here
 
   }

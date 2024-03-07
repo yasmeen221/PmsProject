@@ -5,6 +5,8 @@ import { jwtDecode } from "jwt-decode";
 import ProtectedRouting from "./ProtectedRouting";
 import Icons from "./themes/icons";
 import { useRefreshTokenMutation } from "./features/LogIn/slices/apis/apiLoginSlice";
+import { useDispatch } from "react-redux";
+import { changeUserDataValue } from "./features/LogIn/slices/login";
 
 // Lazy-loaded components
 const ResetPassword = lazy(
@@ -20,6 +22,7 @@ const Dashboard = lazy(() => import("./components/Dashboard"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
+  const dispatch = useDispatch()
   const [userData, setUserData] = useState(null);
   const [refreshToken, { }] = useRefreshTokenMutation()
   const saveUserData = (data) => {
@@ -34,6 +37,7 @@ function App() {
   //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
   //     refreshToken(refreshTokenValue).unwrap().then(() => {
   //       cookie.remove("userToken")
+  //       dispatch(changeUserDataValue(""))
   //       console.log("will redirect to login")
   //     });
 
@@ -60,6 +64,7 @@ function App() {
     //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
     //     refreshToken(refreshTokenValue).unwrap().then(() => {
     //       cookie.remove("userToken")
+    //dispatch(changeUserDataValue(""))
     //       console.log("will redirect to login")
     //       clearInterval(interval)
     //     });
