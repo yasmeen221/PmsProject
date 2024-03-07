@@ -9,11 +9,18 @@ export const getAllData = async () => {
     console.log("error from get", error);
   }
 };
-
+export const getAllDataById = async (id) => {
+  try {
+    const request = await axiosInstance.get(`/category/${id}`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get by id", error);
+  }
+};
 //to insert new data
 export const createData = async (categoryName) => {
   try {
-    const request = await axiosInstance.post(`/category`, {categoryName}  );
+    const request = await axiosInstance.post(`/category`, { categoryName });
     console.log(request);
   } catch (error) {
     console.log("error from create", error);
@@ -26,9 +33,9 @@ export const updateData = async (id, categoryName) => {
   //will know from back use post or  put
   try {
     // console.log("Eeeeeeeeateg",categoryName)
-    const request = await axiosInstance.post(`/category/edit/${id}`, 
-      {categoryName},
-    );
+    const request = await axiosInstance.post(`/category/edit/${id}`, {
+      categoryName,
+    });
     return request.data;
   } catch (error) {
     console.log("error from update", error);

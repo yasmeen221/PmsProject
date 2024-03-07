@@ -8,15 +8,18 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp.jsx";
 import Button from "../../../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
-import { useCreateLevelMutation, useUpdateLevelMutation } from "../../slices/api/apiLevelSlice.js";
+import {
+  useCreateLevelMutation,
+  useUpdateLevelMutation,
+} from "../../slices/api/apiLevelSlice.js";
 
 const schema = yup.object({
   levelName: yup
     .string()
     .required("Level name is required")
     .matches(/^[A-Za-z]+$/, "Level name must contain characters only")
-    .min(3,"level name must be at least 3 characters")
-    .max(30,"level name can't exceed 30 characters")
+    .min(3, "level name must be at least 3 characters")
+    .max(30, "level name can't exceed 30 characters")
     .trim(),
 });
 
@@ -24,7 +27,7 @@ export default function ManageLevel() {
   const dispatch = useDispatch();
   const handleOpen = useSelector((store) => store.openPopupAddLevel.open);
   const [isPopOpen, setPopOpen] = useState(false);
-  const [createLevel, { error }] = useCreateLevelMutation();
+  const [createLevel, { error, isLoading }] = useCreateLevelMutation();
 
   const {
     register,
@@ -37,7 +40,6 @@ export default function ManageLevel() {
 
   useEffect(() => {
     setPopOpen(handleOpen);
-    
   }, [handleOpen]);
 
   const handleClosePopup = () => {
@@ -47,8 +49,8 @@ export default function ManageLevel() {
 
   const formSubmit = async (values) => {
     try {
-          const response = await createLevel(values.levelName).unwrap();
-        console.log("Response:", response);
+      const response = await createLevel(values.levelName).unwrap();
+      console.log("Response:", response);
       reset();
       handleClosePopup();
     } catch (error) {

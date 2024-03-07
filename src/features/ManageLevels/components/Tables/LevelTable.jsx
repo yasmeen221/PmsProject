@@ -24,7 +24,8 @@ export default function LevelTable() {
 
   const { data, isError, isLoading, error, isSuccess } = useGetLevelQuery();
   const [deleteLevel, { isError: deleteError }] = useDeleteLevelMutation();
- 
+  const [selectLevel, setSelectLevel] = useState(null);
+
   // Define functions to handle edit and delete actions
   const handleDeleteLevel = async (id) => {
     try {
@@ -66,12 +67,12 @@ export default function LevelTable() {
                   </td>
                 </tr>
               )}
-              {!isLoading && !isError && data.data.levels.length==0&& (
+              {!isLoading && !isError && data.data.levels.length == 0 && (
                 <tr>
                   <td colSpan="2" className=" px-6 py-3 ">
                     {" "}
                     <div className="inline-flex items-center justify-center">
-                    <p>There is No level Exist</p>
+                      <p>There is No level Exist</p>
                     </div>
                   </td>
                 </tr>
