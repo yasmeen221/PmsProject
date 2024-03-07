@@ -25,7 +25,6 @@ export const createData = async (categoryName) => {
 export const updateData = async (id, categoryName) => {
   //will know from back use post or  put
   try {
-    // console.log("Eeeeeeeeateg",categoryName)
     const request = await axiosInstance.post(`/category/edit/${id}`, 
       {categoryName},
     );
