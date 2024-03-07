@@ -9,7 +9,15 @@ export const getAllDataCompetencies = async () => {
     console.log("error from get", error);
   }
 };
-
+//og get all competencies assigned to specific team 
+export const getAllTeamCompetencies = async (competencyId) => {
+  try {
+    const request = await axiosInstance.get(`/competency/teams-competencies/${competencyId}`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};
 //to insert new data
 export const createData = async (newData) => {
   try {

@@ -13,9 +13,10 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
   const [dropDown3, setOpen3] = useState(false);
 
   const [dataCategory, setDataCategory] = useState([]);
-  const { data: teams } = useGetTeamsNameQuery();
+  const { data: teams,isLoading,isSuccess } = useGetTeamsNameQuery();
+
   const { data: levels } = useGetLevelQuery();
-  console.log(searchTerm);
+  // console.log(searchTerm);
 
   const dropdown1 = (value) => {
     setOpen1((dropDown1) => !dropDown1);
