@@ -5,16 +5,9 @@ import logo from "../../assets/images/logo/logo.png";
 import logoTwo from "../../assets/images/logo/logo.svg";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "universal-cookie";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  selectIsOpen,
-  toggleSidebar,
-} from "../sideBar/slice/sidebarSlice";
 
 function SideBar() {
-  const isOpen = useSelector(selectIsOpen);
-  const dispatch = useDispatch();
-  // const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [userData, setUserData] = useState();
   useEffect(() => {
     const cookie = new Cookies();
@@ -24,17 +17,14 @@ function SideBar() {
       setUserData(decodedUserToken);
     }
   }, []);
-  const handleToggleSidebar = () => {
-    dispatch(toggleSidebar());
-  };
 
   return (
     <aside
       className={
         isOpen
-          ? ` flex w-[16.25rem] h-screen fixed justify-center bg-drawerColor-50 transition-all 
+          ? `relative flex w-[16.25rem]  justify-center bg-drawerColor-50 transition-all 
       duration-500`
-          : `fixed flex w-[6.5rem] h-screen  justify-center bg-drawerColor-50 transition-all 
+          : `relative flex w-[6.5rem]   justify-center bg-drawerColor-50 transition-all 
       duration-500`
       }
     >
@@ -108,7 +98,7 @@ function SideBar() {
         ></SideBarItem>
       </ul>
       <button
-        onClick={handleToggleSidebar}
+        onClick={() => setIsOpen(!isOpen)}
         className={
           isOpen
             ? `absolute left-[92%] top-[50%] h-9  w-9 rounded-[50%] bg-buttonColor-baseColor transition-all duration-500 `

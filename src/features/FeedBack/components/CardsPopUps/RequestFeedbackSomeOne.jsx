@@ -7,7 +7,7 @@ import Button from "../../../../components/Button/Button";
 
 export default function RequestFeedbackSomeOne() {
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
+  const [addToogle, setAddToggle] = useState(false);
   const [team, setTeam] = useState("");
 
   const handleOpenPopup = () => {
@@ -86,7 +86,7 @@ export default function RequestFeedbackSomeOne() {
                       value=""
                       className="sr-only peer"
                       onChange={(e) => {
-                        setTeamsBtnChecked(e.target.checked);
+                        setAddToggle(e.target.checked);
                       }}
                     />
                     <div className="relative w-11 h-6 peer-focus:outline-none rounded-full peer dark:bg-fontColor-placeHolderColor peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content: [''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-buttonColor-baseColor"></div>
@@ -94,7 +94,7 @@ export default function RequestFeedbackSomeOne() {
                 </div>
               </div>
             </div>
-            {teamsBtnChecked && (
+            {addToogle && (
               <div className="relative my-2">
                 <select
                   onChange={(e) => setTeam(e.target.value)}
