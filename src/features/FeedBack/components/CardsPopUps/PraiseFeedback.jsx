@@ -5,8 +5,19 @@ import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import TextInput from "../../../../components/TextInput/TextInput";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-
+const schema = yup.object({
+  employeeName: yup
+    .string()
+    .required()
+    .matches(/^[A-Za-z ]+$/, "Level name must contain characters and spaces only")
+    .min(3, "Min char is 3 char")
+    .max(20, "Max char is 20 char")
+    .trim(),
+});
 export default function PraiseFeedback() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const handleOpenPopup = () => {
@@ -15,7 +26,15 @@ export default function PraiseFeedback() {
   useEffect(() => {
     handleOpenPopup();
   }, []);
-
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+    setValue,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const handleClosePopup = () => {
     setPopupOpen(false);
   };
