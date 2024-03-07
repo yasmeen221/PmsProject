@@ -1,123 +1,190 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TeamItem from "./TeamItem";
 import Icons from "../../../../themes/icons";
 import Accordion, { AccordionItem } from "./Accordion";
+import {
+  getAllDataCompetencies,
+  getAllTeamCompetencies,
+  searchCompetencies,
+} from "../../slices/Api/competenciesApi";
+import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
 
-const AccordingContent = () => {
+const AccordingContent = ({ searchTerm }) => {
+  const [searchResults, setSearchResults] = useState([]);
+  const [sharedComp, setSharedComp] = useState([])
+  const [allTeamComp, setAllTeamComp] = useState()
+  const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
+  const [clicked, setClicked] = useState(false)
+  useEffect(() => {
+    getAllDataCompetencies()
+      .then((fetchedData) => {
+        let arr = []
+        console.log(fetchedData.data)
+        for (let i = 0; i < fetchedData.data.length; i++) {
+          if (fetchedData.data[i].teamsAssigned.length == 0) {
+            arr.push(fetchedData.data[i])
+            console.log(fetchedData.data[i])
+          }
+        }
+        setSharedComp(arr)
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+
+  }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      try {
+        searchCompetencies(searchTerm)
+          .then((fetchedDataSearch) => {
+            setSearchResults(fetchedDataSearch);
+            console.log(fetchedDataSearch)
+          })
+          .catch((error) => {
+
+            console.log("Error fetching data:", error);
+          });
+      } catch (err) {
+        console.log(err)
+      }
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchTerm]);
+
+  const triggerCompetencyHeader = (arrayOfItems) => {
+    return arrayOfItems.map((itemTeamsAssigned, index, array) => { return `${itemTeamsAssigned.teamName} Team${(index == array.length - 1) ? '' : ','}` })
+  }
+  const competencyItems = (arrayOfItems) => {
+    return (
+      arrayOfItems?.data?.map((item) => {
+        return (
+          <AccordionItem
+            key={item._id}
+            className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
+            value={item._id}
+            trigger={item.teamsAssigned.length == 0 ? "Organization Shared Competencies" : triggerCompetencyHeader(item.teamsAssigned)}
+            backgroundColor="bg-buttonColor-baseColor"
+            content={<Icons.Organization />}
+            paragraph="Team Working, Public Speaking, Research"
+          >
+            <hr></hr>
+            {/**filter array of  cometecies based on levelname in seniorityLevels(senior,junior) so that it is not duplicated*/}
+            {item.seniorityLevels.filter(
+              (itemLevel, index, array) =>
+                index ===
+                array.findIndex(
+                  (t) =>
+                    t.level.levelName === itemLevel.level.levelName
+                  // && ask back people to put the describtion the same for each level to remove duplicates
+                  // t.description === itemLevel.description
+                )
+            ).map((itemLevel, index) => {
+              return (
+                <TeamItem
+                  key={itemLevel._id}
+                  title={item.name}
+                  description={itemLevel.description}
+                  skills="Soft skills"
+                  position={Array.isArray(itemLevel.level.levelName) ? itemLevel.level.levelName.map((item) => {
+                    return (
+                      item
+                    )
+                  }) : itemLevel.level.levelName}
+                />
+              )
+            })}
+          </AccordionItem>
+        );
+      })
+    )
+  }
+  const getAllTeamCompetenciesFun = (id) => {
+    setClicked(false)
+    getAllTeamCompetencies(id).then((res) => {
+      console.log(res.data.teamCompetencies)
+      setAllTeamComp(res.data)
+      setClicked(true)
+
+      return res.data
+    })
+  }
   return (
     <>
       <div>
         <main className="w-fall ">
           <Accordion>
-            <AccordionItem
+            {!searchTerm && <AccordionItem
               className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
-              value="1"
-              trigger="Organization Shared Competencies"
+              trigger={`Organization Shared Competencies`}
               backgroundColor="bg-buttonColor-baseColor"
               content={<Icons.Organization />}
               paragraph="Team Working, Public Speaking, Research"
             >
               <hr></hr>
-              <TeamItem
-                title="Team Working"
-                description="Teamwork competency involves the ability to collaborate effectively with others, contributing positively to group efforts."
-                skills="Soft skills"
-                position="Senior, Manager"
-              />
 
-              <hr></hr>
-
-              <TeamItem
-                title="Public Speaking"
-                description="Public speaking competency is characterized by the ability to communicate ideas clearly and persuasively to an audience."
-                skills="Communication"
-                position="Senior, Manger"
-              />
-
-              <hr></hr>
-
-              <TeamItem
-                title="Research"
-                description="Research competency entails the capacity to systematically investigate and analyze information, synthesize findings."
-                skills="Analysis"
-                position="Junior, mid level,+1"
-              />
-            </AccordionItem>
-            {/* /////////////////////////////////// */}
-            <AccordionItem
-              className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor"
-              value="2"
-              trigger="Product Design Team"
-              backgroundColor="bg-buttonColor-1000"
-              content="PD"
-              paragraph="Team Working, Public Speaking, Research"
-            >
-              <hr></hr>
-
-              <TeamItem
-                title="Team Working"
-                description="Teamwork competency involves the ability to collaborate effectively with others, contributing positively to group efforts."
-                skills="Soft skills"
-                position="Senior, Manager"
-              />
-
-              <hr></hr>
-              <div className="transition duration-500 ease-in-out hover:bg-drawerColor-1000 rounded-2xl">
+              {sharedComp && sharedComp.length > 0 && sharedComp.map((itemm, index) => (
                 <TeamItem
-                  title="Public Speaking"
-                  description="Public speaking competency is characterized by the ability to communicate ideas clearly and persuasively to an audience."
-                  skills="Communication"
-                  position="Senior, Manger"
+                  key={itemm._id}
+                  title={itemm.name}
+                  description={itemm.defaultDescription}
+                  skills={!(itemm.category) ? "not found" : itemm.category.categoryName}
+                  position={itemm.seniorityLevels
+                    .filter((item, index, array) => array.findIndex(t => t.level.levelName === item.level.levelName) === index)
+                    .map(item => item.level.levelName)
+                    .join(", ")}
                 />
-              </div>
-
-              <hr></hr>
-              <div className="transition duration-500 ease-in-out hover:bg-drawerColor-1000 rounded-2xl">
+              ))}
+            </AccordionItem>}
+            {searchTerm && searchResults && searchResults.data ? (
+              searchResults?.data.competencies.map((itemm, index) => (
                 <TeamItem
-                  title="Research"
-                  description="Research competency entails the capacity to systematically investigate and analyze information, synthesize findings."
-                  skills="Analysis"
-                  position="Junior, mid level,+1"
-                />
-              </div>
-            </AccordionItem>
-            {/* //////////////////////////////////////////// */}
-            <AccordionItem
-              className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor"
-              value="3"
-              trigger="Web Development Team"
-              backgroundColor="bg-buttonColor-1100"
-              content="WD"
-              paragraph="Team Working, Public Speaking, Research"
-            >
-              <hr></hr>
-              <div className="transition duration-500 ease-in-out hover:bg-drawerColor-1000 rounded-2xl">
-                <TeamItem
-                  title="Team Working"
-                  description="Teamwork competency involves the ability to collaborate effectively with others, contributing positively to group efforts."
-                  skills="Soft skills"
-                  position="Senior, Manager"
-                />
-              </div>
+                  key={itemm._id}
+                  title={itemm.name}
+                  description={itemm.defaultDescription}
+                  skills={!(itemm.category) ? "not found" : itemm.category.categoryName}
+                  position={itemm.seniorityLevels
+                    .filter((item, index, array) => array.findIndex(t => t.level.levelName === item.level.levelName) === index)
+                    .map(item => item.level.levelName)
+                    .join(", ")} />
+              ))
+            ) : teams?.data.teamsNames?.map((item) => {
 
-              <hr></hr>
-              <TeamItem
-                title="Public Speaking"
-                description="Public speaking competency is characterized by the ability to communicate ideas clearly and persuasively to an audience."
-                skills="Communication"
-                position="Senior, Manger"
-              />
+              return (
+                <AccordionItem
+                  className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
+                  value={item._id}
+                  key={item._id}
+                  trigger={`${item.teamName} Team`}
+                  backgroundColor="bg-buttonColor-baseColor"
+                  content={<Icons.Organization />}
+                  paragraph="Team Working, Public Speaking, Research"
+                  onOpenClick={() => { getAllTeamCompetenciesFun(item._id) }}
+                >
+                  <hr></hr>
 
-              <hr></hr>
+                  {
+                    clicked == true && allTeamComp?.teamCompetencies.map((itemm) => {
+                      return (<TeamItem
+                        key={itemm._id}
+                        title={itemm.name}
+                        description={itemm.defaultDescription}
+                        skills={!(itemm.category) ? "not found" : itemm.category.categoryName}
+                        position={itemm.seniorityLevels
+                          .filter((item, index, array) => array.findIndex(t => t.level.levelName === item.level.levelName) === index)
+                          .map(item => item.level.levelName)
+                          .join(", ")} />)
+                    })
 
-              <TeamItem
-                title="Research"
-                description="Research competency entails the capacity to systematically investigate and analyze information, synthesize findings."
-                skills="Analysis"
-                position="Junior, mid level,+1"
-              />
-            </AccordionItem>
+                  }
+                </AccordionItem>
+              );
+            })}
+
           </Accordion>
+
         </main>
       </div>
     </>
