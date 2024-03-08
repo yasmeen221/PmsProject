@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
-import TextInput from "../../../../components/TextInput/TextInput";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 const schema = yup.object({
   userIdTo: yup.string().required("Please select an option"),
@@ -23,16 +22,18 @@ export default function PraiseFeedback() {
   const [employee, setEmployee] = useState([{}]);
   const [employeeID, setEmployeeID] = useState("");
   const [manager, setManager] = useState(null);
-  const cookie = new Cookies();
+  const token = useSelector(
+    (state) => state.persistantReducer.userDataReducer.userData,
+  );
+  
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
   useEffect(() => {
     handleOpenPopup();
-    let token = cookie.get("userToken");
-    const decodedUserToken = jwtDecode(token);
-    console.log("User ID:", decodedUserToken.userId);
-    setUserID(decodedUserToken.userId);
+    const decodedToken = jwtDecode(token);
+    console.log("decodedToken", decodedToken.userId);
+    setUserID(decodedToken.userId);
     getEmployeeData();
   }, []);
   const {
@@ -46,20 +47,20 @@ export default function PraiseFeedback() {
   });
   const onSubmit = (value) => {
     // console.log("formSubmit", value);
-    const stringToSplit= value.visibility;
-    const visibilityArray = stringToSplit.split(',');
+    const stringToSplit = value.visibility;
+    const visibilityArray = stringToSplit.split(",");
     // console.log(visibilityArray)
-    const praiseObject={
-      feedbackMainData:{
-        userIdFrom:userID,
-        userIdTo:employeeID,
-        message:value.messege,
-        visibility:visibilityArray,
-        feedbackType:"praise"
+    const praiseObject = {
+      feedbackMainData: {
+        userIdFrom: userID,
+        userIdTo: employeeID,
+        message: value.messege,
+        visibility: visibilityArray,
+        feedbackType: "praise",
       },
-      feedBackMetaData:[{}]
-    }
-    console.log("praise",praiseObject)
+      feedBackMetaData: [{}],
+    };
+    console.log("praise", praiseObject);
     handleClosePopup();
   };
   const handleClosePopup = () => {
@@ -74,12 +75,12 @@ export default function PraiseFeedback() {
   }
 
   async function recieveVisiability(id) {
-    // console.log(id)
+    console.log("employeeID",id)
     setEmployeeID(id);
     let { data } = await axios.get(
       `https://innovapms.onrender.com/api/v1/user/team-leader/${id}`,
     );
-    // console.log("leader", data.data.teamLeader._id);
+    console.log("leader", data.data.teamLeader._id);
     setManager(data.data.teamLeader._id);
   }
 
@@ -125,7 +126,9 @@ export default function PraiseFeedback() {
                 </div>
                 {errors.userIdTo ? (
                   <p className="text-red-500">{errors.userIdTo.message}</p>
-                ):""}
+                ) : (
+                  ""
+                )}
               </div>
               <div className="pt-4">
                 <Header text="Praise" />
@@ -157,7 +160,7 @@ export default function PraiseFeedback() {
                       <>
                         <option value={[manager]}>Manager Only</option>
                         <option value={[employeeID]}>Employee Only</option>
-                        <option value={[manager,employeeID]}>
+                        <option value={[manager, employeeID]}>
                           Manager and Employee
                         </option>
                       </>
