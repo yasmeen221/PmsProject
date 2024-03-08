@@ -22,6 +22,7 @@ const AccordingContent = ({
   const [sharedComp, setSharedComp] = useState([])
   const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
   const { isLoadingTeamComp, comps, error } = useSelector(state => state.getTeamCompetenciesReducer)
+  
   useEffect(() => {
     getAllDataCompetencies()
       .then((fetchedData) => {
