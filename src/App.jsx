@@ -5,8 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import ProtectedRouting from "./ProtectedRouting";
 import Icons from "./themes/icons";
 import { useRefreshTokenMutation } from "./features/LogIn/slices/apis/apiLoginSlice";
-import { useDispatch } from "react-redux";
-import { changeUserDataValue } from "./features/LogIn/slices/login";
+import { useSelector } from "react-redux";
 
 // Lazy-loaded components
 const ResetPassword = lazy(
@@ -22,9 +21,10 @@ const Dashboard = lazy(() => import("./components/Dashboard"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
-  const dispatch = useDispatch()
   const [userData, setUserData] = useState(null);
   const [refreshToken, { }] = useRefreshTokenMutation()
+  const accessToken=useSelector(state=>state.persistantReducer.userDataReducer.userData)
+  const role=accessToken.length>0?jwtDecode(accessToken).role:"" ; //to dont decode if the data is removed from global state
   const saveUserData = (data) => {
     setUserData(data);
   };
@@ -37,7 +37,6 @@ function App() {
   //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
   //     refreshToken(refreshTokenValue).unwrap().then(() => {
   //       cookie.remove("userToken")
-  //       dispatch(changeUserDataValue(""))
   //       console.log("will redirect to login")
   //     });
 
@@ -64,7 +63,6 @@ function App() {
     //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
     //     refreshToken(refreshTokenValue).unwrap().then(() => {
     //       cookie.remove("userToken")
-    //dispatch(changeUserDataValue(""))
     //       console.log("will redirect to login")
     //       clearInterval(interval)
     //     });
@@ -116,7 +114,7 @@ function App() {
             <Route
 
               path={
-                userData?.role == "superAdmin" || userData?.role == "admin"
+                (role!=""&&role||userData?.role) == "superAdmin" || (role!=""&&role||userData?.role) == "admin"
                   ? "users&teams"
                   : "notfound"
               } //notfound will go to * so that it will render not found page

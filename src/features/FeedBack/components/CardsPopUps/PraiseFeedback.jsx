@@ -5,22 +5,22 @@ import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import TextInput from "../../../../components/TextInput/TextInput";
+import { useDispatch, useSelector } from "react-redux";
+import { changeDropDownValue, tooglePraisePopUp } from "../../slices/openPopUpSlice";
 export default function PraiseFeedback() {
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-  useEffect(() => {
-    handleOpenPopup();
-  }, []);
+  const dispatch=useDispatch()
+  const openPraisePopUp = useSelector(state => state.openPopUpSlice.praisePopUp)
 
   const handleClosePopup = () => {
-    setPopupOpen(false);
+    dispatch(tooglePraisePopUp(false))
+    dispatch(changeDropDownValue(""));
+
+
   };
   return (
     <>
       <FormPopUp
-        isOpen={isPopupOpen}
+        isOpen={openPraisePopUp}
         ClosePop={handleClosePopup}
         TitlePopUp="Give Praise"
         iconLeft={<Icons.ArrowLeftPop />}

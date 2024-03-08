@@ -8,22 +8,22 @@ import {
   searchCompetencies,
 } from "../../slices/Api/competenciesApi";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
+import { useSelector } from "react-redux";
 
 const AccordingContent = ({ searchTerm }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [sharedComp, setSharedComp] = useState([])
-  const [allTeamComp, setAllTeamComp] = useState()
   const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
-  const [clicked, setClicked] = useState(false)
+  const { isLoadingTeamComp, comps, error } = useSelector(state => state.getTeamCompetenciesReducer)
   useEffect(() => {
     getAllDataCompetencies()
       .then((fetchedData) => {
         let arr = []
-        console.log(fetchedData.data)
+        // console.log(fetchedData.data)
         for (let i = 0; i < fetchedData.data.length; i++) {
           if (fetchedData.data[i].teamsAssigned.length == 0) {
             arr.push(fetchedData.data[i])
-            console.log(fetchedData.data[i])
+            // console.log(fetchedData.data[i])
           }
         }
         setSharedComp(arr)
@@ -40,14 +40,13 @@ const AccordingContent = ({ searchTerm }) => {
         searchCompetencies(searchTerm)
           .then((fetchedDataSearch) => {
             setSearchResults(fetchedDataSearch);
-            console.log(fetchedDataSearch)
+            // console.log(fetchedDataSearch)
           })
           .catch((error) => {
 
-            console.log("Error fetching data:", error);
+            console.log("Error fetching data:", error.data);
           });
       } catch (err) {
-        console.log(err)
       }
     } else {
       setSearchResults([]);
@@ -57,66 +56,17 @@ const AccordingContent = ({ searchTerm }) => {
   const triggerCompetencyHeader = (arrayOfItems) => {
     return arrayOfItems.map((itemTeamsAssigned, index, array) => { return `${itemTeamsAssigned.teamName} Team${(index == array.length - 1) ? '' : ','}` })
   }
-  const competencyItems = (arrayOfItems) => {
-    return (
-      arrayOfItems?.data?.map((item) => {
-        return (
-          <AccordionItem
-            key={item._id}
-            className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
-            value={item._id}
-            trigger={item.teamsAssigned.length == 0 ? "Organization Shared Competencies" : triggerCompetencyHeader(item.teamsAssigned)}
-            backgroundColor="bg-buttonColor-baseColor"
-            content={<Icons.Organization />}
-            paragraph="Team Working, Public Speaking, Research"
-          >
-            <hr></hr>
-            {/**filter array of  cometecies based on levelname in seniorityLevels(senior,junior) so that it is not duplicated*/}
-            {item.seniorityLevels.filter(
-              (itemLevel, index, array) =>
-                index ===
-                array.findIndex(
-                  (t) =>
-                    t.level.levelName === itemLevel.level.levelName
-                  // && ask back people to put the describtion the same for each level to remove duplicates
-                  // t.description === itemLevel.description
-                )
-            ).map((itemLevel, index) => {
-              return (
-                <TeamItem
-                  key={itemLevel._id}
-                  title={item.name}
-                  description={itemLevel.description}
-                  skills="Soft skills"
-                  position={Array.isArray(itemLevel.level.levelName) ? itemLevel.level.levelName.map((item) => {
-                    return (
-                      item
-                    )
-                  }) : itemLevel.level.levelName}
-                />
-              )
-            })}
-          </AccordionItem>
-        );
-      })
-    )
-  }
-  const getAllTeamCompetenciesFun = (id) => {
-    setClicked(false)
-    getAllTeamCompetencies(id).then((res) => {
-      console.log(res.data.teamCompetencies)
-      setAllTeamComp(res.data)
-      setClicked(true)
 
-      return res.data
-    })
-  }
+
+
+
   return (
     <>
       <div>
         <main className="w-fall ">
           <Accordion>
             {!searchTerm && <AccordionItem
+              value="shared"
               className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
               trigger={`Organization Shared Competencies`}
               backgroundColor="bg-buttonColor-baseColor"
@@ -150,7 +100,7 @@ const AccordingContent = ({ searchTerm }) => {
                     .map(item => item.level.levelName)
                     .join(", ")} />
               ))
-            ) : teams?.data.teamsNames?.map((item) => {
+            ) : isLoading?<div className="w-full flex flex-row justify-center"><Icons.Loading/></div>:teams?.data.teamsNames?.map((item) => {
 
               return (
                 <AccordionItem
@@ -161,24 +111,38 @@ const AccordingContent = ({ searchTerm }) => {
                   backgroundColor="bg-buttonColor-baseColor"
                   content={<Icons.Organization />}
                   paragraph="Team Working, Public Speaking, Research"
-                  onOpenClick={() => { getAllTeamCompetenciesFun(item._id) }}
                 >
                   <hr></hr>
 
+                  
                   {
-                    clicked == true && allTeamComp?.teamCompetencies.map((itemm) => {
-                      return (<TeamItem
-                        key={itemm._id}
-                        title={itemm.name}
-                        description={itemm.defaultDescription}
-                        skills={!(itemm.category) ? "not found" : itemm.category.categoryName}
-                        position={itemm.seniorityLevels
-                          .filter((item, index, array) => array.findIndex(t => t.level.levelName === item.level.levelName) === index)
-                          .map(item => item.level.levelName)
-                          .join(", ")} />)
-                    })
-
+                    isLoadingTeamComp ? (
+                      <p>loading...</p>
+                    ) : !error && comps?.teamCompetencies?.length > 0 ? (
+                      comps.teamCompetencies.map((itemm) => (
+                        <TeamItem
+                          key={itemm._id}
+                          title={itemm.name}
+                          description={itemm.defaultDescription}
+                          skills={
+                            !(itemm.category) ? "not found" : itemm.category.categoryName
+                          }
+                          position={itemm.seniorityLevels
+                            .filter(
+                              (item, index, array) =>
+                                array.findIndex(
+                                  (t) => t.level.levelName === item.level.levelName
+                                ) === index
+                            )
+                            .map((item) => item.level.levelName)
+                            .join(", ")}
+                        />
+                      ))
+                    ) : !isLoadingTeamComp && !error &&comps?.teamCompetencies?.length === 0 ? (
+                      <p>no data</p>
+                    ) : null
                   }
+                  
                 </AccordionItem>
               );
             })}

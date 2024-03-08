@@ -11,6 +11,7 @@ import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import userDataReducer from "../features/LogIn/slices/login.js";
 import openPopUpConfirmDeleteSlice from "../features/ManageTeams/slices/HandelOpenDelete";
+import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js"
 
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
@@ -44,6 +45,7 @@ export const store = configureStore({
     editLevel: editLevelSlice, // Manage Levels slice
     openPopupAddLevel, // Manage Levels slice
     persistantReducer,
+    getTeamCompetenciesReducer:TeamsSlice,
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,

@@ -41,3 +41,29 @@ export const deleteData = async (id) => {
     console.log("error from delete", error);
   }
 };
+export const getFeedbackCards = async (page) => {
+  try {
+    const request = await axiosInstance.get(``)
+    return request;
+  } catch (err) {
+    console.log(err)
+  }
+}
+export const getPendingCards = async (page) => {
+  try {
+    const request = await axiosInstance.get(``)
+    return request;
+  } catch (err) {
+    console.log(err)
+
+  }
+}
+export const getMyRequestsCards = async (page) => {
+  try {
+    const request = await axiosInstance.get(``)
+    return request;
+  } catch (err) {
+    console.log(err)
+
+  }
+}

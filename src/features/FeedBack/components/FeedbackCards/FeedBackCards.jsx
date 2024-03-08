@@ -2,6 +2,7 @@ import React from 'react'
 import FeedbackCard from '../FeedbackCards/FeedbackCard'
 
 export default function FeedBackCards() {
+  //make feed requset here ans map on items here
   return (
     <>
     <header className='font-bold text-lg w-[18.5rem] h-[1.668rem] my-6'> Feedback</header>
