@@ -10,10 +10,9 @@ export const apiSlice = createApi({
       const cookie = new Cookies();
       let token = cookie.get("userToken");
       if (token) {
-        headers.set('authorization', `Bearer ${token}`)
+        headers.set("authorization", `Bearer ${token}`);
       }
-      console.log(headers.get("authorization"))
-      return headers
+      return headers;
     },
   }),
   tagTypes: ["Teams"],

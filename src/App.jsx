@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { useEffect, useState, lazy, Suspense, useCallback } from "react";
 import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
@@ -51,7 +56,6 @@ function App() {
       saveUserData(decodedUserToken);
       console.log("nnnnnnn", decodedUserToken);
       console.log(token);
-
     }
     // checkTokenExpiration();
     //TRUE
@@ -72,7 +76,6 @@ function App() {
     // return(()=>{clearInterval(interval)
     // })
     //END TRUE
-
   }, [new Cookies().get("userToken")]); //to ensure ypu get the updated role of user
   //jwtDecode(cookie.get("userToken")).exp < Date.now() / 1000
   return (
@@ -112,13 +115,11 @@ function App() {
               }
             />
             <Route
-
               path={
                 (role!=""&&role||userData?.role) == "superAdmin" || (role!=""&&role||userData?.role) == "admin"
                   ? "users&teams"
                   : "notfound"
               } //notfound will go to * so that it will render not found page
-
               element={
                 <ProtectedRouting role={userData?.role}>
                   <Users />

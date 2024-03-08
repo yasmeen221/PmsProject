@@ -10,7 +10,14 @@ import {
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
 import { useSelector } from "react-redux";
 
-const AccordingContent = ({ searchTerm }) => {
+const AccordingContent = ({
+  searchTerm,
+  stateTeam,
+  stateLevel,
+  stateCategory,
+  dropDownTextTeam,
+  dropDownTextCategory,
+  dropDownTextLevel, }) => {
   const [searchResults, setSearchResults] = useState([]);
   const [sharedComp, setSharedComp] = useState([])
   const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
@@ -65,29 +72,100 @@ const AccordingContent = ({ searchTerm }) => {
       <div>
         <main className="w-fall ">
           <Accordion>
-            {!searchTerm && <AccordionItem
-              value="shared"
-              className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
-              trigger={`Organization Shared Competencies`}
-              backgroundColor="bg-buttonColor-baseColor"
-              content={<Icons.Organization />}
-              paragraph="Team Working, Public Speaking, Research"
-            >
-              <hr></hr>
-
-              {sharedComp && sharedComp.length > 0 && sharedComp.map((itemm, index) => (
+            {stateTeam
+              ? stateTeam?.data?.competencies.map((itemm, index) => (
                 <TeamItem
                   key={itemm._id}
                   title={itemm.name}
                   description={itemm.defaultDescription}
-                  skills={!(itemm.category) ? "not found" : itemm.category.categoryName}
+                  skills={
+                    !itemm.category
+                      ? "not found"
+                      : itemm.category.categoryName
+                  }
                   position={itemm.seniorityLevels
-                    .filter((item, index, array) => array.findIndex(t => t.level.levelName === item.level.levelName) === index)
-                    .map(item => item.level.levelName)
+                    .filter(
+                      (item, index, array) =>
+                        array.findIndex(
+                          (t) => t.level.levelName === item.level.levelName,
+                        ) === index,
+                    )
+                    .map((item) => item.level.levelName)
                     .join(", ")}
                 />
-              ))}
-            </AccordionItem>}
+              ))
+              : "teammmmm"}
+            {stateCategory
+              ? stateCategory?.data?.competencies.map((itemm, index) => (
+                <TeamItem
+                  key={itemm._id}
+                  title={itemm.name}
+                  description={itemm.defaultDescription}
+                  skills={
+                    !itemm.category
+                      ? "not found"
+                      : itemm.category.categoryName
+                  }
+                  position={itemm.seniorityLevels
+                    .filter(
+                      (item, index, array) =>
+                        array.findIndex(
+                          (t) => t.level.levelName === item.level.levelName,
+                        ) === index,
+                    )
+                    .map((item) => item.level.levelName)
+                    .join(", ")}
+                />
+              ))
+              : "categgory"}
+            {stateLevel
+              ? stateLevel?.data?.competencies.map((itemm, index) => (
+                <TeamItem
+                  key={itemm._id}
+                  title={itemm.name}
+                  description={itemm.defaultDescription}
+                  skills={
+                    !itemm.category
+                      ? "not found"
+                      : itemm.category.categoryName
+                  }
+                  position={itemm.seniorityLevels
+                    .filter(
+                      (item, index, array) =>
+                        array.findIndex(
+                          (t) => t.level.levelName === item.level.levelName,
+                        ) === index,
+                    )
+                    .map((item) => item.level.levelName)
+                    .join(", ")}
+                />
+              ))
+              : "leeveel"}
+            {!searchTerm && dropDownTextLevel === "Levels" &&
+              dropDownTextTeam === "Teams" &&
+              dropDownTextCategory === "Categories" && <AccordionItem
+                value="shared"
+                className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
+                trigger={`Organization Shared Competencies`}
+                backgroundColor="bg-buttonColor-baseColor"
+                content={<Icons.Organization />}
+                paragraph="Team Working, Public Speaking, Research"
+              >
+                <hr></hr>
+
+                {sharedComp && sharedComp.length > 0 && sharedComp.map((itemm, index) => (
+                  <TeamItem
+                    key={itemm._id}
+                    title={itemm.name}
+                    description={itemm.defaultDescription}
+                    skills={!(itemm.category) ? "not found" : itemm.category.categoryName}
+                    position={itemm.seniorityLevels
+                      .filter((item, index, array) => array.findIndex(t => t.level.levelName === item.level.levelName) === index)
+                      .map(item => item.level.levelName)
+                      .join(", ")}
+                  />
+                ))}
+              </AccordionItem>}
             {searchTerm && searchResults && searchResults.data ? (
               searchResults?.data.competencies.map((itemm, index) => (
                 <TeamItem
@@ -100,7 +178,7 @@ const AccordingContent = ({ searchTerm }) => {
                     .map(item => item.level.levelName)
                     .join(", ")} />
               ))
-            ) : isLoading?<div className="w-full flex flex-row justify-center"><Icons.Loading/></div>:teams?.data.teamsNames?.map((item) => {
+            ) : isLoading ? <div className="w-full flex flex-row justify-center"><Icons.Loading /></div> : teams?.data.teamsNames?.map((item) => {
 
               return (
                 <AccordionItem
@@ -114,7 +192,7 @@ const AccordingContent = ({ searchTerm }) => {
                 >
                   <hr></hr>
 
-                  
+
                   {
                     isLoadingTeamComp ? (
                       <p>loading...</p>
@@ -138,11 +216,11 @@ const AccordingContent = ({ searchTerm }) => {
                             .join(", ")}
                         />
                       ))
-                    ) : !isLoadingTeamComp && !error &&comps?.teamCompetencies?.length === 0 ? (
+                    ) : !isLoadingTeamComp && !error && comps?.teamCompetencies?.length === 0 ? (
                       <p>no data</p>
                     ) : null
                   }
-                  
+
                 </AccordionItem>
               );
             })}
