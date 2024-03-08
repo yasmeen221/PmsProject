@@ -9,7 +9,17 @@ export const getAllDataCompetencies = async () => {
     console.log("error from get", error);
   }
 };
-
+//og get all competencies assigned to specific team
+export const getAllTeamCompetencies = async (competencyId) => {
+  try {
+    const request = await axiosInstance.get(
+      `/competency/teams-competencies/${competencyId}`,
+    );
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};
 //to insert new data
 export const createData = async (newData) => {
   try {
@@ -48,18 +58,40 @@ export const searchCompetencies = async (searchTerm) => {
     const request = await axiosInstance.get(
       `/competency/search?comp=${searchTerm}`,
     );
+    console.log(request);
     return request.data;
   } catch (error) {
-    console.error("Error searching competencies:", error);
+    console.log("Error searching competencies:", error);
   }
 };
-// export const filterCompetencies = async (filterTerm) => {
-//   try {
-//     const request = await axiosInstance.get(
-//       `/competency/......${filterTerm}`,
-//     );
-//     return request.data;
-//   } catch (error) {
-//     console.error("Error filtering competencies:", error);
-//   }
-// };
+
+export const filterWithCategory = async (categoryId) => {
+  try {
+    const request = await axiosInstance.get(
+      `/competency/filter?categoryId=${categoryId}`,
+    );
+    return request.data;
+  } catch (error) {
+    console.log("Error filter with category competencies:", error);
+  }
+};
+export const filterWithTeam = async (teamId) => {
+  try {
+    const request = await axiosInstance.get(
+      `/competency/filter?teamId=${teamId}`,
+    );
+    return request.data;
+  } catch (error) {
+    console.log("Error filter with team competencies:", error);
+  }
+};
+export const filterWithLevel = async (levelId) => {
+  try {
+    const request = await axiosInstance.get(
+      `/competency/filter?levelId=${levelId}`,
+    );
+    return request.data;
+  } catch (error) {
+    console.log("Error filter with level competencies:", error);
+  }
+};

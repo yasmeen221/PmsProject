@@ -6,17 +6,37 @@ import TextInput from "../../components/TextInput/TextInput";
 import { useGetTeamsNameQuery } from "../../features/ManageTeams/slices/apis/apiSlice";
 import { useGetLevelQuery } from "../../features/ManageLevels/slices/api/apiLevelSlice";
 import { getAllData } from "../../features/Competencies/slices/Api/catgoryapi";
-import AccordingContent from "./../../features/Competencies/components/Accordion/AccordingContent";
-export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
+import {
+  filterWithCategory,
+  filterWithLevel,
+  filterWithTeam,
+} from "../../features/Competencies/slices/Api/competenciesApi";
+export default function Inputs({
+  currentList,
+  searchTerm,
+  setSearchTerm,
+  selectIdTeam,
+  setSelectIdTeam,
+  setStateTeam,
+  selectIdLevel,
+  setSelectIdLevel,
+  setSelectIdCategory,
+  setStateLevel,
+  selectIdCategory,
+  setStateCategory,
+  dropDownTextTeam,
+  setDropDownTextTeam,
+  dropDownTextCategory,
+  setDropDownTextCategory,
+  dropDownTextLevel,
+  setDropDownTextLevel,
+}) {
   const [dropDown1, setOpen1] = useState(false);
   const [dropDown2, setOpen2] = useState(false);
   const [dropDown3, setOpen3] = useState(false);
-
   const [dataCategory, setDataCategory] = useState([]);
   const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
-
   const { data: levels } = useGetLevelQuery();
-  // console.log(searchTerm);
 
   const dropdown1 = (value) => {
     setOpen1((dropDown1) => !dropDown1);
@@ -28,6 +48,7 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
     setOpen3((dropDown3) => !dropDown3);
   };
 
+  //to fetch data from category to dropdown
   useEffect(() => {
     getAllData()
       .then((fetchedData) => {
@@ -37,47 +58,109 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
         console.error("Error fetching data:", error);
       });
   }, []);
-  const filterDataByTeam = (team) => {
-    if (teams) {
-      const filteredDataTeam = teams?.data?.teamsNames.filter(
-        (item) => item.teamName === team.teamName,
-      );
-      console.log(filteredDataTeam);
+
+  // to fetch data for filter of team
+  useEffect(() => {
+    if (selectIdTeam) {
+      filterWithTeam(selectIdTeam)
+        .then((fetchedDataTeam) => {
+          setStateTeam(fetchedDataTeam);
+        })
+        .catch((error) => {
+          console.error("Error fetching data from filter:", error);
+        });
+    } else {
+    }
+  }, [selectIdTeam]);
+
+  const filterDataByTeam = async (team) => {
+    try {
+      const filteredDataTeam = await filterWithTeam(team._id);
+      setStateTeam(filteredDataTeam);
+    } catch (error) {
+      console.error("Error filtering data by team:", error);
     }
   };
   const handleTeamClick = (team) => {
     setOpen1(false);
     filterDataByTeam(team);
-    console.log(team);
-  };
-  const filterDataByCategory = (category) => {
-    if (levels) {
-      const filteredDataCategory = dataCategory?.data?.categories.filter(
-        (item) => item.categoryName === category.categoryName,
-      );
-      console.log(filteredDataCategory);
-    }
-  };
-  const handelCategoryClick = (level) => {
-    setOpen2(false);
-    filterDataByCategory(level);
-    console.log(level);
+    setSelectIdTeam(team._id);
+    setDropDownTextTeam(`${team.teamName}`);
   };
 
-  const filterDataByLevels = (level) => {
-    if (levels) {
-      const filteredDataLevel = levels?.data?.levels.filter(
-        (item) => item.levelName === level.levelName,
-      );
-      console.log(filteredDataLevel);
+  // ------------------------------------------------end of team
+  // fetch data for filter of category
+  useEffect(() => {
+    if (selectIdCategory) {
+      filterWithCategory(selectIdCategory)
+        .then((fetchDataCategory) => {
+          setStateTeam(fetchDataCategory);
+        })
+        .catch((error) => {
+          console.error("Error fetching data from filter:", error);
+        });
+    } else {
+    }
+  }, [selectIdCategory]);
+  const filterDataByCategory = async (category) => {
+    try {
+      const filteredDataCategory = await filterWithCategory(category._id);
+      setStateCategory(filteredDataCategory);
+    } catch (error) {
+      console.error("Error filtering data by team:", error);
+    }
+  };
+  const handelCategoryClick = (category) => {
+    setOpen2(false);
+    filterDataByCategory(category);
+    setSelectIdCategory(category._id);
+    setDropDownTextCategory(`${category.categoryName}`);
+  };
+  // ----------------------------------------------end category
+  // fetch data for filter of level
+  useEffect(() => {
+    if (selectIdLevel) {
+      filterWithLevel(selectIdLevel)
+        .then((fetchDataLevel) => {
+          setStateLevel(fetchDataLevel);
+        })
+        .catch((error) => {
+          console.error("Error fetching data from filter:", error);
+        });
+    } else {
+    }
+  }, [selectIdLevel]);
+
+  const filterDataByLevels = async (level) => {
+    try {
+      const filteredDataLevel = await filterWithLevel(level._id);
+      setStateLevel(filteredDataLevel);
+    } catch (error) {
+      console.error("Error filtering data by team:", error);
     }
   };
   const handelLevelClick = (level) => {
     setOpen3(false);
     filterDataByLevels(level);
-    console.log(level);
+    setSelectIdLevel(level._id);
+    setDropDownTextLevel(`${level.levelName}`);
   };
 
+  const defaultFunTeam = () => {
+    setOpen1(false);
+    setStateTeam([]);
+    setDropDownTextTeam("Teams");
+  };
+  const defaultFunCategory = () => {
+    setOpen2(false);
+    setStateCategory([]);
+    setDropDownTextCategory("Categories");
+  };
+  const defaultFunLevel = () => {
+    setOpen3(false);
+    setStateLevel([]);
+    setDropDownTextLevel("Levels");
+  };
   return (
     <>
       {currentList == "Competencies Framework" ? (
@@ -92,7 +175,7 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <DropDown
-              DropDownText="Teams"
+              DropDownText={dropDownTextTeam}
               arrowIcon
               iconColor="#B7BCC1"
               open={dropDown1}
@@ -101,6 +184,12 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
               }}
               className="  bg-white border h-12 border-borderColor-baseBorderColor text-fontColor-placeHolderColor"
             >
+              <li
+                onClick={defaultFunTeam}
+                className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
+              >
+                Teams
+              </li>
               {teams?.data?.teamsNames.map((team) => {
                 return (
                   <li
@@ -114,7 +203,7 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
               })}
             </DropDown>
             <DropDown
-              DropDownText="Category"
+              DropDownText={dropDownTextCategory}
               arrowIcon
               iconColor="#B7BCC1"
               open={dropDown2}
@@ -123,6 +212,12 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
               }}
               className="bg-white border h-12  border-borderColor-baseBorderColor text-fontColor-placeHolderColor"
             >
+              <li
+                onClick={defaultFunCategory}
+                className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
+              >
+                Categories
+              </li>
               {dataCategory?.data?.categories?.map((category) => {
                 return (
                   <li
@@ -136,7 +231,7 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
               })}
             </DropDown>
             <DropDown
-              DropDownText="Levels"
+              DropDownText={dropDownTextLevel}
               arrowIcon
               iconColor="#B7BCC1"
               open={dropDown3}
@@ -145,6 +240,12 @@ export default function Inputs({ currentList, searchTerm, setSearchTerm }) {
               }}
               className="bg-white border h-12 border-borderColor-baseBorderColor text-fontColor-placeHolderColor"
             >
+              <li
+                onClick={defaultFunLevel}
+                className="block px-dropItemXP py-dropItemYP hover:bg-hoverColor-baseHoverColor"
+              >
+                Levels
+              </li>
               {levels?.data?.levels.map((level) => {
                 return (
                   <li

@@ -10,7 +10,6 @@ export const apiLevelSlice = createApi({
     if (token) {
       headers.set('authorization', `Bearer ${token}`)
     }
-    console.log(headers.get("authorization"))
     return headers
   }, }),
   tagTypes: ["Levels"],
