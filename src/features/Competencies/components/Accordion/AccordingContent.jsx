@@ -52,7 +52,7 @@ const AccordingContent = ({
       setSearchResults([]);
     }
   }, [searchTerm]);
-  
+
   // end of search
   // to style of the teams in header acording
   const triggerCompetencyHeader = (arrayOfItems) => {
@@ -75,7 +75,7 @@ const AccordingContent = ({
       <div>
         <main className="w-fall ">
           <Accordion>
-             {stateTeam 
+            {stateTeam
               ? stateTeam?.data?.competencies.map((itemm, index) => (
                   <TeamItem
                     key={itemm._id}
@@ -98,7 +98,7 @@ const AccordingContent = ({
                   />
                 ))
               : "teammmmm"}
-                        {stateCategory
+            {stateCategory
               ? stateCategory?.data?.competencies.map((itemm, index) => (
                   <TeamItem
                     key={itemm._id}
@@ -144,13 +144,11 @@ const AccordingContent = ({
                   />
                 ))
               : "leeveel"}
-            {
-              !searchTerm &&
-            ( dropDownTextLevel === "Levels" &&
+            {!searchTerm &&
+              dropDownTextLevel === "Levels" &&
               dropDownTextTeam === "Teams" &&
-              dropDownTextCategory ===
-              "Categories") &&
-              (
+              dropDownTextCategory === "Categories" && (
+                <>
                   <AccordionItem
                     className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
                     trigger={`Organization Shared Competencies`}
@@ -184,9 +182,10 @@ const AccordingContent = ({
                             .join(", ")}
                         />
                       ))}
-                  </AccordionItem>,
-                )}
-            {searchTerm &&  searchResults && searchResults?.data
+                  </AccordionItem>
+                </>
+              )}
+            {searchTerm && searchResults && searchResults?.data
               ? searchResults.data.competencies.map((itemm, index) => (
                   <TeamItem
                     key={itemm._id}
@@ -208,8 +207,12 @@ const AccordingContent = ({
                       .join(", ")}
                   />
                 ))
-              : !(stateTeam == "Teams" && stateCategory == "Categories" && stateLevel == "Levels") &&
-              teams?.data.teamsNames?.map((item) => {
+              : !(
+                  stateTeam == "Teams" &&
+                  stateCategory == "Categories" &&
+                  stateLevel == "Levels"
+                ) &&
+                teams?.data.teamsNames?.map((item) => {
                   return (
                     <AccordionItem
                       className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
