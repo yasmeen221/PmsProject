@@ -13,7 +13,7 @@ import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
 import Cookies from "universal-cookie";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeUserDataValue } from "../slices/login";
 
 const schema = yup.object({
@@ -33,6 +33,7 @@ const schema = yup.object({
 
 const LoginForm = ({ saveUserData }) => {
   useTitle("LogIn");
+  const dispatch=useDispatch()
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
   const [loginUser, { isLoading, isError, error, isSuccess }] =
@@ -60,6 +61,7 @@ const LoginForm = ({ saveUserData }) => {
           cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
           cookie.set("refreshToken", res.data.refreshToken)
           saveUserData(res.data)
+          dispatch(changeUserDataValue(res.data.accesToken))
           navigate("/dashboard/competencies", { replace: true });
           reset();
           setLoginError("")

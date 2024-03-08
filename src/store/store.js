@@ -17,6 +17,20 @@ import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice
 import { apiLoginSlice } from "../features/LogIn/slices/apis/apiLoginSlice.js";
 import { apiRestPassSlice } from "../features/ResetPassword/slices/apis/apiSetPassSlice.js";
 import { usersApiSlice } from "../features/ManageUsers/slices/api/apiSlice.js";
+//for store data in rtk
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+import { combineReducers } from "@reduxjs/toolkit";
+const persistConfig={
+key:"root",
+version:1,
+storage,
+}
+const userReducer=combineReducers({
+  userDataReducer:userDataReducer
+})
+const persistantReducer=persistReducer(persistConfig,userReducer)
+
 export const store = configureStore({
   reducer: {
     openPopUpConfirmDeleteSlice,
@@ -29,7 +43,7 @@ export const store = configureStore({
     openAddUserFormPopUp, // Manage Users slice
     editLevel: editLevelSlice, // Manage Levels slice
     openPopupAddLevel, // Manage Levels slice
-    userDataReducer,
+    persistantReducer,
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,
@@ -37,13 +51,18 @@ export const store = configureStore({
     [usersApiSlice.reducerPath]: usersApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
+    getDefaultMiddleware({
+      serializableCheck: false, // Disable serialization checks
+    }).concat(
       apiSlice.middleware,
       apiLevelSlice.middleware,
       apiLoginSlice.middleware,
       apiRestPassSlice.middleware,
       usersApiSlice.middleware,
+      
+      
     ),
 });
 
 export default store;
+export const persistor=persistStore(store)
