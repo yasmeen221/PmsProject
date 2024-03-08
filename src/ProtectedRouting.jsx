@@ -11,7 +11,7 @@ export default function ProtectedRouting(props) {
   let token = cookie.get("userToken");
   if (token) {
     const decodedUserToken = jwtDecode(token);
-    console.log("nnjjnjnjjnj", decodedUserToken.role);
+    // console.log("nnjjnjnjjnj", decodedUserToken.role);
     if (role) {
 
       if (role == "superAdmin" || role == "admin") {
