@@ -4,7 +4,7 @@ import { useState } from "react";
 import Header from "../../../../components/Header/Header";
 import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
-
+import img from "../../../../assets/images/girl1.png";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
@@ -54,12 +54,12 @@ export default function GiveFeedback() {
               <Header text=" Feedback" />
               <div className="mt-2">
                 <textarea
-                  {...register("feedback")}
                   rows={4}
                   placeholder="Write Your honst feedback"
                   wrap="soft"
-                  id="feedback"
-                  name="feedback"
+                  id="describtion"
+                  name="describtion"
+                  onChange={(e) => console.log(e.target.value)}
                   className="min-h-[7rem] resize-none block max-h-[7rem] bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                 />
               </div>

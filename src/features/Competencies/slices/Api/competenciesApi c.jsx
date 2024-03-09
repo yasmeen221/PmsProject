@@ -11,10 +11,10 @@ export const getAllData = async () => {
 };
 
 //to insert new data
-export const createData = async (categoryName) => {
+export const createData = async (newData) => {
   try {
-    const request = await axiosInstance.post(`/category`, {categoryName}  );
-    console.log(request);
+    const request = await axiosInstance.post(`/category`,  newData );
+    return request.data;
   } catch (error) {
     console.log("error from create", error);
     throw error;
@@ -22,12 +22,12 @@ export const createData = async (categoryName) => {
 };
 
 // to  update existing data
-export const updateData = async (id, editedCategory) => {
+export const updateData = async (id, updatedData) => {
   //will know from back use post or  put
   try {
-    const request = await axiosInstance.post(`/category/edit/${id}`, 
-      {editedCategory},
-    );
+    const request = await axiosInstance.post(`/category/${id}`, {
+      updatedData,
+    });
     return request.data;
   } catch (error) {
     console.log("error from update", error);
@@ -37,7 +37,7 @@ export const updateData = async (id, editedCategory) => {
 // to delete existing data
 export const deleteData = async (id) => {
   try {
-    const request = await axiosInstance.get(`/category/delete/${id}`);
+    const request = await axiosInstance.delete(`/category/${id}`);
     return request;
   } catch (error) {
     console.log("error from delete", error);

@@ -1,16 +1,9 @@
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
-import { useEffect, useState, lazy, Suspense, useCallback } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useEffect, useState, lazy, Suspense } from "react";
 import Cookies from "universal-cookie";
 import { jwtDecode } from "jwt-decode";
 import ProtectedRouting from "./ProtectedRouting";
 import Icons from "./themes/icons";
-import { useRefreshTokenMutation } from "./features/LogIn/slices/apis/apiLoginSlice";
-import { useSelector } from "react-redux";
 
 // Lazy-loaded components
 const ResetPassword = lazy(
@@ -26,59 +19,22 @@ const Dashboard = lazy(() => import("./components/Dashboard"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
-
-  const [userData, setUserData] = useState(null);
-  const [refreshToken, { }] = useRefreshTokenMutation()
-  const accessToken=useSelector(state=>state.persistantReducer.userDataReducer.userData)
-  const role=accessToken.length>0?jwtDecode(accessToken).role:"" ; //to dont decode if the data is removed from global stat
+  const [userData, setUserData] = useState(null); 
   const saveUserData = (data) => {
     setUserData(data);
   };
-  const cookie = new Cookies();
-  // const checkTokenExpiration = () => {
-  //   const token = cookie.get("userToken");
-  //   const refreshTokenValue = cookie.get("refreshToken");
-  //   console.log("rrr", refreshTokenValue)
-
-  //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
-  //     refreshToken(refreshTokenValue).unwrap().then(() => {
-  //       cookie.remove("userToken")
-  //       console.log("will redirect to login")
-  //     });
-
-  //   }
-  // };
   useEffect(() => {
+    const cookie = new Cookies();
     let token = cookie.get("userToken");
-    // let refreshTokenValue = cookie.get("refreshToken")
-
-    if (token && jwtDecode(token)?.exp > Date.now() / 1000) {
+    if (token) {
       const decodedUserToken = jwtDecode(token);
       saveUserData(decodedUserToken);
       console.log("nnnnnnn", decodedUserToken);
       console.log(token);
     }
-    // checkTokenExpiration();
-    //TRUE
-    // const interval = setInterval(() => {
-    //   const token = cookie.get("userToken");
-    //   const refreshTokenValue = cookie.get("refreshToken");
-    //   console.log("rrr", refreshTokenValue)
 
-    //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
-    //     refreshToken(refreshTokenValue).unwrap().then(() => {
-    //       cookie.remove("userToken")
-    //       console.log("will redirect to login")
-    //       clearInterval(interval)
-    //     });
-
-    //   }
-    // }, 60000) //EVERY 1 MINUTE
-    // return(()=>{clearInterval(interval)
-    // })
-    //END TRUE
   }, [new Cookies().get("userToken")]); //to ensure ypu get the updated role of user
-  //jwtDecode(cookie.get("userToken")).exp < Date.now() / 1000
+
   return (
     <Router>
       <Suspense
@@ -88,6 +44,8 @@ function App() {
           </div>
         }
       >
+
+
         <Routes>
           <Route path="/" element={<LogInPage saveUserData={saveUserData} />} />
           <Route path="/setpassword/:token" element={<ResetPassword />} />
@@ -116,11 +74,13 @@ function App() {
               }
             />
             <Route
+
               path={
-                (role!=""&&role||userData?.role) == "superAdmin" || (role!=""&&role||userData?.role) == "admin"
+                userData?.role == "superAdmin" || userData?.role == "admin"
                   ? "users&teams"
                   : "notfound"
               } //notfound will go to * so that it will render not found page
+
               element={
                 <ProtectedRouting role={userData?.role}>
                   <Users />

@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
 import { useForm } from "react-hook-form";
 import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
-import {useAddTeamMutation,useEditTeamMutation,useGetTeamsNameQuery,} from "../../slices/apis/apiSlice";
+import {
+  useAddTeamMutation,
+  useEditTeamMutation,
+  useGetTeamsNameQuery,
+} from "../../slices/apis/apiSlice";
 import { useGetUsersQuery } from "../../../ManageUsers/slices/api/apiSlice";
 function ManageTeamsForm() {
   const [addTeam, { isLoading, isError, error, isSuccess }] =

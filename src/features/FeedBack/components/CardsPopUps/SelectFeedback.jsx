@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DropDown from "../../../../components/DropDown/DropDown";
-import { useDispatch, useSelector } from "react-redux";
-import { changeDropDownValue, toggleNormalFeedback, tooglePraisePopUp } from "../../slices/openPopUpSlice";
+import { useDispatch } from "react-redux";
+import { changeDropDownValue } from "../../slices/openPopUpSlice";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
@@ -10,11 +10,10 @@ import GiveNormalFeedback from "./GiveNormalFeedback";
 
 const SelectFeedback = () => {
   const dispatch = useDispatch();
-  const openNormalFeedbackPopUp = useSelector(state => state.openPopUpSlice.normalFeedbackPopup)
-  const openPraisePopUp = useSelector(state => state.openPopUpSlice.praisePopUp)
-
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [dropDown1, setDropDown1] = useState(false);
+  const [praisePop, setPraisePop] = useState(false);
+  const [normalPop, setNormalPop] = useState(false);
 
   const dropdown1 = (value) => {
     setDropDown1((dropDown1) => !dropDown1);
@@ -26,15 +25,13 @@ const SelectFeedback = () => {
 
   const handleClosePopup = () => {
     setPopupOpen(false);
-    dispatch(changeDropDownValue(""));
-
   };
   const handlePraise = () => {
-    dispatch(tooglePraisePopUp(true))
+    setPraisePop(true);
     setPopupOpen(false);
   };
   const handleNormal = () => {
-    dispatch(toggleNormalFeedback(true))
+    setNormalPop(true);
     setPopupOpen(false);
   };
   return (
@@ -117,8 +114,8 @@ const SelectFeedback = () => {
           Request Feedback
         </li>
       </DropDown>
-      {openPraisePopUp && <PraiseFeedback />}
-      {openNormalFeedbackPopUp && <GiveNormalFeedback />}
+      {praisePop && <PraiseFeedback />}
+      {normalPop && <GiveNormalFeedback />}
     </>
   );
 };

@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "../../../components/Header/Header";
 import TextInput from "../../../components/TextInput/TextInput";
 import Button from "../../../components/Button/Button";
@@ -13,7 +13,7 @@ import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useLoginUserMutation } from "../slices/apis/apiLoginSlice";
 import Cookies from "universal-cookie";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changeUserDataValue } from "../slices/login";
 
 const schema = yup.object({
@@ -31,10 +31,8 @@ const schema = yup.object({
     ),
 });
 
-const LoginForm = ({  }) => {
+const LoginForm = ({ saveUserData }) => {
   useTitle("LogIn");
-  const dispatch = useDispatch()
-  const cookie = new Cookies((null, { path: "/" }));
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
   const [loginUser, { isLoading, isError, error, isSuccess }] =
@@ -48,39 +46,33 @@ const LoginForm = ({  }) => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  useEffect(() => {
-    dispatch(changeUserDataValue(""))
-    cookie.remove("userToken");  
-    cookie.remove("refreshToken")
 
-
-  }, [])
   const formSubmit = (values) => {
     const objToSend = {
       username: values.email,
       password: values.password
     }
-
-    loginUser(objToSend).unwrap().then((res) => {
-      if (res.status == "success") {
-        console.log(res.data);
-        cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
-        cookie.set("refreshToken", res.data.refreshToken)
-        dispatch(changeUserDataValue(res.data.accesToken))
-        navigate("/dashboard/competencies", { replace: true });
-        reset();
-        setLoginError("")
-      }
-    }).catch((err) => {
-      if (err.data.data.message == "username or password is incorrect") {
-        setLoginError("username or password is incorrect")
-      } else if (err.status == 500) {
-        setLoginError("internal server error")
-      } else {
-        setLoginError("some thing went wrong")
-      }
-    })
-
+      loginUser(objToSend).unwrap().then((res) => {
+        if (res.status == "success") {
+          console.log(res.data);
+          const cookie = new Cookies((null, { path: "/" }));
+          cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
+          cookie.set("refreshToken", res.data.refreshToken)
+          saveUserData(res.data)
+          navigate("/dashboard/competencies", { replace: true });
+          reset();
+          setLoginError("")
+        }
+      }).catch((err) => {
+        if (err.data.data.message == "username or password is incorrect") {
+          setLoginError("username or password is incorrect")
+        } else if (err.status == 500) {
+          setLoginError("internal server error")
+        } else {
+          setLoginError("some thing went wrong")
+        }
+      })
+    
   };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">

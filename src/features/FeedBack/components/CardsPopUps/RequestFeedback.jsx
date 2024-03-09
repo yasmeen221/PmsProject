@@ -3,18 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
-import { changeDropDownValue, toogleRequestFeedbackForMySelf, toogleRequestFeedbackForSomeOne } from "../../slices/openPopUpSlice";
+import { changeDropDownValue } from "../../slices/openPopUpSlice";
 import RequestFeedbackSomeOne from "./RequestFeedbackSomeOne";
-import RequestFeedbackForMyself from "./RequestFeedbackForMyself";
+import GiveFeedback from "./GiveFeedback";
 
 
 const RequestFeedback = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const dropDownValue = useSelector((state) => state.openPopUpSlice.dropDown);
-  const RequestFeedbackForSomeOnePopUp = useSelector(state => state.openPopUpSlice.requestFeedbackForSomeOne)
-  const RequestFeedbackForMyselfPopUp=useSelector(state=>state.openPopUpSlice.requestFeedbackForMySelf)
+  const [someOnePopUp, setSomeOnePopUp] = useState(false);
+  const [myselfPopUp, setMyselfPopUp] = useState(false);
 
+
+
+  const dropDownValue = useSelector((state) => state.openPopUpSlice.dropDown);
   const handleClosePopup = () => {
     setPopupOpen(false);
     dispatch(changeDropDownValue(""));
@@ -25,11 +27,11 @@ const RequestFeedback = () => {
     }
   }, [dropDownValue]);
   const HandelSomeOnePopUp = () => {
-    dispatch(toogleRequestFeedbackForSomeOne(true))
+    setSomeOnePopUp(true);
     setPopupOpen(false);
   };
   const HandelMyselfPopUp = () => {
-    dispatch(toogleRequestFeedbackForMySelf(true))
+    setMyselfPopUp(true);
     setPopupOpen(false);
   };
   return (
@@ -91,8 +93,8 @@ const RequestFeedback = () => {
           />
         </div>
       </FormPopUp>
-      {RequestFeedbackForSomeOnePopUp && <RequestFeedbackSomeOne />}
-      {RequestFeedbackForMyselfPopUp && <RequestFeedbackForMyself   />}
+      {someOnePopUp && <RequestFeedbackSomeOne />}
+      {myselfPopUp && <GiveFeedback />}
     </>
   );
 };
