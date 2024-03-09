@@ -8,8 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeDropDownValue, toogleRequestFeedbackForSomeOne } from "../../slices/openPopUpSlice";
 
 export default function RequestFeedbackSomeOne() {
+
   const dispatch=useDispatch()
   const [addToogle, setAddToggle] = useState(false);
+
   const [team, setTeam] = useState("");
   const RequestFeedbackForSomeOnePopUp = useSelector(state => state.openPopUpSlice.requestFeedbackForSomeOne)
 
@@ -86,7 +88,7 @@ export default function RequestFeedbackSomeOne() {
                       value=""
                       className="sr-only peer"
                       onChange={(e) => {
-                        setAddToggle(e.target.checked);
+                        setTeamsBtnChecked(e.target.checked);
                       }}
                     />
                     <div className="relative w-11 h-6 peer-focus:outline-none rounded-full peer dark:bg-fontColor-placeHolderColor peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content: [''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-buttonColor-baseColor"></div>
@@ -94,7 +96,7 @@ export default function RequestFeedbackSomeOne() {
                 </div>
               </div>
             </div>
-            {addToogle && (
+            {teamsBtnChecked && (
               <div className="relative my-2">
                 <select
                   onChange={(e) => setTeam(e.target.value)}

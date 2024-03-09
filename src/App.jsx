@@ -26,10 +26,11 @@ const Dashboard = lazy(() => import("./components/Dashboard"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
+
   const [userData, setUserData] = useState(null);
   const [refreshToken, { }] = useRefreshTokenMutation()
   const accessToken=useSelector(state=>state.persistantReducer.userDataReducer.userData)
-  const role=accessToken.length>0?jwtDecode(accessToken).role:"" ; //to dont decode if the data is removed from global state
+  const role=accessToken.length>0?jwtDecode(accessToken).role:"" ; //to dont decode if the data is removed from global stat
   const saveUserData = (data) => {
     setUserData(data);
   };

@@ -21,6 +21,7 @@ import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice
 import { apiLoginSlice } from "../features/LogIn/slices/apis/apiLoginSlice.js";
 import { apiRestPassSlice } from "../features/ResetPassword/slices/apis/apiSetPassSlice.js";
 import { usersApiSlice } from "../features/ManageUsers/slices/api/apiSlice.js";
+
 //for store data in rtk
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
@@ -35,6 +36,7 @@ const userReducer=combineReducers({
 })
 const persistantReducer=persistReducer(persistConfig,userReducer)
 
+
 export const store = configureStore({
   reducer: {
     openPopUpConfirmDeleteSlice,
@@ -48,10 +50,12 @@ export const store = configureStore({
     openAddUserFormPopUp, // Manage Users slice
     editLevel: editLevelSlice, // Manage Levels slice
     openPopupAddLevel, // Manage Levels slice
+
     
     persistantReducer,
     getTeamCompetenciesReducer:TeamsSlice,
     ViewFeedback:ViewFeedBackSlice,
+
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,

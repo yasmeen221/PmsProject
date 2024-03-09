@@ -41,6 +41,37 @@ export const deleteData = async (id) => {
     console.log("error from delete", error);
   }
 };
+
+
+//////////////////////////////////////////////////////////////
+export const getTeamLeaderId = async (userId) => {
+  try {
+    const request = await axiosInstance.get(`user/team-leader/${userId}`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+}
+
+export const getAllUsersNames = async () => {
+  try {
+    const request = await axiosInstance.get(`/user/usernames`);
+    return request;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+}
+
+export const getUserCompetencies = async (teamId) => {
+  try {
+    const request = await axiosInstance.get(`/competency/teams-competencies/${teamId}`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+}
+
+
 export const getFeedbacks = async () => {
   try {
     const request = await axiosInstance.get(`/feedback`)
@@ -95,3 +126,4 @@ export const postsPraise = async (data) => {
   }
 };
 //////////////////////end Praise////////////////
+
