@@ -126,4 +126,39 @@ export const postsPraise = async (data) => {
   }
 };
 //////////////////////end Praise////////////////
+/////////////////feedback for my self////////////////////////////
 
+// api.js
+
+
+
+
+export const fetchUsernames = async () => {
+  try {
+    const response = await axiosInstance.get(`/user/usernames`);
+    return response.data;
+  } catch (error) {
+    console.log("error from get", error);
+    throw error;
+  }
+};
+
+export const fetchTeamLeader = async (userId) => {
+  try {
+    const response = await axiosInstance.get(`/user/team-leader/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.log("error from get", error);
+    throw error;
+  }
+};
+
+export const fetchCompetencies = async (teamId) => {
+  try {
+    const response = await axiosInstance.get(`/competency/teams-competencies/${teamId}`);
+    return response.data;
+  } catch (error) {
+    console.log("error from get", error);
+    throw error;
+  }
+};
