@@ -23,11 +23,12 @@ function AddCompetency() {
   const [categories, setCategories] = useState([]);
   const [levelErrorMsg, setLevelErrorMsg] = useState(false);
   const [teamsErrorMsg, setTeamsErrorMsg] = useState(false);
-
+  const [ levelsOptionsMap, setLevelsOptionsMap] = useState({});
   const seniorityLevels = formLevels?.map((level, index) => ({
     level,
     description: descriptions[index],
   }));
+  
 
   const schema = yup.object({
     name: yup
@@ -51,12 +52,19 @@ function AddCompetency() {
   }));
 
   const { data: levels } = useGetLevelQuery();
-
   const levelsArray = levels?.data?.levels;
+  console.log("levelsArray", levelsArray);
   const levelsOptions = levelsArray?.map((level) => ({
     value: level._id,
     label: level.levelName,
   }));
+  
+
+  levelsArray?.forEach((level) => {
+    levelsOptionsMap[level._id] = level.levelName;
+  });
+
+
 
   const handleTeamChange = (selectedOptions) => {
     const teams = selectedOptions.map((team) =>
@@ -277,7 +285,7 @@ function AddCompetency() {
           </div>
 
           {formLevels.length !== 0 &&
-            levelsArray?.map((level, index) => {
+            formLevels?.map((des, index) => {
               return (
                 <div
                   key={index}
@@ -286,7 +294,7 @@ function AddCompetency() {
                   <div className="my-2">
                     <div className="flex items-center justify-between">
                       <Header
-                        text={level?.levelName}
+                        text={`${levelsOptionsMap[des] ?? ""} `}
                         htmlFor="levelDescription"
                       />
                       <div className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500">
@@ -297,7 +305,7 @@ function AddCompetency() {
                     <div className="mt-2">
                       <textarea
                         rows={4}
-                        placeholder={`description for ${level?.levelName}`}
+                        placeholder={`${des === levelsOptions[index].value ? levelsOptions[index].label : ""} `}
                         wrap="soft"
                         className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                         onChange={(e) =>

@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #178CBF;
+  height: 23px;
+  width: 23px;
+  border-radius: 50%;
+  border: 5px solid #bae7fb;
+}
+
 
 
 /* :root {

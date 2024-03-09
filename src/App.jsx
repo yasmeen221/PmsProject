@@ -19,8 +19,7 @@ const Dashboard = lazy(() => import("./components/Dashboard"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
-  const [userData, setUserData] = useState(null);
-
+  const [userData, setUserData] = useState(null); 
   const saveUserData = (data) => {
     setUserData(data);
   };

@@ -4,14 +4,119 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
-import image1 from "../../../../assets/images/girl2.png";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
+import { get, set, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import RatingScale from "../RatingScale";
+import Select from "react-select";
+import {
+  getAllUsersNames,
+  getTeamLeaderId,
+  getUserCompetencies,
+} from "../../slices/Api/feedbackApi";
+// import { jwtDecode } from "jwt-decode";
+// import { useSelector } from "react-redux";
+
 const GiveNormalFeedback = () => {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
-  const [team, setTeam] = useState("");
+  const [competencyRatings, setCompetencyRatings] = useState([]);
+  const [teamId, setTeamId] = useState("");
+  const [userCompetenciesOptions, setUserCompetenciesOptions] = useState([]);
+  const [userCompetencies, setUserCompetencies] = useState([]);
+  const [usernames, setUsernames] = useState([]);
+  const [userId, setUserId] = useState("");
+  const [mangerId, setMangerId] = useState("");
+  const mangerEmployee = [userId, mangerId];
+  const [competencyFeedback, setCompetencyFeedback] = useState([]);
+//  const accessToken = useSelector((state) => state.persistantReducer.userDataReducer.userData)
+//  const userIdFrom=accessToken.length>0?jwtDecode(accessToken).id:"";
+//  console.log(userIdFrom)
+
+
+const formSubmit = (values) => {
+  if (teamsBtnChecked && values.team === "") return;
+  
+  console.log(
+     {
+      feedbackMainData: {
+        userIdTo: userId,
+        message: values.message,
+        visibility: values.visibility.split(","),
+        feedbackType: "normal",
+      },
+      feedbackMetaData:{
+        name:"competency",
+        value:userCompetencies.map((competency,index)=>{
+          return{
+            competencyId:competency.value,
+            competencyFeedBack:competencyFeedback[index],
+            rate:competencyRatings[index]
+          }
+        })
+      }
+
+     }
+  );
+};
+
+
+
+  const usernamesOptions = usernames.map((user) => {
+    return { value: user._id, label: user.username };
+  });
+
+  
+
+  useEffect(() => {
+    const [team] = usernames
+      .filter((user) => user._id === userId)
+      .map((user) => user.team);
+    setTeamId(team);
+  }, [userId]);
+
+  useEffect(() => {
+    if (userId === "") return;
+    const fetchData = async () => {
+      try {
+        const data = await getTeamLeaderId(userId);
+        setMangerId(data.data.teamLeader._id);
+      } catch (error) {
+        console.log("error from get", error);
+      }
+    };
+    fetchData();
+  }, [userId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllUsersNames();
+        setUsernames(data.data.data.usersNames);
+      } catch (error) {
+        console.log("error from get", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!teamId) return;
+    const fetchData = async () => {
+      try {
+        const data = await getUserCompetencies(teamId);
+        setUserCompetenciesOptions(
+          data.data.teamCompetencies.map((competency) => {
+            return { value: competency._id, label: competency.name };
+          
+          }),
+        );
+      } catch (error) {
+        console.log("error from get", error);
+      }
+    };
+    fetchData();
+  }, [teamId]);
 
   const handleOpenPopup = () => {
     setPopupOpen(true);
@@ -24,21 +129,13 @@ const GiveNormalFeedback = () => {
     setPopupOpen(false);
   };
 
-   
-  const schema = yup
-  .object({
-    name: yup.string().required(),
-    feedback: yup.string().required(),
+  const schema = yup.object({
+    message: yup.string().required(),
     visibility: yup.string().required(),
-    // team: yup.string().when('teamsBtnChecked', {
-    //   is: true,
-    //   then: yup.string().required('team is required'),
-    //   otherwise: yup.string().notRequired()
-      
-    // })
-     
-  })
-  
+    competencyFeedback: yup.array().of(
+      yup.string().required("Feedback is required")
+    ),
+  });
 
   const {
     register,
@@ -46,16 +143,46 @@ const GiveNormalFeedback = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-  })
+  });
 
-  const formSubmit = (values) => {
-   if(teamsBtnChecked && values.team === "" ) return
-     
-    console.log(values);
+ 
+  const handleUserNameChange = (selectedOption) => {
+    setUserId(selectedOption.value);
   };
 
+  const handleUserCompetencyChange = (selectedOption) => {
+      setUserCompetencies(selectedOption);
+      setCompetencyRatings(Array(selectedOption.length).fill(0));  
+      setCompetencyFeedback(Array(selectedOption.length).fill(""));    
+  };
+  const handleCompetencyRatingChange = (index, rating) => {
+    const updatedRatings = [...competencyRatings];
+    updatedRatings[index] = rating;
+    setCompetencyRatings(updatedRatings);
+  };
+  
 
+  const handleCompetencyFeedbackChange = (index, feedback) => {
+    const updatedFeedback = [...competencyFeedback];
+    updatedFeedback[index] = feedback;
+    setCompetencyFeedback(updatedFeedback);
+  };
 
+  const handleDeleteCompetency = (index) => {
+    const updatedCompetencies = [...userCompetencies];
+    updatedCompetencies.splice(index, 1);
+
+    setUserCompetencies(updatedCompetencies);
+
+    // Also, update competency ratings and feedback accordingly
+    const updatedRatings = [...competencyRatings];
+    updatedRatings.splice(index, 1);
+    setCompetencyRatings(updatedRatings);
+
+    const updatedFeedback = [...competencyFeedback];
+    updatedFeedback.splice(index, 1);
+    setCompetencyFeedback(updatedFeedback);
+  };
   return (
     <>
       <FormPopUp
@@ -64,28 +191,30 @@ const GiveNormalFeedback = () => {
         TitlePopUp="Give Normal  FeedBack"
         iconLeft={<Icons.ArrowLeftPop />}
       >
-        <form onSubmit={handleSubmit(formSubmit)}
+        <form
+          onSubmit={handleSubmit(formSubmit)}
           className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
           style={{ scrollbarWidth: "none" }}
         >
           <div className="px-1 ">
             <div className="pt-4 ">
               <Header text="Name" />
-              <TextInput  register={{ ...register("name") }} placeholder="Select who you will give the feedback" />
-              {errors.name && (
-                <p className="text-red-500">{errors.name.message}</p>
-              )}
+              <Select
+                options={usernamesOptions}
+                onChange={handleUserNameChange}
+                closeMenuOnSelect={true}
+              />
             </div>
             <div className="pt-4">
               <Header text=" Feedback" />
               <div className="mt-2">
                 <textarea
-                 {...register("feedback")}
+                  {...register("message")}
                   rows={4}
                   placeholder="Write Your honst feedback"
                   wrap="soft"
-                  id="feedback"
-                  name="feedback"
+                  id="message"
+                  name="message"
                   className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                 />
               </div>
@@ -97,27 +226,45 @@ const GiveNormalFeedback = () => {
               <Header text="Visibility" />
               <div className="flex flex-wrap ">
                 <label className="inline-flex items-center mr-4 mb-2">
-                  <input type="radio" value="mangerOnly"  {...register('visibility')} className="w-4 h-4" name="visibility" />
+                  <input
+                    type="radio"
+                    value={mangerId}
+                    {...register("visibility")}
+                    className="w-4 h-4"
+                    name="visibility"
+                  />
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
                     Manger only
                   </span>
                 </label>
 
                 <label className="inline-flex items-center mr-4 mb-2">
-                  <input type="radio"  value="employeeOnly" {...register('visibility')} className="w-4 h-4" name="visibility" />
+                  <input
+                    type="radio"
+                    value={userId}
+                    {...register("visibility")}
+                    className="w-4 h-4"
+                    name="visibility"
+                  />
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
                     Employee only
                   </span>
                 </label>
 
                 <label className="inline-flex items-center mr-4 mb-2">
-                  <input type="radio"  value="mangerAndEmployee"  {...register('visibility')} className="w-4 h-4" name="visibility" />
+                  <input
+                    type="radio"
+                    value={userId + "," + mangerId}
+                    {...register("visibility")}
+                    className="w-4 h-4"
+                    name="visibility"
+                  />
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
                     Manger and Employee
                   </span>
                 </label>
               </div>
-              {errors.visibility&& (
+              {errors.visibility && (
                 <p className="text-red-500">{errors.visibility.message}</p>
               )}
             </div>
@@ -142,44 +289,80 @@ const GiveNormalFeedback = () => {
                 </label>
               </div>
             </div>
-            {/* dropdown */}
             {teamsBtnChecked && (
-              <div className="relative my-2 ">
-                <select
-                   {...register("team")}
-                   name="team"
-                  onChange={(e) => setTeam(e.target.value)}
-                  className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${team == "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"}`}
-                >
-                  <option value="">select team</option>
-                  <option value="1">Option 1</option>
-                  <option value="2">Option 2</option>
-                  <option value="3">Option 3</option>
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <Icons.ArrowDownBlack />
-                </div>
-                {teamsBtnChecked && team==="" && (
-                <p className="text-red-500">team is required</p>
-              )}
+              <div>
+                {
+                  <Select
+                    options={userCompetenciesOptions}
+                    onChange={handleUserCompetencyChange}
+                    isMulti
+                    closeMenuOnSelect={false}
+                  />
+                }
+                {/* { {teamsErrorMsg && (
+                    <p className="text-red-500">Please add teams first</p>
+                  )} } */}
               </div>
+            )}
+
+            {userCompetencies.length!==0 && (
+              userCompetencies?.map((competency,index) => {
+                return(
+                  <div
+                  key={index}
+                  className="relative my-2 transition-all duration-1000 "
+                >
+                  <div className="my-2">
+                    <div className="flex items-center justify-between">
+                      <Header
+                        text={`${competency.label}`}
+                        htmlFor="levelDescription"
+                      />
+                      <div onClick={() => handleDeleteCompetency(index)} className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500">
+                        -
+                      </div>
+                    </div>
+
+                    <div className="mt-2">
+                      <textarea
+                      {...register(`competencyFeedback.${index}`, {
+                        required: "Feedback is required",
+                      })}
+                        rows={4}
+                        placeholder={`write your feedback on ${competency.label}`}
+                        wrap="soft"
+                        className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
+                        // onChange={(e) =>
+                        //   // handleDescriptionChange(index, e.target.value)
+                        // }
+                        onChange={(e) => handleCompetencyFeedbackChange(index, e.target.value)}
+                      />
+                      {errors.competencyFeedback && errors.competencyFeedback[index] && (
+                <p className="text-red-500">{errors.competencyFeedback[index].message}</p>
+              )}
+                    </div>
+                  </div>
+                  <RatingScale index={index}
+              value={competencyRatings[index]}
+              setValue={handleCompetencyRatingChange} />
+                  
+                </div>
+                
+                )
+              })
+              
             )}
           </div>
           <div className="flex items-center justify-end border-t border-gray-200 py-3 mx-1 ">
-          <Button
-            className="px-10 py-2.5 text-fontColor-whiteBaseColor"
-            buttonText="Give Feedback"
-            // onClick={handleClosePopup}
-          />
-        </div>
+            <Button
+              className="px-10 py-2.5 text-fontColor-whiteBaseColor"
+              buttonText="Give Feedback"
+              // onClick={handleClosePopup}
+            />
+          </div>
         </form>
-     
       </FormPopUp>
-      {/* <Button
-        buttonText="Formal feedback"
-        className="text-fontColor-whiteBaseColor"
-        onClick={handleOpenPopup}
-      /> */}
+   
     </>
   );
 };
