@@ -5,7 +5,8 @@ const initialState = {
   normalFeedbackPopup: false,
   praisePopUp: false,
   requestFeedbackForSomeOne:false,
-  requestFeedbackForMySelf:false
+  requestFeedbackForMySelf:false,
+  feedbackDetailsOpenPopUp:false
 
 };
 const openPopUpSlice = createSlice({
@@ -24,9 +25,11 @@ const openPopUpSlice = createSlice({
       state.requestFeedbackForSomeOne=action.payload
     },toogleRequestFeedbackForMySelf:(state,action)=>{
       state.requestFeedbackForMySelf=action.payload
+    },toogleFeedbackDetails:(state,action)=>{
+      state.feedbackDetailsOpenPopUp=action.payload
     }
   },
 });
-export const { changeDropDownValue, toggleNormalFeedback,tooglePraisePopUp,toogleRequestFeedbackForSomeOne ,toogleRequestFeedbackForMySelf} = openPopUpSlice.actions;
+export const { changeDropDownValue, toggleNormalFeedback,tooglePraisePopUp,toogleRequestFeedbackForSomeOne ,toogleRequestFeedbackForMySelf,toogleFeedbackDetails} = openPopUpSlice.actions;
 
 export default openPopUpSlice.reducer;

@@ -3,24 +3,31 @@ import ImageStyle from "../../../../components/ImageStyle/ImageStyle";
 import { useDispatch, useSelector } from "react-redux";
 import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete";
+import { deleteFeedback,  } from "../../slices/Api/feedbackApi";
+import { getFeedbacksRequest } from "../../slices/viewFeedBackSlice";
 
 export default function RequestCardItem({text,image,name,date,cardId}) {
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
   );
+  const handleDelete=(cardId)=>{
+    deleteFeedback(cardId).then(()=>{
+      dispatch(getFeedbacksRequest())
+    })
+  }
   return (
     <div className="flex flex-col  border  p-6 border-borderColor-100 rounded-lg w-[32%] h-[10.365] gap-4 hover:bg-slate-100">
-      <div className=" w-[20.75] h-[2.635] text-sm text-drawerColor-900  font-medium">
-        {text}
+      <div className="  h-[2.635] text-sm text-drawerColor-900  font-medium ">
+        <p >{text}</p>
       </div>
       <div className=" flex  justify-between">
         <div className="flex  items-center gap-2  w-[60%]  ">
           <div className="w-[30%]">
             <ImageStyle src={image} />
           </div>
-          <div className="w-[70%]">
-            <p className="font-md font-medium  text-sm w-[8.654rem]">
+          <div className="w-[70%] ">
+            <p className="font-md font-medium  text-sm  ">
               {name}
             </p>
             <p className="font-md font-medium text-sm text-deleteColor-400">
@@ -35,7 +42,7 @@ export default function RequestCardItem({text,image,name,date,cardId}) {
           </button>
         </div>
       </div>
-      {oPenPopUp && <ConfirmDelete deleteText="Are you sure to Decline? " confirmButtonText="Decline" onConfirm={()=>console.log("delete logic here")} />}
+      {oPenPopUp && <ConfirmDelete deleteText="Are you sure to Decline? " confirmButtonText="Decline" onConfirm={()=>{handleDelete(cardId)}} />}
 
     </div>
   );
