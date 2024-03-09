@@ -14,6 +14,7 @@ import {
   getTeamLeaderId,
   getUserCompetencies,
 } from "../../slices/Api/feedbackApi";
+import axiosInstance from "../../../../components/GeneralApi/generalApi";
 // import { jwtDecode } from "jwt-decode";
 // import { useSelector } from "react-redux";
 
@@ -27,7 +28,6 @@ const GiveNormalFeedback = () => {
   const [usernames, setUsernames] = useState([]);
   const [userId, setUserId] = useState("");
   const [mangerId, setMangerId] = useState("");
-  const mangerEmployee = [userId, mangerId];
   const [competencyFeedback, setCompetencyFeedback] = useState([]);
 //  const accessToken = useSelector((state) => state.persistantReducer.userDataReducer.userData)
 //  const userIdFrom=accessToken.length>0?jwtDecode(accessToken).id:"";
@@ -40,6 +40,7 @@ const formSubmit = (values) => {
   console.log(
      {
       feedbackMainData: {
+        userIdFrom: "65e795d850b07c2645cc6736",
         userIdTo: userId,
         message: values.message,
         visibility: values.visibility.split(","),
@@ -58,6 +59,32 @@ const formSubmit = (values) => {
 
      }
   );
+
+  try {
+    const request = axiosInstance.post(`feedback`, {
+      feedbackMainData: {
+        userIdFrom: "65e795d850b07c2645cc6736",
+        userIdTo: userId,
+        message: values.message,
+        visibility: values.visibility.split(","),
+        feedbackType: "normal",
+      },
+      feedbackMetaData:{
+        name:"competency",
+        value:userCompetencies.map((competency,index)=>{
+          return{
+            competencyId:competency.value,
+            competencyFeedBack:competencyFeedback[index],
+            rate:competencyRatings[index]
+          }
+        })
+      }
+
+     });
+  } catch (error) {
+    console.log("error from create", error);
+  }
+
 };
 
 
@@ -160,14 +187,12 @@ const formSubmit = (values) => {
     updatedRatings[index] = rating;
     setCompetencyRatings(updatedRatings);
   };
-  
-
   const handleCompetencyFeedbackChange = (index, feedback) => {
     const updatedFeedback = [...competencyFeedback];
     updatedFeedback[index] = feedback;
     setCompetencyFeedback(updatedFeedback);
   };
-
+  
   const handleDeleteCompetency = (index) => {
     const updatedCompetencies = [...userCompetencies];
     updatedCompetencies.splice(index, 1);
@@ -332,9 +357,6 @@ const formSubmit = (values) => {
                         placeholder={`write your feedback on ${competency.label}`}
                         wrap="soft"
                         className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
-                        // onChange={(e) =>
-                        //   // handleDescriptionChange(index, e.target.value)
-                        // }
                         onChange={(e) => handleCompetencyFeedbackChange(index, e.target.value)}
                       />
                       {errors.competencyFeedback && errors.competencyFeedback[index] && (
@@ -343,9 +365,8 @@ const formSubmit = (values) => {
                     </div>
                   </div>
                   <RatingScale index={index}
-              value={competencyRatings[index]}
-              setValue={handleCompetencyRatingChange} />
-                  
+                     value={competencyRatings[index]}
+                     setValue={handleCompetencyRatingChange} />
                 </div>
                 
                 )

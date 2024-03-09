@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-
 const RangeSlider = ({index,value,setValue}) => {
 
 
   const handleChange = (event) => {
-    setValue(index, parseInt(event.target.value, 10));
+    setValue(index, parseInt(event.target.value));
   };
   return (
     <div className="relative m-6 ">
