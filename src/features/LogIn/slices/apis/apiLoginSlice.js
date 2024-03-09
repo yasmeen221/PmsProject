@@ -5,7 +5,6 @@ export const apiLoginSlice = createApi({
   reducerPath: "apiLogin",
   baseQuery: fetchBaseQuery({
     baseUrl: URL,
-
   }),
 
   endpoints: (builder) => ({
@@ -15,15 +14,14 @@ export const apiLoginSlice = createApi({
         method: "POST",
         body: user, //body of request
       }),
-
     }),
     refreshToken: builder.mutation({
       query: (oldRefreshToken) => ({
-        url: "/refresh-token",//,
+        url: "/refresh-token", //,
         method: "POST",
-        body:{refreshToken:oldRefreshToken}
-      })
-    })
+        body: { refreshToken: oldRefreshToken },
+      }),
+    }),
   }),
 });
-export const { useLoginUserMutation ,useRefreshTokenMutation} = apiLoginSlice;
+export const { useLoginUserMutation, useRefreshTokenMutation } = apiLoginSlice;

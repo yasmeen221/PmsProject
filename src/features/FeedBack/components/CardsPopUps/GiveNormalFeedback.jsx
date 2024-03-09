@@ -6,19 +6,22 @@ import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
 import image1 from "../../../../assets/images/girl2.png";
 import { useDispatch, useSelector } from "react-redux";
-import { changeDropDownValue, toggleNormalFeedback } from "../../slices/openPopUpSlice";
+import {
+  changeDropDownValue,
+  toggleNormalFeedback,
+} from "../../slices/openPopUpSlice";
 const GiveNormalFeedback = () => {
   // const [isPopupOpen, setPopupOpen] = useState(false);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [addToogle, setAddToggle] = useState(false);
   const [team, setTeam] = useState("");
-  const openNormalFeedbackPopUp = useSelector(state => state.openPopUpSlice.normalFeedbackPopup)
-
+  const openNormalFeedbackPopUp = useSelector(
+    (state) => state.openPopUpSlice.normalFeedbackPopup,
+  );
 
   const handleClosePopup = () => {
-    dispatch(toggleNormalFeedback(false))
+    dispatch(toggleNormalFeedback(false));
     dispatch(changeDropDownValue(""));
-
   };
   return (
     <>

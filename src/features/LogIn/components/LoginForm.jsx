@@ -21,7 +21,10 @@ const schema = yup.object({
     .string()
     // .email("Email must be valid")
     .required("user name is required")
-    .matches(/^[a-zA-Z0-9_]+$/, "username  can contain letters and digits,underscores only"),
+    .matches(
+      /^[a-zA-Z0-9_]+$/,
+      "username  can contain letters and digits,underscores only",
+    ),
   password: yup
     .string()
     .required("Password is required")
@@ -31,15 +34,15 @@ const schema = yup.object({
     ),
 });
 
-const LoginForm = ({  }) => {
+const LoginForm = ({}) => {
   useTitle("LogIn");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const cookie = new Cookies((null, { path: "/" }));
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
   const [loginUser, { isLoading, isError, error, isSuccess }] =
     useLoginUserMutation();
-  const [loginError, setLoginError] = useState()
+  const [loginError, setLoginError] = useState();
   const {
     register,
     handleSubmit,
@@ -49,38 +52,38 @@ const LoginForm = ({  }) => {
     resolver: yupResolver(schema),
   });
   useEffect(() => {
-    dispatch(changeUserDataValue(""))
-    cookie.remove("userToken");  
-    cookie.remove("refreshToken")
-
-
-  }, [])
+    dispatch(changeUserDataValue(""));
+    cookie.remove("userToken");
+    cookie.remove("refreshToken");
+  }, []);
   const formSubmit = (values) => {
     const objToSend = {
       username: values.email,
-      password: values.password
-    }
+      password: values.password,
+    };
 
-    loginUser(objToSend).unwrap().then((res) => {
-      if (res.status == "success") {
-        console.log(res.data);
-        cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
-        cookie.set("refreshToken", res.data.refreshToken)
-        dispatch(changeUserDataValue(res.data.accesToken))
-        navigate("/dashboard/competencies", { replace: true });
-        reset();
-        setLoginError("")
-      }
-    }).catch((err) => {
-      if (err.data.data.message == "username or password is incorrect") {
-        setLoginError("username or password is incorrect")
-      } else if (err.status == 500) {
-        setLoginError("internal server error")
-      } else {
-        setLoginError("some thing went wrong")
-      }
-    })
-
+    loginUser(objToSend)
+      .unwrap()
+      .then((res) => {
+        if (res.status == "success") {
+          console.log(res.data);
+          cookie.set("userToken", res.data.accesToken); //to make cookies more secure
+          cookie.set("refreshToken", res.data.refreshToken);
+          dispatch(changeUserDataValue(res.data.accesToken));
+          navigate("/dashboard/competencies", { replace: true });
+          reset();
+          setLoginError("");
+        }
+      })
+      .catch((err) => {
+        if (err.data.data.message == "username or password is incorrect") {
+          setLoginError("username or password is incorrect");
+        } else if (err.status == 500) {
+          setLoginError("internal server error");
+        } else {
+          setLoginError("some thing went wrong");
+        }
+      });
   };
   return (
     <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">

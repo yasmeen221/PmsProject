@@ -27,9 +27,11 @@ const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
   const [userData, setUserData] = useState(null);
-  const [refreshToken, { }] = useRefreshTokenMutation()
-  const accessToken=useSelector(state=>state.persistantReducer.userDataReducer.userData)
-  const role=accessToken.length>0?jwtDecode(accessToken).role:"" ; //to dont decode if the data is removed from global state
+  const [refreshToken, {}] = useRefreshTokenMutation();
+  const accessToken = useSelector(
+    (state) => state.persistantReducer.userDataReducer.userData,
+  );
+  const role = accessToken.length > 0 ? jwtDecode(accessToken).role : ""; //to dont decode if the data is removed from global state
   const saveUserData = (data) => {
     setUserData(data);
   };
@@ -116,7 +118,8 @@ function App() {
             />
             <Route
               path={
-                (role!=""&&role||userData?.role) == "superAdmin" || (role!=""&&role||userData?.role) == "admin"
+                ((role != "" && role) || userData?.role) == "superAdmin" ||
+                ((role != "" && role) || userData?.role) == "admin"
                   ? "users&teams"
                   : "notfound"
               } //notfound will go to * so that it will render not found page
