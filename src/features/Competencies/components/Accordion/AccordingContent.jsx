@@ -200,7 +200,7 @@ const AccordingContent = ({
 
                   {
                     isLoadingTeamComp ? (
-                      <p>loading...</p>
+                      <div className="w-full flex flex-row justify-center mt-2"><Icons.Loading/></div>
                     ) : !error && comps?.teamCompetencies?.length > 0 ? (
                       comps.teamCompetencies.map((itemm) => (
                         <TeamItem

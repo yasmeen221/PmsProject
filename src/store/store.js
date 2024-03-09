@@ -13,6 +13,8 @@ import userDataReducer from "../features/LogIn/slices/login.js";
 import openPopUpConfirmDeleteSlice from "../features/ManageTeams/slices/HandelOpenDelete";
 import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js"
 import openCompetencyPopUpSlice from "../features/Competencies/slices/openCompentencyPopUp.js"
+import ViewFeedBackSlice from "../features/FeedBack/slices/viewFeedBackSlice.js";
+
 
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
@@ -49,6 +51,7 @@ export const store = configureStore({
     
     persistantReducer,
     getTeamCompetenciesReducer:TeamsSlice,
+    ViewFeedback:ViewFeedBackSlice,
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,

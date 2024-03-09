@@ -41,30 +41,30 @@ export const deleteData = async (id) => {
     console.log("error from delete", error);
   }
 };
-export const getFeedbackCards = async (page) => {
+export const getFeedbacks = async () => {
   try {
-    const request = await axiosInstance.get(``)
+    const request = await axiosInstance.get(`/feedback`)
     return request;
   } catch (err) {
     console.log(err)
   }
 }
-export const getPendingCards = async (page) => {
+export const deleteFeedback = async (id) => {
   try {
-    const request = await axiosInstance.get(``)
+    const request = await axiosInstance.get(`/feedback/delete/${id}`)
     return request;
   } catch (err) {
     console.log(err)
-
   }
 }
-export const getMyRequestsCards = async (page) => {
+//will use it in then when the popup request is done  and in then of calling this function call    dispatch(getFeedbacksRequest())
+
+export const acceptFeedback = async (id) => {
   try {
-    const request = await axiosInstance.get(``)
+    const request = await axiosInstance.get(`/feedback/accept/${id}`)
     return request;
   } catch (err) {
     console.log(err)
-
   }
 }
 /////////////Praise Functions Don't Touch 😕/////////
