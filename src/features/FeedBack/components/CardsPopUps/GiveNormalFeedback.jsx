@@ -4,7 +4,7 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
-import { get, set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import RatingScale from "../RatingScale";

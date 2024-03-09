@@ -90,21 +90,25 @@ function SideBar() {
           icon={<Icons.Surveys />}
           isOpen={isOpen}
           title="surveys"
+          
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Learning />}
           isOpen={isOpen}
           title="learning"
+          
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Compensation />}
           isOpen={isOpen}
           title="compensation"
+          
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Settings />}
           isOpen={isOpen}
           title="settings"
+          
         ></SideBarItem>
       </ul>
       <button

@@ -4,7 +4,7 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
@@ -23,12 +23,13 @@ function AddCompetency() {
   const [categories, setCategories] = useState([]);
   const [levelErrorMsg, setLevelErrorMsg] = useState(false);
   const [teamsErrorMsg, setTeamsErrorMsg] = useState(false);
-  const [ levelsOptionsMap, setLevelsOptionsMap] = useState({});
   const seniorityLevels = formLevels?.map((level, index) => ({
-    level,
+    level: level.value,
     description: descriptions[index],
   }));
-  
+
+  console.log(teamsAssigned)
+console.log(seniorityLevels)
 
   const schema = yup.object({
     name: yup
@@ -51,6 +52,8 @@ function AddCompetency() {
     label: team.teamName,
   }));
 
+  console.log(teamsOptions)
+
   const { data: levels } = useGetLevelQuery();
   const levelsArray = levels?.data?.levels;
   console.log("levelsArray", levelsArray);
@@ -60,22 +63,16 @@ function AddCompetency() {
   }));
   
 
-  levelsArray?.forEach((level) => {
-    levelsOptionsMap[level._id] = level.levelName;
-  });
 
 
 
   const handleTeamChange = (selectedOptions) => {
-    const teams = selectedOptions.map((team) =>
-      setTeamsAssigned([...teamsAssigned, team?.value]),
-    );
+   setTeamsAssigned(selectedOptions.map((option) => option.value));
   };
 
   const handleLevelChange = (selectedOptions) => {
-    const levels = selectedOptions.map((level) =>
-      setFormLevels([...formLevels, level.value]),
-    );
+   setFormLevels(selectedOptions)
+   console.log( selectedOptions);
   };
 
   const {
@@ -118,6 +115,7 @@ function AddCompetency() {
     } catch (error) {
       console.error("Error sending data to the backend:", error);
     }
+
   };
 
   const handleOpenPopup = () => {
@@ -138,6 +136,11 @@ function AddCompetency() {
     const newDescriptions = [...descriptions];
     newDescriptions.splice(index, 1);
     setDescriptions(newDescriptions);
+
+    const newFormLevels = [...formLevels];
+    newFormLevels.splice(index, 1);
+    setFormLevels(newFormLevels);
+
   };
 
   useEffect(() => {
@@ -294,10 +297,10 @@ function AddCompetency() {
                   <div className="my-2">
                     <div className="flex items-center justify-between">
                       <Header
-                        text={`${levelsOptionsMap[des] ?? ""} `}
+                        text={`Description for ${formLevels[index].label}`}
                         htmlFor="levelDescription"
                       />
-                      <div className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500">
+                      <div onClick={()=>handleRemoveDescription(index)} className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500">
                         -
                       </div>
                     </div>
@@ -305,7 +308,7 @@ function AddCompetency() {
                     <div className="mt-2">
                       <textarea
                         rows={4}
-                        placeholder={`${des === levelsOptions[index].value ? levelsOptions[index].label : ""} `}
+                        placeholder={ `Enter Description for ${formLevels[index].label}`}
                         wrap="soft"
                         className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                         onChange={(e) =>
