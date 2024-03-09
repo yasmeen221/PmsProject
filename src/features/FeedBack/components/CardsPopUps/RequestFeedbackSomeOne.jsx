@@ -4,27 +4,29 @@ import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { changeDropDownValue, toogleRequestFeedbackForSomeOne } from "../../slices/openPopUpSlice";
 
 export default function RequestFeedbackSomeOne() {
-  const [isPopupOpen, setPopupOpen] = useState(false);
-  const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
-  const [team, setTeam] = useState("");
 
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-  useEffect(() => {
-    handleOpenPopup();
-  }, []);
+  const dispatch=useDispatch()
+  const [addToogle, setAddToggle] = useState(false);
+
+  const [team, setTeam] = useState("");
+  const RequestFeedbackForSomeOnePopUp = useSelector(state => state.openPopUpSlice.requestFeedbackForSomeOne)
+
+
 
   const handleClosePopup = () => {
-    setPopupOpen(false);
+    dispatch(toogleRequestFeedbackForSomeOne(false))
+    dispatch(changeDropDownValue(""));
+
   };
 
   return (
     <>
       <FormPopUp
-        isOpen={isPopupOpen}
+        isOpen={RequestFeedbackForSomeOnePopUp}
         ClosePop={handleClosePopup}
         TitlePopUp={"Request FeedBack for Some One"}
         iconLeft={<Icons.ArrowLeftPop />}

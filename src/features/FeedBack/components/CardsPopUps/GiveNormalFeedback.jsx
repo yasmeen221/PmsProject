@@ -4,6 +4,7 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -145,14 +146,10 @@ const formSubmit = (values) => {
     fetchData();
   }, [teamId]);
 
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-  useEffect(() => {
-    handleOpenPopup();
-  }, []);
+
 
   const handleClosePopup = () => {
+
     setPopupOpen(false);
   };
 
@@ -208,32 +205,40 @@ const formSubmit = (values) => {
     updatedFeedback.splice(index, 1);
     setCompetencyFeedback(updatedFeedback);
   };
+
   return (
     <>
       <FormPopUp
-        isOpen={isPopupOpen}
+        isOpen={openNormalFeedbackPopUp}
         ClosePop={handleClosePopup}
         TitlePopUp="Give Normal  FeedBack"
         iconLeft={<Icons.ArrowLeftPop />}
+        personImage={image1}
+        personName="yasmeen"
       >
+
         <form
           onSubmit={handleSubmit(formSubmit)}
+
           className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
           style={{ scrollbarWidth: "none" }}
         >
           <div className="px-1 ">
             <div className="pt-4 ">
               <Header text="Name" />
+
               <Select
                 options={usernamesOptions}
                 onChange={handleUserNameChange}
                 closeMenuOnSelect={true}
               />
+
             </div>
             <div className="pt-4">
               <Header text=" Feedback" />
               <div className="mt-2">
                 <textarea
+
                   {...register("message")}
                   rows={4}
                   placeholder="Write Your honst feedback"
@@ -243,14 +248,12 @@ const formSubmit = (values) => {
                   className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                 />
               </div>
-              {errors.feedback && (
-                <p className="text-red-500">{errors.feedback.message}</p>
-              )}
             </div>
             <div className="pt-4 mb-4">
               <Header text="Visibility" />
               <div className="flex flex-wrap ">
                 <label className="inline-flex items-center mr-4 mb-2">
+
                   <input
                     type="radio"
                     value={mangerId}
@@ -258,12 +261,14 @@ const formSubmit = (values) => {
                     className="w-4 h-4"
                     name="visibility"
                   />
+
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
                     Manger only
                   </span>
                 </label>
 
                 <label className="inline-flex items-center mr-4 mb-2">
+
                   <input
                     type="radio"
                     value={userId}
@@ -271,12 +276,14 @@ const formSubmit = (values) => {
                     className="w-4 h-4"
                     name="visibility"
                   />
+
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
                     Employee only
                   </span>
                 </label>
 
                 <label className="inline-flex items-center mr-4 mb-2">
+
                   <input
                     type="radio"
                     value={userId + "," + mangerId}
@@ -284,14 +291,17 @@ const formSubmit = (values) => {
                     className="w-4 h-4"
                     name="visibility"
                   />
+
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
                     Manger and Employee
                   </span>
                 </label>
               </div>
+
               {errors.visibility && (
                 <p className="text-red-500">{errors.visibility.message}</p>
               )}
+
             </div>
             {/* switch */}
             <div className="inline-flex justify-between items-center w-full pb-4">
@@ -305,6 +315,7 @@ const formSubmit = (values) => {
                 <label className="inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
+                    value=""
                     className="sr-only peer"
                     onChange={(e) => {
                       setTeamsBtnChecked(e.target.checked);
@@ -314,6 +325,7 @@ const formSubmit = (values) => {
                 </label>
               </div>
             </div>
+
             {teamsBtnChecked && (
               <div>
                 {
@@ -382,6 +394,7 @@ const formSubmit = (values) => {
             />
           </div>
         </form>
+
       </FormPopUp>
    
     </>

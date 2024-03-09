@@ -4,6 +4,7 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
+
 import { set, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -117,6 +118,7 @@ console.log(seniorityLevels)
     }
 
   };
+
 
   const handleOpenPopup = () => {
     setPopupOpen(true);
@@ -253,6 +255,7 @@ console.log(seniorityLevels)
               </label>
             </div>
           </div>
+
           {teamsBtnChecked && (
             <div>
               <Select
@@ -264,6 +267,7 @@ console.log(seniorityLevels)
               {teamsErrorMsg && (
                 <p className="text-red-500">Please add teams first</p>
               )}
+
             </div>
           )}
 
@@ -274,6 +278,7 @@ console.log(seniorityLevels)
               path level.
             </p>
             <div className="relative mt-2">
+
               <Select
                 options={levelsOptions}
                 onChange={handleLevelChange}
@@ -327,6 +332,7 @@ console.log(seniorityLevels)
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
               // onClick={handleClosePopup}
             />
+
           </div>
         </form>
       </FormPopUp>

@@ -9,13 +9,10 @@ export const apiSlice = createApi({
     prepareHeaders: (headers, { getState }) => {
       const cookie = new Cookies();
       let token = cookie.get("userToken");
-
-      // If we have a token set in state, let's assume that we should be passing it.
       if (token) {
-        headers.set('authorization', `Bearer ${token}`)
+        headers.set("authorization", `Bearer ${token}`);
       }
-      console.log(headers.get("authorization"))
-      return headers
+      return headers;
     },
   }),
   tagTypes: ["Teams"],
