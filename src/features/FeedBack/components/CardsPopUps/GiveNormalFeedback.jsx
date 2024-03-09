@@ -5,25 +5,25 @@ import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
 import image1 from "../../../../assets/images/girl2.png";
+import { useDispatch, useSelector } from "react-redux";
+import { changeDropDownValue, toggleNormalFeedback } from "../../slices/openPopUpSlice";
 const GiveNormalFeedback = () => {
-  const [isPopupOpen, setPopupOpen] = useState(false);
+  // const [isPopupOpen, setPopupOpen] = useState(false);
+  const dispatch=useDispatch()
   const [addToogle, setAddToggle] = useState(false);
   const [team, setTeam] = useState("");
+  const openNormalFeedbackPopUp = useSelector(state => state.openPopUpSlice.normalFeedbackPopup)
 
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
-  useEffect(() => {
-    handleOpenPopup();
-  }, []);
 
   const handleClosePopup = () => {
-    setPopupOpen(false);
+    dispatch(toggleNormalFeedback(false))
+    dispatch(changeDropDownValue(""));
+
   };
   return (
     <>
       <FormPopUp
-        isOpen={isPopupOpen}
+        isOpen={openNormalFeedbackPopUp}
         ClosePop={handleClosePopup}
         TitlePopUp="Give Normal  FeedBack"
         iconLeft={<Icons.ArrowLeftPop />}

@@ -95,3 +95,11 @@ export const filterWithLevel = async (levelId) => {
     console.log("Error filter with level competencies:", error);
   }
 };
+export const getDataCompetenciesByID = async (id) => {
+  try {
+    const request = await axiosInstance.get(`/competency/${id}`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};

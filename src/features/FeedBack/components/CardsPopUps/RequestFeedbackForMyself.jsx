@@ -5,29 +5,35 @@ import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import TextInput from "../../../../components/TextInput/TextInput";
+import { useDispatch, useSelector } from "react-redux";
+import { changeDropDownValue, toogleRequestFeedbackForMySelf } from "../../slices/openPopUpSlice";
 
-export default function RequestFeedbackForMyself(OnClose) {
+export default function RequestFeedbackForMyself({OnClose}) {
+  const dispatch=useDispatch()
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [addToggle, setAddToggle] = useState(false);
   const [team, setTeam] = useState("");
+  const RequestFeedbackForMySelfPopUp = useSelector(state => state.openPopUpSlice.requestFeedbackForMySelf)
 
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
+  // const handleOpenPopup = () => {
+  //   setPopupOpen(true);
+  // };
 
-  useEffect(() => {
-    handleOpenPopup();
-  }, []);
+  // useEffect(() => {
+  //   handleOpenPopup();
+  // }, []);
 
   const handleClosePopup = () => {
-    setPopupOpen(false);
-    onClose();
+    dispatch(toogleRequestFeedbackForMySelf(false))
+    dispatch(changeDropDownValue(""));
+
+    OnClose?OnClose():""
   };
 
   return (
     <>
       <FormPopUp
-        isOpen={isPopupOpen}
+        isOpen={RequestFeedbackForMySelfPopUp}
         ClosePop={handleClosePopup}
         TitlePopUp="Request Feedback For My Self"
         iconLeft={<Icons.ArrowLeftPop />}

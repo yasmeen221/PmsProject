@@ -3,21 +3,18 @@ import { useSelector, useDispatch } from "react-redux";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import Button from "../../../../components/Button/Button";
-import { changeDropDownValue } from "../../slices/openPopUpSlice";
+import { changeDropDownValue, toogleRequestFeedbackForMySelf, toogleRequestFeedbackForSomeOne } from "../../slices/openPopUpSlice";
 import RequestFeedbackSomeOne from "./RequestFeedbackSomeOne";
-import GiveFeedback from "./GiveFeedback";
 import RequestFeedbackForMyself from "./RequestFeedbackForMyself";
 
 
 const RequestFeedback = () => {
   const dispatch = useDispatch();
   const [isPopupOpen, setPopupOpen] = useState(false);
-  const [someOnePopUp, setSomeOnePopUp] = useState(false);
-  const [myselfPopUp, setMyselfPopUp] = useState(false);
-
-
-
   const dropDownValue = useSelector((state) => state.openPopUpSlice.dropDown);
+  const RequestFeedbackForSomeOnePopUp = useSelector(state => state.openPopUpSlice.requestFeedbackForSomeOne)
+  const RequestFeedbackForMyselfPopUp=useSelector(state=>state.openPopUpSlice.requestFeedbackForMySelf)
+
   const handleClosePopup = () => {
     setPopupOpen(false);
     dispatch(changeDropDownValue(""));
@@ -28,11 +25,11 @@ const RequestFeedback = () => {
     }
   }, [dropDownValue]);
   const HandelSomeOnePopUp = () => {
-    setSomeOnePopUp(true);
+    dispatch(toogleRequestFeedbackForSomeOne(true))
     setPopupOpen(false);
   };
   const HandelMyselfPopUp = () => {
-    setMyselfPopUp(true);
+    dispatch(toogleRequestFeedbackForMySelf(true))
     setPopupOpen(false);
   };
   return (
@@ -94,10 +91,8 @@ const RequestFeedback = () => {
           />
         </div>
       </FormPopUp>
-      {someOnePopUp && <RequestFeedbackSomeOne />}
-      {myselfPopUp && <RequestFeedbackForMyself onClose={() => {
-        
-      }}   />}
+      {RequestFeedbackForSomeOnePopUp && <RequestFeedbackSomeOne />}
+      {RequestFeedbackForMyselfPopUp && <RequestFeedbackForMyself   />}
     </>
   );
 };

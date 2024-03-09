@@ -41,3 +41,57 @@ export const deleteData = async (id) => {
     console.log("error from delete", error);
   }
 };
+export const getFeedbackCards = async (page) => {
+  try {
+    const request = await axiosInstance.get(``)
+    return request;
+  } catch (err) {
+    console.log(err)
+  }
+}
+export const getPendingCards = async (page) => {
+  try {
+    const request = await axiosInstance.get(``)
+    return request;
+  } catch (err) {
+    console.log(err)
+
+  }
+}
+export const getMyRequestsCards = async (page) => {
+  try {
+    const request = await axiosInstance.get(``)
+    return request;
+  } catch (err) {
+    console.log(err)
+
+  }
+}
+/////////////Praise Functions Don't Touch 😕/////////
+export const getEmployeesData = async () => {
+  try {
+    
+    const { data } = await axiosInstance.get(`/user/usernames`);
+    return data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};
+export const recievesVisiability = async (id) => {
+  try {
+    
+    const { data } = await axiosInstance.get(`/user/team-leader/${id}`);
+    return data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};
+export const postsPraise = async (data) => {
+  try {
+    const request = await axiosInstance.post(`/feedback`,  data );
+    return request;
+  } catch (error) {
+    console.log("error from create", error);
+  }
+};
+//////////////////////end Praise////////////////

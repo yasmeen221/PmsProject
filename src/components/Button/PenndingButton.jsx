@@ -7,6 +7,8 @@ const PenndingButton = ({
   className,
   onClick,
   buttonText,
+  deleteButtonClick,
+  confirmButtonClick
 }) => {
   const [isHovered, setHovered] = useState(false);
   const [isClicked, setClicked] = useState(false);
@@ -22,6 +24,10 @@ const PenndingButton = ({
   const handleButtonClick = () => {
     setClicked((prevClicked) => !prevClicked);
   };
+  const handleArrayEvents = () => {
+    const events = [handleButtonClick, deleteButtonClick,confirmButtonClick];
+    events.forEach((event) => (event==deleteButtonClick&&!deleteButtonClick?"":event==confirmButtonClick&&!confirmButtonClick?"":event()));
+  };
   const dynamicStyles = {
     className: `${className}`,
     backgroundColor: isHovered ? hoverColor : bgColor, // Use hoverColor when hovered, otherwise use bgColor
@@ -34,7 +40,7 @@ const PenndingButton = ({
 
   return (
     <button
-      onClick={handleButtonClick}
+      onClick={handleArrayEvents}
       className="flex items-center justify-center  rounded-md border border-gray-200 gap-2 "
       style={dynamicStyles}
       onMouseEnter={handleButtonHover}

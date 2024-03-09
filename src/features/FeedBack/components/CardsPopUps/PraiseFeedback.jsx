@@ -9,7 +9,9 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { changeDropDownValue, tooglePraisePopUp } from "../../slices/openPopUpSlice";
+import { getEmployeesData, postsPraise, recievesVisiability } from "../../slices/Api/feedbackApi";
 
 const schema = yup.object({
   userIdTo: yup.string().required("Please select an option"),
@@ -17,7 +19,8 @@ const schema = yup.object({
   visibility: yup.string().required("Please select an option"),
 });
 export default function PraiseFeedback() {
-  const [isPopupOpen, setPopupOpen] = useState(false);
+  const dispatch=useDispatch()
+  const openPraisePopUp = useSelector(state => state.openPopUpSlice.praisePopUp)
   const [userID, setUserID] = useState("");
   const [employee, setEmployee] = useState([{}]);
   const [employeeID, setEmployeeID] = useState("");
@@ -26,30 +29,22 @@ export default function PraiseFeedback() {
     (state) => state.persistantReducer.userDataReducer.userData,
   );
   
-  const handleOpenPopup = () => {
-    setPopupOpen(true);
-  };
   useEffect(() => {
-    handleOpenPopup();
-    const decodedToken = jwtDecode(token);
-    console.log("decodedToken", decodedToken.userId);
-    setUserID(decodedToken.userId);
+    let decodedToken;
+    {token.length >0 &&( decodedToken = jwtDecode(token)) }
+        setUserID(decodedToken.userId);
     getEmployeeData();
   }, []);
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-    setValue,
   } = useForm({
     resolver: yupResolver(schema),
   });
   const onSubmit = (value) => {
-    // console.log("formSubmit", value);
     const stringToSplit = value.visibility;
     const visibilityArray = stringToSplit.split(",");
-    // console.log(visibilityArray)
     const praiseObject = {
       feedbackMainData: {
         userIdFrom: userID,
@@ -60,34 +55,34 @@ export default function PraiseFeedback() {
       },
       feedBackMetaData: [{}],
     };
-    console.log("praise", praiseObject);
+    postPraise(praiseObject);
     handleClosePopup();
   };
   const handleClosePopup = () => {
-    setPopupOpen(false);
+    dispatch(tooglePraisePopUp(false))
+    dispatch(changeDropDownValue(""));
+
+
   };
   async function getEmployeeData() {
-    let { data } = await axios.get(
-      "https://innovapms.onrender.com/api/v1/user/usernames",
-    );
-    // console.log("employeeeee", data.data.usersNames);
+    const data= await getEmployeesData()
+    console.log("employeeeee", data.data.usersNames);
     setEmployee(data.data.usersNames);
   }
 
   async function recieveVisiability(id) {
-    console.log("employeeID",id)
     setEmployeeID(id);
-    let { data } = await axios.get(
-      `https://innovapms.onrender.com/api/v1/user/team-leader/${id}`,
-    );
-    console.log("leader", data.data.teamLeader._id);
+    const data= await recievesVisiability(id);
     setManager(data.data.teamLeader._id);
   }
-
+  async function postPraise(data){
+    const response= await postsPraise(data);
+    console.log(response);
+  }
   return (
     <>
       <FormPopUp
-        isOpen={isPopupOpen}
+        isOpen={openPraisePopUp}
         ClosePop={handleClosePopup}
         TitlePopUp="Give Praise"
         iconLeft={<Icons.ArrowLeftPop />}
