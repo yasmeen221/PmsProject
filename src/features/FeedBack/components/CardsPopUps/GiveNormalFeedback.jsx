@@ -46,7 +46,7 @@ const formSubmit = (values) => {
         visibility: values.visibility.split(","),
         feedbackType: "normal",
       },
-      feedbackMetaData:{
+      feedbackMetaData:[{
         name:"competency",
         value:userCompetencies.map((competency,index)=>{
           return{
@@ -55,7 +55,7 @@ const formSubmit = (values) => {
             rate:competencyRatings[index]
           }
         })
-      }
+      }]
 
      }
   );
@@ -69,7 +69,7 @@ const formSubmit = (values) => {
         visibility: values.visibility.split(","),
         feedbackType: "normal",
       },
-      feedbackMetaData:{
+      feedBackMetaData:[{
         name:"competency",
         value:userCompetencies.map((competency,index)=>{
           return{
@@ -78,7 +78,7 @@ const formSubmit = (values) => {
             rate:competencyRatings[index]
           }
         })
-      }
+      }]
 
      });
   } catch (error) {
