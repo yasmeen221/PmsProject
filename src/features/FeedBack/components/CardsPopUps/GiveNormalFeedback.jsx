@@ -4,7 +4,7 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import Icons from "../../../../themes/icons";
-
+import { getFeedbacksRequest } from "../../slices/viewFeedBackSlice";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -16,10 +16,12 @@ import {
   getUserCompetencies,
 } from "../../slices/Api/feedbackApi";
 import axiosInstance from "../../../../components/GeneralApi/generalApi";
-// import { jwtDecode } from "jwt-decode";
-// import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
+import { changeDropDownValue, toggleNormalFeedback } from "../../slices/openPopUpSlice";
 
 const GiveNormalFeedback = () => {
+  const openNormalFeedbackPopUp = useSelector(state => state.openPopUpSlice.normalFeedbackPopup)
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
   const [competencyRatings, setCompetencyRatings] = useState([]);
@@ -30,18 +32,17 @@ const GiveNormalFeedback = () => {
   const [userId, setUserId] = useState("");
   const [mangerId, setMangerId] = useState("");
   const [competencyFeedback, setCompetencyFeedback] = useState([]);
-//  const accessToken = useSelector((state) => state.persistantReducer.userDataReducer.userData)
-//  const userIdFrom=accessToken.length>0?jwtDecode(accessToken).id:"";
-//  console.log(userIdFrom)
+ const accessToken = useSelector((state) => state.persistantReducer.userDataReducer.userData)
+ const userIdFrom=accessToken.length>0?jwtDecode(accessToken).userId:"";
+ console.log(userIdFrom)
 
-
+ const dispatch = useDispatch();
 const formSubmit = (values) => {
   if (teamsBtnChecked && values.team === "") return;
-  
-  console.log(
-     {
+  try {
+    const request = axiosInstance.post(`feedback`,   {
       feedbackMainData: {
-        userIdFrom: "65e795d850b07c2645cc6736",
+        userIdFrom,
         userIdTo: userId,
         message: values.message,
         visibility: values.visibility.split(","),
@@ -58,30 +59,9 @@ const formSubmit = (values) => {
         })
       }]
 
-     }
-  );
-
-  try {
-    const request = axiosInstance.post(`feedback`, {
-      feedbackMainData: {
-        userIdFrom: "65e795d850b07c2645cc6736",
-        userIdTo: userId,
-        message: values.message,
-        visibility: values.visibility.split(","),
-        feedbackType: "normal",
-      },
-      feedBackMetaData:[{
-        name:"competency",
-        value:userCompetencies.map((competency,index)=>{
-          return{
-            competencyId:competency.value,
-            competencyFeedBack:competencyFeedback[index],
-            rate:competencyRatings[index]
-          }
-        })
-      }]
-
-     });
+     }).then(()=>{dispatch(getFeedbacksRequest())})
+     handleClosePopup();
+    
   } catch (error) {
     console.log("error from create", error);
   }
@@ -136,7 +116,6 @@ const formSubmit = (values) => {
         setUserCompetenciesOptions(
           data.data.teamCompetencies.map((competency) => {
             return { value: competency._id, label: competency.name };
-          
           }),
         );
       } catch (error) {
@@ -149,7 +128,8 @@ const formSubmit = (values) => {
 
 
   const handleClosePopup = () => {
-
+    dispatch(toggleNormalFeedback(false))
+    dispatch(changeDropDownValue(""));
     setPopupOpen(false);
   };
 
@@ -189,7 +169,7 @@ const formSubmit = (values) => {
     updatedFeedback[index] = feedback;
     setCompetencyFeedback(updatedFeedback);
   };
-  
+
   const handleDeleteCompetency = (index) => {
     const updatedCompetencies = [...userCompetencies];
     updatedCompetencies.splice(index, 1);
@@ -213,13 +193,11 @@ const formSubmit = (values) => {
         ClosePop={handleClosePopup}
         TitlePopUp="Give Normal  FeedBack"
         iconLeft={<Icons.ArrowLeftPop />}
-        personImage={image1}
-        personName="yasmeen"
       >
 
         <form
           onSubmit={handleSubmit(formSubmit)}
-
+          
           className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
           style={{ scrollbarWidth: "none" }}
         >
@@ -390,6 +368,7 @@ const formSubmit = (values) => {
             <Button
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
               buttonText="Give Feedback"
+              
               // onClick={handleClosePopup}
             />
           </div>

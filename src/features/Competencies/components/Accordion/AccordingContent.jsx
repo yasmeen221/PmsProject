@@ -54,6 +54,7 @@ const AccordingContent = ({
             console.log("Error fetching data:", error.data);
           });
       } catch (err) {
+        console.log("Error fetching data:", err.data)
       }
     } else {
       setSearchResults([]);

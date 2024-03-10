@@ -8,7 +8,7 @@ import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+
 import { useDispatch,useSelector } from "react-redux";
 import { changeDropDownValue, tooglePraisePopUp } from "../../slices/openPopUpSlice";
 import { getEmployeesData, postsPraise, recievesVisiability } from "../../slices/Api/feedbackApi";
