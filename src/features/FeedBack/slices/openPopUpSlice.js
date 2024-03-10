@@ -4,9 +4,9 @@ const initialState = {
   dropDown: "",
   normalFeedbackPopup: false,
   praisePopUp: false,
-  requestFeedbackForSomeOne:false,
-  requestFeedbackForMySelf:false
-
+  requestFeedbackForSomeOne: false,
+  requestFeedbackForMySelf: false,
+  feedbackDetailsOpenPopUp: false,
 };
 const openPopUpSlice = createSlice({
   name: "openPopUpSlice",
@@ -16,17 +16,33 @@ const openPopUpSlice = createSlice({
       state.dropDown = action.payload;
     },
     toggleNormalFeedback: (state, action) => {
-      state.normalFeedbackPopup = action.payload
+      state.normalFeedbackPopup = action.payload;
     },
     tooglePraisePopUp: (state, action) => {
-      state.praisePopUp = action.payload
-    },toogleRequestFeedbackForSomeOne:(state,action)=>{
-      state.requestFeedbackForSomeOne=action.payload
-    },toogleRequestFeedbackForMySelf:(state,action)=>{
-      state.requestFeedbackForMySelf=action.payload
-    }
+      state.praisePopUp = action.payload;
+    },
+    toogleRequestFeedbackForSomeOne: (state, action) => {
+      state.requestFeedbackForSomeOne = action.payload;
+    },
+    toogleRequestFeedbackForMySelf: (state, action) => {
+      state.requestFeedbackForMySelf = action.payload;
+    },
+    // toogleCompentancyDetails: (state, action) => {
+    //   state.feedbackDetailsOpenPopUp = action.payload;
+    // },
+    toogleCompentancy: (state, action) => {
+      state.feedbackDetailsOpenPopUp = action.payload;
+    },
   },
 });
-export const { changeDropDownValue, toggleNormalFeedback,tooglePraisePopUp,toogleRequestFeedbackForSomeOne ,toogleRequestFeedbackForMySelf} = openPopUpSlice.actions;
+export const {
+  changeDropDownValue,
+  toggleNormalFeedback,
+  tooglePraisePopUp,
+  toogleRequestFeedbackForSomeOne,
+  toogleRequestFeedbackForMySelf,
+  // toogleCompentancyDetails,
+  toogleCompentancy,
+} = openPopUpSlice.actions;
 
 export default openPopUpSlice.reducer;

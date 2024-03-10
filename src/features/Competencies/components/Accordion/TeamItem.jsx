@@ -1,18 +1,33 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import Icons from "../../../../themes/icons";
-
+// import { toggleCompetencyDetails } from "../../slices/openCompentencyPopUp";
+import ViewDetails from "../CardsPopUps/ViewDetails";
+import { useSelector } from "react-redux";
 const TeamItem = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { title, description, skills, position } = props;
+  const { title, description, skills, position, id } = props;
   const [isHovered, setIsHovered] = useState(false);
+  const [details, setDetails] = useState(false);
+  // const openPopUp = useSelector(
+  //   (state) => state.openPopUpSlice.feedbackDetailsOpenPopUp,
+  // );
+  // const dispatch=useDispatch();
 
+  // const HandelDetailsPopUp = () => {
+  //   dispatch(toggleCompetencyDetails(true))
+  //   console.log("mmmm")
+  // };
   return (
     <div
       className={`flex justify-around items-center py-4 ${isHovered ? "hovered:text-blue-500 transition duration-500 ease-in-out hover:bg-drawerColor-1000 rounded-2xl" : ""}`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onClick={() => {
+        setDetails(true);
+      }}
     >
       <div className="flex items-start flex-row w-[35%] mr-10">
         <div>
@@ -47,6 +62,14 @@ const TeamItem = (props) => {
       <div>
         <Icons.ThreeDotsIcon />
       </div>
+      {details && (
+        <ViewDetails
+          id={id}
+          onClose={() => {
+            setDetails(false);
+          }}
+        />
+      )}
     </div>
   );
 };

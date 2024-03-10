@@ -16,45 +16,170 @@ import {
 } from "../../slices/openPopUpSlice";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
 import { jwtDecode } from "jwt-decode";
+import {
+  getCompetenciesForSomeOne,
+  getEmployeesData,
+  postsPraise,
+  recievesVisiability,
+} from "../../slices/Api/feedbackApi";
+
 const schema = yup.object({
-  receiver: yup.string().required("Receiver is required"),
-  sender: yup.string().required("Sender is required"),
+  userIdFrom: yup.string().required("Receiver is required"),
+  userIdTo: yup.string().required("Please select an option"),
   message: yup.string().required("Message is required"),
   visibility: yup.string().required("Visibility is required"),
-  team: yup.string().required("Team is required when checkbox is checked"),
+  competency: yup
+    .string()
+    .required("competency is required when checkbox is checked"),
 });
 export default function RequestFeedbackSomeOne() {
+  const [visibility, setVisibility] = useState(null);
+  // useEffect(() => {
+  //   const personLogin = jwtDecode(takeToken);
+  //   console.log(personLogin);
+  // }, []);
   const dispatch = useDispatch();
   const [addToogle, setAddToggle] = useState(false);
-  const [team, setTeam] = useState("");
+  const [usersName, setUsersNames] = useState([{}]);
+  const [userID, setUserID] = useState("");
+  const [usersNameID, setUsersNameID] = useState("");
+  const [usersNameIDTwo, setUsersNameIDTwo] = useState("");
+  const [competencies, setCompetencies] = useState([]);
+  const [teamId, setTeamId] = useState("");
   const RequestFeedbackForSomeOnePopUp = useSelector(
     (state) => state.openPopUpSlice.requestFeedbackForSomeOne,
   );
-  const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
   const takeToken = useSelector(
     (state) => state.persistantReducer.userDataReducer.userData,
   );
-  const userData = jwtDecode(takeToken);
-  console.log(userData);
+  console.log("userNameidfrom", usersNameID);
+  console.log("selectedfrom");
+  console.log("userNameidto", usersNameIDTwo);
+  console.log("iduser", userID);
+
+  // to feeeetchhhh commmpeticesssssss
+  // ---1-fecth id of username selected
+  useEffect(() => {
+    const [team] = usersName
+      .filter((user) => user._id === usersNameID)
+      .map((user) => user.team);
+    setTeamId(team);
+  }, [usersNameID]);
+  //--2-fetch compentinces
+  useEffect(() => {
+    if (!teamId) return;
+    const fetchData = async () => {
+      try {
+        const data = await getCompetenciesForSomeOne(teamId);
+        console.log("daddadadad", data);
+        if (data) {
+          setCompetencies(data);
+        }
+        console.log("cccciiidid", data.data.teamCompetencies._id);
+      } catch (error) {
+        console.log("error from get compentancy", error);
+      }
+    };
+    fetchData();
+  }, [teamId]);
+
+  // userIdloggggginnnnnnnn
+  useEffect(() => {
+    let decodedToken;
+    {
+      takeToken.length > 0 && (decodedToken = jwtDecode(takeToken));
+    }
+    setUserID(decodedToken.userId);
+    getAllUsersData();
+    getAllUsersDataTwo();
+  }, []);
+
+  // recevieeerrrrrrrrrrrrrrrrrrrr
+  const getAllUsersData = async (selectedUserId) => {
+    const data = await getEmployeesData();
+    const allUsers = data.data.usersNames;
+    setUsersNames(allUsers);
+    if (selectedUserId) {
+      const selectedUser = allUsers.find((user) => user._id == selectedUserId);
+      if (selectedUser) {
+        setUsersNameID(selectedUser._id);
+      }
+    }
+    console.log("fromm", selectedUserId);
+  };
+  // sennnderrrrrrrrrrrrrrrrrrr
+  const getAllUsersDataTwo = async (selectedUserIdTwo) => {
+    const data = await getEmployeesData();
+    const allUsers = data.data.usersNames;
+    setUsersNames(allUsers);
+    if (selectedUserIdTwo) {
+      const selectedUserTwo = allUsers.find(
+        (user) => user._id == selectedUserIdTwo,
+      );
+      if (selectedUserTwo) {
+        setUsersNameIDTwo(selectedUserTwo._id);
+      }
+    }
+    console.log("toooo", selectedUserIdTwo);
+  };
+  // const [selectedVisibility, setSelectedVisibility] = useState([]);
+  // console.log("sellelelel", selectedVisibility);
+  // const handleVisibilityChange = (e) => {
+  //   const selectedValues = Array.from(
+  //     e.target.selectedOptions,
+  //     (option) => option.value,
+  //   );
+  //   setSelectedVisibility(selectedValues);
+  // };
+  // const visibilityFun = async (id) => {
+  //   setVisibility(data.data.teamLeader._id);
+  // };
+  // const getCompetencies = async () => {
+  //   const dataCompetencies = await getCompetenciesForSomeOne(usersNameID);
+  //   setCompetencies(dataCompetencies);
+  // };
+  // console.log("compenatcy", Competencies);
+  async function postPraise(data) {
+    const response = await postsPraise(data);
+    console.log(response);
+  }
+  //
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (data) => {
-    if (userData) {
-      const formData = {
-        receiver: userData?.userId,
-        userId: userData?.userId,
-        ...data,
-      };
-      console.log("hhhhh");
-      console.log(formData);
-    }
-    handleClosePopup(true);
+  const onSubmit = (value) => {
+    const requestObject = {
+      feedbackMainData: {
+        userIdFrom: userID,
+        userIdTo: usersNameIDTwo,
+        message: value.message,
+        visibility: value.visibility.split(","),
+        feedbackType: "request",
+      },
+      feedBackMetaData: [
+        {
+          name: "competency",
+          value: [value.competency],
+        },
+        {
+          name: "feedbackAbout",
+          value: usersNameID,
+        },
+        {
+          name: "feedbackStatus",
+          value: "pending",
+        },
+      ],
+    };
+    console.log("datasend", requestObject);
+    postPraise(requestObject);
+    handleClosePopup();
     reset();
   };
 
@@ -79,29 +204,61 @@ export default function RequestFeedbackSomeOne() {
             <div className="px-1 ">
               <div className="pt-4">
                 <Header text="Receiver" />
-                <TextInput
-                  register={{ ...register("receiver") }}
-                  name="receiver"
-                  value={userData?.username}
-                  type="text"
-                  placeholder="Who the feedback is about"
-                />
+                <select
+                  name="userIdFrom"
+                  {...register("userIdFrom")}
+                  onChange={(e) => getAllUsersData(e.target.value)}
+                  className={`block text-fontColor-placeHolderColor appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none `}
+                >
+                  <option value="" selected disabled>
+                    AllUsers
+                  </option>
+                  {usersName &&
+                    usersName.map((item) => {
+                      return (
+                        <>
+                          <option key={item._id} value={item._id}>
+                            {item.username}
+                          </option>
+                        </>
+                      );
+                    })}
+                </select>
               </div>
-              {errors.receiver ? (
-                <p className="text-deleteColor-50">{errors.receiver.message}</p>
+              {errors.userIdFrom ? (
+                <p className="text-deleteColor-50">
+                  {errors.userIdFrom.message}
+                </p>
               ) : null}
               <div className="pt-4">
                 <Header text="Sender" />
-                <TextInput
-                  register={{ ...register("sender") }}
-                  name="sender"
-                  type="text"
-                  placeholder="Who will give the feedback"
-                />
+
+                <select
+                  name="userIdTo"
+                  {...register("userIdTo")}
+                  onChange={(e) => getAllUsersDataTwo(e.target.value)}
+                  className={`block text-fontColor-placeHolderColor appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none `}
+                >
+                  <option value="" selected disabled>
+                    AllUsers
+                  </option>
+                  {usersName &&
+                    usersName.map((item) => {
+                      return (
+                        <>
+                          <option key={item._id} value={item._id}>
+                            {item.username}
+                          </option>
+                        </>
+                      );
+                    })}
+                </select>
+                {errors.userIdTo ? (
+                  <p className="text-deleteColor-50">
+                    {errors.userIdTo.message}
+                  </p>
+                ) : null}
               </div>
-              {errors.sender ? (
-                <p className="text-deleteColor-50">{errors.sender.message}</p>
-              ) : null}
               <div className="pt-4">
                 <Header text="Message" />
                 <div className="mt-2">
@@ -123,30 +280,27 @@ export default function RequestFeedbackSomeOne() {
               <div className="pt-4 mb-4">
                 <Header text="Visibility" />
                 <div className="flex flex-wrap">
-                  <label className="inline-flex items-center mr-4 mb-2">
-                    <input
-                      {...register("visibility")}
-                      type="radio"
-                      value="senderReceiverMe"
-                      className="w-4 h-4"
-                      name="visibility"
-                    />
-                    <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
-                      Sender, receiver and me
-                    </span>
-                  </label>
-                  <label className="inline-flex items-center mr-4 mb-2">
-                    <input
-                      value="onlySenderMe"
-                      {...register("visibility")}
-                      type="radio"
-                      className="w-4 h-4"
-                      name="visibility"
-                    />
-                    <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
-                      Only sender and me
-                    </span>
-                  </label>
+                  <select
+                    name="visibility"
+                    {...register("visibility")}
+                    className={`block text-fontColor-placeHolderColor appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none `}
+                  >
+                    <option value="">Select who can see this</option>
+                    {usersNameID && usersNameIDTwo && userID && (
+                      <>
+                        <option
+                          value={
+                            usersNameID + "," + usersNameIDTwo + "," + userID
+                          }
+                        >
+                          Sender, receiver and me
+                        </option>
+                        <option value={usersNameIDTwo + "," + userID}>
+                          Only sender and me
+                        </option>
+                      </>
+                    )}
+                  </select>
                 </div>
                 {errors.visibility ? (
                   <p className="text-deleteColor-50">
@@ -179,21 +333,24 @@ export default function RequestFeedbackSomeOne() {
               {addToogle && (
                 <div className="relative my-2">
                   <select
-                    {...register("team")}
-                    onChange={(e) => setTeam(e.target.value)}
-                    className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor rounded-buttonRadius shadow-sm focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${team === "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"}`}
+                    {...register("competency")}
+                    className={`block appearance-none w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor rounded-buttonRadius shadow-sm focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${competencies === "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"}`}
                   >
-                    <option value="selectTeam">Select team</option>
-                    {teams?.data?.teamsNames.map((team) => {
-                      return (
-                        <option value={team._id} key={team._id}>
-                          {team.teamName}
-                        </option>
-                      );
-                    })}
+                    <option value="selectcompetency">Select competency</option>
+                    {competencies?.data?.teamCompetencies?.map(
+                      (competen, index) => {
+                        return (
+                          <option value={competen._id} key={index}>
+                            {competen.name}
+                          </option>
+                        );
+                      },
+                    )}
                   </select>
-                  {errors.team ? (
-                    <p className="text-deleteColor-50">{errors.team.message}</p>
+                  {errors.competency ? (
+                    <p className="text-deleteColor-50">
+                      {errors.competency.message}
+                    </p>
                   ) : null}
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />
@@ -207,7 +364,6 @@ export default function RequestFeedbackSomeOne() {
               type="submit"
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
               buttonText="Give Feedback"
-              // onClick={handleClosePopup}
             />
           </div>
         </form>

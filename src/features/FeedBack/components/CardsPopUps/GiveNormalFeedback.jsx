@@ -10,7 +10,8 @@ import {
   changeDropDownValue,
   toggleNormalFeedback,
 } from "../../slices/openPopUpSlice";
-const GiveNormalFeedback = () => {
+
+const GiveNormalFeedback = ({ cardId }) => {
   // const [isPopupOpen, setPopupOpen] = useState(false);
   const dispatch = useDispatch();
   const [addToogle, setAddToggle] = useState(false);

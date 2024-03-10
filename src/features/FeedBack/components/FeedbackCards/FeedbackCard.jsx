@@ -4,7 +4,7 @@ import image from "../../../../assets/images/boy1.png";
 import image1 from "../../../../assets/images/girl1.png";
 import Icons from "../../../../themes/icons";
 
-const FeedbackCard = ({ text, date, label }) => {
+const FeedbackCard = ({ text, date, label ,fromName,toName}) => {
   return (
     <>
       <div className="flex flex-col justify-between  gap-4   w-[32%]  h-14.375rem px-6 pb-6 rounded-2xl border border-borderColor-100   ">
@@ -26,8 +26,8 @@ hover:text-white`
           </div>
         </div>
         <div className="flex w-full gap-4 ">
-          <ImageStyle src={image1} caption="from" personName="sama ahmed" />
-          <ImageStyle src={image} caption="to" personName="ahmed ali" />
+          <ImageStyle src={image1} caption="from" personName={fromName} />
+          <ImageStyle src={image} caption="to" personName={toName} />
         </div>
       </div>
       .

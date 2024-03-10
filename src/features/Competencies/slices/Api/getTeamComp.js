@@ -11,16 +11,15 @@ export const getTeams = createAsyncThunk(
     async (_id, thunkAPI) => {
         const { rejectWithValue, dispatch } = thunkAPI;
         try {
-            getAllTeamCompetencies(_id).then((res) => {
+            const res=await getAllTeamCompetencies(_id)
                 if (res.data) {
                     dispatch(setCompsArr(res.data))
                     // console.log(res.data)
-                    
+                    return res.data
                     
                 } else {
                     console.log(res)
                 }
-            })
         } catch (error) {
             console.log(error.message);
             dispatch(setError(JSON.stringify(error)));
