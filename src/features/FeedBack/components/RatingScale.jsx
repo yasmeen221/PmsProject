@@ -12,14 +12,14 @@ const RangeSlider = ({index,value,setValue}) => {
       </div>
 
       <div className="flex space-x-11 ">
-        <div className="w-[20%] ">
+        <div className="w-[10%] ">
           <img
             src="../../../../public/rocket-312767_1280.png"
             alt="rocket"
             className=""
           />
         </div>
-        <div className="w-[80%]">
+        <div className="w-[90%]">
           <input
             id="labels-range-input"
             type="range"

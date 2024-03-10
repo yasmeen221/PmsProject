@@ -39,6 +39,28 @@ const GiveNormalFeedback = () => {
  const dispatch = useDispatch();
 const formSubmit = (values) => {
   if (teamsBtnChecked && values.team === "") return;
+  console.log(
+    {
+      feedbackMainData: {
+        userIdFrom,
+        userIdTo: userId,
+        message: values.message,
+        visibility: values.visibility.split(","),
+        feedbackType: "normal",
+      },
+      feedbackMetaData:[{
+        name:"competency",
+        value:userCompetencies.map((competency,index)=>{
+          return{
+            competencyId:competency.value,
+            competencyFeedBack:competencyFeedback[index],
+            rate:competencyRatings[index]
+          }
+        })
+      }]
+
+     }
+  )
   try {
     const request = axiosInstance.post(`feedback`,   {
       feedbackMainData: {
@@ -59,7 +81,7 @@ const formSubmit = (values) => {
         })
       }]
 
-     }).then(()=>{dispatch(getFeedbacksRequest())})
+     })
      handleClosePopup();
     
   } catch (error) {
@@ -354,7 +376,7 @@ const formSubmit = (values) => {
               )}
                     </div>
                   </div>
-                  <RatingScale index={index}
+                  <RatingScale   index={index}
                      value={competencyRatings[index]}
                      setValue={handleCompetencyRatingChange} />
                 </div>
