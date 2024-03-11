@@ -63,7 +63,7 @@ const LoginForm = ({  }) => {
 
     loginUser(objToSend).unwrap().then((res) => {
       if (res.status == "success") {
-        console.log(res.data);
+        // console.log(res.data);
         cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
         cookie.set("refreshToken", res.data.refreshToken)
         dispatch(changeUserDataValue(res.data.accesToken))

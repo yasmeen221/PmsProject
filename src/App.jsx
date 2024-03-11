@@ -13,12 +13,8 @@ import { useRefreshTokenMutation } from "./features/LogIn/slices/apis/apiLoginSl
 import { useSelector } from "react-redux";
 
 // Lazy-loaded components
-const ResetPassword = lazy(
-  () => import("./features/ResetPassword/pages/ResetPassword"),
-);
-const Competencies = lazy(
-  () => import("./features/Competencies/pages/Competencies"),
-);
+const ResetPassword = lazy(() => import("./features/ResetPassword/pages/ResetPassword"));
+const Competencies = lazy(() => import("./features/Competencies/pages/Competencies"));
 const FeedBack = lazy(() => import("./features/FeedBack/pages/FeedBack"));
 const Users = lazy(() => import("./features/User&Teams/pages/Users"));
 const LogInPage = lazy(() => import("./features/LogIn/pages/LogInPage"));
@@ -26,58 +22,41 @@ const Dashboard = lazy(() => import("./components/Dashboard"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
-  const [userData, setUserData] = useState(null);
-  const [refreshToken, { }] = useRefreshTokenMutation()
-  const accessToken=useSelector(state=>state.persistantReducer.userDataReducer.userData)
-  const role=accessToken.length>0?jwtDecode(accessToken).role:"" ; //to dont decode if the data is removed from global state
-  const saveUserData = (data) => {
-    setUserData(data);
-  };
+  const [refreshToken, { }] = useRefreshTokenMutation() //to   refresh token when the time of access token ended
+  const accessToken = useSelector(state => state.persistantReducer.userDataReducer.userData) //get access token (stored )from global state
+  const role = accessToken.length > 0 ? jwtDecode(accessToken).role : ""; //to don't decode if the data is removed from global state
   const cookie = new Cookies();
-  // const checkTokenExpiration = () => {
-  //   const token = cookie.get("userToken");
-  //   const refreshTokenValue = cookie.get("refreshToken");
-  //   console.log("rrr", refreshTokenValue)
 
-  //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
-  //     refreshToken(refreshTokenValue).unwrap().then(() => {
-  //       cookie.remove("userToken")
-  //       console.log("will redirect to login")
-  //     });
 
-  //   }
-  // };
   useEffect(() => {
-    let token = cookie.get("userToken");
     // let refreshTokenValue = cookie.get("refreshToken")
 
-    if (token && jwtDecode(token)?.exp > Date.now() / 1000) {
-      const decodedUserToken = jwtDecode(token);
-      saveUserData(decodedUserToken);
+    if (accessToken && jwtDecode(accessToken)?.exp > Date.now() / 1000) {
+      const decodedUserToken = jwtDecode(accessToken);
       console.log("nnnnnnn", decodedUserToken);
-      console.log(token);
+      console.log(accessToken);
     }
-    // checkTokenExpiration();
     //TRUE
     // const interval = setInterval(() => {
-    //   const token = cookie.get("userToken");
     //   const refreshTokenValue = cookie.get("refreshToken");
     //   console.log("rrr", refreshTokenValue)
+    //   if (accessToken && jwtDecode(accessToken)?.exp < Date.now() / 1000) {
+    //     refreshToken(refreshTokenValue).unwrap().then((res) => {
+    //       console.log("ressssssssssssss",res)
 
-    //   if (token && jwtDecode(token)?.exp < Date.now() / 1000) {
-    //     refreshToken(refreshTokenValue).unwrap().then(() => {
-    //       cookie.remove("userToken")
-    //       console.log("will redirect to login")
+    //       cookie.update('refreshToken', res.data.accessToken, { expires: new Date(jwtDecode(accessToken).exp * 1000) });
+    //       console.log("refresh token done")
+    //       console.log("ressssssssssssss",res)
     //       clearInterval(interval)
     //     });
 
     //   }
     // }, 60000) //EVERY 1 MINUTE
-    // return(()=>{clearInterval(interval)
+    // return (() => {
+    //   clearInterval(interval)
     // })
     //END TRUE
-  }, [new Cookies().get("userToken")]); //to ensure ypu get the updated role of user
-  //jwtDecode(cookie.get("userToken")).exp < Date.now() / 1000
+  }, []); //to ensure ypu get the updated role of user
   return (
     <Router>
       <Suspense
@@ -88,7 +67,7 @@ function App() {
         }
       >
         <Routes>
-          <Route path="/" element={<LogInPage saveUserData={saveUserData} />} />
+          <Route path="/" element={<LogInPage />} />
           <Route path="/setpassword/:token" element={<ResetPassword />} />
           <Route
             path="/dashboard"
@@ -116,12 +95,12 @@ function App() {
             />
             <Route
               path={
-                (role!=""&&role||userData?.role) == "superAdmin" || (role!=""&&role||userData?.role) == "admin"
+                (role) == "superAdmin" || (role) == "admin"
                   ? "users&teams"
                   : "notfound"
               } //notfound will go to * so that it will render not found page
               element={
-                <ProtectedRouting role={userData?.role}>
+                <ProtectedRouting role={role}>
                   <Users />
                 </ProtectedRouting>
               }

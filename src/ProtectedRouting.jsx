@@ -1,4 +1,3 @@
-import { jwtDecode } from "jwt-decode";
 import React from "react";
 import { Navigate } from "react-router-dom";
 import Cookies from "universal-cookie";
@@ -7,9 +6,9 @@ export default function ProtectedRouting(props) {
   const { role } = props;
 
   const cookie = new Cookies();
-  let token = cookie.get("userToken");
-  if (token) {
-    const decodedUserToken = jwtDecode(token);
+  const accessToken = cookie.get("userToken");
+  const refreshToken = cookie.get("refreshToken")
+  if (accessToken&&refreshToken) {
     if (role) {
       if (role == "superAdmin" || role == "admin") {
         return props.children;

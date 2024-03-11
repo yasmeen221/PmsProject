@@ -11,6 +11,7 @@ export default function PendingCards() {
   const userId=userData.length>0?jwtDecode(userData).userId :""
   const filterRequestFeedback = feedbacks.length > 0 ? feedbacks.filter((item, index) => (item.feedbackMainData.userIdTo._id===userId&&item.feedbackMainData.feedbackType == "requested"
   &&(item.feedBackMetaData[0]?.value=="pending"||item.feedBackMetaData[1]?.value=="pending"||item.feedBackMetaData[2]?.value=="pending"))) : []
+// console.log(filterRequestFeedback)
   return (
 
     <>
@@ -24,7 +25,7 @@ export default function PendingCards() {
         ) : (
           filterRequestFeedback.length > 0 ? (
             filterRequestFeedback.map((item, index) => (
-              <PendingCardItem key={item.feedbackMainData._id} cardId={item.feedbackMainData._id} text={item.feedbackMainData.message} name={`${item.feedbackMainData.userIdFrom.firstName} ${item.feedbackMainData.userIdFrom.lastName}`} date={item.feedbackMainData.createdAt.substring(0,10)} image={image1} />
+              <PendingCardItem key={item.feedbackMainData._id} cardId={item.feedbackMainData.userIdFrom._id} text={item.feedbackMainData.message} name={`${item.feedbackMainData.userIdFrom.firstName} ${item.feedbackMainData.userIdFrom.lastName}`} date={item.feedbackMainData.createdAt.substring(0,10)} image={image1} />
             ))
           ) : (
             (isLoadingFeedback==false&&filterRequestFeedback.length==0)?<div className='w-full flex flex-row justify-center'>

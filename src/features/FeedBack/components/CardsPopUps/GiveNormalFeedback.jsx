@@ -7,7 +7,7 @@ import Icons from "../../../../themes/icons";
 import image1 from "../../../../assets/images/girl2.png";
 import { useDispatch, useSelector } from "react-redux";
 import { changeDropDownValue, toggleNormalFeedback } from "../../slices/openPopUpSlice";
-const GiveNormalFeedback = ({cardId}) => {
+const GiveNormalFeedback = ({cardId,name}) => {
   // const [isPopupOpen, setPopupOpen] = useState(false);
   const dispatch=useDispatch()
   const [addToogle, setAddToggle] = useState(false);

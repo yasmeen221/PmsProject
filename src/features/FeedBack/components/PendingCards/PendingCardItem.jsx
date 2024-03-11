@@ -58,7 +58,7 @@ export default function PendingCardItem({ image, name, date, text, cardId }) {
         {text}
       </div>
       {oPenPopUp && <ConfirmDelete deleteText="Are you sure to Decline? " confirmButtonText="Decline" onConfirm={() => {handleDelete(cardId),console.log(cardId)}} />}
-      {openNormalFeedbackPopUp && <GiveNormalFeedback cardId={cardId}/>} 
+      {openNormalFeedbackPopUp && <GiveNormalFeedback cardId={cardId} to={name}/>} 
     </div> //card
   );
 }

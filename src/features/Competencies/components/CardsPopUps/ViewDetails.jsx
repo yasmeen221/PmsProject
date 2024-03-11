@@ -60,7 +60,7 @@ export default function ViewDetails({ onClose, id }) {
               </p>{" "}
               <p>
                 {details.category == null
-                  ? "communication"
+                  ? "not found"
                   : details.category.categoryName}
               </p>
             </div>
@@ -80,7 +80,7 @@ export default function ViewDetails({ onClose, id }) {
                       <AccordionItemDropDown
                         className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
                         value={i}
-                        trigger={item.level.levelName}
+                        trigger={item.level?.levelName?item.level.levelName:"not found"}
                       >
                         <hr />
                         <div className="mt-1 text-fontColor-fromAndToColor text-sm font-normal">
