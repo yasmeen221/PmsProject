@@ -13,7 +13,7 @@ export const getFeedbacksRequest = createAsyncThunk(
             const res = await getFeedbacks();
             if (res.data) {
                 dispatch(setFeedbacksArr(res.data.data.feedbacks));
-                console.log(res.data.data.feedbacks);
+                // console.log(res.data.data.feedbacks);
                 return res.data.data.feedbacks; // Return the data
             } else {
                 console.log(res);

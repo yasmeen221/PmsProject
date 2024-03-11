@@ -13,20 +13,20 @@ function RequestCards() {
     (state) => state.persistantReducer.userDataReducer.userData,
   );
   const userId = userData.length > 0 ? jwtDecode(userData).userId : "";
-  console.log(userId);
-  console.log(isLoadingFeedback, error, feedbacks);
+  // console.log(userId);
+  // console.log(isLoadingFeedback, error, feedbacks);
   const filterMyRequestFeedback =
     feedbacks.length > 0
       ? feedbacks.filter(
           (item, index) =>
-            item.feedbackMainData.userIdFrom?._id === userId &&
+          item.feedbackMainData.userIdFrom&&item.feedbackMainData.userIdTo&&item.feedbackMainData.userIdFrom?._id === userId &&  //first two to filter feedback if the sender or reciver account deleted
             item.feedbackMainData.feedbackType == "requested" &&
             (item.feedBackMetaData[0]?.value == "pending" ||
               item.feedBackMetaData[1]?.value == "pending" ||
               item.feedBackMetaData[2]?.value == "pending"),
         )
       : [];
-  console.log(filterMyRequestFeedback);
+  // console.log(filterMyRequestFeedback);
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">

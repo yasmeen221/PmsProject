@@ -9,7 +9,7 @@ export default function PendingCards() {
   const { isLoadingFeedback, error, feedbacks } = useSelector(state => state.ViewFeedback)
   const userData=useSelector(state=>state.persistantReducer.userDataReducer.userData)
   const userId=userData.length>0?jwtDecode(userData).userId :""
-  const filterRequestFeedback = feedbacks.length > 0 ? feedbacks.filter((item, index) => (item.feedbackMainData.userIdTo._id===userId&&item.feedbackMainData.feedbackType == "requested"
+  const filterRequestFeedback = feedbacks.length > 0 ? feedbacks.filter((item, index) => (item.feedbackMainData.userIdFrom&&item.feedbackMainData.userIdTo&&item.feedbackMainData.userIdTo._id===userId&&item.feedbackMainData.feedbackType == "requested"   //first two to filter feedback if the sender or reciver account deleted
   &&(item.feedBackMetaData[0]?.value=="pending"||item.feedBackMetaData[1]?.value=="pending"||item.feedBackMetaData[2]?.value=="pending"))) : []
 // console.log(filterRequestFeedback)
   return (

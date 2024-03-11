@@ -60,11 +60,8 @@ const AccordingContent = ({
     }
   }, [searchTerm]);
 
-  const triggerCompetencyHeader = (arrayOfItems) => {
-    return arrayOfItems.map((itemTeamsAssigned, index, array) => { return `${itemTeamsAssigned.teamName} Team${(index == array.length - 1) ? '' : ','}` })
-  }
   const renderPosition = (itemm) => {
-    console.log(itemm.seniorityLevels)
+    // console.log(itemm.seniorityLevels)
        const allCompetencyLevelNames=  itemm.seniorityLevels.map(  //rerurn array of competency levels names
         (item, index) => 
           item.level?.levelName?

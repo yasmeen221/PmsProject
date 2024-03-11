@@ -17,7 +17,7 @@ export default function ViewDetails({ onClose, id }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [details, setDetails] = useState({});
   useEffect(() => {
-    console.log(id);
+    // console.log(id);
     setPopupOpen(true);
     getDetails(id);
   }, []);
@@ -28,7 +28,7 @@ export default function ViewDetails({ onClose, id }) {
   };
   async function getDetails(id) {
     const { data } = await getDataCompetenciesByID(id);
-    console.log(data.foundedCompetency);
+    // console.log(data.foundedCompetency);
     setDetails(data.foundedCompetency);
   }
   return (
@@ -82,7 +82,7 @@ export default function ViewDetails({ onClose, id }) {
                         className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
                         value={i}
                         trigger={item.level?.levelName?item.level.levelName:"not found"}
-                        key={index}
+                        key={i}
                         
                       >
                         <hr />

@@ -40,8 +40,7 @@ const LoginForm = ({}) => {
   const cookie = new Cookies((null, { path: "/" }));
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
-  const [loginUser, { isLoading, isError, error, isSuccess }] =
-    useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error, isSuccess }] =useLoginUserMutation();
   const [loginError, setLoginError] = useState();
   const {
     register,
