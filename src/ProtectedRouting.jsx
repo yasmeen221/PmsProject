@@ -12,6 +12,8 @@ export default function ProtectedRouting(props) {
     if (role) {
       if (role == "superAdmin" || role == "admin") {
         return props.children;
+      }else{
+        return <Navigate to="*" />
       }
     } else {
       return props.children;

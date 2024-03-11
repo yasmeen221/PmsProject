@@ -78,7 +78,7 @@ const SelectUser = () => {
     isLoading: isTeamsNameLoading,
     error: TeamsNameError,
   } = useGetTeamsNameQuery();
-  console.log(teamsNames);
+  // console.log(teamsNames);
 
   
 
@@ -133,7 +133,7 @@ const SelectUser = () => {
           console.log("edit");
         }
         else{
-          addUser(values);
+          addUser(values).then((res)=>{console.log(res)}).catch((res)=>console.log(res));
           console.log(values)
           console.log("add");
         }
