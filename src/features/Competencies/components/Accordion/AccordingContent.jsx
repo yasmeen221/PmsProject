@@ -17,28 +17,30 @@ const AccordingContent = ({
   stateCategory,
   dropDownTextTeam,
   dropDownTextCategory,
-  dropDownTextLevel, }) => {
+  dropDownTextLevel,
+}) => {
   const [searchResults, setSearchResults] = useState([]);
-  const [sharedComp, setSharedComp] = useState([])
+  const [sharedComp, setSharedComp] = useState([]);
   const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
-  const { isLoadingTeamComp, comps, error } = useSelector(state => state.getTeamCompetenciesReducer)
+  const { isLoadingTeamComp, comps, error } = useSelector(
+    (state) => state.getTeamCompetenciesReducer,
+  );
   useEffect(() => {
     getAllDataCompetencies()
       .then((fetchedData) => {
-        let arr = []
+        let arr = [];
         // console.log(fetchedData.data)
         for (let i = 0; i < fetchedData.data.length; i++) {
           if (fetchedData.data[i].teamsAssigned.length == 0) {
-            arr.push(fetchedData.data[i])
+            arr.push(fetchedData.data[i]);
             // console.log(fetchedData.data[i])
           }
         }
-        setSharedComp(arr)
+        setSharedComp(arr);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-
   }, []);
 
   useEffect(() => {
@@ -50,11 +52,9 @@ const AccordingContent = ({
             // console.log(fetchedDataSearch)
           })
           .catch((error) => {
-
             console.log("Error fetching data:", error.data);
           });
-      } catch (err) {
-      }
+      } catch (err) {}
     } else {
       setSearchResults([]);
     }

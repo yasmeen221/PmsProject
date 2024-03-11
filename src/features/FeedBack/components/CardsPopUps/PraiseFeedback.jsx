@@ -9,9 +9,16 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
-import { useDispatch,useSelector } from "react-redux";
-import { changeDropDownValue, tooglePraisePopUp } from "../../slices/openPopUpSlice";
-import { getEmployeesData, postsPraise, recievesVisiability } from "../../slices/Api/feedbackApi";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeDropDownValue,
+  tooglePraisePopUp,
+} from "../../slices/openPopUpSlice";
+import {
+  getEmployeesData,
+  postsPraise,
+  recievesVisiability,
+} from "../../slices/Api/feedbackApi";
 
 const schema = yup.object({
   userIdTo: yup.string().required("Please select an option"),
@@ -19,8 +26,10 @@ const schema = yup.object({
   visibility: yup.string().required("Please select an option"),
 });
 export default function PraiseFeedback() {
-  const dispatch=useDispatch()
-  const openPraisePopUp = useSelector(state => state.openPopUpSlice.praisePopUp)
+  const dispatch = useDispatch();
+  const openPraisePopUp = useSelector(
+    (state) => state.openPopUpSlice.praisePopUp,
+  );
   const [userID, setUserID] = useState("");
   const [employee, setEmployee] = useState([{}]);
   const [employeeID, setEmployeeID] = useState("");
@@ -28,11 +37,13 @@ export default function PraiseFeedback() {
   const token = useSelector(
     (state) => state.persistantReducer.userDataReducer.userData,
   );
-  
+
   useEffect(() => {
     let decodedToken;
-    {token.length >0 &&( decodedToken = jwtDecode(token)) }
-        setUserID(decodedToken.userId);
+    {
+      token.length > 0 && (decodedToken = jwtDecode(token));
+    }
+    setUserID(decodedToken.userId);
     getEmployeeData();
   }, []);
   const {
@@ -43,40 +54,39 @@ export default function PraiseFeedback() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (value) => {
-    const stringToSplit = value.visibility;
-    const visibilityArray = stringToSplit.split(",");
+    const valuevisibilty = value.visibility;
+    const visibiltyArray = valuevisibilty.split(",");
     const praiseObject = {
       feedbackMainData: {
         userIdFrom: userID,
         userIdTo: employeeID,
         message: value.messege,
-        visibility: visibilityArray,
+        visibility: visibiltyArray,
         feedbackType: "praise",
       },
       feedBackMetaData: [{}],
     };
+    console.log("feed", praiseObject);
     postPraise(praiseObject);
     handleClosePopup();
   };
   const handleClosePopup = () => {
-    dispatch(tooglePraisePopUp(false))
+    dispatch(tooglePraisePopUp(false));
     dispatch(changeDropDownValue(""));
-
-
   };
   async function getEmployeeData() {
-    const data= await getEmployeesData()
+    const data = await getEmployeesData();
     console.log("employeeeee", data.data.usersNames);
     setEmployee(data.data.usersNames);
   }
 
   async function recieveVisiability(id) {
     setEmployeeID(id);
-    const data= await recievesVisiability(id);
+    const data = await recievesVisiability(id);
     setManager(data.data.teamLeader._id);
   }
-  async function postPraise(data){
-    const response= await postsPraise(data);
+  async function postPraise(data) {
+    const response = await postsPraise(data);
     console.log(response);
   }
   return (

@@ -39,7 +39,7 @@ export const store = configureStore({
   reducer: {
     openPopUpConfirmDeleteSlice,
     openCompetencyPopUpSlice,//competency slice
-    openPopUpSlice, // Feedback slice
+    openPopUpSlice, // POPUPS slice
     openTeamPopUpSlice, // Manage Teams slice
     editTeamPopUpSlice, // Manage Teams slice
     users: usersReducer, // Manage Users slice
@@ -52,6 +52,7 @@ export const store = configureStore({
     persistantReducer,
     getTeamCompetenciesReducer:TeamsSlice,
     ViewFeedback:ViewFeedBackSlice,
+    
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,

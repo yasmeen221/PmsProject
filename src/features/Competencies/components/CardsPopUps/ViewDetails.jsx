@@ -9,6 +9,7 @@ import { toggleCompetencyDetails } from "../../slices/openCompentencyPopUp";
 import AccordionDropDown, {
   AccordionItemDropDown,
 } from "../Accordion/DropDownDetails";
+// import { toogleCompentancyDetails } from "../../../FeedBack/slices/openPopUpSlice";
 
 export default function ViewDetails({ onClose, id }) {
   // const dispatch=useDispatch()
@@ -21,7 +22,7 @@ export default function ViewDetails({ onClose, id }) {
     getDetails(id);
   }, []);
   const handleClosePopup = () => {
-    // dispatch(toggleCompetencyDetails(false))
+    // dispatch(toogleCompentancyDetails(false));
     setPopupOpen(false);
     onClose();
   };
@@ -73,7 +74,7 @@ export default function ViewDetails({ onClose, id }) {
           </div>
           {details.seniorityLevels && (
             <>
-              {details.seniorityLevels.map((item, i) => {
+              {details.seniorityLevels.map((item, i, index) => {
                 return (
                   <>
                     <AccordionDropDown key={i}>
@@ -81,11 +82,15 @@ export default function ViewDetails({ onClose, id }) {
                         className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
                         value={i}
                         trigger={item.level?.levelName?item.level.levelName:"not found"}
+                        key={index}
+                        
                       >
                         <hr />
                         <div className="mt-1 text-fontColor-fromAndToColor text-sm font-normal">
                           <p className="">
-                            {item.description ? item.description:"there is no description"}
+                            {item.description
+                              ? item.description
+                              : "there is no description"}
                           </p>
                         </div>
                       </AccordionItemDropDown>

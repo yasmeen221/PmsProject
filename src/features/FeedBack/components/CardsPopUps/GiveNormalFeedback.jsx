@@ -9,16 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { changeDropDownValue, toggleNormalFeedback } from "../../slices/openPopUpSlice";
 const GiveNormalFeedback = ({cardId,name}) => {
   // const [isPopupOpen, setPopupOpen] = useState(false);
-  const dispatch=useDispatch()
+  const dispatch = useDispatch();
   const [addToogle, setAddToggle] = useState(false);
   const [team, setTeam] = useState("");
-  const openNormalFeedbackPopUp = useSelector(state => state.openPopUpSlice.normalFeedbackPopup)
-
+  const openNormalFeedbackPopUp = useSelector(
+    (state) => state.openPopUpSlice.normalFeedbackPopup,
+  );
 
   const handleClosePopup = () => {
-    dispatch(toggleNormalFeedback(false))
+    dispatch(toggleNormalFeedback(false));
     dispatch(changeDropDownValue(""));
-
   };
   return (
     <>
