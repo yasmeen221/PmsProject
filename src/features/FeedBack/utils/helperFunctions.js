@@ -7,7 +7,7 @@ export const getDataWithPagination = (setIsLoadingFeedback, setData, value, user
         getRequestsFeedback(value, userId).then((res) => {
             if (res.data.data.feedbacks) {
                 setData(res.data.data.feedbacks)
-                setNumberOfPages(res.data.data.totalPages)
+                setNumberOfPages(res.data.data.totalPages==0?1:res.data.data.totalPages)
             }
             setIsLoadingFeedback(false)
         }).catch((error) => {
@@ -19,7 +19,7 @@ export const getDataWithPagination = (setIsLoadingFeedback, setData, value, user
         getPending(value,userId).then((res) => {
             if (res.data.data.feedbacks) {
                 setData(res.data.data.feedbacks)
-                setNumberOfPages(res.data.data.totalPages)
+                setNumberOfPages(res.data.data.totalPages==0?1:res.data.data.totalPages)
             }
             setIsLoadingFeedback(false)
         }).catch((error) => {
@@ -31,7 +31,7 @@ export const getDataWithPagination = (setIsLoadingFeedback, setData, value, user
         getFeedAndPraise(value).then((res) => {
             if (res.data.data.feedbacks) {
                 setData(res.data.data.feedbacks)
-                setNumberOfPages(res.data.data.totalPages)
+                setNumberOfPages(res.data.data.totalPages==0?1:res.data.data.totalPages)
             }
             setIsLoadingFeedback(false)
         }).catch((error) => {

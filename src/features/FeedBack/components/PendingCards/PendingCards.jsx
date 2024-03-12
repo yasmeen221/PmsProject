@@ -66,7 +66,7 @@ export default function PendingCards() {
             </div> : ""
           ))
         }
-        {numberOfPages != 0 && <Pagination handlePageClick={handlePageClick} numberOfPages={numberOfPages} />}
+        {<Pagination handlePageClick={handlePageClick} numberOfPages={numberOfPages} />}
 
       </main>
     </>

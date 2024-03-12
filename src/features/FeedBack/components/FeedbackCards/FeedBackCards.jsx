@@ -50,7 +50,7 @@ export default function FeedBackCards() {
         ) : (
           ""
         )}
-        {numberOfPages != 0 && <Pagination handlePageClick={handlePageClick} numberOfPages={numberOfPages} />}
+        {<Pagination handlePageClick={handlePageClick} numberOfPages={numberOfPages} />}
       </main>
     </>
   );

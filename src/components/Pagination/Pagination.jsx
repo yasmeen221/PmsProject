@@ -17,8 +17,8 @@ const Pagination = ({handlePageClick,numberOfPages}) => {
           previousLinkClassName=" px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
           nextLinkClassName=" px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
           breakLinkClassName="px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
-          activeLinkClassName="bg-sky-500	"
-
+          activeLinkClassName="bg-blue-50	"
+          
 
         />
   )
