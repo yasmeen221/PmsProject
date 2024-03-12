@@ -19,6 +19,7 @@ import {
   getFeedbacks,
   getTeamLeaderId,
 } from "../../slices/Api/feedbackApi";
+import toast from "react-hot-toast";
 
 const schema = yup.object({
   userIdTo: yup.string().required("Please select an option"),
@@ -54,7 +55,8 @@ export default function PraiseFeedback() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (value) => {
-    const valuevisibilty = value.visibility;
+    try {
+      const valuevisibilty = value.visibility;
     const visibiltyArray = valuevisibilty.split(",");
     const praiseObject = {
       feedbackMainData: {
@@ -68,7 +70,14 @@ export default function PraiseFeedback() {
     };
     console.log("feed", praiseObject);
     postPraise(praiseObject);
+    toast.success("your respond is submitted successfully!");
     handleClosePopup();
+
+    } catch (error) {
+      console.log("error", error);
+     
+    }
+    
   };
   const handleClosePopup = () => {
     dispatch(tooglePraisePopUp(false));

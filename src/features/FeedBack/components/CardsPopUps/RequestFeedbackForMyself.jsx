@@ -10,7 +10,7 @@ import Button from "../../../../components/Button/Button";
 import Header from "../../../../components/Header/Header";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 
-import axios from "axios";
+
 
 import { jwtDecode } from "jwt-decode";
 import Select from "react-select";
@@ -25,6 +25,7 @@ import {
   getTeamLeaderId,
   getFeedbacks,
 } from "../../slices/Api/feedbackApi";
+import toast from "react-hot-toast";
 
 const schema = yup.object().shape({
   //userIdTo: yup.string().required("Request is required"),
@@ -133,33 +134,39 @@ export default function RequestFeedbackForMyself({ OnClose }) {
   };
 
   const formSubmit = (data) => {
-    const formData = {
-      feedbackMainData: {
-        userIdFrom: userIdFrom,
-        userIdTo: selectedUserId,
-        message: data.message,
-        visibility: [userIdFrom, selectedUserId],
-        feedbackType: "requested",
-      },
-      feedBackMetaData: [],
-    };
-
-    if (selectedCompetencies.length > 0) {
+    try {
+      const formData = {
+        feedbackMainData: {
+          userIdFrom: userIdFrom,
+          userIdTo: selectedUserId,
+          message: data.message,
+          visibility: [userIdFrom, selectedUserId],
+          feedbackType: "requested",
+        },
+        feedBackMetaData: [],
+      };
+  
+      if (selectedCompetencies.length > 0) {
+        formData.feedBackMetaData.push({
+          name: "competency",
+          value: selectedCompetencies.map((item) => ({
+            competencyId: item.value,
+          })),
+        });
+      }
       formData.feedBackMetaData.push({
-        name: "competency",
-        value: selectedCompetencies.map((item) => ({
-          competencyId: item.value,
-        })),
+        name: "feedbackStatus",
+        value: "pending",
       });
+  
+      //  data
+      console.log("Formatted Form Data:", formData);
+      toast.success("your respond is submitted successfully!");
+      postPraise(formData);
+    } catch (error) {
+      toast.error("your respond is not submitted successfully!");
     }
-    formData.feedBackMetaData.push({
-      name: "feedbackStatus",
-      value: "pending",
-    });
-
-    //  data
-    console.log("Formatted Form Data:", formData);
-    postPraise(formData);
+   
   };
 
   return (

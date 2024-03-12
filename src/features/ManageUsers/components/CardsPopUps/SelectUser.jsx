@@ -11,12 +11,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icons from "../../../../themes/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../../slices/userSlice";
+
 import { editUser } from "../../slices/editUsersSlice";
 import { handleOpenAddUserFormPopUp } from "../../slices/openAddUserFormPopUp";
 import { useAddUserMutation, useEditRemoteUserMutation } from "../../slices/api/apiSlice.js";
 import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice.js";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice.js";
+import toast from "react-hot-toast";
 
 const userSchema = yup.object({
   firstName: yup
@@ -116,15 +117,7 @@ const SelectUser = () => {
 
 
     const formSubmit = (values) => {
-      // try {
-      // console.log(values);
-      // editRemoteUser(values)
-      // addUser(values)
-      // reset();
-      // } catch (error) {
-      //   console.log(error)
-      // }
-      // handleClosePopup();
+
       try {
         if (userData.username) {
           editRemoteUser({_id:userData._id,...values});
@@ -138,9 +131,11 @@ const SelectUser = () => {
           console.log("add");
         }
         reset();
+        toast.success("User Added Successfully");
         handleClosePopup();
       } catch (error) {
         console.log(error);
+        toast.error("User Not Added");
       }
  
     };

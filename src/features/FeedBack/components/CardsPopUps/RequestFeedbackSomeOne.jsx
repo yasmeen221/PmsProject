@@ -22,6 +22,7 @@ import {
   getFeedbacks,
   getTeamLeaderId,
 } from "../../slices/Api/feedbackApi";
+import toast from "react-hot-toast";
 
 const schema = yup.object({
   userIdFrom: yup.string().required("Receiver is required"),
@@ -149,33 +150,40 @@ export default function RequestFeedbackSomeOne() {
     resolver: yupResolver(schema),
   });
   const onSubmit = (value) => {
-    const requestObject = {
-      feedbackMainData: {
-        userIdFrom: userID,
-        userIdTo: usersNameIDTwo,
-        message: value.message,
-        visibility: value.visibility.split(","),
-        feedbackType: "request",
-      },
-      feedBackMetaData: [
-        {
-          name: "competency",
-          value: [{ competencyId: value.competency }],
+    try {
+      const requestObject = {
+        feedbackMainData: {
+          userIdFrom: userID,
+          userIdTo: usersNameIDTwo,
+          message: value.message,
+          visibility: value.visibility.split(","),
+          feedbackType: "request",
         },
-        {
-          name: "feedbackAbout",
-          value: usersNameID,
-        },
-        {
-          name: "feedbackStatus",
-          value: "pending",
-        },
-      ],
-    };
-    console.log("datasend", requestObject);
-    postPraise(requestObject);
-    handleClosePopup();
-    reset();
+        feedBackMetaData: [
+          {
+            name: "competency",
+            value: [{ competencyId: value.competency }],
+          },
+          {
+            name: "feedbackAbout",
+            value: usersNameID,
+          },
+          {
+            name: "feedbackStatus",
+            value: "pending",
+          },
+        ],
+      };
+      console.log("datasend", requestObject);
+      postPraise(requestObject);
+      toast.success("your respond is submitted successfully!");
+      handleClosePopup();
+      reset();
+    } catch (error) {
+      console.log("error", error);
+      toast.error("your respond is not submitted successfully!");
+    }
+  
   };
 
   const handleClosePopup = () => {

@@ -21,6 +21,7 @@ import {
   changeDropDownValue,
   toggleNormalFeedback,
 } from "../../slices/openPopUpSlice";
+import toast from "react-hot-toast";
 
 const GiveNormalFeedback = () => {
   const openNormalFeedbackPopUp = useSelector(
@@ -89,9 +90,11 @@ const GiveNormalFeedback = () => {
           },
         ],
       });
+      toast.success("your respond is submitted successfully!");
       handleClosePopup();
     } catch (error) {
       console.log("error from create", error);
+      toast.error("your respond is not submitted successfully!");
     }
   };
 
