@@ -8,17 +8,17 @@ import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import  { toggleNormalFeedback } from "../../slices/openPopUpSlice";
 import GiveNormalFeedback from "../CardsPopUps/GiveNormalFeedback";
 import { deleteFeedback } from "../../slices/Api/feedbackApi";
-import { getFeedbacksRequest } from "../../slices/viewFeedBackSlice";
 
-export default function PendingCardItem({ image, name, date, text, cardId }) {
+export default function PendingCardItem({ image, name, date, text, cardId ,getDataWithPagination,currentPage,setIsLoadingFeedback,setData,userId,setNumberOfPages}) {
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
   );
   const openNormalFeedbackPopUp = useSelector(state => state.openPopUpSlice.normalFeedbackPopup)
   const handleDelete=(cardId)=>{
-    deleteFeedback(cardId).then(()=>{
-      dispatch(getFeedbacksRequest())
+    deleteFeedback(cardId).then((res)=>{
+      getDataWithPagination(setIsLoadingFeedback,setData,currentPage,userId,setNumberOfPages,false,false,true)
+      console.log(res)
     })
   }
   return (

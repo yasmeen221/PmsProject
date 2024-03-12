@@ -4,16 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete";
 import { deleteFeedback,  } from "../../slices/Api/feedbackApi";
-import { getFeedbacksRequest } from "../../slices/viewFeedBackSlice";
 
-export default function RequestCardItem({text,image,name,date,cardId}) {
+export default function RequestCardItem({text,image,name,date,cardId,getDataWithPagination,currentPage,setIsLoadingFeedback,setData,userId,setNumberOfPages}) {
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
   );
   const handleDelete=(cardId)=>{
-    deleteFeedback(cardId).then(()=>{
-      dispatch(getFeedbacksRequest())
+    deleteFeedback(cardId).then((res)=>{
+      getDataWithPagination(setIsLoadingFeedback,setData,currentPage,userId,setNumberOfPages,true,false,false)
+      // console.log(res)
     })
   }
   return (

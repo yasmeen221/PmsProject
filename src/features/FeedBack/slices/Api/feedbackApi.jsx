@@ -41,14 +41,32 @@ import axiosInstance from "../../../../components/GeneralApi/generalApi";
 //     console.log("error from delete", error);
 //   }
 // };
-export const getFeedbacks = async () => {
+
+export const getFeedAndPraise=async(page)=>{
   try {
-    const request = await axiosInstance.get(`/feedback`);
+    const request = await axiosInstance.get(`/feedback?page=${page}&type=normal&type=praise`);
     return request;
   } catch (err) {
     console.log(err);
   }
-};
+}
+export const getRequestsFeedback=async(page,userIdFrom)=>{
+  try {
+    const request = await axiosInstance.get(`/feedback?page=${page}&type=requested&userIdFrom=${userIdFrom}`);
+    return request;
+  } catch (err) {
+    console.log(err);
+  }
+}
+export const getPending=async(page,userIdTo)=>{
+  try {
+    const request = await axiosInstance.get(`/feedback?page=${page}&type=requested&userIdTo=${userIdTo}`);
+    return request;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export const deleteFeedback = async (id) => {
   try {
     const request = await axiosInstance.get(`/feedback/delete/${id}`);

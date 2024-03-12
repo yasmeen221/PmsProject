@@ -1,17 +1,28 @@
-import React, { Component } from "react";
+import React, {  useEffect, useState } from "react";
 import PendingCardItem from "./PendingCardItem";
 import image1 from "../../../../assets/images/boy4.png";
 import { useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import Icons from "../../../../themes/icons";
+import Pagination from "../../../../components/Pagination/Pagination";
+import { getDataWithPagination } from "../../utils/helperFunctions";
 
 export default function PendingCards() {
-  const { isLoadingFeedback, error, feedbacks } = useSelector(state => state.ViewFeedback)
-  const userData=useSelector(state=>state.persistantReducer.userDataReducer.userData)
-  const userId=userData.length>0?jwtDecode(userData).userId :""
-  const filterRequestFeedback = feedbacks.length > 0 ? feedbacks.filter((item, index) => (item.feedbackMainData.userIdFrom&&item.feedbackMainData.userIdTo&&item.feedbackMainData.userIdTo._id===userId&&item.feedbackMainData.feedbackType == "requested"   //first two to filter feedback if the sender or reciver account deleted
-  &&(item.feedBackMetaData[0]?.value=="pending"||item.feedBackMetaData[1]?.value=="pending"||item.feedBackMetaData[2]?.value=="pending"))) : []
-// console.log(filterRequestFeedback)
+  const [numberOfPages, setNumberOfPages] = useState(0)
+
+  const [isLoadingFeedback, setIsLoadingFeedback] = useState(false)
+  const [data, setData] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const userData = useSelector(state => state.persistantReducer.userDataReducer.userData)
+  const userId = userData.length > 0 ? jwtDecode(userData).userId : ""
+  useEffect(() => {
+    getDataWithPagination(setIsLoadingFeedback, setData, 1, userId, setNumberOfPages,false,false,true)
+  }, [])
+  const handlePageClick = (event) => {
+    getDataWithPagination(setIsLoadingFeedback, setData, event.selected + 1, userId, setNumberOfPages,false,false,true)
+
+  };
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
@@ -23,8 +34,8 @@ export default function PendingCards() {
           <div className="w-full flex flex-row justify-center">
             <Icons.Loading />
           </div>
-        ) : filterRequestFeedback.length > 0 ? (
-          filterRequestFeedback.map((item, index) => (
+        ) : data.length > 0 ? (
+          data.filter((item) => item.feedbackMainData.userIdFrom).map((item, index) => (
             <PendingCardItem
               key={item.feedbackMainData._id}
               cardId={item.feedbackMainData._id}
@@ -32,26 +43,30 @@ export default function PendingCards() {
               name={`${item.feedbackMainData.userIdFrom.firstName} ${item.feedbackMainData.userIdFrom.lastName}`}
               date={item.feedbackMainData.createdAt.substring(0, 10)}
               image={image1}
+              getDataWithPagination={getDataWithPagination}
+              currentPage={currentPage}
+              setIsLoadingFeedback={setIsLoadingFeedback}
+              setData={setData}
+              userId={userId}
+              setNumberOfPages={setNumberOfPages}
             />
           ))
-        ) : isLoadingFeedback == false && filterRequestFeedback.length == 0 ? (
+        ) : isLoadingFeedback == false && data.length == 0 ? (
           <div className="w-full flex flex-row justify-center">
             <p>There is No Pending Requests Exist</p>
           </div>
         ) : (
-          filterRequestFeedback.length > 0 ? (
-            filterRequestFeedback.map((item, index) => (
-              <PendingCardItem key={item.feedbackMainData._id} cardId={item.feedbackMainData.userIdFrom._id} text={item.feedbackMainData.message} name={`${item.feedbackMainData.userIdFrom.firstName} ${item.feedbackMainData.userIdFrom.lastName}`} date={item.feedbackMainData.createdAt.substring(0,10)} image={image1} />
+          data.length > 0 ? (
+            data.map((item, index) => (
+              <PendingCardItem key={item.feedbackMainData._id} cardId={item.feedbackMainData.userIdFrom._id} text={item.feedbackMainData.message} name={`${item.feedbackMainData.userIdFrom.firstName} ${item.feedbackMainData.userIdFrom.lastName}`} date={item.feedbackMainData.createdAt.substring(0, 10)} image={image1} />
             ))
           ) : (
-            (isLoadingFeedback==false&&filterRequestFeedback.length==0)?<div className='w-full flex flex-row justify-center'>
+            (isLoadingFeedback == false && data.length == 0) ? <div className='w-full flex flex-row justify-center'>
               <p>There is No Pending Requests Exist</p>
-            </div>:""
-          )
-        )
-        
-      }
-        
+            </div> : ""
+          ))
+        }
+        {numberOfPages != 0 && <Pagination handlePageClick={handlePageClick} numberOfPages={numberOfPages} />}
 
       </main>
     </>
