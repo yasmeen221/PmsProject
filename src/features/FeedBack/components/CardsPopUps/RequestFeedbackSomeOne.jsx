@@ -183,7 +183,6 @@ export default function RequestFeedbackSomeOne() {
       console.log("error", error);
       toast.error("your respond is not submitted successfully!");
     }
-  
   };
 
   const handleClosePopup = () => {
