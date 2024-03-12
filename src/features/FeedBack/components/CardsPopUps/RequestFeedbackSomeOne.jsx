@@ -118,23 +118,7 @@ export default function RequestFeedbackSomeOne() {
     }
     console.log("toooo", selectedUserIdTwo);
   };
-  // const [selectedVisibility, setSelectedVisibility] = useState([]);
-  // console.log("sellelelel", selectedVisibility);
-  // const handleVisibilityChange = (e) => {
-  //   const selectedValues = Array.from(
-  //     e.target.selectedOptions,
-  //     (option) => option.value,
-  //   );
-  //   setSelectedVisibility(selectedValues);
-  // };
-  // const visibilityFun = async (id) => {
-  //   setVisibility(data.data.teamLeader._id);
-  // };
-  // const getCompetencies = async () => {
-  //   const dataCompetencies = await getUserCompetencies(usersNameID);
-  //   setCompetencies(dataCompetencies);
-  // };
-  // console.log("compenatcy", Competencies);
+
   async function postPraise(data) {
     const response = await getFeedbacks(data);
     console.log(response);
@@ -157,7 +141,7 @@ export default function RequestFeedbackSomeOne() {
           userIdTo: usersNameIDTwo,
           message: value.message,
           visibility: value.visibility.split(","),
-          feedbackType: "request",
+          feedbackType: "requested",
         },
         feedBackMetaData: [
           {
@@ -271,7 +255,6 @@ export default function RequestFeedbackSomeOne() {
                     wrap="soft"
                     id="message"
                     name="message"
-                    // onChange={(e) => console.log(e.target.value)}
                     className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0 py-2.5 px-2 shadow-sm ring-1 ring-fontColor-outLineInputColor placeholder:text-fontColor-placeHolderColor focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                   />
                 </div>
