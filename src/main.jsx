@@ -6,10 +6,12 @@ import { Provider } from "react-redux";
 import { store,persistor } from "./store/store.js";
 //to store data in rtk
 import { PersistGate } from "redux-persist/integration/react";
+import { Toaster } from "react-hot-toast";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
+      <Toaster position="top-right"  reverseOrder={false} />
     </Provider>
   </React.StrictMode>
 );

@@ -21,6 +21,7 @@ import {
   changeDropDownValue,
   toggleNormalFeedback,
 } from "../../slices/openPopUpSlice";
+import toast from "react-hot-toast";
 
 const GiveNormalFeedback = () => {
   const openNormalFeedbackPopUp = useSelector(
@@ -36,6 +37,9 @@ const GiveNormalFeedback = () => {
   const [userId, setUserId] = useState("");
   const [mangerId, setMangerId] = useState("");
   const [competencyFeedback, setCompetencyFeedback] = useState([]);
+  const [userCompetenciesErrMsg, setUserCompetenciesErrMsg] = useState(false);
+  const [userIdsErrMsg, setUserIdsErrMsg] = useState(false);
+  const [competencyRatingsErrMsg, setCompetencyRatingsErrMsg] = useState(false);
   const accessToken = useSelector(
     (state) => state.persistantReducer.userDataReducer.userData,
   );
@@ -45,7 +49,28 @@ const GiveNormalFeedback = () => {
 
   const dispatch = useDispatch();
   const formSubmit = (values) => {
-    if (teamsBtnChecked && values.team === "") return;
+    if (teamsBtnChecked && userCompetencies.length == 0) {
+      setUserCompetenciesErrMsg(true);
+      return;
+    }
+
+    if (teamsBtnChecked && competencyRatings.includes(0)) {
+      setCompetencyRatingsErrMsg(true);
+      return;
+    }
+    if (userId === "") {
+      setUserIdsErrMsg(true);
+      return;
+    }
+
+    if (
+      userId === "" ||
+      teamsBtnChecked &&
+      competencyFeedback.length == 0 &&
+      competencyRatings.length == 0
+
+    )
+      return;
     console.log({
       feedbackMainData: {
         userIdFrom,
@@ -89,9 +114,11 @@ const GiveNormalFeedback = () => {
           },
         ],
       });
+      toast.success("your respond is submitted successfully!");
       handleClosePopup();
     } catch (error) {
       console.log("error from create", error);
+      toast.error("your respond is not submitted successfully!");
     }
   };
 
@@ -196,7 +223,6 @@ const GiveNormalFeedback = () => {
 
     setUserCompetencies(updatedCompetencies);
 
-    // Also, update competency ratings and feedback accordingly
     const updatedRatings = [...competencyRatings];
     updatedRatings.splice(index, 1);
     setCompetencyRatings(updatedRatings);
@@ -221,12 +247,14 @@ const GiveNormalFeedback = () => {
           >
             <div className="pt-4 ">
               <Header text="Name" />
-
               <Select
                 options={usernamesOptions}
                 onChange={handleUserNameChange}
                 closeMenuOnSelect={true}
               />
+              {
+                userIdsErrMsg && (<p>you must choose a user</p>)
+              }
             </div>
             <div className="pt-4">
               <Header text=" Feedback" />
@@ -234,12 +262,13 @@ const GiveNormalFeedback = () => {
                 <textarea
                   {...register("message")}
                   rows={4}
-                  placeholder="Write Your honst feedback"
+                  placeholder="Write Your honest feedback"
                   wrap="soft"
                   id="message"
                   name="message"
                   className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                 />
+                {errors.message && (<p className="text-red-500">{errors.message.message}</p>)}
               </div>
             </div>
             <div className="pt-4 mb-4">
@@ -330,9 +359,11 @@ const GiveNormalFeedback = () => {
                       closeMenuOnSelect={false}
                     />
                   }
-                  {/* { {teamsErrorMsg && (
-                    <p className="text-red-500">Please add teams first</p>
-                  )} } */}
+                  {userCompetenciesErrMsg && (
+                    <p className="text-red-500">
+                      Please add competencies first
+                    </p>
+                  )}
                 </div>
               )}
 
@@ -386,6 +417,11 @@ const GiveNormalFeedback = () => {
                         value={competencyRatings[index]}
                         setValue={handleCompetencyRatingChange}
                       />
+                      {competencyRatingsErrMsg && (
+                        <p className="text-red-500">
+                          Please rate the competency
+                        </p>
+                      )}
                     </div>
                   );
                 })}

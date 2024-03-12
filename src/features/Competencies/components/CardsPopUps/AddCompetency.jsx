@@ -13,6 +13,7 @@ import Select from "react-select";
 import axiosInstance from "../../../../components/GeneralApi/generalApi";
 
 import { getAllData } from "../../slices/Api/catgoryapi";
+import toast from "react-hot-toast";
 
 function AddCompetency() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -107,9 +108,12 @@ function AddCompetency() {
       console.log("Data to send:", dataToSend);
       const response = await axiosInstance.post("/competency", dataToSend);
       console.log("Backend response:", response.data);
+      toast.success("your respond is submitted successfully!");
       setPopupOpen(false);
+     
     } catch (error) {
       console.error("Error sending data to the backend:", error);
+      toast.error("your respond is not submitted successfully!");
     }
   };
 
