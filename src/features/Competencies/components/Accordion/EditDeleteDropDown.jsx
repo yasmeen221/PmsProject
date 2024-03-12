@@ -5,7 +5,7 @@ import ThreeDotsDropDown from "../../../../components/componentTitle/ThreeDotsDr
 import EditCompetency from "../CardsPopUps/EditCompetency";
 import ButtonPopUPNewClose from "../../../../components/PopUp/ButtonPopUPNewClose";
 
-export default function EditDeleteDropDown({ id, item }) {
+export default function EditDeleteDropDown({ id, refresh }) {
   // console.log(id);
 
   const [selectedOption, setSelectedOption] = useState(null);
@@ -24,7 +24,7 @@ export default function EditDeleteDropDown({ id, item }) {
 
   const handlePopupClose = () => {
     setSelectedOption(null);
-    setIsDropdownVisible(true);
+    setIsDropdownVisible(false);
   };
 
   // new one delete and Edit
@@ -37,7 +37,7 @@ export default function EditDeleteDropDown({ id, item }) {
     <>
       {isDropdownVisible && (
         <>
-         <div
+          <div
             className="backdrop"
             style={{
               position: "fixed",
@@ -45,81 +45,74 @@ export default function EditDeleteDropDown({ id, item }) {
               left: 0,
               width: "100%",
               height: "100%",
-          
-             
             }}
             onClick={() => setIsDropdownVisible(false)}
           ></div>
-        
-        <ul
-          className="w-[120px] shadow bg-white mr-7"
-          style={{
-            position: "absolute",
-            right: "0rem",
-            marginTop: "110px",
-            marginLeft:"0"
-         
-         
-           
-          }}
-        >
-          <ThreeDotsDropDown
-          
-            Icon={
-              <span>
-                <Icons.EditUserPage />
-              </span>
-            }
-            text={
-              <p
-                style={{
-                  textAlign: "center",
-                  margin: "auto",
-                  fontSize: "14px",
-                  color: "#333",
-                  paddingLeft:"0",
-                  marginLeft:"0"
-                }}
-              >
-                Edit
-              </p>
-            }
-            onClick={() => handleDropdownClick("Edit", id)}
-            className=""
-          />
 
-          <ThreeDotsDropDown
-            Icon={
-              <span>
-                <Icons.DeleteUserPage />
-              </span>
-            }
-            text={
-              <p
-                style={{ textAlign: "center", fontSize: "14px", color: "#333" }}
-              >
-                Delete
-              </p>
-            }
-            // onClick={() => handleDropdownClick("Delete", id)}
-            onClick={() => setPopUPCloseAndOpen(!popUPCloseAndOpen)}
-            className="custom-class-2"
-          />
-         
-        </ul>
+          <ul
+            className="w-[120px] shadow bg-white mr-7"
+            style={{
+              position: "absolute",
+              right: "0rem",
+              marginTop: "110px",
+            }}
+          >
+            <ThreeDotsDropDown
+              Icon={
+                <span>
+                  <Icons.EditUserPage />
+                </span>
+              }
+              text={
+                <p
+                  style={{
+                    textAlign: "center",
+                    margin: "auto",
+                    fontSize: "14px",
+                    color: "#333",
+                  }}
+                >
+                  Edit
+                </p>
+              }
+              onClick={() => handleDropdownClick("Edit", id)}
+              className=""
+            />
+
+            <ThreeDotsDropDown
+              Icon={
+                <span>
+                  <Icons.DeleteUserPage />
+                </span>
+              }
+              text={
+                <p
+                  style={{
+                    textAlign: "center",
+                    fontSize: "14px",
+                    color: "#333",
+                  }}
+                >
+                  Delete
+                </p>
+              }
+              // onClick={() => handleDropdownClick("Delete", id)}
+              onClick={() => setPopUPCloseAndOpen(!popUPCloseAndOpen)}
+              className="custom-class-2"
+            />
+          </ul>
         </>
       )}
 
-{popUPCloseAndOpen && (
-            <ButtonPopUPNewClose id={id} title={"Delete"} isOpen={true} />
-          )}
+      {popUPCloseAndOpen && (
+        <ButtonPopUPNewClose id={id} title={"Delete"} isOpen={true} />
+      )}
 
       {selectedOption === "Edit" && (
         <EditCompetency
-          item={item}
-          selectedItemId={selectedItemId}
           onClose={handlePopupClose}
-          parentId={id}
+          competencyId={id}
+          refresh={refresh}
         />
       )}
     </>
