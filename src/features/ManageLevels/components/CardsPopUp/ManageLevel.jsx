@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import FormPopUp from "../../../../components/PopUp/FormPopUp.jsx";
 import Button from "../../../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
-
+import toast from "react-hot-toast";
 import { handleOpenAddLevelPopUp } from "../../slices/OpenPopupLevel";
 import { editLevel } from "../../slices/EditLevel";
 import { addLevel } from "../../slices/LevelSlice";
@@ -73,6 +73,7 @@ export default function ManageLevel() {
       } else {
         const response = await createLevel(values.levelName).unwrap();
         console.log("Response:", response);
+        toast.success("Add Level successfully!");
       }
       reset();
       handleClosePopup();

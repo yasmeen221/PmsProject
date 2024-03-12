@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
 import {useAddTeamMutation,useEditTeamMutation,useGetTeamsNameQuery,} from "../../slices/apis/apiSlice";
 import { useGetUsersQuery } from "../../../ManageUsers/slices/api/apiSlice";
+import toast from "react-hot-toast";
 function ManageTeamsForm() {
   const [addTeam, { isLoading, isError, error, isSuccess }] =
     useAddTeamMutation(); //to send team to the back end
@@ -85,6 +86,7 @@ function ManageTeamsForm() {
       ? editTeam({ _id: itemToEdit._id, ...data })
       : addTeam(data).then((data) => {
           console.log(data);
+          toast.success("Add Team successfully!");
         });
     console.log(isError);
     console.log(error);
