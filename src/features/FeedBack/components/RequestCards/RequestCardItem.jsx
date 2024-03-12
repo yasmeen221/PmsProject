@@ -17,17 +17,17 @@ export default function RequestCardItem({text,image,name,date,cardId}) {
     })
   }
   return (
-    <div className="flex flex-col  border  p-6 border-borderColor-100 rounded-lg w-[32%] h-[10.365] gap-4 hover:bg-slate-100">
+    <div className="flex flex-col  justify-between border  p-6 border-borderColor-100 rounded-lg w-[32%] h-[10.365] gap-4 hover:bg-slate-100">
       <div className="  h-[2.635] text-sm text-drawerColor-900  font-medium ">
-        <p >{text}</p>
+        <p className="break-words break-all " >{text}</p>
       </div>
       <div className=" flex  justify-between">
         <div className="flex  items-center gap-2  w-[60%]  ">
           <div className="w-[30%]">
             <ImageStyle src={image} />
           </div>
-          <div className="w-[70%] ">
-            <p className="font-md font-medium  text-sm  ">
+          <div className="w-[70%] " >
+            <p className="font-md font-medium  text-sm " >
               {name}
             </p>
             <p className="font-md font-medium text-sm text-deleteColor-400">

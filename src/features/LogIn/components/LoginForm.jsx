@@ -40,8 +40,7 @@ const LoginForm = ({}) => {
   const cookie = new Cookies((null, { path: "/" }));
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
-  const [loginUser, { isLoading, isError, error, isSuccess }] =
-    useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error, isSuccess }] =useLoginUserMutation();
   const [loginError, setLoginError] = useState();
   const {
     register,
@@ -59,8 +58,28 @@ const LoginForm = ({}) => {
   const formSubmit = (values) => {
     const objToSend = {
       username: values.email,
-      password: values.password,
-    };
+      password: values.password
+    }
+
+    loginUser(objToSend).unwrap().then((res) => {
+      if (res.status == "success") {
+        // console.log(res.data);
+        cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
+        cookie.set("refreshToken", res.data.refreshToken)
+        dispatch(changeUserDataValue(res.data.accesToken))
+        navigate("/dashboard/competencies", { replace: true });
+        reset();
+        setLoginError("")
+      }
+    }).catch((err) => {
+      if (err.data.data.message == "username or password is incorrect") {
+        setLoginError("username or password is incorrect")
+      } else if (err.status == 500) {
+        setLoginError("internal server error")
+      } else {
+        setLoginError("some thing went wrong")
+      }
+    })
 
     loginUser(objToSend)
       .unwrap()

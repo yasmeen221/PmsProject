@@ -11,7 +11,7 @@ export const usersApiSlice = createApi({
       if (token) {
         headers.set('authorization', `Bearer ${token}`)
       }
-      console.log(headers.get("authorization"))
+      // console.log(headers.get("authorization"))
       return headers
     },
   }),

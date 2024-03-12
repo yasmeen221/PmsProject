@@ -60,90 +60,70 @@ const AccordingContent = ({
     }
   }, [searchTerm]);
 
-  const triggerCompetencyHeader = (arrayOfItems) => {
-    return arrayOfItems.map((itemTeamsAssigned, index, array) => {
-      return `${itemTeamsAssigned.teamName} Team${index == array.length - 1 ? "" : ","}`;
-    });
+  const renderPosition = (itemm) => {
+    // console.log( itemm.seniorityLevels);
+    const allCompetencyLevelNames = itemm.seniorityLevels.map(
+      //rerurn array of competency levels names
+      (item, index) =>
+        item.level?.levelName ? item.level.levelName : "not found",
+    );
+    const uniqueLevelNames = Array.from(
+      new Set(allCompetencyLevelNames.map((levelName) => levelName)), //use set to remove duplicated level names
+    );
+    return uniqueLevelNames.map((item) => item).join(", ");
   };
-  console.log("sharrrrd", sharedComp);
-  console.log("teeeeammm", stateTeam);
+  const renderCatogry = (itemm) => {
+    return !itemm.category ? "not found" : itemm.category.categoryName;
+  };
+  const renderNoData = () => {
+    return (
+      <div className=" flex flex-row w-full justify-center">
+        <p>no data</p>
+      </div>
+    );
+  };
+
   return (
     <>
       <div>
-        <main className="w-fall ">
+        <main className="w-full ">
           <Accordion>
-            {stateTeam
+            {stateTeam //filter by team
               ? stateTeam?.data?.competencies.map((itemm, index) => (
                   <TeamItem
                     key={itemm._id}
                     title={itemm.name}
                     id={itemm._id}
                     description={itemm.defaultDescription}
-                    skills={
-                      !itemm.category
-                        ? "not found"
-                        : itemm.category.categoryName
-                    }
-                    position={itemm.seniorityLevels
-                      .filter(
-                        (item, index, array) =>
-                          array.findIndex(
-                            (t) => t.level.levelName == item.level.levelName,
-                          ) === index,
-                      )
-                      .map((item) => item.level?.levelName)
-                      .join(", ")}
+                    skills={renderCatogry(itemm)}
+                    position={renderPosition(itemm)}
                   />
                 ))
-              : "teammmmm"}
-            {stateCategory
+              : "no competency in this team"}
+            {stateCategory //filter by catogry
               ? stateCategory?.data?.competencies.map((itemm, index) => (
                   <TeamItem
                     key={itemm._id}
                     title={itemm.name}
                     description={itemm.defaultDescription}
                     id={itemm._id}
-                    skills={
-                      !itemm.category
-                        ? "not found"
-                        : itemm.category.categoryName
-                    }
-                    position={itemm.seniorityLevels
-                      .filter(
-                        (item, index, array) =>
-                          array.findIndex(
-                            (t) => t.level?.levelName == item.level?.levelName,
-                          ) === index,
-                      )
-                      .map((item) => item.level?.levelName)
-                      .join(", ")}
+                    skills={renderCatogry(itemm)}
+                    position={renderPosition(itemm)}
                   />
                 ))
-              : "categgory"}
-            {stateLevel
+              : "no competency in this category"}
+            {stateLevel //filter by level
               ? stateLevel?.data?.competencies.map((itemm, index) => (
                   <TeamItem
                     key={itemm._id}
                     title={itemm.name}
                     id={itemm._id}
                     description={itemm.defaultDescription}
-                    skills={
-                      !itemm.category
-                        ? "not found"
-                        : itemm.category.categoryName
-                    }
-                    position={itemm.seniorityLevels
-                      .filter(
-                        (item, index, array) =>
-                          array.findIndex(
-                            (t) => t.level?.levelName === item.level?.levelName,
-                          ) === index,
-                      )
-                      .map((item) => item.level?.levelName)
-                      .join(", ")}
+                    skills={renderCatogry(itemm)}
+                    position={renderPosition(itemm)}
                   />
                 ))
-              : "leeveel"}
+              : "no competency in this level"}
             {!searchTerm &&
               dropDownTextLevel === "Levels" &&
               dropDownTextTeam === "Teams" &&
@@ -157,47 +137,18 @@ const AccordingContent = ({
                   paragraph="Team Working, Public Speaking, Research"
                 >
                   <hr></hr>
-
-                  {sharedComp &&
-                    sharedComp.length > 0 &&
-                    sharedComp.map((itemm, index) => (
-                      <TeamItem
-                        key={itemm._id}
-                        title={itemm.name}
-                        id={itemm._id}
-                        description={itemm.defaultDescription}
-                        skills={
-                          !itemm.category
-                            ? "not found"
-                            : itemm.category.categoryName
-                        }
-                        position={itemm.seniorityLevels
-                          .filter(
-                            (item, index, array) =>
-                              array.findIndex(
-                                (t) =>
-                                  t.level?.levelName === item.level?.levelName,
-                              ) === index,
-                          )
-                          .map((item) => item.level?.levelName || "notfound")
-                          .join(", ")}
-
-                        // {itemm.seniorityLevels
-                        //   .filter(
-                        //     (item, index, array) =>
-                        //       array.findIndex(
-                        //         (t) =>
-                        //           t.level?.levelName == item.level?.levelName,
-                        //       ) == index,
-                        //   )
-                        //   .map((item) => {
-                        //     item.level?.levelName
-                        //       ? item.level?.levelName
-                        //       : "notfound";
-                        //   })
-                        //   .join(", ")}
-                      />
-                    ))}
+                  {sharedComp && sharedComp.length > 0
+                    ? sharedComp.map((itemm, index) => (
+                        <TeamItem
+                          key={itemm._id}
+                          title={itemm.name}
+                          id={itemm._id}
+                          description={itemm.defaultDescription}
+                          skills={renderCatogry(itemm)}
+                          position={renderPosition(itemm)}
+                        />
+                      ))
+                    : renderNoData()}
                 </AccordionItem>
               )}
             {searchTerm && searchResults && searchResults.data ? (
@@ -207,25 +158,18 @@ const AccordingContent = ({
                   title={itemm.name}
                   id={itemm._id}
                   description={itemm.defaultDescription}
-                  skills={
-                    !itemm.category ? "not found" : itemm.category.categoryName
-                  }
-                  position={itemm.seniorityLevels
-                    .filter(
-                      (item, index, array) =>
-                        array.findIndex(
-                          (t) => t.level?.levelName === item.level?.levelName,
-                        ) === index,
-                    )
-                    .map((item) => item.level?.levelName)
-                    .join(", ")}
+                  skills={renderCatogry(itemm)}
+                  position={renderPosition(itemm)}
                 />
               ))
             ) : isLoading ? (
               <div className="w-full flex flex-row justify-center">
                 <Icons.Loading />
               </div>
-            ) : (
+            ) : !searchTerm &&
+              dropDownTextLevel === "Levels" && //to remove teams accordion when search or filter
+              dropDownTextTeam === "Teams" &&
+              dropDownTextCategory === "Categories" ? (
               teams?.data.teamsNames?.map((item) => {
                 return (
                   <AccordionItem
@@ -238,7 +182,6 @@ const AccordingContent = ({
                     paragraph="Team Working, Public Speaking, Research"
                   >
                     <hr></hr>
-
                     {isLoadingTeamComp ? (
                       <div className="w-full flex flex-row justify-center mt-2">
                         <Icons.Loading />
@@ -250,32 +193,20 @@ const AccordingContent = ({
                           id={itemm._id}
                           title={itemm.name}
                           description={itemm.defaultDescription}
-                          skills={
-                            !itemm.category
-                              ? "not found"
-                              : itemm.category.categoryName
-                          }
-                          position={itemm.seniorityLevels
-                            .filter(
-                              (item, index, array) =>
-                                array.findIndex(
-                                  (t) =>
-                                    t.level?.levelName ===
-                                    item.level?.levelName,
-                                ) === index,
-                            )
-                            .map((item) => item.level?.levelName)
-                            .join(", ")}
+                          skills={renderCatogry(itemm)}
+                          position={renderPosition(itemm)}
                         />
                       ))
                     ) : !isLoadingTeamComp &&
                       !error &&
                       comps?.teamCompetencies?.length === 0 ? (
-                      <p>no data</p>
+                      renderNoData()
                     ) : null}
                   </AccordionItem>
                 );
               })
+            ) : (
+              ""
             )}
           </Accordion>
         </main>

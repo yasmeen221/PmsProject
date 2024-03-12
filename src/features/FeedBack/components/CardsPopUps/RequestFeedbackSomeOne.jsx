@@ -17,10 +17,10 @@ import {
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
 import { jwtDecode } from "jwt-decode";
 import {
-  getCompetenciesForSomeOne,
-  getEmployeesData,
-  postsPraise,
-  recievesVisiability,
+  getUserCompetencies,
+  getAllUsersNames,
+  getFeedbacks,
+  getTeamLeaderId,
 } from "../../slices/Api/feedbackApi";
 
 const schema = yup.object({
@@ -33,11 +33,6 @@ const schema = yup.object({
     .required("competency is required when checkbox is checked"),
 });
 export default function RequestFeedbackSomeOne() {
-  const [visibility, setVisibility] = useState(null);
-  // useEffect(() => {
-  //   const personLogin = jwtDecode(takeToken);
-  //   console.log(personLogin);
-  // }, []);
   const dispatch = useDispatch();
   const [addToogle, setAddToggle] = useState(false);
   const [usersName, setUsersNames] = useState([{}]);
@@ -70,7 +65,7 @@ export default function RequestFeedbackSomeOne() {
     if (!teamId) return;
     const fetchData = async () => {
       try {
-        const data = await getCompetenciesForSomeOne(teamId);
+        const data = await getUserCompetencies(teamId);
         console.log("daddadadad", data);
         if (data) {
           setCompetencies(data);
@@ -96,7 +91,7 @@ export default function RequestFeedbackSomeOne() {
 
   // recevieeerrrrrrrrrrrrrrrrrrrr
   const getAllUsersData = async (selectedUserId) => {
-    const data = await getEmployeesData();
+    const data = await getAllUsersNames();
     const allUsers = data.data.usersNames;
     setUsersNames(allUsers);
     if (selectedUserId) {
@@ -109,7 +104,7 @@ export default function RequestFeedbackSomeOne() {
   };
   // sennnderrrrrrrrrrrrrrrrrrr
   const getAllUsersDataTwo = async (selectedUserIdTwo) => {
-    const data = await getEmployeesData();
+    const data = await getAllUsersNames();
     const allUsers = data.data.usersNames;
     setUsersNames(allUsers);
     if (selectedUserIdTwo) {
@@ -135,12 +130,12 @@ export default function RequestFeedbackSomeOne() {
   //   setVisibility(data.data.teamLeader._id);
   // };
   // const getCompetencies = async () => {
-  //   const dataCompetencies = await getCompetenciesForSomeOne(usersNameID);
+  //   const dataCompetencies = await getUserCompetencies(usersNameID);
   //   setCompetencies(dataCompetencies);
   // };
   // console.log("compenatcy", Competencies);
   async function postPraise(data) {
-    const response = await postsPraise(data);
+    const response = await getFeedbacks(data);
     console.log(response);
   }
   //
@@ -165,7 +160,7 @@ export default function RequestFeedbackSomeOne() {
       feedBackMetaData: [
         {
           name: "competency",
-          value: [value.competency],
+          value: [{ competencyId: value.competency }],
         },
         {
           name: "feedbackAbout",
@@ -214,10 +209,10 @@ export default function RequestFeedbackSomeOne() {
                     AllUsers
                   </option>
                   {usersName &&
-                    usersName.map((item) => {
+                    usersName.map((item, index) => {
                       return (
                         <>
-                          <option key={item._id} value={item._id}>
+                          <option key={index} value={item._id}>
                             {item.username}
                           </option>
                         </>

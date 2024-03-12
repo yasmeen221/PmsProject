@@ -1,8 +1,10 @@
 import image from "../../../assets/images/rocket.png";
 const RangeSlider = ({ index, value, setValue }) => {
+  const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const handleChange = (event) => {
     setValue(index, parseInt(event.target.value));
   };
+
   return (
     <div className="relative m-6 ">
       <div className="flex justify-between mb-6">
@@ -13,10 +15,10 @@ const RangeSlider = ({ index, value, setValue }) => {
       </div>
 
       <div className="flex space-x-11 ">
-        <div className="w-[20%] ">
+        <div className="w-[10%] ">
           <img src={image} alt="rocket" className="" />
         </div>
-        <div className="w-[80%]">
+        <div className="w-[90%]">
           <input
             id="labels-range-input"
             type="range"
@@ -27,16 +29,14 @@ const RangeSlider = ({ index, value, setValue }) => {
             className="w-full  bg-slate-50 rounded-lg appearance-none cursor-pointer  h-5"
           />
           <div className="flex justify-between mt-2">
-            <span className="text-sm text-gray-500 dark:text-gray-400">1</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">2</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">3</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">4</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">5</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">6</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">7</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">8</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">9</span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">10</span>
+            {numbers.map((number) => (
+              <span
+                key={number}
+                className="text-sm text-gray-500 dark:text-gray-400"
+              >
+                {number}
+              </span>
+            ))}
           </div>
         </div>
       </div>

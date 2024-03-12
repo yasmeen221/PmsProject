@@ -23,7 +23,7 @@ const FormPopUp = ({
           <div
             className={`bg-white rounded-buttonRadius p-4 shadow-md  ${className}`} //max-w-[43.563rem]
           >
-            <div className="flex items-center justify-between rounded-t border-b py-4 ">
+            <div className="flex items-center  justify-between rounded-t border-b py-4 ">
               {iconLeft}
               <h3 className="text-captionRegSize md:text-subTitle2Size lg:text-popUpSize font-popUpWeight font-custom text-fontColor-blackBaseColor pr-4 ">
                 {TitlePopUp}

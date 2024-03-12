@@ -17,7 +17,7 @@ export default function ViewDetails({ onClose, id }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [details, setDetails] = useState({});
   useEffect(() => {
-    console.log(id);
+    // console.log(id);
     setPopupOpen(true);
     getDetails(id);
   }, []);
@@ -28,7 +28,7 @@ export default function ViewDetails({ onClose, id }) {
   };
   async function getDetails(id) {
     const { data } = await getDataCompetenciesByID(id);
-    console.log(data.foundedCompetency);
+    // console.log(data.foundedCompetency);
     setDetails(data.foundedCompetency);
   }
   return (
@@ -44,9 +44,9 @@ export default function ViewDetails({ onClose, id }) {
             width: "39.214vw",
             maxHeight: "65vh",
             overflowY: "auto",
-            scrollbarWidth: "none",
+            // scrollbarWidth: "none",
           }}
-          className="px-1 my-4"
+          className="px-1 my-4 "
         >
           <h4 className="text-fontColor-fromAndToColor font-custom text-xs">
             Competency Name
@@ -61,7 +61,7 @@ export default function ViewDetails({ onClose, id }) {
               </p>{" "}
               <p>
                 {details.category == null
-                  ? "communication"
+                  ? "not found"
                   : details.category.categoryName}
               </p>
             </div>
@@ -72,8 +72,8 @@ export default function ViewDetails({ onClose, id }) {
               <p>Shared with everyone</p>
             </div>
           </div>
-          {details.seniorityLevels && (
-            <>
+          {details.seniorityLevels ? (
+            <div className="pe-1">
               {details.seniorityLevels.map((item, i, index) => {
                 return (
                   <>
@@ -81,12 +81,12 @@ export default function ViewDetails({ onClose, id }) {
                       <AccordionItemDropDown
                         className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
                         value={i}
-                        key={index}
                         trigger={
                           item.level?.levelName
-                            ? item.level?.levelName
-                            : "notfounded"
+                            ? item.level.levelName
+                            : "not found"
                         }
+                        key={i}
                       >
                         <hr />
                         <div className="mt-1 text-fontColor-fromAndToColor text-sm font-normal">
@@ -101,24 +101,12 @@ export default function ViewDetails({ onClose, id }) {
                   </>
                 );
               })}
-            </>
+            </div>
+          ) : (
+            <div className="flex items-center mt-5 justify-center">
+              <Icons.Loading />
+            </div>
           )}
-
-          {/* <AccordionDropDown>
-            <AccordionItemDropDown
-              className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
-              value="1"
-              trigger="Junior"
-            >
-              <hr />
-              <div className="mt-1 text-fontColor-fromAndToColor text-sm font-normal">
-                <p className="">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Debitis, recusandae.
-                </p>
-              </div>
-            </AccordionItemDropDown>
-          </AccordionDropDown> */}
         </div>
         <div className="w-full inline-flex justify-end px-1 ">
           <Button

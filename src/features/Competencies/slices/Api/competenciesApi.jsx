@@ -15,6 +15,7 @@ export const getAllTeamCompetencies = async (competencyId) => {
     const request = await axiosInstance.get(
       `/competency/teams-competencies/${competencyId}`,
     );
+    // console.log(request.data)
     return request.data;
   } catch (error) {
     console.log("error from get", error);

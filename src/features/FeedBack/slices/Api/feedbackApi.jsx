@@ -11,7 +11,7 @@ export const getTeamLeaderId = async (userId) => {
 export const getAllUsersNames = async () => {
   try {
     const request = await axiosInstance.get(`/user/usernames`);
-    return request;
+    return request.data;
   } catch (error) {
     console.log("error from get", error);
   }
@@ -38,7 +38,7 @@ export const getFeedbacks = async () => {
 export const deleteFeedback = async (id) => {
   try {
     const request = await axiosInstance.get(`/feedback/delete/${id}`);
-    return request;
+    return request.data;
   } catch (err) {
     console.log(err);
   }
@@ -48,44 +48,8 @@ export const deleteFeedback = async (id) => {
 export const acceptFeedback = async (id) => {
   try {
     const request = await axiosInstance.get(`/feedback/accept/${id}`);
-    return request;
+    return request.data;
   } catch (err) {
     console.log(err);
-  }
-};
-/////////////Praise Functions Don't Touch 😕/////////
-export const getEmployeesData = async () => {
-  try {
-    const { data } = await axiosInstance.get(`/user/usernames`);
-    return data;
-  } catch (error) {
-    console.log("error from get", error);
-  }
-};
-export const recievesVisiability = async (id) => {
-  try {
-    const { data } = await axiosInstance.get(`/user/team-leader/${id}`);
-    return data;
-  } catch (error) {
-    console.log("error from get", error);
-  }
-};
-export const postsPraise = async (data) => {
-  try {
-    const request = await axiosInstance.post(`/feedback`, data);
-    return request;
-  } catch (error) {
-    console.log("error from create", error);
-  }
-};
-//////////////////////end Praise////////////////
-export const getCompetenciesForSomeOne = async (id) => {
-  try {
-    const request = await axiosInstance.get(
-      `competency/teams-competencies/${id}`,
-    );
-    return request.data;
-  } catch (error) {
-    console.log("error from get Competencies", error);
   }
 };

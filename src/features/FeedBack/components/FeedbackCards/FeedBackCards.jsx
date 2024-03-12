@@ -13,11 +13,11 @@ export default function FeedBackCards() {
     feedbacks.length > 0
       ? feedbacks.filter(
           (item, index) =>
-            item.feedbackMainData.feedbackType == "normal" ||
-            item.feedbackMainData.feedbackType == "praise",
+            item.feedbackMainData?.feedbackType == "normal" ||
+            item.feedbackMainData?.feedbackType == "praise",
         )
       : [];
-  console.log(filterNormalFeedback);
+  // console.log(filterNormalFeedback);
   return (
     <>
       <header className="font-bold text-lg w-[18.5rem] h-[1.668rem] my-6">
@@ -36,12 +36,12 @@ export default function FeedBackCards() {
               key={item.feedbackMainData._id}
               text={item.feedbackMainData.message}
               label={
-                item.feedbackMainData.feedbackType == "normal"
+                item.feedbackMainData?.feedbackType == "normal"
                   ? "feedback"
                   : "praise"
               }
-              fromName={`${item?.feedbackMainData?.userIdFrom?.firstName} ${item.feedbackMainData?.userIdFrom?.lastName}`}
-              toName={`${item?.feedbackMainData?.userIdTo?.firstName} ${item?.feedbackMainData?.userIdTo?.lastName}`}
+              fromName={`${item?.feedbackMainData?.userIdFrom?.firstName ? item.feedbackMainData.userIdFrom.firstName : "not found"} ${item.feedbackMainData?.userIdFrom?.lastName ? item.feedbackMainData.userIdFrom.lastName : ""}`}
+              toName={`${item?.feedbackMainData?.userIdTo?.firstName ? item.feedbackMainData.userIdTo.firstName : "not found"} ${item?.feedbackMainData?.userIdTo?.lastName ? item.feedbackMainData.userIdTo.lastName : ""}`}
               date={item.feedbackMainData.createdAt.substring(0, 10)} //wait back
             />
           ))
