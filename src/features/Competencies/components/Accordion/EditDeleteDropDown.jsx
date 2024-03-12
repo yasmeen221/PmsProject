@@ -36,15 +36,35 @@ export default function EditDeleteDropDown({ id, item }) {
   return (
     <>
       {isDropdownVisible && (
+        <>
+         <div
+            className="backdrop"
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+          
+             
+            }}
+            onClick={() => setIsDropdownVisible(false)}
+          ></div>
+        
         <ul
           className="w-[120px] shadow bg-white mr-7"
           style={{
             position: "absolute",
             right: "0rem",
             marginTop: "110px",
+            marginLeft:"0"
+         
+         
+           
           }}
         >
           <ThreeDotsDropDown
+          
             Icon={
               <span>
                 <Icons.EditUserPage />
@@ -57,6 +77,8 @@ export default function EditDeleteDropDown({ id, item }) {
                   margin: "auto",
                   fontSize: "14px",
                   color: "#333",
+                  paddingLeft:"0",
+                  marginLeft:"0"
                 }}
               >
                 Edit
@@ -83,11 +105,14 @@ export default function EditDeleteDropDown({ id, item }) {
             onClick={() => setPopUPCloseAndOpen(!popUPCloseAndOpen)}
             className="custom-class-2"
           />
-          {popUPCloseAndOpen && (
+         
+        </ul>
+        </>
+      )}
+
+{popUPCloseAndOpen && (
             <ButtonPopUPNewClose id={id} title={"Delete"} isOpen={true} />
           )}
-        </ul>
-      )}
 
       {selectedOption === "Edit" && (
         <EditCompetency

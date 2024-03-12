@@ -5,115 +5,152 @@ import Button from "../../../../components/Button/Button";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
 import Select from "react-select";
-import {
-  updateData,
-  getAllTeamCompetencies,
-} from "../../slices/Api/competenciesApi";
+import { updateData, getAllTeamCompetencies, getDataCompetenciesByID } from "../../slices/Api/competenciesApi";
 import { getAllData } from "../../slices/Api/catgoryapi";
 import { getLevelsData } from "../../slices/Api/levelsApi";
 import axiosInstance from "../../../../components/GeneralApi/generalApi";
-const EditCompetency = ({ onClose, parentId, item }) => {
-  const [inputsData, setInputsData] = useState(item);
-  const [category, setCategory] = useState(item);
-  let [levels, setLevels] = useState();
-  let [team, setTeam] = useState();
+const EditCompetency = ({selectedItemId,onClose,parentId}) => {
+  const [inputsData, setInputsData] = useState();
+  const [category,setCategory]=useState();
+  let [levels,setLevels]=useState()
+  let [team,setTeam]=useState()
   const [isPopupOpen, setPopupOpen] = useState(true);
   const [addToggle, setAddToggle] = useState(false);
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [allTeams, setAllTeams] = useState([]);
 
+  async function getItem(param) {
+    const data  = await getDataCompetenciesByID(param);
+    setInputsData(data.data.foundedCompetency);
+    setCategory(data.data.foundedCompetency.category)
+    }
+    useEffect(()=>{
+      getItem(selectedItemId)
+    },[])
   //  get All Teams
-  useEffect(() => {
-    const getAllTeam = async () => {
-      try {
-        let response = await axiosInstance.get("/teams");
-        setAllTeams(response.data);
-      } catch (e) {
+  useEffect(()=>{
+    const getAllTeam=async()=>{
+      try{
+        let response=await axiosInstance.get("/teams");
+        setAllTeams(response.data)
+      }catch(e){
         console.log(e);
       }
-    };
+    } 
     getAllTeam();
-  }, []);
+  },[])
 
-  const handleTeams = (param) => {
-    param.map((item) => setSelectedTeams(item.value));
-  };
+
+const handleTeams=(param)=>{
+  param.map((item)=>
+  setSelectedTeams(item.value)
+  )
+}
 
   const handleClosePopUp = () => {
     setPopupOpen(false);
     onClose();
   };
   // get category and levels data
-  useEffect(() => {
-    getAllData().then((res) => setCategory(res.data));
-    getLevelsData().then((res) => setLevels(res.data));
-  }, []);
-  let categoryData, teamsOptions, teamsData, levelsData, levelOptions;
-  try {
-    if (category.categories) {
-      categoryData = category.categories;
-    }
-    if (allTeams.data) {
-      teamsData = allTeams.data;
-      teamsOptions = teamsData.teams.map((item) => ({
-        value: item._id,
-        label: item.teamName,
-      }));
-    }
-    if (levels.levels) {
-      levelsData = levels.levels;
-      levelOptions = levelsData.map((item) => ({
-        value: item._id,
-        label: item.levelName,
-      }));
-    }
-  } catch (e) {}
+  useEffect(()=>{
+    getAllData().then((res)=>
+      setCategory(res.data)
+  )
+  getLevelsData().then((res)=>
+  setLevels(res.data)
+  )
+},[]);
+let categoryData,teamsOptions,teamsData,levelsData,levelOptions;
+try{
+  if(category.categories){
+    categoryData=category.categories;
+  }
+  if(allTeams.data){
+    teamsData=allTeams.data;
+    teamsOptions = teamsData.teams.map(item => ({
+      value: item._id,
+      label: item.teamName
+    }))
+}
+  if(levels.levels){
+    levelsData=levels.levels;
+    levelOptions = levelsData.map(item => ({
+      value: item._id,
+      label: item.levelName
+    }))
+  }
+}catch(e){}
+  
 
+  let [nameComp,setNameComp]=useState();
+  let [categoryId,setCategoryId]=useState();
+  let [descInput,setDescInput]=useState();
+  let [teamInput,setTeamInput]=useState();
+  let [levelsInput,setlevelsInput]=useState();
+  useEffect(()=>{
+    try{
+      if(inputsData.name){
+        setNameComp(inputsData.name)
+      }
+      if(inputsData.category._id){
+        setCategoryId(inputsData.category._id)
+      }
+      if(inputsData.defaultDescription){
+        setDescInput(inputsData.defaultDescription)
+      }
+      if(inputsData.teamsAssigned){
+        setTeamInput(inputsData.teamsAssigned)
+      }
+      if(inputsData.teamsAssigned){
+        setlevelsInput(inputsData.teamsAssigned)
+      }
+    }catch(e){}
+  })
+  
   // handle Name
-  let [nameComp, setNameComp] = useState(inputsData?.name);
-  const handelName = (e) => {
-    setNameComp(e.target.value);
-  };
+  const handelName=(e)=>{
+    setNameComp(e.target.value)
+  }
+  console.log(categoryData,"categoryId");
+// handle category
+const handleCategory=(e)=>{
+  setCategoryId(e.target.value)
+}
+// handle desription
+const handleDesc=(e)=>{
+  setDescInput(e.target.value)
+}
 
-  // handle category
-  let [categoryId, setCategoryId] = useState(inputsData?.category._id);
-  const handleCategory = (e) => {
-    setCategoryId(e.target.value);
-  };
-  // handle desription
-  let [descInput, setDescInput] = useState(inputsData?.defaultDescription);
-  const handleDesc = (e) => {
-    setDescInput(e.target.value);
-  };
-
-  // handle team
-  let [teamInput, setTeamInput] = useState(inputsData?.teamsAssigned);
-  const handleTeam = (e) => {
-    setTeamInput(e.target.value);
-  };
-  // handle levels
-  let [levelsInput, setlevelsInput] = useState(inputsData?.teamsAssigned);
-  const handlelevels = (e) => {
-    setlevelsInput(e.target.value);
-  };
+// handle team
+const handleTeam=(e)=>{
+  setTeamInput(e.target.value)
+}
+// handle levels
+const handlelevels=(e)=>{
+  setlevelsInput(e.target.value)
+}
   // send data to api
-  const sendData = () => {
-    let updatedData = {
-      category: categoryId,
-      defaultDescription: descInput,
-      name: nameComp,
-      seniorityLevels: [
-        { level: "65ee73aa3c1df4660fd801d6", description: "fresh" },
-        { level: "65ee73aa3c1df4660fd801d7", description: "senior" },
-      ],
+  const sendData=()=>{
+    let updatedData={
+      "category": categoryId,
+        "defaultDescription": descInput,
+        "name": nameComp,
+        "seniorityLevels": [
+          {"level": "65ee73aa3c1df4660fd801d6", "description": "fresh"},
+          {"level": "65ee73aa3c1df4660fd801d7", "description": "senior"},
+        ],
+        
+        "teamsAssigned": [
+          selectedTeams
+        ]
+      }
 
-      teamsAssigned: [selectedTeams],
-    };
 
-    updateData(item._id, updatedData);
-  };
-
+    updateData(inputsData._id,updatedData)
+    
+    }
+    
   return (
     <>
       <FormPopUp
@@ -131,6 +168,7 @@ const EditCompetency = ({ onClose, parentId, item }) => {
           }}
           className="px-1"
         >
+
           {/* Name Input */}
           <div className="my-2  w-full">
             <Header text="Name" htmlFor="name" />
@@ -148,29 +186,24 @@ const EditCompetency = ({ onClose, parentId, item }) => {
             </div>
           </div>
 
-          {/* Category Select */}
+
+            {/* Category Select */}
           <div className="my-2  w-full">
             <Header text="Category" htmlFor="category" />
             <div className="relative mt-2">
-              <select
-                onChange={handleCategory}
-                className={`block w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor rounded-buttonRadius shadow-sm focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${category === "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor h-[61px]"}`}
-                value={categoryId}
-              >
-                <option value={0}>Choose Category</option>
-                {categoryData
-                  ? categoryData.map((item) => (
-                      <option key={item._id} value={item._id}>
-                        {item.categoryName}
-                      </option>
-                    ))
-                  : null}
-              </select>
+            <select onChange={handleCategory} className={`block w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor rounded-buttonRadius shadow-sm focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${category === "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor h-[61px]"}`} value={categoryId}>
+              <option value={0}>Choose Category</option>
+              {categoryData?(categoryData.map((item)=><option key={item._id} value={item._id}>{item.categoryName}</option>)):null}
+            </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                <Icons.ArrowDownBlack />
+                {/* <Icons.ArrowDownBlack /> */}
               </div>
             </div>
           </div>
+
+
+
+
 
           {/* Description Input */}
           <div className="my-2  w-full">
@@ -188,6 +221,9 @@ const EditCompetency = ({ onClose, parentId, item }) => {
               />
             </div>
           </div>
+
+
+
 
           <div className="w-full inline-flex justify-between items-center my-2">
             <div>
@@ -219,7 +255,7 @@ const EditCompetency = ({ onClose, parentId, item }) => {
                 isMulti
                 closeMenuOnSelect={false}
                 value={selectedTeams.label}
-                onChange={() => handleTeams(teamsOptions)}
+                onChange={()=>handleTeams(teamsOptions)}
               />
             </div>
           )}
@@ -231,7 +267,10 @@ const EditCompetency = ({ onClose, parentId, item }) => {
               path level.
             </p>
             <div className="relative mt-2">
-              <Select
+
+
+
+            <Select
                 options={levelOptions}
                 isMulti
                 closeMenuOnSelect={false}
@@ -239,7 +278,7 @@ const EditCompetency = ({ onClose, parentId, item }) => {
                 onChange={(selectedOptions) =>
                   setSelectedLevels(selectedOptions)
                 }
-              />
+              /> 
             </div>
           </div>
           {selectedLevels.map((level, index) => (
@@ -258,7 +297,8 @@ const EditCompetency = ({ onClose, parentId, item }) => {
                   </div>
                 </div>
 
-                {/* ============================== */}
+
+{/* ============================== */}
                 <div className="mt-2">
                   <textarea
                     rows={4}
@@ -268,7 +308,9 @@ const EditCompetency = ({ onClose, parentId, item }) => {
                     // Add your onChange handler for level descriptions
                   />
                 </div>
-                {/* ============================== */}
+{/* ============================== */}
+
+
               </div>
             </div>
           ))}
@@ -287,3 +329,4 @@ const EditCompetency = ({ onClose, parentId, item }) => {
 };
 
 export default EditCompetency;
+
