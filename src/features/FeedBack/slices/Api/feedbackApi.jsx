@@ -1,23 +1,21 @@
 import axiosInstance from "../../../../components/GeneralApi/generalApi";
-// to get all data
-// export const getAllData = async () => {
-//   try {
-//     const request = await axiosInstance.get(`...end point..`);
-//     return request.data;
-//   } catch (error) {
-//     console.log("error from get", error);
-//   }
-// };
+export const getTeamLeaderId = async (userId) => {
+  try {
+    const request = await axiosInstance.get(`user/team-leader/${userId}`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};
 
-// //to insert new data
-// export const createData = async (newData) => {
-//   try {
-//     const request = await axiosInstance.post(`....end point..`, { newData });
-//     return request.data;
-//   } catch (error) {
-//     console.log("error from create", error);
-//   }
-// };
+export const getAllUsersNames = async () => {
+  try {
+    const request = await axiosInstance.get(`/user/usernames`);
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};
 
 // // to  update existing data
 // export const updateData = async (id, updatedData) => {
@@ -42,7 +40,17 @@ import axiosInstance from "../../../../components/GeneralApi/generalApi";
 //   }
 // };
 
-export const getFeedAndPraise=async(page)=>{
+export const getUserCompetencies = async (teamId) => {
+  try {
+    const request = await axiosInstance.get(
+      `/competency/teams-competencies/${teamId}`,
+    );
+    return request.data;
+  } catch (error) {
+    console.log("error from get", error);
+  }
+};
+export const getFeedbacks = async () => {
   try {
     const request = await axiosInstance.get(`/feedback?page=${page}&type=normal&type=praise`);
     return request;
@@ -53,6 +61,14 @@ export const getFeedAndPraise=async(page)=>{
 export const getRequestsFeedback=async(page,userIdFrom)=>{
   try {
     const request = await axiosInstance.get(`/feedback?page=${page}&type=requested&userIdFrom=${userIdFrom}`);
+    return request;
+  } catch (err) {
+    console.log(err);
+  }
+}
+export const getFeedAndPraise=async(page)=>{
+  try {
+    const request = await axiosInstance.get(`/feedback?page=${page}&type=normal&type=praise`);
     return request;
   } catch (err) {
     console.log(err);
@@ -70,7 +86,7 @@ export const getPending=async(page,userIdTo)=>{
 export const deleteFeedback = async (id) => {
   try {
     const request = await axiosInstance.get(`/feedback/delete/${id}`);
-    return request;
+    return request.data;
   } catch (err) {
     console.log(err);
   }
@@ -80,44 +96,8 @@ export const deleteFeedback = async (id) => {
 export const acceptFeedback = async (id) => {
   try {
     const request = await axiosInstance.get(`/feedback/accept/${id}`);
-    return request;
+    return request.data;
   } catch (err) {
     console.log(err);
-  }
-};
-/////////////Praise Functions Don't Touch 😕/////////
-export const getEmployeesData = async () => {
-  try {
-    const { data } = await axiosInstance.get(`/user/usernames`);
-    return data;
-  } catch (error) {
-    console.log("error from get", error);
-  }
-};
-export const recievesVisiability = async (id) => {
-  try {
-    const { data } = await axiosInstance.get(`/user/team-leader/${id}`);
-    return data;
-  } catch (error) {
-    console.log("error from get", error);
-  }
-};
-export const postsPraise = async (data) => {
-  try {
-    const request = await axiosInstance.post(`/feedback`, data);
-    return request;
-  } catch (error) {
-    console.log("error from create", error);
-  }
-};
-//////////////////////end Praise////////////////
-export const getCompetenciesForSomeOne = async (id) => {
-  try {
-    const request = await axiosInstance.get(
-      `competency/teams-competencies/${id}`,
-    );
-    return request.data;
-  } catch (error) {
-    console.log("error from get Competencies", error);
   }
 };

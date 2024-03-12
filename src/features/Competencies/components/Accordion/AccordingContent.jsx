@@ -4,7 +4,6 @@ import Icons from "../../../../themes/icons";
 import Accordion, { AccordionItem } from "./Accordion";
 import {
   getAllDataCompetencies,
-  getAllTeamCompetencies,
   searchCompetencies,
 } from "../../slices/Api/competenciesApi";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
@@ -61,80 +60,35 @@ const AccordingContent = ({
   }, [searchTerm]);
 
   const renderPosition = (itemm) => {
-    // console.log(itemm.seniorityLevels)
-       const allCompetencyLevelNames=  itemm.seniorityLevels.map(  //rerurn array of competency levels names
-        (item, index) => 
-          item.level?.levelName?
-            item.level.levelName  :"not found"
-      )
-      const uniqueLevelNames =  Array.from(
-        new Set(allCompetencyLevelNames.map((levelName) => levelName))  //use set to remove duplicated level names
-      );
-     return  uniqueLevelNames.map((item)=>item).join(", ")
-       
-  }
+    // console.log( itemm.seniorityLevels);
+    const allCompetencyLevelNames = itemm.seniorityLevels.map(
+      //rerurn array of competency levels names
+      (item, index) =>
+        item.level?.levelName ? item.level.levelName : "not found",
+    );
+    const uniqueLevelNames = Array.from(
+      new Set(allCompetencyLevelNames.map((levelName) => levelName)), //use set to remove duplicated level names
+    );
+    return uniqueLevelNames.map((item) => item).join(", ");
+  };
   const renderCatogry = (itemm) => {
-    return (!itemm.category
-      ? "not found"
-      : itemm.category.categoryName)
-  }
-  const renderNoData=()=>{
-    return <div className=" flex flex-row w-full justify-center"><p>no data</p></div>
-  }
+    return !itemm.category ? "not found" : itemm.category.categoryName;
+  };
+  const renderNoData = () => {
+    return (
+      <div className=" flex flex-row w-full justify-center">
+        <p>no data</p>
+      </div>
+    );
+  };
 
   return (
     <>
       <div>
         <main className="w-full ">
           <Accordion>
-            {stateTeam   //filter by team
+            {stateTeam //filter by team
               ? stateTeam?.data?.competencies.map((itemm, index) => (
-                <TeamItem
-                  key={itemm._id}
-                  title={itemm.name}
-                  id={itemm._id}
-                  description={itemm.defaultDescription}
-                  skills={renderCatogry(itemm)}
-                  position={renderPosition(itemm)}
-                />
-              ))
-              : "no competency in this team"}
-            {stateCategory  //filter by catogry
-              ? stateCategory?.data?.competencies.map((itemm, index) => (
-                <TeamItem
-                  key={itemm._id}
-                  title={itemm.name}
-                  description={itemm.defaultDescription}
-                  id={itemm._id}
-                  skills={renderCatogry(itemm)}
-                  position={renderPosition(itemm)}
-                />
-              ))
-              : "no competency in this category"}
-            {stateLevel  //filter by level
-              ? stateLevel?.data?.competencies.map((itemm, index) => (
-                <TeamItem
-                  key={itemm._id}
-                  title={itemm.name}
-                  id={itemm._id}
-                  description={itemm.defaultDescription}
-                  skills={renderCatogry(itemm)}
-                  position={renderPosition(itemm)}
-                />
-              ))
-              : "no competency in this level"}
-            {!searchTerm && dropDownTextLevel === "Levels" &&
-              dropDownTextTeam === "Teams" &&
-              dropDownTextCategory === "Categories" && <AccordionItem
-                value="shared"
-                className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
-                trigger={`Organization Shared Competencies`}
-                backgroundColor="bg-buttonColor-baseColor"
-                content={<Icons.Organization />}
-                paragraph="Team Working, Public Speaking, Research"
-              >
-                <hr></hr>
-                {(sharedComp && sharedComp.length > 0) ?sharedComp.map((itemm, index) => (
                   <TeamItem
                     key={itemm._id}
                     title={itemm.name}
@@ -143,8 +97,59 @@ const AccordingContent = ({
                     skills={renderCatogry(itemm)}
                     position={renderPosition(itemm)}
                   />
-                )):renderNoData()}
-              </AccordionItem>}
+                ))
+              : "no competency in this team"}
+            {stateCategory //filter by catogry
+              ? stateCategory?.data?.competencies.map((itemm, index) => (
+                  <TeamItem
+                    key={itemm._id}
+                    title={itemm.name}
+                    description={itemm.defaultDescription}
+                    id={itemm._id}
+                    skills={renderCatogry(itemm)}
+                    position={renderPosition(itemm)}
+                  />
+                ))
+              : "no competency in this category"}
+            {stateLevel //filter by level
+              ? stateLevel?.data?.competencies.map((itemm, index) => (
+                  <TeamItem
+                    key={itemm._id}
+                    title={itemm.name}
+                    id={itemm._id}
+                    description={itemm.defaultDescription}
+                    skills={renderCatogry(itemm)}
+                    position={renderPosition(itemm)}
+                  />
+                ))
+              : "no competency in this level"}
+            {!searchTerm &&
+              dropDownTextLevel === "Levels" &&
+              dropDownTextTeam === "Teams" &&
+              dropDownTextCategory === "Categories" && (
+                <AccordionItem
+                  value="shared"
+                  className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
+                  trigger={`Organization Shared Competencies`}
+                  backgroundColor="bg-buttonColor-baseColor"
+                  content={<Icons.Organization />}
+                  paragraph="Team Working, Public Speaking, Research"
+                >
+                  <hr></hr>
+                  {sharedComp && sharedComp.length > 0
+                    ? sharedComp.map((itemm, index) => (
+                        <TeamItem
+                          key={itemm._id}
+                          title={itemm.name}
+                          id={itemm._id}
+                          description={itemm.defaultDescription}
+                          skills={renderCatogry(itemm)}
+                          position={renderPosition(itemm)}
+                        />
+                      ))
+                    : renderNoData()}
+                </AccordionItem>
+              )}
             {searchTerm && searchResults && searchResults.data ? (
               searchResults?.data.competencies.map((itemm, index) => (
                 <TeamItem
@@ -153,25 +158,33 @@ const AccordingContent = ({
                   id={itemm._id}
                   description={itemm.defaultDescription}
                   skills={renderCatogry(itemm)}
-                  position={renderPosition(itemm)} />
+                  position={renderPosition(itemm)}
+                />
               ))
-            ) : isLoading ? <div className="w-full flex flex-row justify-center"><Icons.Loading /></div> :!searchTerm && dropDownTextLevel === "Levels" &&  //to remove teams accordion when search or filter
-            dropDownTextTeam === "Teams" &&
-            dropDownTextCategory === "Categories" ? (teams?.data.teamsNames?.map((item) => {
-              return (
-                <AccordionItem
-                  className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
-                  value={item._id}
-                  key={item._id}
-                  trigger={`${item.teamName} Team`}
-                  backgroundColor="bg-buttonColor-baseColor"
-                  content={<Icons.Organization />}
-                  paragraph="Team Working, Public Speaking, Research"
-                >
-                  <hr></hr>
-                  {
-                    isLoadingTeamComp ? (
-                      <div className="w-full flex flex-row justify-center mt-2"><Icons.Loading /></div>
+            ) : isLoading ? (
+              <div className="w-full flex flex-row justify-center">
+                <Icons.Loading />
+              </div>
+            ) : !searchTerm &&
+              dropDownTextLevel === "Levels" && //to remove teams accordion when search or filter
+              dropDownTextTeam === "Teams" &&
+              dropDownTextCategory === "Categories" ? (
+              teams?.data.teamsNames?.map((item) => {
+                return (
+                  <AccordionItem
+                    className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
+                    value={item._id}
+                    key={item._id}
+                    trigger={`${item.teamName} Team`}
+                    backgroundColor="bg-buttonColor-baseColor"
+                    content={<Icons.Organization />}
+                    paragraph="Team Working, Public Speaking, Research"
+                  >
+                    <hr></hr>
+                    {isLoadingTeamComp ? (
+                      <div className="w-full flex flex-row justify-center mt-2">
+                        <Icons.Loading />
+                      </div>
                     ) : !error && comps?.teamCompetencies?.length > 0 ? (
                       comps.teamCompetencies.map((itemm) => (
                         <TeamItem
@@ -180,17 +193,20 @@ const AccordingContent = ({
                           title={itemm.name}
                           description={itemm.defaultDescription}
                           skills={renderCatogry(itemm)}
-                          position={renderPosition(itemm)
-                          }
+                          position={renderPosition(itemm)}
                         />
                       ))
-                    ) : !isLoadingTeamComp && !error && comps?.teamCompetencies?.length === 0 ? (
+                    ) : !isLoadingTeamComp &&
+                      !error &&
+                      comps?.teamCompetencies?.length === 0 ? (
                       renderNoData()
-                    ) : null
-                  }
-                </AccordionItem>
-              );
-            })):""}
+                    ) : null}
+                  </AccordionItem>
+                );
+              })
+            ) : (
+              ""
+            )}
           </Accordion>
         </main>
       </div>

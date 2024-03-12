@@ -33,7 +33,7 @@ export default function FeedBackCards() {
               key={item.feedbackMainData._id}
               text={item.feedbackMainData.message}
               label={
-                item.feedbackMainData.feedbackType == "normal"
+                item.feedbackMainData?.feedbackType == "normal"
                   ? "feedback"
                   : "praise"
               }

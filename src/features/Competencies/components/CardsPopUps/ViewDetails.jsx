@@ -38,7 +38,6 @@ export default function ViewDetails({ onClose, id }) {
         ClosePop={handleClosePopup}
         TitlePopUp="Details"
         className=""
-
       >
         <div
           style={{
@@ -82,9 +81,12 @@ export default function ViewDetails({ onClose, id }) {
                       <AccordionItemDropDown
                         className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
                         value={i}
-                        trigger={item.level?.levelName?item.level.levelName:"not found"}
+                        trigger={
+                          item.level?.levelName
+                            ? item.level.levelName
+                            : "not found"
+                        }
                         key={i}
-                        
                       >
                         <hr />
                         <div className="mt-1 text-fontColor-fromAndToColor text-sm font-normal">
@@ -100,10 +102,11 @@ export default function ViewDetails({ onClose, id }) {
                 );
               })}
             </div>
-          ):<div className="flex items-center mt-5 justify-center">
-          <Icons.Loading />
-        </div>}
-
+          ) : (
+            <div className="flex items-center mt-5 justify-center">
+              <Icons.Loading />
+            </div>
+          )}
         </div>
         <div className="w-full inline-flex justify-end px-1 ">
           <Button

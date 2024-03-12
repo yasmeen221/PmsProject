@@ -6,8 +6,8 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup"
-import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 export default function GiveFeedback() {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const handleOpenPopup = () => {
@@ -21,11 +21,11 @@ export default function GiveFeedback() {
   };
 
   const schema = yup
-  .object({
-    firstName: yup.string().required(),
-    age: yup.number().positive().integer().required(),
-  })
-  .required()
+    .object({
+      firstName: yup.string().required(),
+      age: yup.number().positive().integer().required(),
+    })
+    .required();
 
   const {
     register,
@@ -33,10 +33,10 @@ export default function GiveFeedback() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
-  })
+  });
 
-  const onSubmit = (data) => console.log(data)
-  
+  const onSubmit = (data) => console.log(data);
+
   return (
     <>
       <FormPopUp
@@ -45,7 +45,8 @@ export default function GiveFeedback() {
         TitlePopUp={"Give FeedBack for"}
         iconLeft={<Icons.ArrowLeftPop />}
       >
-        <form onSubmit={handleSubmit(onSubmit)} 
+        <form
+          onSubmit={handleSubmit(onSubmit)}
           className="w-[35vw] max-h-[65vh] pb-4 overflow-y-auto"
           style={{ scrollbarWidth: "none" }}
         >

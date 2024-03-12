@@ -15,9 +15,9 @@ import {
   tooglePraisePopUp,
 } from "../../slices/openPopUpSlice";
 import {
-  getEmployeesData,
-  postsPraise,
-  recievesVisiability,
+  getAllUsersNames,
+  getFeedbacks,
+  getTeamLeaderId,
 } from "../../slices/Api/feedbackApi";
 
 const schema = yup.object({
@@ -75,18 +75,18 @@ export default function PraiseFeedback() {
     dispatch(changeDropDownValue(""));
   };
   async function getEmployeeData() {
-    const data = await getEmployeesData();
+    const data = await getAllUsersNames();
     console.log("employeeeee", data.data.usersNames);
     setEmployee(data.data.usersNames);
   }
 
   async function recieveVisiability(id) {
     setEmployeeID(id);
-    const data = await recievesVisiability(id);
+    const data = await getTeamLeaderId(id);
     setManager(data.data.teamLeader._id);
   }
   async function postPraise(data) {
-    const response = await postsPraise(data);
+    const response = await getFeedbacks(data);
     console.log(response);
   }
   return (
