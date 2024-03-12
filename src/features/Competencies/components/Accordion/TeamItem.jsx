@@ -6,11 +6,21 @@ import Icons from "../../../../themes/icons";
 // import { toggleCompetencyDetails } from "../../slices/openCompentencyPopUp";
 import ViewDetails from "../CardsPopUps/ViewDetails";
 import { useSelector } from "react-redux";
+import EditDeleteDropDown from "./EditDeleteDropDown";
 const TeamItem = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { title, description, skills, position, id } = props;
+  const { title, description, skills, position, id, item } = props;
   const [isHovered, setIsHovered] = useState(false);
   const [details, setDetails] = useState(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  // console.log("{{{{{{{{{{{{{{{{{{{{TeamItem}}}}}}}}}}}}}}}}}}}}", { id });
+  const handleThreeDotsClick = () => {
+    // Toggle the dropdown visibility
+    setIsDropdownVisible(!isDropdownVisible);
+  };
+  const closeDropdown = () => {
+    setIsDropdownVisible(false);
+  };
   // const openPopUp = useSelector(
   //   (state) => state.openPopUpSlice.feedbackDetailsOpenPopUp,
   // );
@@ -59,9 +69,12 @@ const TeamItem = (props) => {
           {position}
         </p>
       </div>
-      <div>
+      <div onClick={handleThreeDotsClick}>
         <Icons.ThreeDotsIcon />
       </div>
+      {isDropdownVisible && (
+        <EditDeleteDropDown id={id} item={item} closeDropdown={closeDropdown} />
+      )}
       {details && (
         <ViewDetails
           id={id}

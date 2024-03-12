@@ -4,7 +4,6 @@ import Icons from "../../../../themes/icons";
 import Accordion, { AccordionItem } from "./Accordion";
 import {
   getAllDataCompetencies,
-  getAllTeamCompetencies,
   searchCompetencies,
 } from "../../slices/Api/competenciesApi";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
