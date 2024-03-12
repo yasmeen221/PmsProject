@@ -29,7 +29,7 @@ export const getUserCompetencies = async (teamId) => {
 };
 export const getFeedbacks = async () => {
   try {
-    const request = await axiosInstance.get(`/feedback`);
+    const request = await axiosInstance.get(`/feedback/?page=4&pageSize=5&type=normal`);
     return request;
   } catch (err) {
     console.log(err);

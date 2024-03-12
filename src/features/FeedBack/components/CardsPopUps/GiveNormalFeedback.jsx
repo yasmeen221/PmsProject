@@ -55,7 +55,7 @@ const GiveNormalFeedback = () => {
         visibility: values.visibility.split(","),
         feedbackType: "normal",
       },
-      feedbackMetaData: [
+      feedBackMetaData: [
         {
           name: "competency",
           value: userCompetencies.map((competency, index) => {
@@ -77,7 +77,7 @@ const GiveNormalFeedback = () => {
           visibility: values.visibility.split(","),
           feedbackType: "normal",
         },
-        feedbackMetaData: [
+        feedBackMetaData: [
           {
             name: "competency",
             value: userCompetencies.map((competency, index) => {
