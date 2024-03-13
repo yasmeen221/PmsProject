@@ -3,6 +3,7 @@ import FormPopUp from "../PopUp/FormPopUp";
 import { useDispatch, useSelector } from "react-redux";
 import { HandelOpenPopUpDelete } from "../../features/ManageTeams/slices/HandelOpenDelete";
 import Button from "../Button/Button";
+import { setIdToDeletePendingPage, setIdToDeleteRequestedPage } from "../../features/FeedBack/slices/openPopUpSlice";
 
 const ConfirmDelete = ({ onClose, onConfirm,deleteText="Are You Sure Delete It?!",confirmButtonText="Delete" }) => {
   const dispatch = useDispatch();
@@ -11,6 +12,8 @@ const ConfirmDelete = ({ onClose, onConfirm,deleteText="Are You Sure Delete It?!
   );
   const handleClosePopup = () => {
     dispatch(HandelOpenPopUpDelete(false));
+    dispatch(setIdToDeletePendingPage("")) //to set id to "" when delete feedback
+    dispatch(setIdToDeleteRequestedPage(""))
     if (onClose) {
       onClose();
     }
