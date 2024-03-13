@@ -101,7 +101,7 @@ export const deleteFeedback = async (id) => {
 
 export const acceptFeedback = async (id) => {
   try {
-    const request = await axiosInstance.get(`/feedback/accept/${id}`);
+    const request = await axiosInstance.post(`/feedback/accept/${id}`);
     return request.data;
   } catch (err) {
     console.log(err);

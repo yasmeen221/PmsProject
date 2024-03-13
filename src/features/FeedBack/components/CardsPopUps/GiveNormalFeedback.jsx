@@ -10,6 +10,7 @@ import * as yup from "yup";
 import RatingScale from "../RatingScale";
 import Select from "react-select";
 import {
+  acceptFeedback,
   getAllUsersNames,
   getTeamLeaderId,
   getUserCompetencies,
@@ -22,11 +23,20 @@ import {
   toggleNormalFeedback,
 } from "../../slices/openPopUpSlice";
 import toast from "react-hot-toast";
+import { setCardId, setFromId, setUserName } from "../../slices/acceptPending";
 
-const GiveNormalFeedback = () => {
-  const openNormalFeedbackPopUp = useSelector(
-    (state) => state.openPopUpSlice.normalFeedbackPopup,
-  );
+const GiveNormalFeedback = ({ }) => {
+
+  const openNormalFeedbackPopUp = useSelector((state) => state.openPopUpSlice.normalFeedbackPopup,);
+  const fromName = useSelector((state) => state.confirmSlice.username)
+  const cardId = useSelector((state) => state.confirmSlice.cardId)
+  const fromId = useSelector((state) => state.confirmSlice.id) //will be send in the form (this name refers it is from id in the pending when i press it)
+
+  // console.log("fid", fromId)
+  // console.log("card", cardId)
+  // console.log("fff", fromName)
+
+
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
   const [competencyRatings, setCompetencyRatings] = useState([]);
@@ -40,15 +50,12 @@ const GiveNormalFeedback = () => {
   const [userCompetenciesErrMsg, setUserCompetenciesErrMsg] = useState(false);
   const [userIdsErrMsg, setUserIdsErrMsg] = useState(false);
   const [competencyRatingsErrMsg, setCompetencyRatingsErrMsg] = useState(false);
-  const accessToken = useSelector(
-    (state) => state.persistantReducer.userDataReducer.userData,
-  );
-  const userIdFrom =
-    accessToken.length > 0 ? jwtDecode(accessToken).userId : "";
-
-
+  const accessToken = useSelector((state) => state.persistantReducer.userDataReducer.userData,);
+  const userIdFrom = accessToken.length > 0 ? jwtDecode(accessToken).userId : ""
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    setUserId(fromId)
+  }, [fromName, fromId])
   const formSubmit = (values) => {
     if (teamsBtnChecked && userCompetencies.length == 0) {
       setUserCompetenciesErrMsg(true);
@@ -65,7 +72,7 @@ const GiveNormalFeedback = () => {
     }
 
     if (
-      userId === "" ||
+      (userId === "") ||
       teamsBtnChecked &&
       competencyFeedback.length == 0 &&
       competencyRatings.length == 0
@@ -115,6 +122,15 @@ const GiveNormalFeedback = () => {
           },
         ],
       });
+      request.then((res) => {
+        if (res.data.status == "success") {
+          acceptFeedback(cardId).then((res) => {
+            console.log(cardId, "card")
+            console.log(res)
+          })
+        }
+      })
+      console.log(request)
       toast.success("your respond is submitted successfully!");
       handleClosePopup();
     } catch (error) {
@@ -124,9 +140,22 @@ const GiveNormalFeedback = () => {
   };
 
   const usernamesOptions = usernames.map((user) => {
-    return { value: user._id, label: user.username };
+    return { value: !fromId ? user._id : fromId, label: !fromName ? user.username : fromName };
   });
-
+  const schema = yup.object({
+    message: yup.string().required(),
+    visibility: yup.string().required(),
+    competencyFeedback: yup
+      .array()
+      .of(yup.string().required("Feedback is required")),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
 
   useEffect(() => {
     const [team] = usernames
@@ -140,7 +169,7 @@ const GiveNormalFeedback = () => {
     const fetchData = async () => {
       try {
         const data = await getTeamLeaderId(userId);
-        setMangerId(data.teamLeader._id);
+          setMangerId(data.teamLeader._id);
       } catch (error) {
         console.log("error from get", error);
       }
@@ -149,15 +178,20 @@ const GiveNormalFeedback = () => {
   }, [userId]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getAllUsersNames();
-        setUsernames(data.data.usersNames);
-      } catch (error) {
-        console.log("error from get", error);
-      }
-    };
-    fetchData();
+    if (!fromId) { //to get users if there is not id selected from pending card
+      const fetchData = async () => {
+        try {
+          const data = await getAllUsersNames();
+          setUsernames(data.data.usersNames);
+        } catch (error) {
+          console.log("error from get", error);
+        }
+      };
+      fetchData();
+    } else {
+      // handleUserNameChange()
+
+    }
   }, []);
 
   useEffect(() => {
@@ -181,26 +215,23 @@ const GiveNormalFeedback = () => {
     dispatch(toggleNormalFeedback(false));
     dispatch(changeDropDownValue(""));
     setPopupOpen(false);
+    dispatch(setUserName("")) //set this values to "" so you add add normal feedback without pending
+    dispatch(setFromId(""))
+    dispatch(setCardId(""))
   };
 
-  const schema = yup.object({
-    message: yup.string().required(),
-    visibility: yup.string().required(),
-    competencyFeedback: yup
-      .array()
-      .of(yup.string().required("Feedback is required")),
-  });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+
+
 
   const handleUserNameChange = (selectedOption) => {
-    setUserId(selectedOption.value);
+    if (!fromId) {
+      setUserId(selectedOption.value);
+
+    } else {
+      // setUserId(userId);
+
+    }
   };
 
   const handleUserCompetencyChange = (selectedOption) => {
@@ -253,6 +284,8 @@ const GiveNormalFeedback = () => {
                 options={usernamesOptions}
                 onChange={handleUserNameChange}
                 closeMenuOnSelect={true}
+                placeholder={fromName ? fromName : "select.."}
+                isDisabled={fromName ? true : false}
               />
               {
                 userIdsErrMsg && (<p>you must choose a user</p>)
@@ -434,7 +467,7 @@ const GiveNormalFeedback = () => {
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
               buttonText="Give Feedback"
 
-              // onClick={handleClosePopup}
+            // onClick={handleClosePopup}
             />
           </div>
         </form>

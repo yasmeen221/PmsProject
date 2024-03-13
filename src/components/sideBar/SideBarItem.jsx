@@ -12,7 +12,7 @@ function SideBarItem({ icon, title, isOpen ,to}) {
           : "hover:bg-buttonColor-500 rounded-lg mx-4 px-6 justify-center flex  py-4 text-center "
       }
 
-     activeClassName="active"
+      activeclassname="active"
     >
       {isOpen ? (
         <>

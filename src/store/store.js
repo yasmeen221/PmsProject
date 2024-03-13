@@ -11,8 +11,10 @@ import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import userDataReducer from "../features/LogIn/slices/login.js";
 import openPopUpConfirmDeleteSlice from "../features/ManageTeams/slices/HandelOpenDelete";
-import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js";
-import openCompetencyPopUpSlice from "../features/Competencies/slices/openCompentencyPopUp.js";
+import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js"
+import openCompetencyPopUpSlice from "../features/Competencies/slices/openCompentencyPopUp.js"
+import confirmSlice from "../features/FeedBack/slices/acceptPending.js"
+
 
 import sidebarReducer from "../components/sideBar/slice/slidebarSlice.js";
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
@@ -47,6 +49,7 @@ export const store = configureStore({
     openAddUserFormPopUp, // Manage Users slice
     editLevel: editLevelSlice, // Manage Levels slice
     openPopupAddLevel, // Manage Levels slice
+    confirmSlice,
     sidebar: sidebarReducer,
     persistantReducer,
     getTeamCompetenciesReducer: TeamsSlice,

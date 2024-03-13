@@ -9,7 +9,7 @@ function Dashboard() {
   return (
     <div className="flex">
       <SideBar />
-      <div className= {isOpen?"transition-all absolute left-[260px] w-[82%] duration-500":" transition-all absolute left-[105px] w-[93%] duration-500"} >
+      <div className= {isOpen?"transition-all absolute left-[260px] w-[80%] duration-500":" transition-all absolute left-[105px] w-[90%] duration-500"} >
         <TopNav />
         <Outlet />
       </div>
