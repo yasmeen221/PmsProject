@@ -48,8 +48,8 @@ export const getDataWithPagination = (
       });
     // console.log("pendinnnnnnnnnnnnng")
   }
-  if (feedback == true && userId == "") {
-    getFeedAndPraise(value)
+  if (feedback == true ) {
+    getFeedAndPraise(value,userId)
       .then((res) => {
         if (res.data.data.feedbacks) {
           setData(res.data.data.feedbacks);
