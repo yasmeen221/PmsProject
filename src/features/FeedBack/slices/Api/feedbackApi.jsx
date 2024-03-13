@@ -68,10 +68,10 @@ export const getRequestsFeedback = async (page, userIdFrom) => {
     console.log(err);
   }
 };
-export const getFeedAndPraise = async (page) => {
+export const getFeedAndPraise = async (page,userId) => {
   try {
     const request = await axiosInstance.get(
-      `/feedback?page=${page}&type=normal&type=praise`,
+      `/feedback?page=${page}&type=normal&currentUserId=${userId}`,
     );
     return request;
   } catch (err) {
