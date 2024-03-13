@@ -145,6 +145,7 @@ const AccordingContent = ({
                           description={itemm.defaultDescription}
                           skills={renderCatogry(itemm)}
                           position={renderPosition(itemm)}
+                          refresh={getAllDataCompetencies}
                         />
                       ))
                     : renderNoData()}
@@ -159,6 +160,7 @@ const AccordingContent = ({
                   description={itemm.defaultDescription}
                   skills={renderCatogry(itemm)}
                   position={renderPosition(itemm)}
+                  refresh={getAllDataCompetencies}
                 />
               ))
             ) : isLoading ? (
@@ -170,6 +172,7 @@ const AccordingContent = ({
               dropDownTextTeam === "Teams" &&
               dropDownTextCategory === "Categories" ? (
               teams?.data.teamsNames?.map((item) => {
+               
                 return (
                   <AccordionItem
                     className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
@@ -177,7 +180,7 @@ const AccordingContent = ({
                     key={item._id}
                     trigger={`${item.teamName} Team`}
                     backgroundColor="bg-buttonColor-baseColor"
-                    content={<Icons.Organization />}
+                    content={item.teamName.substring(0, 2).toUpperCase()}
                     paragraph="Team Working, Public Speaking, Research"
                   >
                     <hr></hr>
@@ -194,6 +197,7 @@ const AccordingContent = ({
                           description={itemm.defaultDescription}
                           skills={renderCatogry(itemm)}
                           position={renderPosition(itemm)}
+                          refresh={getAllDataCompetencies}
                         />
                       ))
                     ) : !isLoadingTeamComp &&

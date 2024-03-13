@@ -94,12 +94,12 @@ export default function UserTable() {
           
             {isLoading &&
             <tr >
-              <td colSpan="4" className=" px-6 py-3 " > <div className="inline-flex items-center justify-center"><Icons.Loading /></div></td>
+              <td colSpan="8" className=" px-6 py-3 " > <div className="inline-flex items-center justify-center"><Icons.Loading /></div></td>
             </tr>}
             
             {!isLoading && !isError && users.data.users.length == 0 && (
               <tr>
-                <td colSpan="4" className=" px-6 py-3 ">
+                <td colSpan="8" className=" px-6 py-3 ">
                   {" "}
                   <div className="inline-flex items-center justify-center">
                     <p>There is No Users Exist</p>
@@ -109,7 +109,7 @@ export default function UserTable() {
             )}
             {!isLoading && isError ? (
               <tr>
-                <td colSpan="4" className=" px-6 py-3  ">
+                <td colSpan="8" className=" px-6 py-3  ">
                   <div className="inline-flex items-center justify-center">
                     {"server error"}
                   </div>
