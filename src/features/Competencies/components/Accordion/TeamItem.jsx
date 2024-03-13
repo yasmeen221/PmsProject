@@ -1,11 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 
 import Icons from "../../../../themes/icons";
-// import { toggleCompetencyDetails } from "../../slices/openCompentencyPopUp";
+
 import ViewDetails from "../CardsPopUps/ViewDetails";
-import { useSelector } from "react-redux";
+
 import EditDeleteDropDown from "./EditDeleteDropDown";
 const TeamItem = (props) => {
   // eslint-disable-next-line react/prop-types
@@ -13,22 +12,14 @@ const TeamItem = (props) => {
   const [isHovered, setIsHovered] = useState(false);
   const [details, setDetails] = useState(false);
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  // console.log("{{{{{{{{{{{{{{{{{{{{TeamItem}}}}}}}}}}}}}}}}}}}}", { id });
+
   const handleThreeDotsClick = () => {
     setIsDropdownVisible(!isDropdownVisible);
   };
   const closeDropdown = () => {
     setIsDropdownVisible(false);
   };
-  // const openPopUp = useSelector(
-  //   (state) => state.openPopUpSlice.feedbackDetailsOpenPopUp,
-  // );
-  // const dispatch=useDispatch();
 
-  // const HandelDetailsPopUp = () => {
-  //   dispatch(toggleCompetencyDetails(true))
-  //   console.log("mmmm")
-  // };
   return (
     <div
       className={`  flex justify-around items-center py-4 ${isHovered ? "hovered:text-blue-500 transition duration-500 ease-in-out hover:bg-drawerColor-1000 rounded-2xl" : ""}`}
@@ -37,7 +28,6 @@ const TeamItem = (props) => {
     >
       <div
         className="w-[80%] flex justify-between px-2 items-center"
-        // style={{ backgroundColor: "green" }}
         onClick={() => {
           setDetails(true);
         }}

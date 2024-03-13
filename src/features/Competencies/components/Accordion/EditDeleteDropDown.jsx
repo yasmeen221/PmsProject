@@ -15,7 +15,6 @@ import {
 } from "../../slices/compentancySlice";
 
 export default function EditDeleteDropDown({ id, refresh }) {
-  console.log("iii", id);
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
@@ -25,8 +24,6 @@ export default function EditDeleteDropDown({ id, refresh }) {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   const handleDropdownClick = (option, id) => {
-    console.log(`btn ${option} clicked`);
-
     setSelectedOption(option);
     setSelectedItemId(id);
     setIsDropdownVisible(false);
@@ -36,24 +33,12 @@ export default function EditDeleteDropDown({ id, refresh }) {
     setSelectedOption(null);
     setIsDropdownVisible(false);
   };
-  // const handelDeleteCom = () => {
-  //   deleteData(id);
-  //   dispatch(HandelOpenPopUpDelete(false));
-  //   console.log("hh", id);
-  //   setTimeout(() => {
-  //     location.reload();
-  //   }, 1000);
-  // };
 
   const handelDeleteCom = async () => {
     try {
       const res = await deleteData(id);
-
-      console.log("hh", id);
-      console.log("frommm delete", res);
+      console.log("res from delete", res);
       if (res.status == "success") {
-        //  dispatch(setEditCompetancyDone(true));
-        //  dispatch(setEditShardCompetancyDone(true));
         dispatch(setDeleteCompentancy(true));
         dispatch(setDeleteShardCompentancy(true));
       }
@@ -61,9 +46,6 @@ export default function EditDeleteDropDown({ id, refresh }) {
       console.error("Error deleting data:", error);
     } finally {
       dispatch(HandelOpenPopUpDelete(false));
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
     }
   };
 

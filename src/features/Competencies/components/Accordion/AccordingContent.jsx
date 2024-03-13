@@ -39,16 +39,15 @@ const AccordingContent = ({
     getAllDataCompetencies()
       .then((fetchedData) => {
         let arr = [];
-        // console.log(fetchedData.data)
+
         for (let i = 0; i < fetchedData.data.length; i++) {
           if (fetchedData.data[i].teamsAssigned.length == 0) {
             arr.push(fetchedData.data[i]);
-            // console.log(fetchedData.data[i])
           }
         }
 
         setSharedComp(arr);
-        console.log("arrfrom content", arr);
+
         dispatch(setEditShardCompetancyDone(false));
         dispatch(setDeleteShardCompentancy(false));
       })
@@ -65,7 +64,6 @@ const AccordingContent = ({
         searchCompetencies(searchTerm)
           .then((fetchedDataSearch) => {
             setSearchResults(fetchedDataSearch);
-            // console.log(fetchedDataSearch)
           })
           .catch((error) => {
             console.log("Error fetching data:", error.data);
@@ -77,7 +75,6 @@ const AccordingContent = ({
   }, [searchTerm]);
 
   const renderPosition = (itemm) => {
-    // console.log( itemm.seniorityLevels);
     const allCompetencyLevelNames = itemm.seniorityLevels.map(
       //rerurn array of competency levels names
       (item, index) =>

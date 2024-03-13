@@ -7,13 +7,13 @@ export default function ProtectedRouting(props) {
 
   const cookie = new Cookies();
   const accessToken = cookie.get("userToken");
-  const refreshToken = cookie.get("refreshToken")
-  if (accessToken&&refreshToken) {
+  const refreshToken = cookie.get("refreshToken");
+  if (accessToken && refreshToken) {
     if (role) {
       if (role == "superAdmin" || role == "admin") {
         return props.children;
-      }else{
-        return <Navigate to="*" />
+      } else {
+        return <Navigate to="*" />;
       }
     } else {
       return props.children;

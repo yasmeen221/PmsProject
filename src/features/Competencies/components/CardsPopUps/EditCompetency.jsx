@@ -5,7 +5,7 @@ import Button from "../../../../components/Button/Button";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
 import Select from "react-select";
-import axiosInstance from "../../../../components/GeneralApi/generalApi";
+
 import {
   getDataCompetenciesByID,
   updateData,
@@ -25,7 +25,6 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
   const dispatch = useDispatch();
   const [competencyData, setCompetencyData] = useState([]);
   const { _id, name, defaultDescription } = competencyData;
-  console.log("dddd", competencyData);
 
   const [isPopupOpen, setPopupOpen] = useState(true);
   const [category, setCategory] = useState("");
@@ -33,8 +32,6 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
   const [categories, setCategories] = useState([]);
-
-  console.log({ selectedTeams });
 
   const handleClosePopUp = () => {
     setPopupOpen(false);
@@ -57,7 +54,6 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
       teamsAssigned: selectedTeams?.map((team) => team.value),
     };
 
-    console.log("datasend", updatedData);
     try {
       const res = await updateData(_id, updatedData);
       if (res.status == "success") {
@@ -65,10 +61,7 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
         dispatch(setEditShardCompetancyDone(true));
         dispatch(setDeleteCompentancy(true));
         dispatch(setDeleteShardCompentancy(true));
-
-
       }
-      console.log("rrsrsrsr", res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -106,14 +99,14 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
     const getdata = async () => {
       const res = await getDataCompetenciesByID(competencyId);
       const { foundedCompetency } = res?.data;
-      console.log("foundedCompetency", foundedCompetency);
+
       setCompetencyData(foundedCompetency);
       const formattedLevels = foundedCompetency?.seniorityLevels?.map((le) => ({
         value: le?.level._id,
         label: le?.level.levelName,
         description: le?.description,
       }));
-      console.log({ formattedLevels });
+
       if (formattedLevels) setSelectedLevels(formattedLevels);
       const formattedteams = foundedCompetency?.teamsAssigned?.map((team) => ({
         value: team?._id,
@@ -154,7 +147,6 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
               <div className="mt-2 w-full">
                 <TextInput
                   onChange={(e) => {
-                    console.log(e.target.value);
                     setCompetencyData((prevData) => ({
                       ...prevData,
                       name: e.target.value,
