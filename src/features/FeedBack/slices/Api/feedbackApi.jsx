@@ -99,9 +99,9 @@ export const deleteFeedback = async (id) => {
 };
 //will use it in then when the popup request is done  and in then of calling this function call    dispatch(getFeedbacksRequest())
 
-export const acceptFeedback = async (id) => {
+export const acceptFeedback = async (id,body) => {
   try {
-    const request = await axiosInstance.post(`/feedback/accept/${id}`);
+    const request = await axiosInstance.post(`/feedback/accept/${id}`,body);
     return request.data;
   } catch (err) {
     console.log(err);

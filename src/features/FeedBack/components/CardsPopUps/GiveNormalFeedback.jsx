@@ -79,27 +79,27 @@ const GiveNormalFeedback = ({ }) => {
 
     )
       return;
-    console.log({
-      feedbackMainData: {
-        userIdFrom,
-        userIdTo: userId,
-        message: values.message,
-        visibility: values.visibility.split(","),
-        feedbackType: "normal",
-      },
-      feedBackMetaData: [
-        {
-          name: "competency",
-          value: userCompetencies.map((competency, index) => {
-            return {
-              competencyId: competency.value,
-              competencyFeedBack: competencyFeedback[index],
-              rate: competencyRatings[index],
-            };
-          }),
-        },
-      ],
-    });
+    // console.log({
+    //   feedbackMainData: {
+    //     userIdFrom,
+    //     userIdTo: userId,
+    //     message: values.message,
+    //     visibility: values.visibility.split(","),
+    //     feedbackType: "normal",
+    //   },
+    //   feedBackMetaData: [
+    //     {
+    //       name: "competency",
+    //       value: userCompetencies.map((competency, index) => {
+    //         return {
+    //           competencyId: competency.value,
+    //           competencyFeedBack: competencyFeedback[index],
+    //           rate: competencyRatings[index],
+    //         };
+    //       }),
+    //     },
+    //   ],
+    // });
     try {
       const request = axiosInstance.post(`feedback`, {
         feedbackMainData: {
@@ -124,13 +124,32 @@ const GiveNormalFeedback = ({ }) => {
       });
       request.then((res) => {
         if (res.data.status == "success") {
-          acceptFeedback(cardId).then((res) => {
-            console.log(cardId, "card")
-            console.log(res)
+          acceptFeedback(cardId,{
+            feedbackMainData: {
+              userIdFrom,
+              userIdTo: userId,
+              message: values.message,
+              visibility: values.visibility.split(","),
+              feedbackType: "normal",
+            },
+            feedBackMetaData: [
+              {
+                name: "competency",
+                value: userCompetencies.map((competency, index) => {
+                  return {
+                    competencyId: competency.value,
+                    competencyFeedBack: competencyFeedback[index],
+                    rate: competencyRatings[index],
+                  };
+                }),
+              },
+            ],
+          }).then((res) => {
+            // console.log(cardId, "card")
+            // console.log("resss",res)
           })
         }
       })
-      console.log(request)
       toast.success("your respond is submitted successfully!");
       handleClosePopup();
     } catch (error) {
@@ -273,7 +292,7 @@ const GiveNormalFeedback = ({ }) => {
         TitlePopUp="Give Normal  FeedBack"
         iconLeft={<Icons.ArrowLeftPop />}
       >
-        <form onSubmit={handleSubmit(formSubmit)}>
+        <form onSubmit={handleSubmit(formSubmit)} >
           <div
             className="px-1 w-[35vw] max-h-[65vh] pb-4 overflow-y-auto "
             style={{ scrollbarWidth: "none" }}
