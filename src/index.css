@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
+.active {
+  background-color: #178CBF; /* Change this to your desired active background color */
+  color: #ffffff; /* Change this to your desired active text color */
+}
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

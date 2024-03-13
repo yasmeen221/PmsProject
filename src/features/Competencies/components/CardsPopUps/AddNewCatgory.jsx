@@ -5,6 +5,7 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
+import toast from "react-hot-toast";
 
 export default function AddNewCatgory({ handleAddCategory }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -34,6 +35,7 @@ export default function AddNewCatgory({ handleAddCategory }) {
       await schema.validate(values, { abortEarly: false });
 
       console.log("Form submitted successfully:", values);
+      toast.success("Add Category successfully!");
       handleClosePopup();
 
       handleAddCategory(values.categoryName);

@@ -45,9 +45,10 @@ const GiveNormalFeedback = () => {
   );
   const userIdFrom =
     accessToken.length > 0 ? jwtDecode(accessToken).userId : "";
-  console.log(userIdFrom);
+
 
   const dispatch = useDispatch();
+
   const formSubmit = (values) => {
     if (teamsBtnChecked && userCompetencies.length == 0) {
       setUserCompetenciesErrMsg(true);
@@ -125,6 +126,7 @@ const GiveNormalFeedback = () => {
   const usernamesOptions = usernames.map((user) => {
     return { value: user._id, label: user.username };
   });
+
 
   useEffect(() => {
     const [team] = usernames
