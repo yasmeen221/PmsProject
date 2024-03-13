@@ -36,9 +36,10 @@ export const createData = async (newData) => {
 export const updateData = async (id, updatedData) => {
   //will know from back use post or  put
   try {
-    const request = await axiosInstance.post(`/competency/edit/${id}`, {
+    const request = await axiosInstance.post(
+      `/competency/edit/${id}`,
       updatedData,
-    });
+    );
     return request.data;
   } catch (error) {
     console.log("error from update", error);
@@ -49,6 +50,7 @@ export const updateData = async (id, updatedData) => {
 export const deleteData = async (id) => {
   try {
     const request = await axiosInstance.get(`/competency/delete/${id}`);
+
     return request.data;
   } catch (error) {
     console.log("error from delete", error);

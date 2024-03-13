@@ -9,9 +9,12 @@ import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import { useSelector } from "react-redux";
 import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete";
 import { deleteData } from "../../slices/Api/competenciesApi";
+import {
+  setDeleteCompentancy,
+  setDeleteShardCompentancy,
+} from "../../slices/compentancySlice";
 
 export default function EditDeleteDropDown({ id, refresh }) {
-  console.log("iii", id);
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
@@ -21,8 +24,6 @@ export default function EditDeleteDropDown({ id, refresh }) {
   const [selectedItemId, setSelectedItemId] = useState(null);
 
   const handleDropdownClick = (option, id) => {
-    console.log(`btn ${option} clicked`);
-
     setSelectedOption(option);
     setSelectedItemId(id);
     setIsDropdownVisible(false);
@@ -32,26 +33,19 @@ export default function EditDeleteDropDown({ id, refresh }) {
     setSelectedOption(null);
     setIsDropdownVisible(false);
   };
-  // const handelDeleteCom = () => {
-  //   deleteData(id);
-  //   dispatch(HandelOpenPopUpDelete(false));
-  //   console.log("hh", id);
-  //   setTimeout(() => {
-  //     location.reload();
-  //   }, 1000);
-  // };
 
   const handelDeleteCom = async () => {
     try {
-      await deleteData(id);
-      dispatch(HandelOpenPopUpDelete(false));
-      console.log("hh", id);
+      const res = await deleteData(id);
+      console.log("res from delete", res);
+      if (res.status == "success") {
+        dispatch(setDeleteCompentancy(true));
+        dispatch(setDeleteShardCompentancy(true));
+      }
     } catch (error) {
       console.error("Error deleting data:", error);
     } finally {
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
+      dispatch(HandelOpenPopUpDelete(false));
     }
   };
 
