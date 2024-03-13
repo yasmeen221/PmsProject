@@ -145,6 +145,7 @@ const AccordingContent = ({
                           description={itemm.defaultDescription}
                           skills={renderCatogry(itemm)}
                           position={renderPosition(itemm)}
+                          refresh={getAllDataCompetencies}
                         />
                       ))
                     : renderNoData()}
@@ -159,6 +160,7 @@ const AccordingContent = ({
                   description={itemm.defaultDescription}
                   skills={renderCatogry(itemm)}
                   position={renderPosition(itemm)}
+                  refresh={getAllDataCompetencies}
                 />
               ))
             ) : isLoading ? (
@@ -194,6 +196,7 @@ const AccordingContent = ({
                           description={itemm.defaultDescription}
                           skills={renderCatogry(itemm)}
                           position={renderPosition(itemm)}
+                          refresh={getAllDataCompetencies}
                         />
                       ))
                     ) : !isLoadingTeamComp &&

@@ -5,143 +5,116 @@ import Button from "../../../../components/Button/Button";
 import TextInput from "../../../../components/TextInput/TextInput";
 import Header from "../../../../components/Header/Header";
 import Select from "react-select";
+import axiosInstance from "../../../../components/GeneralApi/generalApi";
 import {
-  updateData,
-  getAllTeamCompetencies,
   getDataCompetenciesByID,
+  updateData,
 } from "../../slices/Api/competenciesApi";
 import { getAllData } from "../../slices/Api/catgoryapi";
-import { getLevelsData } from "../../slices/Api/levelsApi";
-import axiosInstance from "../../../../components/GeneralApi/generalApi";
-const EditCompetency = ({ selectedItemId, onClose, parentId }) => {
-  const [inputsData, setInputsData] = useState();
-  const [category, setCategory] = useState();
-  let [levels, setLevels] = useState();
-  let [team, setTeam] = useState();
+import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
+import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice";
+
+const EditCompetency = ({ competencyId, onClose, refresh }) => {
+  const [competencyData, setCompetencyData] = useState([]);
+  const { _id, name, defaultDescription } = competencyData;
+
   const [isPopupOpen, setPopupOpen] = useState(true);
+  const [category, setCategory] = useState("");
   const [addToggle, setAddToggle] = useState(false);
   const [selectedTeams, setSelectedTeams] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
-  const [allTeams, setAllTeams] = useState([]);
+  const [categories, setCategories] = useState([]);
 
-  async function getItem(param) {
-    const data = await getDataCompetenciesByID(param);
-    setInputsData(data.data.foundedCompetency);
-    setCategory(data.data.foundedCompetency.category);
-  }
-  useEffect(() => {
-    getItem(selectedItemId);
-  }, []);
-  //  get All Teams
-  useEffect(() => {
-    const getAllTeam = async () => {
-      try {
-        let response = await axiosInstance.get("/teams");
-        setAllTeams(response.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getAllTeam();
-  }, []);
-
-  const handleTeams = (param) => {
-    param.map((item) => setSelectedTeams(item.value));
-  };
+  console.log({ selectedTeams });
 
   const handleClosePopUp = () => {
     setPopupOpen(false);
     onClose();
   };
-  // get category and levels data
-  useEffect(() => {
-    getAllData().then((res) => setCategory(res.data));
-    getLevelsData().then((res) => setLevels(res.data));
-  }, []);
-  let categoryData, teamsOptions, teamsData, levelsData, levelOptions;
-  try {
-    if (category.categories) {
-      categoryData = category.categories;
-    }
-    if (allTeams.data) {
-      teamsData = allTeams.data;
-      teamsOptions = teamsData.teams.map((item) => ({
-        value: item._id,
-        label: item.teamName,
-      }));
-    }
-    if (levels.levels) {
-      levelsData = levels.levels;
-      levelOptions = levelsData.map((item) => ({
-        value: item._id,
-        label: item.levelName,
-      }));
-    }
-  } catch (e) {}
 
-  let [nameComp, setNameComp] = useState();
-  let [categoryId, setCategoryId] = useState();
-  let [descInput, setDescInput] = useState();
-  let [teamInput, setTeamInput] = useState();
-  let [levelsInput, setlevelsInput] = useState();
-  useEffect(() => {
+  const handleSaveChanges = async (e) => {
+    if (e) e.preventDefault();
+    // Add your logic to save changes here
+    // Include selectedTeams and selectedLevels in your API request or logic
+    const updatedData = {
+      name,
+      defaultDescription,
+      seniorityLevels: selectedLevels?.map((lv) => ({
+        level: lv.value,
+        description: lv.label,
+      })),
+      category: category?.value,
+      teamsAssigned: selectedTeams?.map((team) => team.value),
+    };
     try {
-      if (inputsData.name) {
-        setNameComp(inputsData.name);
-      }
-      if (inputsData.category._id) {
-        setCategoryId(inputsData.category._id);
-      }
-      if (inputsData.defaultDescription) {
-        setDescInput(inputsData.defaultDescription);
-      }
-      if (inputsData.teamsAssigned) {
-        setTeamInput(inputsData.teamsAssigned);
-      }
-      if (inputsData.teamsAssigned) {
-        setlevelsInput(inputsData.teamsAssigned);
-      }
-    } catch (e) {}
-  });
-
-  // handle Name
-  const handelName = (e) => {
-    setNameComp(e.target.value);
-  };
-  console.log(categoryData, "categoryId");
-  // handle category
-  const handleCategory = (e) => {
-    setCategoryId(e.target.value);
-  };
-  // handle desription
-  const handleDesc = (e) => {
-    setDescInput(e.target.value);
+      const res = await updateData(_id, updatedData);
+      refresh();
+      console.log({ res });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      handleClosePopUp();
+    }
   };
 
-  // handle team
-  const handleTeam = (e) => {
-    setTeamInput(e.target.value);
-  };
-  // handle levels
-  const handlelevels = (e) => {
-    setlevelsInput(e.target.value);
-  };
-  // send data to api
-  const sendData = () => {
-    let updatedData = {
-      category: categoryId,
-      defaultDescription: descInput,
-      name: nameComp,
-      seniorityLevels: [
-        { level: "65ee73aa3c1df4660fd801d6", description: "fresh" },
-        { level: "65ee73aa3c1df4660fd801d7", description: "senior" },
-      ],
+  const { data: teamsNames } = useGetTeamsNameQuery();
+  const teamsArray = teamsNames?.data?.teamsNames;
+  const teamsOptions = teamsArray?.map((team) => ({
+    value: team._id,
+    label: team.teamName,
+  }));
 
-      teamsAssigned: [selectedTeams],
+  const { data: levels } = useGetLevelQuery();
+
+  const levelsArray = levels?.data?.levels;
+  const levelsOptions = levelsArray?.map((level) => ({
+    value: level._id,
+    label: level.levelName,
+  }));
+
+  const getCategoriesData = async () => {
+    const categoriesDataSource = await getAllData();
+    const { categories } = categoriesDataSource?.data;
+    const fc = categories.map((cate) => ({
+      value: cate._id,
+      label: cate.categoryName,
+    }));
+    setCategories(fc);
+  };
+
+  useEffect(() => {
+    // Fetch data and set initial values for the edit form
+    const getdata = async () => {
+      const res = await getDataCompetenciesByID(competencyId);
+      const { foundedCompetency } = res?.data;
+      console.log("foundedCompetency", foundedCompetency);
+      setCompetencyData(foundedCompetency);
+      const formattedLevels = foundedCompetency?.seniorityLevels?.map((le) => ({
+        value: le?._id,
+        label: le?.description,
+      }));
+      console.log({ formattedLevels });
+      if (formattedLevels) setSelectedLevels(formattedLevels);
+      const formattedteams = foundedCompetency?.teamsAssigned?.map((team) => ({
+        value: team?._id,
+        label: team?.teamName,
+      }));
+      if (formattedteams) {
+        setSelectedTeams(formattedteams);
+        setAddToggle(formattedteams.length > 0);
+      }
+
+      setCategory({
+        value: foundedCompetency?.category?._id,
+        label: foundedCompetency?.category?.categoryName,
+      });
     };
 
-    updateData(inputsData._id, updatedData);
-  };
+    getdata();
+    getCategoriesData();
+    // For example, you can use an API call to get the existing competency details
+    // and populate the form fields with the fetched data.
+  }, []);
 
   return (
     <>
@@ -156,49 +129,40 @@ const EditCompetency = ({ selectedItemId, onClose, parentId }) => {
             className="px-1 w-[35vw] max-h-[65vh] pb-4 overflow-y-auto "
             style={{ scrollbarWidth: "none" }}
           >
-            {/* Name Input */}
             <div className="my-2  w-full">
               <Header text="Name" htmlFor="name" />
               <div className="mt-2 w-full">
                 <TextInput
-                  onChange={handelName}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setCompetencyData((prevData) => ({
+                      ...prevData,
+                      name: e.target.value,
+                    }));
+                  }}
                   placeholder="Public Speaking"
                   id="name"
                   name="name"
                   type="text"
                   required
-                  value={nameComp}
                   className={"h-[61px]"}
+                  value={name || ""}
                 />
               </div>
             </div>
 
-            {/* Category Select */}
             <div className="my-2  w-full">
               <Header text="Category" htmlFor="category" />
               <div className="relative mt-2">
-                <select
-                  onChange={handleCategory}
+                <Select
+                  value={category}
+                  onChange={(selectedOption) => setCategory(selectedOption)}
+                  options={categories}
                   className={`block w-full bg-white border-0 py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor rounded-buttonRadius shadow-sm focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${category === "" ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor h-[61px]"}`}
-                  value={categoryId}
-                >
-                  <option value={0}>Choose Category</option>
-
-                  {categoryData
-                    ? categoryData.map((item) => (
-                        <option key={item._id} value={item._id}>
-                          {item.categoryName}
-                        </option>
-                      ))
-                    : null}
-                </select>
-                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  {/* <Icons.ArrowDownBlack /> */}
-                </div>
+                />
               </div>
             </div>
 
-            {/* Description Input */}
             <div className="my-2  w-full">
               <Header text="Default Description" htmlFor="description" />
               <div className="mt-2">
@@ -208,8 +172,14 @@ const EditCompetency = ({ selectedItemId, onClose, parentId }) => {
                   wrap="soft"
                   id="description"
                   name="description"
-                  value={descInput}
-                  onChange={handleDesc}
+                  value={defaultDescription}
+                  onChange={(e) => {
+                    console.log(e.target.value);
+                    setCompetencyData((prevData) => ({
+                      ...prevData,
+                      defaultDescription: e.target.value,
+                    }));
+                  }}
                   className="min-h-[112px] resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0 py-2.5 px-2 shadow-sm ring-1 ring-fontColor-outLineInputColor placeholder:text-fontColor-placeHolderColor focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                 />
               </div>
@@ -226,9 +196,10 @@ const EditCompetency = ({ selectedItemId, onClose, parentId }) => {
                 <label className="inline-flex items-center cursor-pointer">
                   <input
                     type="checkbox"
-                    value=""
+                    checked={addToggle}
                     className="sr-only peer"
                     onChange={(e) => {
+                      console.log(e.target.checked);
                       setAddToggle(e.target.checked);
                     }}
                   />
@@ -247,8 +218,10 @@ const EditCompetency = ({ selectedItemId, onClose, parentId }) => {
                     options={teamsOptions}
                     isMulti
                     closeMenuOnSelect={false}
-                    value={selectedTeams.label}
-                    onChange={() => handleTeams(teamsOptions)}
+                    value={selectedTeams}
+                    onChange={(selectedOptions) =>
+                      setSelectedTeams(selectedOptions)
+                    }
                   />
                 </div>
               )}
@@ -261,17 +234,19 @@ const EditCompetency = ({ selectedItemId, onClose, parentId }) => {
                 </p>
                 <div className="relative mt-2">
                   <Select
-                    options={levelOptions}
+                    options={levelsOptions}
                     isMulti
                     closeMenuOnSelect={false}
-                    value={selectedLevels.label}
-                    onChange={(selectedOptions) =>
-                      setSelectedLevels(selectedOptions)
-                    }
+                    value={selectedLevels}
+                    onChange={(selectedOptions) => {
+                      console.log({ selectedOptions });
+                      setSelectedLevels(selectedOptions);
+                    }}
                   />
                 </div>
               </div>
-              {selectedLevels.map((level, index) => (
+
+              {selectedLevels?.map((level, index) => (
                 <div
                   key={index}
                   className="relative my-2 transition-all duration-1000"
@@ -279,36 +254,46 @@ const EditCompetency = ({ selectedItemId, onClose, parentId }) => {
                   <div className="my-2">
                     <div className="flex items-center justify-between">
                       <Header
-                        text={level.label}
+                        text={level?.label}
                         htmlFor={`levelDescription-${index}`}
                       />
                       <div className="cursor-pointer flex items-center justify-center rounded-sm text-red-500 w-4 h-4 border border-red-500">
                         -
                       </div>
                     </div>
-
-                    {/* ============================== */}
                     <div className="mt-2">
                       <textarea
                         rows={4}
-                        placeholder={`Description for ${level.label}`}
+                        placeholder={`Description for ${level?.label}`}
+                        value={level?.description}
                         wrap="soft"
                         className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0 py-2.5 px-2 shadow-sm ring-1 ring-fontColor-outLineInputColor placeholder:text-fontColor-placeHolderColor focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                         // Add your onChange handler for level descriptions
+                        onChange={(e) =>
+                          setSelectedLevels((prevLevels) =>
+                            prevLevels.map((prevLevel, idx) =>
+                              idx === index
+                                ? {
+                                    ...prevLevel,
+                                    description: e.target.value,
+                                  }
+                                : prevLevel,
+                            ),
+                          )
+                        }
                       />
                     </div>
-                    {/* ============================== */}
                   </div>
                 </div>
               ))}
             </div>
           </div>
+
           <div className="mt-2 w-full inline-flex justify-end px-1 ">
             <Button
               buttonText="Save Changes"
               className="px-10 py-3 text-fontColor-whiteBaseColor mb-[20px]"
-              // onClick={handleSaveChanges}
-              onClick={sendData}
+              onClick={handleSaveChanges}
             />
           </div>
         </form>

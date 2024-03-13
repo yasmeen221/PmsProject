@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Icons from "../../../../themes/icons";
 import ThreeDotsDropDown from "../../../../components/componentTitle/ThreeDotsDropDown";
 import EditCompetency from "../CardsPopUps/EditCompetency";
@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete";
 import { deleteData } from "../../slices/Api/competenciesApi";
 
-export default function EditDeleteDropDown({ id, item }) {
+export default function EditDeleteDropDown({ id, refresh }) {
   console.log("iii", id);
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
@@ -20,9 +20,7 @@ export default function EditDeleteDropDown({ id, item }) {
   const [isDropdownVisible, setIsDropdownVisible] = useState(true);
   const [selectedItemId, setSelectedItemId] = useState(null);
 
-  const [deleteCom, setDeleteCom] = useState(null);
-  const [popUPCloseAndOpen, setPopUPCloseAndOpen] = useState(false);
-  const handleDropdownClick = (option) => {
+  const handleDropdownClick = (option, id) => {
     console.log(`btn ${option} clicked`);
 
     setSelectedOption(option);
@@ -32,15 +30,29 @@ export default function EditDeleteDropDown({ id, item }) {
 
   const handlePopupClose = () => {
     setSelectedOption(null);
-    setIsDropdownVisible(true);
+    setIsDropdownVisible(false);
   };
-  const handelDeleteCom = () => {
-    deleteData(id);
-    dispatch(HandelOpenPopUpDelete(false));
-    console.log("hh", id);
-    setTimeout(() => {
-      location.reload();
-    }, 1000);
+  // const handelDeleteCom = () => {
+  //   deleteData(id);
+  //   dispatch(HandelOpenPopUpDelete(false));
+  //   console.log("hh", id);
+  //   setTimeout(() => {
+  //     location.reload();
+  //   }, 1000);
+  // };
+
+  const handelDeleteCom = async () => {
+    try {
+      await deleteData(id);
+      dispatch(HandelOpenPopUpDelete(false));
+      console.log("hh", id);
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    } finally {
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
+    }
   };
 
   return (
@@ -65,7 +77,6 @@ export default function EditDeleteDropDown({ id, item }) {
               position: "absolute",
               right: "0rem",
               marginTop: "110px",
-              marginLeft: "0",
             }}
           >
             <ThreeDotsDropDown
@@ -121,10 +132,9 @@ export default function EditDeleteDropDown({ id, item }) {
       {oPenPopUp && <ConfirmDelete onConfirm={handelDeleteCom} />}
       {selectedOption === "Edit" && (
         <EditCompetency
-          item={item}
-          selectedItemId={selectedItemId}
           onClose={handlePopupClose}
-          parentId={id}
+          competencyId={id}
+          refresh={refresh}
         />
       )}
     </>

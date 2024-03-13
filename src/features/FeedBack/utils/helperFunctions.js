@@ -21,8 +21,9 @@ export const getDataWithPagination = (
       .then((res) => {
         if (res.data.data.feedbacks) {
           setData(res.data.data.feedbacks);
-          setNumberOfPages(res.data.data.totalPages);
-          console.log("request", res.data);
+          setNumberOfPages(
+            res.data.data.totalPages == 0 ? 1 : res.data.data.totalPages,
+          );
         }
         setIsLoadingFeedback(false);
       })
@@ -36,8 +37,9 @@ export const getDataWithPagination = (
       .then((res) => {
         if (res.data.data.feedbacks) {
           setData(res.data.data.feedbacks);
-          setNumberOfPages(res.data.data.totalPages);
-          console.log("pendding", res.data);
+          setNumberOfPages(
+            res.data.data.totalPages == 0 ? 1 : res.data.data.totalPages,
+          );
         }
         setIsLoadingFeedback(false);
       })
@@ -51,8 +53,9 @@ export const getDataWithPagination = (
       .then((res) => {
         if (res.data.data.feedbacks) {
           setData(res.data.data.feedbacks);
-          setNumberOfPages(res.data.data.totalPages);
-          console.log("feedback", res.data);
+          setNumberOfPages(
+            res.data.data.totalPages == 0 ? 1 : res.data.data.totalPages,
+          );
         }
         setIsLoadingFeedback(false);
       })
