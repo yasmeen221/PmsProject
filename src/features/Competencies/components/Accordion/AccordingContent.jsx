@@ -7,7 +7,11 @@ import {
   searchCompetencies,
 } from "../../slices/Api/competenciesApi";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setDeleteShardCompentancy,
+  setEditShardCompetancyDone,
+} from "../../slices/compentancySlice";
 
 const AccordingContent = ({
   searchTerm,
@@ -18,6 +22,13 @@ const AccordingContent = ({
   dropDownTextCategory,
   dropDownTextLevel,
 }) => {
+  const dispatch = useDispatch();
+  const editShardCompentancy = useSelector(
+    (state) => state.compentancySlice.editShardCompentancy,
+  );
+  const deleteShardCompentancy = useSelector(
+    (state) => state.compentancySlice.deleteShardCompetancy,
+  );
   const [searchResults, setSearchResults] = useState([]);
   const [sharedComp, setSharedComp] = useState([]);
   const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
@@ -35,12 +46,18 @@ const AccordingContent = ({
             // console.log(fetchedData.data[i])
           }
         }
+
         setSharedComp(arr);
+        console.log("arrfrom content", arr);
+        dispatch(setEditShardCompetancyDone(false));
+        dispatch(setDeleteShardCompentancy(false));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        dispatch(setEditShardCompetancyDone(false));
+        dispatch(setDeleteShardCompentancy(false));
       });
-  }, []);
+  }, [editShardCompentancy, deleteShardCompentancy]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -172,7 +189,6 @@ const AccordingContent = ({
               dropDownTextTeam === "Teams" &&
               dropDownTextCategory === "Categories" ? (
               teams?.data.teamsNames?.map((item) => {
-               
                 return (
                   <AccordionItem
                     className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "

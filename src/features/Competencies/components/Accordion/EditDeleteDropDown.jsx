@@ -9,6 +9,10 @@ import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import { useSelector } from "react-redux";
 import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete";
 import { deleteData } from "../../slices/Api/competenciesApi";
+import {
+  setDeleteCompentancy,
+  setDeleteShardCompentancy,
+} from "../../slices/compentancySlice";
 
 export default function EditDeleteDropDown({ id, refresh }) {
   console.log("iii", id);
@@ -43,15 +47,23 @@ export default function EditDeleteDropDown({ id, refresh }) {
 
   const handelDeleteCom = async () => {
     try {
-      await deleteData(id);
-      dispatch(HandelOpenPopUpDelete(false));
+      const res = await deleteData(id);
+
       console.log("hh", id);
+      console.log("frommm delete", res);
+      if (res.status == "success") {
+        //  dispatch(setEditCompetancyDone(true));
+        //  dispatch(setEditShardCompetancyDone(true));
+        dispatch(setDeleteCompentancy(true));
+        dispatch(setDeleteShardCompentancy(true));
+      }
     } catch (error) {
       console.error("Error deleting data:", error);
     } finally {
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
+      dispatch(HandelOpenPopUpDelete(false));
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1000);
     }
   };
 

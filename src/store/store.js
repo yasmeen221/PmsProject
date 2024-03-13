@@ -11,10 +11,10 @@ import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import userDataReducer from "../features/LogIn/slices/login.js";
 import openPopUpConfirmDeleteSlice from "../features/ManageTeams/slices/HandelOpenDelete";
-import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js"
-import openCompetencyPopUpSlice from "../features/Competencies/slices/openCompentencyPopUp.js"
-import confirmSlice from "../features/FeedBack/slices/acceptPending.js"
-
+import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js";
+import openCompetencyPopUpSlice from "../features/Competencies/slices/openCompentencyPopUp.js";
+import confirmSlice from "../features/FeedBack/slices/acceptPending.js";
+import compentancySlice from "../features/Competencies/slices/compentancySlice.js";
 
 import sidebarReducer from "../components/sideBar/slice/slidebarSlice.js";
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
@@ -38,6 +38,7 @@ const persistantReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {
+    compentancySlice,
     openPopUpConfirmDeleteSlice,
     openCompetencyPopUpSlice, //competency slice
     openPopUpSlice, // POPUPS slice

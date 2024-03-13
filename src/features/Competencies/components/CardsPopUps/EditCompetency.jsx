@@ -13,10 +13,19 @@ import {
 import { getAllData } from "../../slices/Api/catgoryapi";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
 import { useGetLevelQuery } from "../../../ManageLevels/slices/api/apiLevelSlice";
+import { useDispatch } from "react-redux";
+import {
+  setEditCompetancyDone,
+  setEditShardCompetancyDone,
+  setDeleteCompentancy,
+  setDeleteShardCompentancy,
+} from "../../slices/compentancySlice";
 
 const EditCompetency = ({ competencyId, onClose, refresh }) => {
+  const dispatch = useDispatch();
   const [competencyData, setCompetencyData] = useState([]);
   const { _id, name, defaultDescription } = competencyData;
+  console.log("dddd", competencyData);
 
   const [isPopupOpen, setPopupOpen] = useState(true);
   const [category, setCategory] = useState("");
@@ -41,15 +50,25 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
       defaultDescription,
       seniorityLevels: selectedLevels?.map((lv) => ({
         level: lv.value,
-        description: lv.label,
+        description: lv.description,
       })),
+
       category: category?.value,
       teamsAssigned: selectedTeams?.map((team) => team.value),
     };
+
+    console.log("datasend", updatedData);
     try {
       const res = await updateData(_id, updatedData);
-      refresh();
-      console.log({ res });
+      if (res.status == "success") {
+        dispatch(setEditCompetancyDone(true));
+        dispatch(setEditShardCompetancyDone(true));
+        dispatch(setDeleteCompentancy(true));
+        dispatch(setDeleteShardCompentancy(true));
+
+
+      }
+      console.log("rrsrsrsr", res);
     } catch (error) {
       console.log(error);
     } finally {
@@ -90,8 +109,9 @@ const EditCompetency = ({ competencyId, onClose, refresh }) => {
       console.log("foundedCompetency", foundedCompetency);
       setCompetencyData(foundedCompetency);
       const formattedLevels = foundedCompetency?.seniorityLevels?.map((le) => ({
-        value: le?._id,
-        label: le?.description,
+        value: le?.level._id,
+        label: le?.level.levelName,
+        description: le?.description,
       }));
       console.log({ formattedLevels });
       if (formattedLevels) setSelectedLevels(formattedLevels);

@@ -1,32 +1,48 @@
 import { createContext, useContext, useRef, useEffect, useState } from "react";
 import { ChevronDown } from "react-feather";
 import Icons from "../../../../themes/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getTeams, setCompsArr } from "../../slices/Api/getTeamComp";
+import {
+  setDeleteCompentancy,
+  setDeleteShardCompentancy,
+  setEditCompetancyDone,
+  setEditShardCompetancyDone,
+} from "../../slices/compentancySlice";
 
 const AccordionContext = createContext();
 
 // eslint-disable-next-line react/prop-types
-export default function Accordion({ children, value, onChange,...rest }) {
-  const dispatch=useDispatch()
+export default function Accordion({ children, value, onChange, ...rest }) {
+  const dispatch = useDispatch();
   const [selected, setSelected] = useState(value);
+  const editCompentancy = useSelector(
+    (state) => state.compentancySlice.editCompentancyDone,
+  );
+  const deletedCompentancy = useSelector(
+    (state) => state.compentancySlice.deleteCompentancy,
+  );
 
   useEffect(() => {
     onChange?.(selected);
-    if(selected!=null&&selected!="shared"){
-      // console.log("dispatch action with selected")
-      // console.log(selected)
-      dispatch(setCompsArr([]))
-      dispatch(getTeams(selected))
+    if (selected != null && selected != "shared") {
+      dispatch(setCompsArr([]));
+      dispatch(getTeams(selected));
+      dispatch(setEditCompetancyDone(false));
+      dispatch(setEditShardCompetancyDone(false));
+      dispatch(setDeleteShardCompentancy(false));
     }
-  }, [selected]);
+    if (selected != null && selected == "shared") {
+      dispatch(setEditCompetancyDone(false));
+      dispatch(setDeleteCompentancy(false));
+    }
+  }, [selected, editCompentancy, deletedCompentancy]);
 
   return (
-    <ul {...rest}  >
+    <ul {...rest}>
       <AccordionContext.Provider value={{ selected, setSelected }}>
         {children}
       </AccordionContext.Provider>
-    
     </ul>
   );
 }
@@ -76,12 +92,12 @@ export function AccordionItem({
         <ChevronDown
           size={18}
           className={`mr-5  transition-transform ${open ? "rotate-180" : ""}`}
-          onClick={!open?onOpenClick:null}
+          onClick={!open ? onOpenClick : null}
         />
       </header>
       <div
         className="overflow-y-hidden transition-all duration-1000 "
-        style={{ height: open ? 'auto' || 0 : 0 }}
+        style={{ height: open ? "auto" || 0 : 0 }}
       >
         <div className="pt-2 p-4" ref={ref}>
           {children}
