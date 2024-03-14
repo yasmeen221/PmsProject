@@ -56,10 +56,10 @@ const GiveNormalFeedback = ({}) => {
   const userIdFrom =
     accessToken.length > 0 ? jwtDecode(accessToken).userId : "";
   const dispatch = useDispatch();
-  console.log("commmm", userCompetenciesOptions);
   useEffect(() => {
     setUserId(fromId);
   }, [fromName, fromId]);
+
   const formSubmit = (values) => {
     if (teamsBtnChecked && userCompetencies.length == 0) {
       setUserCompetenciesErrMsg(true);
@@ -74,7 +74,11 @@ const GiveNormalFeedback = ({}) => {
       setUserIdsErrMsg(true);
       return;
     }
-
+    // if(mangerId === "") {
+    //   toast.error("the user did not have a manger yet!")
+    //   console.log("mangerId", mangerId)
+    //   return;
+    // }
     if (
       userId === "" ||
       (teamsBtnChecked &&
@@ -103,8 +107,9 @@ const GiveNormalFeedback = ({}) => {
     //     },
     //   ],
     // });
+
     try {
-      const request = axiosInstance.post(`feedback`, {
+      const requestData = {
         feedbackMainData: {
           userIdFrom,
           userIdTo: userId,
@@ -124,35 +129,25 @@ const GiveNormalFeedback = ({}) => {
             }),
           },
         ],
-      });
-      request.then((res) => {
-        if (res.data.status == "success") {
-          acceptFeedback(cardId, {
-            feedbackMainData: {
-              userIdFrom,
-              userIdTo: userId,
-              message: values.message,
-              visibility: values.visibility.split(","),
-              feedbackType: "normal",
-            },
-            feedBackMetaData: [
-              {
-                name: "competency",
-                value: userCompetencies.map((competency, index) => {
-                  return {
-                    competencyId: competency.value,
-                    competencyFeedBack: competencyFeedback[index],
-                    rate: competencyRatings[index],
-                  };
-                }),
-              },
-            ],
-          }).then((res) => {
-            // console.log(cardId, "card")
-            // console.log("resss",res)
-          });
-        }
-      });
+      };
+
+      // axiosInstance.post(`/feedback`, requestData).then((res) => {
+      //   console.log("feedback", res);
+      // });
+
+      fromId == ""
+        ? axiosInstance.post(`/feedback`, requestData).then((res) => {
+            console.log("feedback", res);
+          })
+        : acceptFeedback(cardId, requestData)
+            .then((res) => {
+              console.log("accept", res);
+            })
+
+            .catch((error) => {
+              console.error("Error:", error);
+            });
+      console.log("ffform", fromId != "");
       toast.success("your respond is submitted successfully!");
       handleClosePopup();
     } catch (error) {
