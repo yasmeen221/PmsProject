@@ -129,7 +129,7 @@ const GiveNormalFeedback = ({ }) => {
             },
         ],
     };
-    (!fromId ? axiosInstance.post(`feedback`, requestData) : acceptFeedback(cardId, requestData))
+    (fromId !=="" ? axiosInstance.post(`feedback`, requestData) : acceptFeedback(cardId, requestData))
     .then((res) => {
         if (fromId && res.data.status == "success") {
             console.log("res", res)
