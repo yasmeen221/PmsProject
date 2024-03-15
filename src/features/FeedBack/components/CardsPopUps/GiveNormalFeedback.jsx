@@ -101,7 +101,7 @@ const GiveNormalFeedback = ({ }) => {
     //   ],
     // });
     try {
-      const request = axiosInstance.post(`feedback`, {
+      axiosInstance.post(`feedback`, {
         feedbackMainData: {
           userIdFrom,
           userIdTo: userId,
@@ -121,9 +121,8 @@ const GiveNormalFeedback = ({ }) => {
             }),
           },
         ],
-      });
-      request.then((res) => {
-        if (res.data.status == "success") {
+      }).then((res)=>{
+        if (res.data.status == "success"&&fromId) {
           acceptFeedback(cardId,{
             feedbackMainData: {
               userIdFrom,
@@ -150,6 +149,7 @@ const GiveNormalFeedback = ({ }) => {
           })
         }
       })
+    
       toast.success("your respond is submitted successfully!");
       handleClosePopup();
     } catch (error) {
