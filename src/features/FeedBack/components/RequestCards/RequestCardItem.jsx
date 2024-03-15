@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImageStyle from "../../../../components/ImageStyle/ImageStyle";
 import { useDispatch, useSelector } from "react-redux";
 import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete";
-import { deleteFeedback,  } from "../../slices/Api/feedbackApi";
+import { deleteFeedback, } from "../../slices/Api/feedbackApi";
+import { setIdToDeleteRequestedPage } from "../../slices/openPopUpSlice";
 
-export default function RequestCardItem({text,image,name,date,cardId,getDataWithPagination,currentPage,setIsLoadingFeedback,setData,userId,setNumberOfPages}) {
+export default function RequestCardItem({ text, image, name, date, cardId, getDataWithPagination, currentPage, setIsLoadingFeedback, setData, userId, setNumberOfPages }) {
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
   );
-  const handleDelete=(cardId)=>{
-    deleteFeedback(cardId).then((res)=>{
-      getDataWithPagination(setIsLoadingFeedback,setData,currentPage,userId,setNumberOfPages,true,false,false)
-      // console.log(res)
+  const id = useSelector(state => state.openPopUpSlice.idToDeleteRequestedPage)
+  const handleDelete = (cardId) => {
+    deleteFeedback(cardId).then((res) => {
+      getDataWithPagination(setIsLoadingFeedback, setData, currentPage, userId, setNumberOfPages, true, false, false)
+      console.log(res)
+    }).catch((err) => {
+      console.log(err)
     })
   }
+  useEffect(() => { }, [id])
   return (
     <div className="flex flex-col  justify-between border  p-6 border-borderColor-100 rounded-lg w-[32%] h-[10.365] gap-4 hover:bg-slate-100">
       <div className="  h-[2.635] text-sm text-drawerColor-900  font-medium ">
@@ -36,13 +41,13 @@ export default function RequestCardItem({text,image,name,date,cardId,getDataWith
           </div>
         </div>
         <div className="flex items-center ">
-          <button onClick={()=>dispatch(HandelOpenPopUpDelete(true))}
-           className=" flex items-center justify-center bg-white px-2 py-4 w-[4.688rem] h-2 text-sm font-medium font-fontColor-900 rounded-md border  text- border-borderColor-200 hover:bg-green-100 active:bg-green-300">
+          <button onClick={() => { dispatch(HandelOpenPopUpDelete(true)), dispatch(setIdToDeleteRequestedPage(cardId)) }}
+            className=" flex items-center justify-center bg-white px-2 py-4 w-[4.688rem] h-2 text-sm font-medium font-fontColor-900 rounded-md border  text- border-borderColor-200 hover:bg-green-100 active:bg-green-300">
             Cancel
           </button>
         </div>
       </div>
-      {oPenPopUp && <ConfirmDelete deleteText="Are you sure to Decline? " confirmButtonText="Decline" onConfirm={()=>{handleDelete(cardId)}} />}
+      {oPenPopUp && <ConfirmDelete deleteText="Are you sure to Decline? " confirmButtonText="Decline" onConfirm={() => { handleDelete(id) }} />}
 
     </div>
   );

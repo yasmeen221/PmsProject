@@ -29,9 +29,6 @@ function AddCompetency() {
     description: descriptions[index],
   }));
 
-  console.log(teamsAssigned);
-  console.log(seniorityLevels);
-
   const schema = yup.object({
     name: yup
       .string()
@@ -53,11 +50,11 @@ function AddCompetency() {
     label: team.teamName,
   }));
 
-  console.log(teamsOptions);
+
 
   const { data: levels } = useGetLevelQuery();
   const levelsArray = levels?.data?.levels;
-  console.log("levelsArray", levelsArray);
+
   const levelsOptions = levelsArray?.map((level) => ({
     value: level._id,
     label: level.levelName,
@@ -69,7 +66,6 @@ function AddCompetency() {
 
   const handleLevelChange = (selectedOptions) => {
     setFormLevels(selectedOptions);
-    console.log(selectedOptions);
   };
 
   const {
@@ -110,7 +106,6 @@ function AddCompetency() {
       console.log("Backend response:", response.data);
       toast.success("your respond is submitted successfully!");
       setPopupOpen(false);
-     
     } catch (error) {
       console.error("Error sending data to the backend:", error);
       toast.error("your respond is not submitted successfully!");

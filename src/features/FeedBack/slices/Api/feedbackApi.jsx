@@ -50,38 +50,44 @@ export const getUserCompetencies = async (teamId) => {
     console.log("error from get", error);
   }
 };
-export const getFeedbacks = async () => {
+export const getFeedbacks = async (data) => {
   try {
-    const request = await axiosInstance.get(`/feedback?page=${page}&type=normal&type=praise`);
+    const request = await axiosInstance.post(`/feedback`, data);
+    return request;
+  } catch (error) {
+    console.log("error from create", error);
+  }
+};
+export const getRequestsFeedback = async (page, userIdFrom) => {
+  try {
+    const request = await axiosInstance.get(
+      `/feedback?page=${page}&type=requested&userIdFrom=${userIdFrom}`,
+    );
     return request;
   } catch (err) {
     console.log(err);
   }
-}
-export const getRequestsFeedback=async(page,userIdFrom)=>{
+};
+export const getFeedAndPraise = async (page,userId) => {
   try {
-    const request = await axiosInstance.get(`/feedback?page=${page}&type=requested&userIdFrom=${userIdFrom}`);
+    const request = await axiosInstance.get(
+      `/feedback?page=${page}&type=normal&currentUserId=${userId}`,
+    );
     return request;
   } catch (err) {
     console.log(err);
   }
-}
-export const getFeedAndPraise=async(page)=>{
+};
+export const getPending = async (page, userIdTo) => {
   try {
-    const request = await axiosInstance.get(`/feedback?page=${page}&type=normal&type=praise`);
+    const request = await axiosInstance.get(
+      `/feedback?page=${page}&type=requested&userIdTo=${userIdTo}`,
+    );
     return request;
   } catch (err) {
     console.log(err);
   }
-}
-export const getPending=async(page,userIdTo)=>{
-  try {
-    const request = await axiosInstance.get(`/feedback?page=${page}&type=requested&userIdTo=${userIdTo}`);
-    return request;
-  } catch (err) {
-    console.log(err);
-  }
-}
+};
 
 export const deleteFeedback = async (id) => {
   try {
@@ -93,9 +99,9 @@ export const deleteFeedback = async (id) => {
 };
 //will use it in then when the popup request is done  and in then of calling this function call    dispatch(getFeedbacksRequest())
 
-export const acceptFeedback = async (id) => {
+export const acceptFeedback = async (id,body) => {
   try {
-    const request = await axiosInstance.get(`/feedback/accept/${id}`);
+    const request = await axiosInstance.post(`/feedback/accept/${id}`,body);
     return request.data;
   } catch (err) {
     console.log(err);

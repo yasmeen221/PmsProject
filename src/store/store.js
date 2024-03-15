@@ -11,10 +11,12 @@ import editLevelSlice from "../features/ManageLevels/slices/EditLevel";
 import levelsReducer from "../features/ManageLevels/slices/LevelSlice";
 import userDataReducer from "../features/LogIn/slices/login.js";
 import openPopUpConfirmDeleteSlice from "../features/ManageTeams/slices/HandelOpenDelete";
-import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js"
-import openCompetencyPopUpSlice from "../features/Competencies/slices/openCompentencyPopUp.js"
+import TeamsSlice from "../features/Competencies/slices/Api/getTeamComp.js";
+import openCompetencyPopUpSlice from "../features/Competencies/slices/openCompentencyPopUp.js";
+import confirmSlice from "../features/FeedBack/slices/acceptPending.js";
+import compentancySlice from "../features/Competencies/slices/compentancySlice.js";
 
-
+import sidebarReducer from "../components/sideBar/slice/slidebarSlice.js";
 import { apiSlice } from "../features/ManageTeams/slices/apis/apiSlice.js";
 import { apiLevelSlice } from "../features/ManageLevels/slices/api/apiLevelSlice.js";
 import { apiLoginSlice } from "../features/LogIn/slices/apis/apiLoginSlice.js";
@@ -24,20 +26,21 @@ import { usersApiSlice } from "../features/ManageUsers/slices/api/apiSlice.js";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import { combineReducers } from "@reduxjs/toolkit";
-const persistConfig={
-key:"root",
-version:1,
-storage,
-}
-const userReducer=combineReducers({
-  userDataReducer:userDataReducer
-})
-const persistantReducer=persistReducer(persistConfig,userReducer)
+const persistConfig = {
+  key: "root",
+  version: 1,
+  storage,
+};
+const userReducer = combineReducers({
+  userDataReducer: userDataReducer,
+});
+const persistantReducer = persistReducer(persistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {
+    compentancySlice,
     openPopUpConfirmDeleteSlice,
-    openCompetencyPopUpSlice,//competency slice
+    openCompetencyPopUpSlice, //competency slice
     openPopUpSlice, // POPUPS slice
     openTeamPopUpSlice, // Manage Teams slice
     editTeamPopUpSlice, // Manage Teams slice
@@ -47,10 +50,11 @@ export const store = configureStore({
     openAddUserFormPopUp, // Manage Users slice
     editLevel: editLevelSlice, // Manage Levels slice
     openPopupAddLevel, // Manage Levels slice
-    
+    confirmSlice,
+    sidebar: sidebarReducer,
     persistantReducer,
-    getTeamCompetenciesReducer:TeamsSlice,
-    
+    getTeamCompetenciesReducer: TeamsSlice,
+    sidebar: sidebarReducer,
     [apiSlice.reducerPath]: apiSlice.reducer, // API slice
     [apiLevelSlice.reducerPath]: apiLevelSlice.reducer, // API level slice
     [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,
@@ -66,10 +70,8 @@ export const store = configureStore({
       apiLoginSlice.middleware,
       apiRestPassSlice.middleware,
       usersApiSlice.middleware,
-      
-      
     ),
 });
 
 export default store;
-export const persistor=persistStore(store)
+export const persistor = persistStore(store);

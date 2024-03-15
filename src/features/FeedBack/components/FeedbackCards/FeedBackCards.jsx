@@ -3,17 +3,20 @@ import FeedbackCard from "../FeedbackCards/FeedbackCard";
 import Icons from "../../../../themes/icons";
 import Pagination from "../../../../components/Pagination/Pagination";
 import { getDataWithPagination } from "../../utils/helperFunctions";
+import { useSelector } from "react-redux";
+import { jwtDecode } from "jwt-decode";
 
 export default function FeedBackCards() {
   const [isLoadingFeedback, setIsLoadingFeedback] = useState(false)
   const [data, setData] = useState([])
   const [numberOfPages, setNumberOfPages] = useState(0)
-  
+  const userData = useSelector(state => state.persistantReducer.userDataReducer.userData)
+  const userId = userData.length > 0 ? jwtDecode(userData).userId : ""
   useEffect(() => {
-    getDataWithPagination(setIsLoadingFeedback, setData, 1, "", setNumberOfPages,false,true,false)
+    getDataWithPagination(setIsLoadingFeedback, setData, 1, userId, setNumberOfPages,false,true,false)
   }, [])
   const handlePageClick = (event) => {
-    getDataWithPagination(setIsLoadingFeedback, setData, event.selected + 1, "", setNumberOfPages,false,true,false)
+    getDataWithPagination(setIsLoadingFeedback, setData, event.selected + 1, userId, setNumberOfPages,false,true,false)
   };
   return (
     <>

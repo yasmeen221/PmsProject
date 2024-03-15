@@ -43,28 +43,21 @@ export default function PendingCards() {
               name={`${item.feedbackMainData.userIdFrom.firstName} ${item.feedbackMainData.userIdFrom.lastName}`}
               date={item.feedbackMainData.createdAt.substring(0, 10)}
               image={image1}
-              getDataWithPagination={getDataWithPagination}
-              currentPage={currentPage}
-              setIsLoadingFeedback={setIsLoadingFeedback}
-              setData={setData}
-              userId={userId}
-              setNumberOfPages={setNumberOfPages}
+              fromName={item.feedbackMainData.userIdFrom.username} //to put it in dropdown label when make normal feedback when press ✅
+              fromId={item.feedbackMainData.userIdFrom._id} //to put in normal feedback submit 
+              getDataWithPagination={getDataWithPagination} //to refresh when delete item when press delete in pendingcarditem page
+              currentPage={currentPage} //to know your current page in pagination to refresh it
+              setIsLoadingFeedback={setIsLoadingFeedback} //to make set to loader in pendingcards by the pendingcarditem when delete item
+              setData={setData} //to set the array of feedbacks displayed in the page
+              userId={userId} //to get userIdTo=userId
+              setNumberOfPages={setNumberOfPages} //to set number of pages 
             />
           ))
         ) : isLoadingFeedback == false && data.length == 0 ? (
           <div className="w-full flex flex-row justify-center">
             <p>There is No Pending Requests Exist</p>
           </div>
-        ) : (
-          data.length > 0 ? (
-            data.map((item, index) => (
-              <PendingCardItem key={item.feedbackMainData._id} cardId={item.feedbackMainData.userIdFrom._id} text={item.feedbackMainData.message} name={`${item.feedbackMainData.userIdFrom.firstName} ${item.feedbackMainData.userIdFrom.lastName}`} date={item.feedbackMainData.createdAt.substring(0, 10)} image={image1} />
-            ))
-          ) : (
-            (isLoadingFeedback == false && data.length == 0) ? <div className='w-full flex flex-row justify-center'>
-              <p>There is No Pending Requests Exist</p>
-            </div> : ""
-          ))
+        ) :""
         }
         {<Pagination handlePageClick={handlePageClick} numberOfPages={numberOfPages} />}
 

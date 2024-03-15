@@ -5,9 +5,16 @@ import logo from "../../assets/images/logo/logo.png";
 import logoTwo from "../../assets/images/logo/logo.svg";
 import { jwtDecode } from "jwt-decode";
 import Cookies from "universal-cookie";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectIsOpen,
+  toggleSidebar,
+} from "../../components/sideBar/slice/slidebarSlice.js";
 
 function SideBar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const isOpen = useSelector(selectIsOpen);
+  const dispatch = useDispatch();
+  // const [isOpen, setIsOpen] = useState(false);
   const [userData, setUserData] = useState();
   useEffect(() => {
     const cookie = new Cookies();
@@ -17,14 +24,17 @@ function SideBar() {
       setUserData(decodedUserToken);
     }
   }, []);
+  const handleToggleSidebar = () => {
+    dispatch(toggleSidebar());
+  };
 
   return (
     <aside
       className={
         isOpen
-          ? `relative flex w-[16.25rem]  justify-center bg-drawerColor-50 transition-all 
+          ? ` flex w-[16.25rem] h-screen fixed justify-center bg-drawerColor-50 transition-all 
       duration-500`
-          : `relative flex w-[6.5rem]   justify-center bg-drawerColor-50 transition-all 
+          : `fixed flex w-[6.5rem] h-screen  justify-center bg-drawerColor-50 transition-all 
       duration-500`
       }
     >
@@ -56,6 +66,7 @@ function SideBar() {
           icon={<Icons.GoalsIcon />}
           isOpen={isOpen}
           title="Goals"
+          to="goals" 
         ></SideBarItem>
 
         <SideBarItem
@@ -80,25 +91,29 @@ function SideBar() {
           icon={<Icons.Surveys />}
           isOpen={isOpen}
           title="surveys"
+          to="surveys"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Learning />}
           isOpen={isOpen}
           title="learning"
+          to="learnings"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Compensation />}
           isOpen={isOpen}
           title="compensation"
+          to="compensations"
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Settings />}
           isOpen={isOpen}
           title="settings"
+          to="settings"
         ></SideBarItem>
       </ul>
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggleSidebar}
         className={
           isOpen
             ? `absolute left-[92%] top-[50%] h-9  w-9 rounded-[50%] bg-buttonColor-baseColor transition-all duration-500 `

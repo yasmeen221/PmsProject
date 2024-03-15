@@ -5,30 +5,25 @@ import Button from "../../../../components/Button/Button";
 import FormPopUp from "../../../../components/PopUp/FormPopUp";
 import Icons from "../../../../themes/icons";
 import { getDataCompetenciesByID } from "../../slices/Api/competenciesApi";
-import { toggleCompetencyDetails } from "../../slices/openCompentencyPopUp";
+
 import AccordionDropDown, {
   AccordionItemDropDown,
 } from "../Accordion/DropDownDetails";
-// import { toogleCompentancyDetails } from "../../../FeedBack/slices/openPopUpSlice";
 
 export default function ViewDetails({ onClose, id }) {
-  // const dispatch=useDispatch()
-  // const openDetailsPopUp = useSelector(state => state.openCompetencyPopUpSlice.detailsPopup)
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [details, setDetails] = useState({});
   useEffect(() => {
-    // console.log(id);
     setPopupOpen(true);
     getDetails(id);
   }, []);
   const handleClosePopup = () => {
-    // dispatch(toogleCompentancyDetails(false));
     setPopupOpen(false);
     // onClose();
   };
   async function getDetails(id) {
     const { data } = await getDataCompetenciesByID(id);
-    // console.log(data.foundedCompetency);
+
     setDetails(data.foundedCompetency);
   }
   return (

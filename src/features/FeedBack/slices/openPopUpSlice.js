@@ -7,6 +7,8 @@ const initialState = {
   requestFeedbackForSomeOne: false,
   requestFeedbackForMySelf: false,
   feedbackDetailsOpenPopUp: false,
+  idToDeleteRequestedPage: "",
+  idToDeletePendingPage:""
 };
 const openPopUpSlice = createSlice({
   name: "openPopUpSlice",
@@ -33,6 +35,12 @@ const openPopUpSlice = createSlice({
     toogleCompentancy: (state, action) => {
       state.feedbackDetailsOpenPopUp = action.payload;
     },
+    setIdToDeleteRequestedPage: (state, action) => {
+      state.idToDeleteRequestedPage = action.payload
+    },setIdToDeletePendingPage: (state, action) => {
+      state.idToDeletePendingPage = action.payload
+    }
+
   },
 });
 export const {
@@ -43,6 +51,9 @@ export const {
   toogleRequestFeedbackForMySelf,
   // toogleCompentancyDetails,
   toogleCompentancy,
+  setIdToDeleteRequestedPage,
+  setIdToDeletePendingPage
+
 } = openPopUpSlice.actions;
 
 export default openPopUpSlice.reducer;

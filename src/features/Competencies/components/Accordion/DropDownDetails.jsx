@@ -1,11 +1,15 @@
 import { createContext, useContext, useRef, useEffect, useState } from "react";
 import { ChevronDown } from "react-feather";
-import Icons from "../../../../themes/icons";
 
 const AccordionContext = createContext();
 
 // eslint-disable-next-line react/prop-types
-export default function AccordionDropDown({ children, value, onChange, ...rest }) {
+export default function AccordionDropDown({
+  children,
+  value,
+  onChange,
+  ...rest
+}) {
   const [selected, setSelected] = useState(value);
 
   useEffect(() => {
@@ -17,7 +21,6 @@ export default function AccordionDropDown({ children, value, onChange, ...rest }
       <AccordionContext.Provider value={{ selected, setSelected }}>
         {children}
       </AccordionContext.Provider>
-    
     </ul>
   );
 }
@@ -47,10 +50,7 @@ export function AccordionItemDropDown({
         className="flex justify-between items-center p-4 font-medium"
       >
         <div className="flex justify-between items-center">
-          
-          <div>
-            {trigger}
-          </div>
+          <div>{trigger}</div>
         </div>
         <ChevronDown
           size={18}

@@ -7,7 +7,11 @@ import {
   searchCompetencies,
 } from "../../slices/Api/competenciesApi";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  setDeleteShardCompentancy,
+  setEditShardCompetancyDone,
+} from "../../slices/compentancySlice";
 
 const AccordingContent = ({
   searchTerm,
@@ -18,6 +22,13 @@ const AccordingContent = ({
   dropDownTextCategory,
   dropDownTextLevel,
 }) => {
+  const dispatch = useDispatch();
+  const editShardCompentancy = useSelector(
+    (state) => state.compentancySlice.editShardCompentancy,
+  );
+  const deleteShardCompentancy = useSelector(
+    (state) => state.compentancySlice.deleteShardCompetancy,
+  );
   const [searchResults, setSearchResults] = useState([]);
   const [sharedComp, setSharedComp] = useState([]);
   const { data: teams, isLoading, isSuccess } = useGetTeamsNameQuery();
@@ -28,19 +39,24 @@ const AccordingContent = ({
     getAllDataCompetencies()
       .then((fetchedData) => {
         let arr = [];
-        // console.log(fetchedData.data)
+
         for (let i = 0; i < fetchedData.data.length; i++) {
           if (fetchedData.data[i].teamsAssigned.length == 0) {
             arr.push(fetchedData.data[i]);
-            // console.log(fetchedData.data[i])
           }
         }
+
         setSharedComp(arr);
+
+        dispatch(setEditShardCompetancyDone(false));
+        dispatch(setDeleteShardCompentancy(false));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        dispatch(setEditShardCompetancyDone(false));
+        dispatch(setDeleteShardCompentancy(false));
       });
-  }, []);
+  }, [editShardCompentancy, deleteShardCompentancy]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -48,7 +64,6 @@ const AccordingContent = ({
         searchCompetencies(searchTerm)
           .then((fetchedDataSearch) => {
             setSearchResults(fetchedDataSearch);
-            // console.log(fetchedDataSearch)
           })
           .catch((error) => {
             console.log("Error fetching data:", error.data);
@@ -60,7 +75,6 @@ const AccordingContent = ({
   }, [searchTerm]);
 
   const renderPosition = (itemm) => {
-    // console.log( itemm.seniorityLevels);
     const allCompetencyLevelNames = itemm.seniorityLevels.map(
       //rerurn array of competency levels names
       (item, index) =>
@@ -145,6 +159,7 @@ const AccordingContent = ({
                           description={itemm.defaultDescription}
                           skills={renderCatogry(itemm)}
                           position={renderPosition(itemm)}
+                          refresh={getAllDataCompetencies}
                         />
                       ))
                     : renderNoData()}
@@ -159,6 +174,7 @@ const AccordingContent = ({
                   description={itemm.defaultDescription}
                   skills={renderCatogry(itemm)}
                   position={renderPosition(itemm)}
+                  refresh={getAllDataCompetencies}
                 />
               ))
             ) : isLoading ? (
@@ -177,7 +193,7 @@ const AccordingContent = ({
                     key={item._id}
                     trigger={`${item.teamName} Team`}
                     backgroundColor="bg-buttonColor-baseColor"
-                    content={<Icons.Organization />}
+                    content={item.teamName.substring(0, 2).toUpperCase()}
                     paragraph="Team Working, Public Speaking, Research"
                   >
                     <hr></hr>
@@ -194,6 +210,7 @@ const AccordingContent = ({
                           description={itemm.defaultDescription}
                           skills={renderCatogry(itemm)}
                           position={renderPosition(itemm)}
+                          refresh={getAllDataCompetencies}
                         />
                       ))
                     ) : !isLoadingTeamComp &&

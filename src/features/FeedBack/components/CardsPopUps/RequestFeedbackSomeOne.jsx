@@ -42,6 +42,7 @@ export default function RequestFeedbackSomeOne() {
   const [usersNameIDTwo, setUsersNameIDTwo] = useState("");
   const [competencies, setCompetencies] = useState([]);
   const [teamId, setTeamId] = useState("");
+  console.log("team", teamId);
   const RequestFeedbackForSomeOnePopUp = useSelector(
     (state) => state.openPopUpSlice.requestFeedbackForSomeOne,
   );
@@ -49,7 +50,7 @@ export default function RequestFeedbackSomeOne() {
     (state) => state.persistantReducer.userDataReducer.userData,
   );
   console.log("userNameidfrom", usersNameID);
-  console.log("selectedfrom");
+
   console.log("userNameidto", usersNameIDTwo);
   console.log("iduser", userID);
 
@@ -91,9 +92,12 @@ export default function RequestFeedbackSomeOne() {
   }, []);
 
   // recevieeerrrrrrrrrrrrrrrrrrrr
-  const getAllUsersData = async (selectedUserId) => {
+  const getAllUsersData = async (selectedUserId, userID) => {
     const data = await getAllUsersNames();
     const allUsers = data.data.usersNames;
+    console.log("All", allUsers);
+    const filteredUsers = allUsers.filter((user) => user._id !== userID);
+    console.log("filter", filteredUsers);
     setUsersNames(allUsers);
     if (selectedUserId) {
       const selectedUser = allUsers.find((user) => user._id == selectedUserId);
@@ -118,23 +122,7 @@ export default function RequestFeedbackSomeOne() {
     }
     console.log("toooo", selectedUserIdTwo);
   };
-  // const [selectedVisibility, setSelectedVisibility] = useState([]);
-  // console.log("sellelelel", selectedVisibility);
-  // const handleVisibilityChange = (e) => {
-  //   const selectedValues = Array.from(
-  //     e.target.selectedOptions,
-  //     (option) => option.value,
-  //   );
-  //   setSelectedVisibility(selectedValues);
-  // };
-  // const visibilityFun = async (id) => {
-  //   setVisibility(data.data.teamLeader._id);
-  // };
-  // const getCompetencies = async () => {
-  //   const dataCompetencies = await getUserCompetencies(usersNameID);
-  //   setCompetencies(dataCompetencies);
-  // };
-  // console.log("compenatcy", Competencies);
+
   async function postPraise(data) {
     const response = await getFeedbacks(data);
     console.log(response);
@@ -153,11 +141,11 @@ export default function RequestFeedbackSomeOne() {
     try {
       const requestObject = {
         feedbackMainData: {
-          userIdFrom: userID,
-          userIdTo: usersNameIDTwo,
+          userIdFrom: usersNameIDTwo,
+          userIdTo: userID,
           message: value.message,
           visibility: value.visibility.split(","),
-          feedbackType: "request",
+          feedbackType: "requested",
         },
         feedBackMetaData: [
           {
@@ -183,7 +171,6 @@ export default function RequestFeedbackSomeOne() {
       console.log("error", error);
       toast.error("your respond is not submitted successfully!");
     }
-  
   };
 
   const handleClosePopup = () => {
@@ -272,7 +259,6 @@ export default function RequestFeedbackSomeOne() {
                     wrap="soft"
                     id="message"
                     name="message"
-                    // onChange={(e) => console.log(e.target.value)}
                     className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0 py-2.5 px-2 shadow-sm ring-1 ring-fontColor-outLineInputColor placeholder:text-fontColor-placeHolderColor focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
                   />
                 </div>
