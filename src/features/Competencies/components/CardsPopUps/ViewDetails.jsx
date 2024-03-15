@@ -24,7 +24,7 @@ export default function ViewDetails({ onClose, id }) {
   const handleClosePopup = () => {
     // dispatch(toogleCompentancyDetails(false));
     setPopupOpen(false);
-    onClose();
+    // onClose();
   };
   async function getDetails(id) {
     const { data } = await getDataCompetenciesByID(id);
