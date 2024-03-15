@@ -23,24 +23,24 @@ const schema = yup.object({
     .required("user name is required")
     .matches(
       /^[a-zA-Z0-9_]+$/,
-      "username  can contain letters and digits,underscores only",
+      "Invalid username or password",
     ),
   password: yup
     .string()
     .required("Password is required")
     .matches(
       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/,
-      "Invalid password. It must contain at least 8 characters and max 20, small and capital letter,numbers, and special character.",
+      "Invalid username or password",
     ),
 });
 
-const LoginForm = ({}) => {
+const LoginForm = ({ }) => {
   useTitle("LogIn");
   const dispatch = useDispatch();
   const cookie = new Cookies((null, { path: "/" }));
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
-  const [loginUser, { isLoading, isError, error, isSuccess }] =useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation();
   const [loginError, setLoginError] = useState();
   const {
     register,
@@ -128,7 +128,7 @@ const LoginForm = ({}) => {
                 placeholder="Enter User Name"
               />
             </div>
-            {errors.email ? (
+            {errors.email && errors.email.type == "required" ? (
               <p className="text-deleteColor-50">{errors.email.message}</p>
             ) : null}
             <div className="mt-1">
@@ -146,12 +146,15 @@ const LoginForm = ({}) => {
                 placeholder="enter password"
               />
             </div>
-            {errors.password ? (
+            {errors.password && errors.password.type == "required" ? (
               <p className="text-deleteColor-50">{errors.password.message}</p>
             ) : null}
-            {loginError ? (
+            {loginError ? ( //error fron response feom server
               <p className="text-deleteColor-50">{loginError}</p>
             ) : null}
+            {!loginError && ((errors.email && errors.email.type != "required") || (errors.password && errors.password.type != "required")) ? //for validation errors
+              <p className="text-deleteColor-50">username or password is incorrect</p>
+              : ""}
 
             <div className="mt-4">
               <Button

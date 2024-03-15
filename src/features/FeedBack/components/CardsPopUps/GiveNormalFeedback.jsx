@@ -25,7 +25,7 @@ import {
 import toast from "react-hot-toast";
 import { setCardId, setFromId, setUserName } from "../../slices/acceptPending";
 
-const GiveNormalFeedback = ({}) => {
+const GiveNormalFeedback = ({ }) => {
   const openNormalFeedbackPopUp = useSelector(
     (state) => state.openPopUpSlice.normalFeedbackPopup,
   );
@@ -137,16 +137,16 @@ const GiveNormalFeedback = ({}) => {
 
       fromId == ""
         ? axiosInstance.post(`/feedback`, requestData).then((res) => {
-            console.log("feedback", res);
-          })
+          console.log("feedback", res);
+        })
         : acceptFeedback(cardId, requestData)
-            .then((res) => {
-              console.log("accept", res);
-            })
+          .then((res) => {
+            console.log("accept", res);
+          })
 
-            .catch((error) => {
-              console.error("Error:", error);
-            });
+          .catch((error) => {
+            console.error("Error:", error);
+          });
       console.log("ffform", fromId != "");
       toast.success("your respond is submitted successfully!");
       handleClosePopup();
@@ -372,7 +372,7 @@ const GiveNormalFeedback = ({}) => {
             </div>
             {/* switch */}
 
-            <div className="inline-flex justify-between items-center w-full pb-4">
+            {!fromId && <div className="inline-flex justify-between items-center w-full pb-4">
               <div className="w-full">
                 <Header text="Feedback on specific competencies" />
                 <p className="text-fontColor-placeHolderColor  text-body1Size">
@@ -393,7 +393,7 @@ const GiveNormalFeedback = ({}) => {
                 </label>
               </div>
             </div>
-
+            }
             <div
               className="h-[40vh] overflow-y-auto px-1 "
               style={{ scrollbarWidth: "none" }}
@@ -481,7 +481,7 @@ const GiveNormalFeedback = ({}) => {
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
               buttonText="Give Feedback"
 
-              // onClick={handleClosePopup}
+            // onClick={handleClosePopup}
             />
           </div>
         </form>
