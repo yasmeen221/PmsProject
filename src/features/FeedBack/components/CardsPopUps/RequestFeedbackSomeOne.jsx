@@ -42,6 +42,7 @@ export default function RequestFeedbackSomeOne() {
   const [usersNameIDTwo, setUsersNameIDTwo] = useState("");
   const [competencies, setCompetencies] = useState([]);
   const [teamId, setTeamId] = useState("");
+  console.log("team", teamId);
   const RequestFeedbackForSomeOnePopUp = useSelector(
     (state) => state.openPopUpSlice.requestFeedbackForSomeOne,
   );
@@ -49,7 +50,7 @@ export default function RequestFeedbackSomeOne() {
     (state) => state.persistantReducer.userDataReducer.userData,
   );
   console.log("userNameidfrom", usersNameID);
-  console.log("selectedfrom");
+
   console.log("userNameidto", usersNameIDTwo);
   console.log("iduser", userID);
 
@@ -91,9 +92,12 @@ export default function RequestFeedbackSomeOne() {
   }, []);
 
   // recevieeerrrrrrrrrrrrrrrrrrrr
-  const getAllUsersData = async (selectedUserId) => {
+  const getAllUsersData = async (selectedUserId, userID) => {
     const data = await getAllUsersNames();
     const allUsers = data.data.usersNames;
+    console.log("All", allUsers);
+    const filteredUsers = allUsers.filter((user) => user._id !== userID);
+    console.log("filter", filteredUsers);
     setUsersNames(allUsers);
     if (selectedUserId) {
       const selectedUser = allUsers.find((user) => user._id == selectedUserId);
@@ -137,8 +141,8 @@ export default function RequestFeedbackSomeOne() {
     try {
       const requestObject = {
         feedbackMainData: {
-          userIdFrom: userID,
-          userIdTo: usersNameIDTwo,
+          userIdFrom: usersNameIDTwo,
+          userIdTo: userID,
           message: value.message,
           visibility: value.visibility.split(","),
           feedbackType: "requested",

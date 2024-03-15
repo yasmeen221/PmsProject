@@ -20,7 +20,7 @@ const schema = yup.object({
   levelName: yup
     .string()
     .required("Level name is required")
-    .matches(/^[A-Za-z]+$/, "Level name must contain characters only")
+    .matches(/^[A-Za-z\s_]+$/, "Level name must contain letters, spaces, '_' only")
     .min(3, "level name must be at least 3 characters")
     .max(30, "level name can't exceed 30 characters")
     .trim(),
@@ -30,7 +30,6 @@ export default function ManageLevel() {
   const dispatch = useDispatch();
   const handleOpen = useSelector((store) => store.openPopupAddLevel.open);
   const levelData = useSelector((store) => store.editLevel.level);
-
   const [isPopOpen, setPopOpen] = useState(false);
   const [createLevel, { error, isLoading }] = useCreateLevelMutation();
   const [updateLevel] = useUpdateLevelMutation(); // Add this line
@@ -77,8 +76,8 @@ export default function ManageLevel() {
       }
       reset();
       handleClosePopup();
-    } catch (error) {
-      console.error("Error:", error);
+    } catch (errors) {
+      console.error("Error:", errors);
       // Handle error state, display error message to user, etc.
     }
   };
@@ -105,6 +104,7 @@ export default function ManageLevel() {
               {errors.levelName && (
                 <p className="text-red-600">{errors.levelName.message}</p>
               )}
+              
             </div>
           </div>
         </div>

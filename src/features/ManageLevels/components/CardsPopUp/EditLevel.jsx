@@ -16,7 +16,7 @@ const schema = yup.object().shape({
   levelName: yup
     .string()
     .required("Level name is required")
-    .matches(/^[A-Za-z]+$/, "Level name must contain characters only")
+    .matches(/^[A-Za-z\s_-]+$/, "Level name must contain letters, spaces, '-', or '_' only")
     .min(3,"level name must be at least 3 characters")
     .max(30,"level name can't exceed 30 characters")
     .trim(),

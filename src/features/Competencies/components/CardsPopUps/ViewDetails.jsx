@@ -19,7 +19,7 @@ export default function ViewDetails({ onClose, id }) {
   }, []);
   const handleClosePopup = () => {
     setPopupOpen(false);
-    onClose();
+    // onClose();
   };
   async function getDetails(id) {
     const { data } = await getDataCompetenciesByID(id);

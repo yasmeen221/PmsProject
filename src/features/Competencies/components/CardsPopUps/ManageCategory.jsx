@@ -5,13 +5,20 @@ import Icons from '../../../../themes/icons';
 import AddNewCatgory from './AddNewCatgory';
 import EditCatgory from './EditCatgory';
 import { getAllData, deleteData, createData, updateData } from '../../slices/Api/catgoryapi';
+import { useDispatch, useSelector } from 'react-redux';
+import { HandelOpenPopUpDelete } from '../../../ManageTeams/slices/HandelOpenDelete';
+import ConfirmDelete from '../../../../components/Delete/ConfirmDelete';
 
 export default function ManageCategory({ onClose }) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [isEditPopupOpen, setEditPopupOpen] = useState(false);
   const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const dispatch = useDispatch();
+  const openDeletPopup = useSelector(
+    (state) => state.openPopUpConfirmDeleteSlice.open,
+  );
+  const [selectedCat,setSelectedCat]=useState(null);
   useEffect(() => {
     fetchData();
     setPopupOpen(true);
@@ -40,12 +47,15 @@ export default function ManageCategory({ onClose }) {
     setEditPopupOpen(false);
   };
 
-  const handleDeleteCategory = async (id) => {
+  const handleDeleteCategory = async () => {
     try {
-      const res = await deleteData(id);
-      const updatedCategories = category.filter(cat => cat._id !== id);
+      if(selectedCat){
+      const res = await deleteData(selectedCat);
+      const updatedCategories = category.filter(cat => cat._id !== selectedCat);
       setCategory(updatedCategories);
+      dispatch(HandelOpenPopUpDelete(false));
       console.log('Category deleted successfully');
+      }
     } catch (error) {
       console.error('Error deleting category:', error);
     }
@@ -79,7 +89,7 @@ export default function ManageCategory({ onClose }) {
         TitlePopUp="Manage Category"
       >
         <div style={{ width: '30.75vw', maxHeight: '69.73478939157566vh' }} className="px-1">
-          {category.map((cat) => (
+          {category[0]?category.map((cat) => (
             <div key={cat._id} className='flex justify-between my-3'>
               <div>
                 <h3 className='font-semibold text-lg'>{cat.categoryName}</h3>
@@ -94,16 +104,24 @@ export default function ManageCategory({ onClose }) {
                 <Button
                   iconLeft={<Icons.DeleteUserPage />}
                   className="bg-transparent px-1"
-                  onClick={() => handleDeleteCategory(cat._id)}
+                  onClick={() => {
+                    setSelectedCat(cat._id)
+                    dispatch(HandelOpenPopUpDelete(true))
+                  }}
                 />
               </div>
             </div>
-          ))}
+          )):(
+            <div className="flex items-center my-5 justify-center">
+              <Icons.Loading />
+            </div>
+          )}
           <hr />
           <div className="mt-2 w-full inline-flex justify-end px-1">
             <AddNewCatgory handleAddCategory={handleAddCategory} />
           </div>
         </div>
+        {openDeletPopup && <ConfirmDelete onConfirm={handleDeleteCategory}/>}
       </FormPopUp>
       {isEditPopupOpen && <EditCatgory onClose={handleCloseEditPopup} category={selectedCategory} handleEditCategory={handleEditCategory} />}
     </>
