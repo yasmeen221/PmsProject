@@ -1,24 +1,27 @@
 import React, {  useEffect, useState } from "react";
 import PendingCardItem from "./PendingCardItem";
 import image1 from "../../../../assets/images/boy4.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import Icons from "../../../../themes/icons";
 import Pagination from "../../../../components/Pagination/Pagination";
 import { getDataWithPagination } from "../../utils/helperFunctions";
+import { setAcceptPending } from "../../slices/acceptPending";
 
 export default function PendingCards() {
+  const dispatch=useDispatch()
   const [numberOfPages, setNumberOfPages] = useState(0)
 
   const [isLoadingFeedback, setIsLoadingFeedback] = useState(false)
   const [data, setData] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
-
+  const acceptDone = useSelector((state) => state.confirmSlice.acceptDone);
   const userData = useSelector(state => state.persistantReducer.userDataReducer.userData)
   const userId = userData.length > 0 ? jwtDecode(userData).userId : ""
   useEffect(() => {
     getDataWithPagination(setIsLoadingFeedback, setData, 1, userId, setNumberOfPages,false,false,true)
-  }, [])
+    dispatch(setAcceptPending(false))
+  }, [acceptDone])
   const handlePageClick = (event) => {
     getDataWithPagination(setIsLoadingFeedback, setData, event.selected + 1, userId, setNumberOfPages,false,false,true)
 

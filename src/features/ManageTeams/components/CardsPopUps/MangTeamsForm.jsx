@@ -66,8 +66,8 @@ function ManageTeamsForm() {
     if (itemToEdit.teamName) {
       // console.log(itemToEdit.teamLeader?.firstName)
       setValue("teamName", itemToEdit.teamName);
-      setValue("teamLeader", itemToEdit.teamLeader);
-      setValue("parentTeam", itemToEdit.parentTeam);
+      setValue("teamLeader", itemToEdit.teamLeader._id);
+      setValue("parentTeam", itemToEdit.parentTeam?itemToEdit.parentTeam._id:"");
     }
   }, [handleOpen]);
 
@@ -77,7 +77,6 @@ function ManageTeamsForm() {
     dispatch(editButtonTeamHandle({}));
   };
   const onSubmit = (data) => {
-    // console.log(data,"kkkkkkkk");
     handleClosePopup();
     reset();
     //send data to backend
@@ -85,11 +84,8 @@ function ManageTeamsForm() {
     itemToEdit.teamName
       ? editTeam({ _id: itemToEdit._id, ...data })
       : addTeam(data).then((data) => {
-          console.log(data);
           toast.success("Add Team successfully!");
         });
-    console.log(isError);
-    console.log(error);
   };
   return (
     <>

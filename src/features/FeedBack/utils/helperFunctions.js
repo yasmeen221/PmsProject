@@ -22,7 +22,7 @@ export const getDataWithPagination = (
         if (res.data.data.feedbacks) {
           setData(res.data.data.feedbacks);
           setNumberOfPages(
-            res.data.data.totalPages == 0 ? 1 : res.data.data.totalPages,
+             res.data.data.totalPages,
           );
         }
         setIsLoadingFeedback(false);
@@ -38,7 +38,7 @@ export const getDataWithPagination = (
         if (res.data.data.feedbacks) {
           setData(res.data.data.feedbacks);
           setNumberOfPages(
-            res.data.data.totalPages == 0 ? 1 : res.data.data.totalPages,
+             res.data.data.totalPages,
           );
         }
         setIsLoadingFeedback(false);
@@ -54,7 +54,7 @@ export const getDataWithPagination = (
         if (res.data.data.feedbacks) {
           setData(res.data.data.feedbacks);
           setNumberOfPages(
-            res.data.data.totalPages == 0 ? 1 : res.data.data.totalPages,
+             res.data.data.totalPages,
           );
         }
         setIsLoadingFeedback(false);

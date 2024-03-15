@@ -23,7 +23,7 @@ import {
   toggleNormalFeedback,
 } from "../../slices/openPopUpSlice";
 import toast from "react-hot-toast";
-import { setCardId, setFromId, setUserName } from "../../slices/acceptPending";
+import { setAcceptPending, setCardId, setFromId, setUserName } from "../../slices/acceptPending";
 
 const GiveNormalFeedback = ({ }) => {
   const openNormalFeedbackPopUp = useSelector(
@@ -142,6 +142,8 @@ const GiveNormalFeedback = ({ }) => {
         : acceptFeedback(cardId, requestData)
           .then((res) => {
             console.log("accept", res);
+            dispatch(setAcceptPending(true))
+
           })
 
           .catch((error) => {
