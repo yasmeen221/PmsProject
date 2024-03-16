@@ -83,7 +83,9 @@ export default function UserTable() {
               <th scope="col" className="px-6 py-3">
                 Role
               </th>
-
+              <th scope="col" className="px-6 py-3">
+                team
+              </th>
               <th scope="col" className="px-6 py-3">
                 Action
               </th>
@@ -135,6 +137,7 @@ export default function UserTable() {
                     <td className="px-6 py-4">{user?.position} </td>
                     <td className="px-6 py-4"> {user?.level?.levelName} </td>
                     <td className="px-6 py-4"> {user?.role}</td>
+                    <td className="px-6 py-4">{user?.team.teamName} </td>
                     <td className="px-6 py-4 inline-flex">
                       <Button
                         onClick={() => handleEditUser(user)}
