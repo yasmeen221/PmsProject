@@ -69,7 +69,15 @@ export default function PendingCards() {
                 date={item.feedbackMainData.createdAt.substring(0, 10)}
                 image={image1}
                 feedBackMetaData={item.feedBackMetaData} //to display competencies in the feedback popup when press accept
-                fromName={item.feedbackMainData.userIdFrom.username} //to put it in dropdown label when make normal feedback when press ✅ ==>(the name of the person that want feedback(it will be the name of the reciever when accept the request and send normal feedback))
+                fromName={
+                  item.feedBackMetaData.find(
+                    (item, index) => item.name == "feedbackAbout",
+                  )?.value
+                    ? item.feedBackMetaData.find(
+                        (item, index) => item.name == "feedbackAbout",
+                      ).value
+                    : item.feedbackMainData.userIdFrom.username
+                } //to put it in dropdown label when make normal feedback when press ✅ ==>(the name of the person that want feedback(it will be the name of the reciever when accept the request and send normal feedback))
                 fromId={
                   item.feedBackMetaData.find(
                     (item, index) => item.name == "feedbackAbout",
