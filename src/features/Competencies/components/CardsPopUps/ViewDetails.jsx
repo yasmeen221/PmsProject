@@ -65,7 +65,7 @@ export default function ViewDetails({ onClose, id }) {
               <p>Shared with everyone</p>
             </div>
           </div>
-          {details.seniorityLevels && 
+          {details.seniorityLevels ?
               <>
               {details.seniorityLevels.map((item, i) => {
                 return (
@@ -93,7 +93,9 @@ export default function ViewDetails({ onClose, id }) {
                 );
               })}
               </>
-            }
+            :<div className="flex items-center my-5 justify-center">
+            <Icons.Loading />
+          </div>}
         </div>
         <div className="w-full inline-flex justify-end px-1 ">
           <Button
