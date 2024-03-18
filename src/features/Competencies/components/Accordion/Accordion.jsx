@@ -16,7 +16,7 @@ const AccordionContext = createContext();
 export default function Accordion({ children, onChange, ...rest }) {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(); //get it from context
-  console.log(selected)
+  // console.log(selected)
   const editCompentancy = useSelector(
     (state) => state.compentancySlice.editCompentancyDone,
   );
