@@ -71,6 +71,7 @@ function AddCompetency() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -105,6 +106,11 @@ function AddCompetency() {
       const response = await axiosInstance.post("/competency", dataToSend);
       console.log("Backend response:", response.data);
       toast.success("your respond is submitted successfully!");
+      reset();
+      setFormLevels([]);
+      setDescriptions([]);
+      setTeamsAssigned([]);
+      setTeamsBtnChecked(false);
       setPopupOpen(false);
     } catch (error) {
       console.error("Error sending data to the backend:", error);
