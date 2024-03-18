@@ -19,11 +19,10 @@ export default function ViewDetails({ onClose, id }) {
   }, []);
   const handleClosePopup = () => {
     setPopupOpen(false);
-    // onClose();
+    onClose();
   };
   async function getDetails(id) {
     const { data } = await getDataCompetenciesByID(id);
-
     setDetails(data.foundedCompetency);
   }
   return (
@@ -39,7 +38,6 @@ export default function ViewDetails({ onClose, id }) {
             width: "39.214vw",
             maxHeight: "65vh",
             overflowY: "auto",
-            // scrollbarWidth: "none",
           }}
           className="px-1 my-4 "
         >
@@ -67,12 +65,11 @@ export default function ViewDetails({ onClose, id }) {
               <p>Shared with everyone</p>
             </div>
           </div>
-          {details.seniorityLevels ? (
-            <div className="pe-1">
-              {details.seniorityLevels.map((item, i, index) => {
+          {details.seniorityLevels ?
+              <>
+              {details.seniorityLevels.map((item, i) => {
                 return (
-                  <>
-                    <AccordionDropDown key={i}>
+                    <AccordionDropDown key={item._id}>
                       <AccordionItemDropDown
                         className="border-2 border-solid border-borderColor-baseBorderColor mb-5 rounded-buttonRadius text-subTitle2Size font-subTitle2Weight text-fontColor-blackBaseColor "
                         value={i}
@@ -93,15 +90,12 @@ export default function ViewDetails({ onClose, id }) {
                         </div>
                       </AccordionItemDropDown>
                     </AccordionDropDown>
-                  </>
                 );
               })}
-            </div>
-          ) : (
-            <div className="flex items-center mt-5 justify-center">
-              <Icons.Loading />
-            </div>
-          )}
+              </>
+            :<div className="flex items-center my-5 justify-center">
+            <Icons.Loading />
+          </div>}
         </div>
         <div className="w-full inline-flex justify-end px-1 ">
           <Button
