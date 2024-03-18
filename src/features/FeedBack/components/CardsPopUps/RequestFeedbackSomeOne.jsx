@@ -141,8 +141,9 @@ export default function RequestFeedbackSomeOne() {
     try {
       const requestObject = {
         feedbackMainData: {
-          userIdFrom: usersNameIDTwo,
-          userIdTo: userID,
+          // userID
+          userIdFrom: userID,
+          userIdTo: usersNameIDTwo,
           message: value.message,
           visibility: value.visibility.split(","),
           feedbackType: "requested",
