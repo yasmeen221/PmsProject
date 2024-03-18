@@ -55,7 +55,7 @@ const GiveNormalFeedback = ({ }) => {
       //handle add feedback for competence in case competence of pending
     const competencyObj = feedbackMetaData.find((item, index) => item.name == "competency") 
     if (competencyObj) {
-      let arrayOfComp = competencyObj.value.filter((item, index) => item.competencyId != "selectCompetency") //to make sure there is actual competencies
+      let arrayOfComp = competencyObj.value.filter((item, index) => item.competencyId != "selectcompetency") //to make sure there is actual competencies
       if (arrayOfComp.length > 0) {
         arrayOfComp = arrayOfComp.map((item, index) => { return { value: item.competencyId, label: item.competencyId } }) //to make it as if i select them from drop down list that exist in case of nornmal feed without pending
         console.log(arrayOfComp)
