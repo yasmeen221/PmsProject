@@ -16,28 +16,10 @@ function RequestCards() {
   const [currentPage, setCurrentPage] = useState(1);
   const userId = userData.length > 0 ? jwtDecode(userData).userId : "";
   useEffect(() => {
-    getDataWithPagination(
-      setIsLoadingFeedback,
-      setData,
-      1,
-      userId,
-      setNumberOfPages,
-      true,
-      false,
-      false,
-    );
+    getDataWithPagination(setIsLoadingFeedback,setData,1,userId,setNumberOfPages,true,false,false,);
   }, []);
   const handlePageClick = (event) => {
-    getDataWithPagination(
-      setIsLoadingFeedback,
-      setData,
-      event.selected + 1,
-      userId,
-      setNumberOfPages,
-      true,
-      false,
-      false,
-    );
+    getDataWithPagination(setIsLoadingFeedback,setData,event.selected + 1,userId,setNumberOfPages,true,false,false,);
   };
   return (
     <>
@@ -51,7 +33,7 @@ function RequestCards() {
           <div className="w-full flex flex-row justify-center">
             <Icons.Loading />
           </div>
-        ) : data.length > 0 ? (
+        ) : data.filter((item) => item.feedbackMainData.userIdTo).length > 0 ? (  //filter to return all req where the userto account is exist(not deleted)
           data
             .filter((item) => item.feedbackMainData.userIdTo)
             .map((item, index) => (
@@ -61,7 +43,7 @@ function RequestCards() {
                 image={image2}
                 name={`${item.feedbackMainData.userIdTo.firstName} ${item.feedbackMainData.userIdTo.lastName}`}
                 date={item.feedbackMainData.createdAt.substring(0, 10)}
-                cardId={item.feedbackMainData._id}
+                cardId={item.feedbackMainData._id} //use it when delete
                 getDataWithPagination={getDataWithPagination}
                 currentPage={currentPage}
                 setIsLoadingFeedback={setIsLoadingFeedback}
@@ -70,7 +52,7 @@ function RequestCards() {
                 setNumberOfPages={setNumberOfPages}
               />
             ))
-        ) : isLoadingFeedback == false && data.length == 0 ? (
+        ) : isLoadingFeedback == false && data.filter((item) => item.feedbackMainData.userIdTo).length == 0 ? (
           <div className="w-full flex flex-row justify-center">
             <p>There is No Requestes Exist</p>
           </div>

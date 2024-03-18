@@ -4,6 +4,7 @@ const initialState = {
   username: "",
   id: "",
   cardId: "",
+  feedbackCompetencies:"",
   acceptDone: false
 };
 const confirmSlice = createSlice({
@@ -21,6 +22,8 @@ const confirmSlice = createSlice({
       state.cardId = action.payload
     }, setAcceptPending: (state, action) => {
       state.acceptDone = action.payload
+    },setFeedbackCompetencies:(state,action)=>{
+      state.feedbackCompetencies=action.payload
     }
   },
 });
@@ -29,7 +32,8 @@ export const {
   setUserName,
   setFromId,
   setCardId,
-  setAcceptPending
+  setAcceptPending,
+  setFeedbackCompetencies
 } = confirmSlice.actions;
 
 export default confirmSlice.reducer;

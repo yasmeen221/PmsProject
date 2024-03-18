@@ -9,7 +9,7 @@ const Pagination = ({handlePageClick,numberOfPages}) => {
           nextLabel="Next"
           onPageChange={handlePageClick} 
           pageRangeDisplayed={4}
-          pageCount={Math.ceil(numberOfPages)} //from request
+          pageCount={Math.ceil(numberOfPages)}
           previousLabel="Previous"
           renderOnZeroPageCount={null}
           containerClassName="flex flex-row justify-center w-full mt-[3rem] "

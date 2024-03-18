@@ -13,9 +13,10 @@ import {
 const AccordionContext = createContext();
 
 // eslint-disable-next-line react/prop-types
-export default function Accordion({ children, value, onChange, ...rest }) {
+export default function Accordion({ children, onChange, ...rest }) {
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState(value);
+  const [selected, setSelected] = useState(); //get it from context
+  console.log(selected)
   const editCompentancy = useSelector(
     (state) => state.compentancySlice.editCompentancyDone,
   );

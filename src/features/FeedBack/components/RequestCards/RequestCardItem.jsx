@@ -5,6 +5,7 @@ import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import { HandelOpenPopUpDelete } from "../../../ManageTeams/slices/HandelOpenDelete";
 import { deleteFeedback, } from "../../slices/Api/feedbackApi";
 import { setIdToDeleteRequestedPage } from "../../slices/openPopUpSlice";
+import Button from "../../../../components/Button/Button";
 
 export default function RequestCardItem({ text, image, name, date, cardId, getDataWithPagination, currentPage, setIsLoadingFeedback, setData, userId, setNumberOfPages }) {
   const dispatch = useDispatch();
@@ -41,10 +42,9 @@ export default function RequestCardItem({ text, image, name, date, cardId, getDa
           </div>
         </div>
         <div className="flex items-center ">
-          <button onClick={() => { dispatch(HandelOpenPopUpDelete(true)), dispatch(setIdToDeleteRequestedPage(cardId)) }}
-            className=" flex items-center justify-center bg-white px-2 py-4 w-[4.688rem] h-2 text-sm font-medium font-fontColor-900 rounded-md border  text- border-borderColor-200 hover:bg-green-100 active:bg-green-300">
-            Cancel
-          </button>
+          <Button buttonText={"Cancel"} 
+          onClick={() => { dispatch(HandelOpenPopUpDelete(true)), dispatch(setIdToDeleteRequestedPage(cardId)) }} 
+          className="  bg-white px-4 py-2 text-sm font-medium font-fontColor-900 rounded-md border  border-borderColor-200 hover:bg-green-100 active:bg-green-300" />
         </div>
       </div>
       {oPenPopUp && <ConfirmDelete deleteText="Are you sure to Decline? " confirmButtonText="Decline" onConfirm={() => { handleDelete(id) }} />}

@@ -3,6 +3,7 @@ import React from "react";
 import Icons from "../../themes/icons"
 
 // eslint-disable-next-line react/prop-types
+//button that in the header of popup to close it
 const ButtonPopUpClose = ({ onClick }) => {
   return (
     <>

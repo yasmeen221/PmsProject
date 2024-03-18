@@ -32,6 +32,8 @@ const GiveNormalFeedback = ({ }) => {
   const fromName = useSelector((state) => state.confirmSlice.username);
   const cardId = useSelector((state) => state.confirmSlice.cardId);
   const fromId = useSelector((state) => state.confirmSlice.id); //will be send in the form (this name refers it is from id in the pending when i press it)
+  const feedbackMetaData = useSelector((state) => state.confirmSlice.feedbackCompetencies);
+  console.log("comp",feedbackMetaData)
 
   // console.log("fid", fromId)
   // console.log("card", cardId)
@@ -191,7 +193,8 @@ const GiveNormalFeedback = ({ }) => {
     const fetchData = async () => {
       try {
         const data = await getTeamLeaderId(userId);
-        setMangerId(data.teamLeader._id);
+        console.log("data",data.data.teamLeader._id)
+        setMangerId(data.data.teamLeader._id);
       } catch (error) {
         console.log("error from get", error);
       }

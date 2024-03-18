@@ -24,6 +24,7 @@ export const apiSlice = createApi({
     getTeamsName: builder.query({
       query: () => "/teams/teams-names", //to use in drop down
       providesTags: ["Teams"],
+      keepUnusedDataFor:0 //to not cache data
     }),
     addTeam: builder.mutation({
       query: (team) => ({

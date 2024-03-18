@@ -8,15 +8,14 @@ import ConfirmDelete from "../../../../components/Delete/ConfirmDelete";
 import  {  setIdToDeletePendingPage, toggleNormalFeedback } from "../../slices/openPopUpSlice";
 import GiveNormalFeedback from "../CardsPopUps/GiveNormalFeedback";
 import { deleteFeedback } from "../../slices/Api/feedbackApi";
-import { setCardId, setFromId, setUserName } from "../../slices/acceptPending";
+import { setCardId, setFeedbackCompetencies, setFromId, setUserName } from "../../slices/acceptPending";
 
-export default function PendingCardItem({ image, name, date, text, cardId ,fromName,fromId,getDataWithPagination,currentPage,setIsLoadingFeedback,setData,userId,setNumberOfPages}) {
+export default function PendingCardItem({ image, name, date, text, cardId ,feedBackMetaData,fromName,fromId,getDataWithPagination,currentPage,setIsLoadingFeedback,setData,userId,setNumberOfPages}) {
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(
     (state) => state.openPopUpConfirmDeleteSlice.open,
   );
   const id = useSelector(state => state.openPopUpSlice.idToDeletePendingPage)
-
   const openNormalFeedbackPopUp = useSelector(state => state.openPopUpSlice.normalFeedbackPopup)
   const handleDelete=(cardId)=>{
     deleteFeedback(cardId).then((res)=>{
@@ -48,7 +47,7 @@ export default function PendingCardItem({ image, name, date, text, cardId ,fromN
             icon={<Icons.GreenFeedback />}
             bgColor="#EBF5EF"
             hoverColor=" #329B5C"
-            confirmButtonClick={() => { dispatch(toggleNormalFeedback(true)), dispatch(setUserName(fromName)),dispatch(setCardId(cardId)),dispatch(setFromId(fromId)) }}
+            confirmButtonClick={() => { dispatch(toggleNormalFeedback(true)), dispatch(setUserName(fromName)),dispatch(setCardId(cardId)),dispatch(setFromId(fromId)),dispatch(setFeedbackCompetencies(feedBackMetaData)) }}
           />
 
           <PenndingButton

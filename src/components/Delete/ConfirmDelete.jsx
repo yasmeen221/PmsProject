@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HandelOpenPopUpDelete } from "../../features/ManageTeams/slices/HandelOpenDelete";
 import Button from "../Button/Button";
 import { setIdToDeletePendingPage, setIdToDeleteRequestedPage } from "../../features/FeedBack/slices/openPopUpSlice";
-
+//popup used for delete operations
 const ConfirmDelete = ({ onClose, onConfirm,deleteText="Are You Sure Delete It?!",confirmButtonText="Delete" }) => {
   const dispatch = useDispatch();
   const oPenPopUp = useSelector(

@@ -5,7 +5,6 @@ const PenndingButton = ({
   bgColor,
   hoverColor,
   className,
-  onClick,
   buttonText,
   deleteButtonClick,
   confirmButtonClick
@@ -25,7 +24,7 @@ const PenndingButton = ({
     setClicked((prevClicked) => !prevClicked);
   };
   const handleArrayEvents = () => {
-    const events = [handleButtonClick, deleteButtonClick,confirmButtonClick];
+    const events = [handleButtonClick, deleteButtonClick,confirmButtonClick];  //make this => event==deleteButtonClick&&!deleteButtonClick so that if i dont pass deleteButtonClick  
     events.forEach((event) => (event==deleteButtonClick&&!deleteButtonClick?"":event==confirmButtonClick&&!confirmButtonClick?"":event()));
   };
   const dynamicStyles = {
@@ -46,7 +45,6 @@ const PenndingButton = ({
       onMouseEnter={handleButtonHover}
       onMouseLeave={handleButtonLeave}
     >
-      {onClick}
       {icon}
     </button>
   );
