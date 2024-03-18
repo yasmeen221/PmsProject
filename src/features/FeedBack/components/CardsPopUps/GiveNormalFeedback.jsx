@@ -23,16 +23,24 @@ import {
   toggleNormalFeedback,
 } from "../../slices/openPopUpSlice";
 import toast from "react-hot-toast";
-import { setAcceptPending, setCardId, setFeedbackCompetencies, setFromId, setUserName } from "../../slices/acceptPending";
+import {
+  setAcceptPending,
+  setCardId,
+  setFeedbackCompetencies,
+  setFromId,
+  setUserName,
+} from "../../slices/acceptPending";
 
-const GiveNormalFeedback = ({ }) => {
+const GiveNormalFeedback = ({}) => {
   const openNormalFeedbackPopUp = useSelector(
     (state) => state.openPopUpSlice.normalFeedbackPopup,
   );
   const fromName = useSelector((state) => state.confirmSlice.username);
   const cardId = useSelector((state) => state.confirmSlice.cardId);
   const fromId = useSelector((state) => state.confirmSlice.id); //will be send in the form (this name refers it is from id in the pending when i press it)
-  const feedbackMetaData = useSelector((state) => state.confirmSlice.feedbackCompetencies);
+  const feedbackMetaData = useSelector(
+    (state) => state.confirmSlice.feedbackCompetencies,
+  );
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
   const [competencyRatings, setCompetencyRatings] = useState([]);
@@ -46,26 +54,35 @@ const GiveNormalFeedback = ({ }) => {
   const [userCompetenciesErrMsg, setUserCompetenciesErrMsg] = useState(false);
   const [userIdsErrMsg, setUserIdsErrMsg] = useState(false);
   const [competencyRatingsErrMsg, setCompetencyRatingsErrMsg] = useState(false);
-  const accessToken = useSelector((state) => state.persistantReducer.userDataReducer.userData);
-  const userIdFrom = accessToken.length > 0 ? jwtDecode(accessToken).userId : "";
+  const accessToken = useSelector(
+    (state) => state.persistantReducer.userDataReducer.userData,
+  );
+  const userIdFrom =
+    accessToken.length > 0 ? jwtDecode(accessToken).userId : "";
   const dispatch = useDispatch();
   useEffect(() => {
     setUserId(fromId);
-    if(feedbackMetaData!=""){ 
+    if (feedbackMetaData != "") {
       //handle add feedback for competence in case competence of pending
-    const competencyObj = feedbackMetaData.find((item, index) => item.name == "competency") 
-    if (competencyObj) {
-      let arrayOfComp = competencyObj.value.filter((item, index) => item.competencyId != "selectcompetency") //to make sure there is actual competencies
-      if (arrayOfComp.length > 0) {
-        arrayOfComp = arrayOfComp.map((item, index) => { return { value: item.competencyId, label: item.competencyId } }) //to make it as if i select them from drop down list that exist in case of nornmal feed without pending
-        console.log(arrayOfComp)
-        setUserCompetencies(arrayOfComp) //set array as i choose comp rom the drop down list
-        handleUserCompetencyInPending(arrayOfComp) //to set competencies boxs and rete to 0 and ""
-        console.log("usercomp",userCompetencies)
-        console.log("arrayOfComp",arrayOfComp)
+      const competencyObj = feedbackMetaData.find(
+        (item, index) => item.name == "competency",
+      );
+      if (competencyObj) {
+        let arrayOfComp = competencyObj.value.filter(
+          (item, index) => item.competencyId != "selectcompetency",
+        ); //to make sure there is actual competencies
+        if (arrayOfComp.length > 0) {
+          arrayOfComp = arrayOfComp.map((item, index) => {
+            return { value: item.competencyId, label: item.competencyId };
+          }); //to make it as if i select them from drop down list that exist in case of nornmal feed without pending
+          console.log(arrayOfComp);
+          setUserCompetencies(arrayOfComp); //set array as i choose comp rom the drop down list
+          handleUserCompetencyInPending(arrayOfComp); //to set competencies boxs and rete to 0 and ""
+          console.log("usercomp", userCompetencies);
+          console.log("arrayOfComp", arrayOfComp);
+        }
       }
     }
-  }
   }, [fromName, fromId]);
 
   const formSubmit = (values) => {
@@ -94,27 +111,6 @@ const GiveNormalFeedback = ({ }) => {
         competencyRatings.length == 0)
     )
       return;
-    // console.log({
-    //   feedbackMainData: {
-    //     userIdFrom,
-    //     userIdTo: userId,
-    //     message: values.message,
-    //     visibility: values.visibility.split(","),
-    //     feedbackType: "normal",
-    //   },
-    //   feedBackMetaData: [
-    //     {
-    //       name: "competency",
-    //       value: userCompetencies.map((competency, index) => {
-    //         return {
-    //           competencyId: competency.value,
-    //           competencyFeedBack: competencyFeedback[index],
-    //           rate: competencyRatings[index],
-    //         };
-    //       }),
-    //     },
-    //   ],
-    // });
 
     try {
       const requestData = {
@@ -145,18 +141,17 @@ const GiveNormalFeedback = ({ }) => {
 
       fromId == ""
         ? axiosInstance.post(`/feedback`, requestData).then((res) => {
-          console.log("feedback", res);
-        })
-        : acceptFeedback(cardId, requestData)
-          .then((res) => {
-            console.log("accept", res);
-            dispatch(setAcceptPending(true))
-
+            console.log("feedback", res);
           })
+        : acceptFeedback(cardId, requestData)
+            .then((res) => {
+              console.log("accept", res);
+              dispatch(setAcceptPending(true));
+            })
 
-          .catch((error) => {
-            console.error("Error:", error);
-          });
+            .catch((error) => {
+              console.error("Error:", error);
+            });
       console.log("ffform", fromId != "");
       toast.success("your respond is submitted successfully!");
       handleClosePopup();
@@ -249,7 +244,7 @@ const GiveNormalFeedback = ({ }) => {
     dispatch(setUserName("")); //set this values to "" so you add add normal feedback without pending
     dispatch(setFromId(""));
     dispatch(setCardId(""));
-    dispatch(setFeedbackCompetencies(""))
+    dispatch(setFeedbackCompetencies(""));
   };
 
   const handleUserNameChange = (selectedOption) => {
@@ -257,7 +252,7 @@ const GiveNormalFeedback = ({ }) => {
       setUserId(selectedOption.value);
     }
   };
-  console.log(userCompetencies)
+  console.log(userCompetencies);
 
   const handleUserCompetencyChange = (selectedOption) => {
     setUserCompetencies(selectedOption);
@@ -294,23 +289,19 @@ const GiveNormalFeedback = ({ }) => {
     setCompetencyFeedback(updatedFeedback);
   };
   const renderCometencies = (array) => {
-    return array?.map((competency, index) =>
-      <div
-        key={index}
-        className="relative my-2 transition-all duration-1000 "
-      >
+    return array?.map((competency, index) => (
+      <div key={index} className="relative my-2 transition-all duration-1000 ">
         <div className="my-2">
           <div className="flex items-center justify-between">
-            <Header
-              text={`${competency.label}`}
-              htmlFor="levelDescription"
-            />
-            {!fromId && <div
-              onClick={() => handleDeleteCompetency(index)}
-              className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500"
-            >
-              -
-            </div>}
+            <Header text={`${competency.label}`} htmlFor="levelDescription" />
+            {!fromId && (
+              <div
+                onClick={() => handleDeleteCompetency(index)}
+                className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500"
+              >
+                -
+              </div>
+            )}
           </div>
 
           <div className="mt-2">
@@ -323,18 +314,14 @@ const GiveNormalFeedback = ({ }) => {
               wrap="soft"
               className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
               onChange={(e) =>
-                handleCompetencyFeedbackChange(
-                  index,
-                  e.target.value,
-                )
+                handleCompetencyFeedbackChange(index, e.target.value)
               }
             />
-            {errors.competencyFeedback &&
-              errors.competencyFeedback[index] && (
-                <p className="text-red-500">
-                  {errors.competencyFeedback[index].message}
-                </p>
-              )}
+            {errors.competencyFeedback && errors.competencyFeedback[index] && (
+              <p className="text-red-500">
+                {errors.competencyFeedback[index].message}
+              </p>
+            )}
           </div>
         </div>
         <RatingScale
@@ -343,13 +330,11 @@ const GiveNormalFeedback = ({ }) => {
           setValue={handleCompetencyRatingChange}
         />
         {competencyRatingsErrMsg && (
-          <p className="text-red-500">
-            Please rate the competency
-          </p>
+          <p className="text-red-500">Please rate the competency</p>
         )}
       </div>
-    )
-  }
+    ));
+  };
   return (
     <>
       <FormPopUp
@@ -443,28 +428,29 @@ const GiveNormalFeedback = ({ }) => {
             </div>
             {/* switch */}
 
-            {!fromId && <div className="inline-flex justify-between items-center w-full pb-4">
-              <div className="w-full">
-                <Header text="Feedback on specific competencies" />
-                <p className="text-fontColor-placeHolderColor  text-body1Size">
-                  By default, he/she will receive your general feedback
-                </p>
+            {!fromId && (
+              <div className="inline-flex justify-between items-center w-full pb-4">
+                <div className="w-full">
+                  <Header text="Feedback on specific competencies" />
+                  <p className="text-fontColor-placeHolderColor  text-body1Size">
+                    By default, he/she will receive your general feedback
+                  </p>
+                </div>
+                <div>
+                  <label className="inline-flex items-center cursor-pointer">
+                    <input
+                      type="checkbox"
+                      value=""
+                      className="sr-only peer"
+                      onChange={(e) => {
+                        setTeamsBtnChecked(e.target.checked);
+                      }}
+                    />
+                    <div className="relative w-11 h-6  peer-focus:outline-none rounded-full peer dark:bg-fontColor-placeHolderColor peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-buttonColor-baseColor"></div>
+                  </label>
+                </div>
               </div>
-              <div>
-                <label className="inline-flex items-center cursor-pointer">
-                  <input
-                    type="checkbox"
-                    value=""
-                    className="sr-only peer"
-                    onChange={(e) => {
-                      setTeamsBtnChecked(e.target.checked);
-                    }}
-                  />
-                  <div className="relative w-11 h-6  peer-focus:outline-none rounded-full peer dark:bg-fontColor-placeHolderColor peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-buttonColor-baseColor"></div>
-                </label>
-              </div>
-            </div>
-            }
+            )}
             <div
               className="h-[40vh] overflow-y-auto px-1 "
               style={{ scrollbarWidth: "none" }}
@@ -488,9 +474,7 @@ const GiveNormalFeedback = ({ }) => {
               )}
               {/* give normal feed competencies and rate view*/}
               {userCompetencies.length !== 0 &&
-                renderCometencies(userCompetencies)
-              }
-            
+                renderCometencies(userCompetencies)}
             </div>
           </div>
           <div className="flex items-center justify-end border-t border-gray-200 py-3 mx-1 ">
@@ -498,7 +482,7 @@ const GiveNormalFeedback = ({ }) => {
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
               buttonText="Give Feedback"
 
-            // onClick={handleClosePopup}
+              // onClick={handleClosePopup}
             />
           </div>
         </form>

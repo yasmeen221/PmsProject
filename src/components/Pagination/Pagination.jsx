@@ -1,27 +1,25 @@
-import React from 'react'
-import ReactPaginate from 'react-paginate';
+import React from "react";
+import ReactPaginate from "react-paginate";
 
-
-const Pagination = ({handlePageClick,numberOfPages}) => {
+const Pagination = ({ handlePageClick, numberOfPages }) => {
   return (
     <ReactPaginate
-          breakLabel="..."
-          nextLabel="Next"
-          onPageChange={handlePageClick} 
-          pageRangeDisplayed={4}
-          pageCount={Math.ceil(numberOfPages)}
-          previousLabel="Previous"
-          renderOnZeroPageCount={null}
-          containerClassName="flex flex-row justify-center w-full mt-[3rem] "
-          pageLinkClassName="px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor	"
-          previousLinkClassName=" px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
-          nextLinkClassName=" px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
-          breakLinkClassName="px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
-          activeLinkClassName="bg-blue-50"
-          
+      breakLabel="..."
+      nextLabel="Next"
+      onPageChange={handlePageClick}
+      pageRangeDisplayed={4}
+      pageCount={Math.ceil(numberOfPages)}
+      previousLabel="Previous"
+      renderOnZeroPageCount={null}
+      containerClassName="flex flex-row justify-center w-full mt-[3rem] "
+      pageLinkClassName="px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor	"
+      previousLinkClassName=" px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
+      nextLinkClassName=" px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
+      breakLinkClassName="px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
+      activeLinkClassName="bg-cyan-700"
+      // {{ backgroundColor: "bg-slate-950" }}
+    />
+  );
+};
 
-        />
-  )
-}
-
-export default Pagination
+export default Pagination;
