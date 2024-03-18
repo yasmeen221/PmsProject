@@ -23,7 +23,7 @@ import {
   toggleNormalFeedback,
 } from "../../slices/openPopUpSlice";
 import toast from "react-hot-toast";
-import { setAcceptPending, setCardId, setFromId, setUserName } from "../../slices/acceptPending";
+import { setAcceptPending, setCardId, setFeedbackCompetencies, setFromId, setUserName } from "../../slices/acceptPending";
 
 const GiveNormalFeedback = ({ }) => {
   const openNormalFeedbackPopUp = useSelector(
@@ -33,12 +33,6 @@ const GiveNormalFeedback = ({ }) => {
   const cardId = useSelector((state) => state.confirmSlice.cardId);
   const fromId = useSelector((state) => state.confirmSlice.id); //will be send in the form (this name refers it is from id in the pending when i press it)
   const feedbackMetaData = useSelector((state) => state.confirmSlice.feedbackCompetencies);
-  console.log("comp",feedbackMetaData)
-
-  // console.log("fid", fromId)
-  // console.log("card", cardId)
-  // console.log("fff", fromName)
-
   const [isPopupOpen, setPopupOpen] = useState(false);
   const [teamsBtnChecked, setTeamsBtnChecked] = useState(false);
   const [competencyRatings, setCompetencyRatings] = useState([]);
@@ -52,14 +46,26 @@ const GiveNormalFeedback = ({ }) => {
   const [userCompetenciesErrMsg, setUserCompetenciesErrMsg] = useState(false);
   const [userIdsErrMsg, setUserIdsErrMsg] = useState(false);
   const [competencyRatingsErrMsg, setCompetencyRatingsErrMsg] = useState(false);
-  const accessToken = useSelector(
-    (state) => state.persistantReducer.userDataReducer.userData,
-  );
-  const userIdFrom =
-    accessToken.length > 0 ? jwtDecode(accessToken).userId : "";
+  const accessToken = useSelector((state) => state.persistantReducer.userDataReducer.userData);
+  const userIdFrom = accessToken.length > 0 ? jwtDecode(accessToken).userId : "";
   const dispatch = useDispatch();
   useEffect(() => {
     setUserId(fromId);
+    if(feedbackMetaData!=""){ 
+      //handle add feedback for competence in case competence of pending
+    const competencyObj = feedbackMetaData.find((item, index) => item.name == "competency") 
+    if (competencyObj) {
+      let arrayOfComp = competencyObj.value.filter((item, index) => item.competencyId != "selectCompetency") //to make sure there is actual competencies
+      if (arrayOfComp.length > 0) {
+        arrayOfComp = arrayOfComp.map((item, index) => { return { value: item.competencyId, label: item.competencyId } }) //to make it as if i select them from drop down list that exist in case of nornmal feed without pending
+        console.log(arrayOfComp)
+        setUserCompetencies(arrayOfComp) //set array as i choose comp rom the drop down list
+        handleUserCompetencyInPending(arrayOfComp) //to set competencies boxs and rete to 0 and ""
+        console.log("usercomp",userCompetencies)
+        console.log("arrayOfComp",arrayOfComp)
+      }
+    }
+  }
   }, [fromName, fromId]);
 
   const formSubmit = (values) => {
@@ -193,7 +199,7 @@ const GiveNormalFeedback = ({ }) => {
     const fetchData = async () => {
       try {
         const data = await getTeamLeaderId(userId);
-        console.log("data",data.data.teamLeader._id)
+        // console.log("data",data.data.teamLeader._id)
         setMangerId(data.data.teamLeader._id);
       } catch (error) {
         console.log("error from get", error);
@@ -243,20 +249,24 @@ const GiveNormalFeedback = ({ }) => {
     dispatch(setUserName("")); //set this values to "" so you add add normal feedback without pending
     dispatch(setFromId(""));
     dispatch(setCardId(""));
+    dispatch(setFeedbackCompetencies(""))
   };
 
   const handleUserNameChange = (selectedOption) => {
     if (!fromId) {
       setUserId(selectedOption.value);
-    } else {
-      // setUserId(userId);
     }
   };
+  console.log(userCompetencies)
 
   const handleUserCompetencyChange = (selectedOption) => {
     setUserCompetencies(selectedOption);
-    setCompetencyRatings(Array(selectedOption.length).fill(0));
+    setCompetencyRatings(Array(selectedOption.length).fill(0)); //like this for the array of comp in pending
     setCompetencyFeedback(Array(selectedOption.length).fill(""));
+  };
+  const handleUserCompetencyInPending = (feedbackCompetencies) => {
+    setCompetencyRatings(Array(feedbackCompetencies.length).fill(0)); //like this for the array of comp in pending
+    setCompetencyFeedback(Array(feedbackCompetencies.length).fill(""));
   };
   const handleCompetencyRatingChange = (index, rating) => {
     const updatedRatings = [...competencyRatings];
@@ -283,7 +293,63 @@ const GiveNormalFeedback = ({ }) => {
     updatedFeedback.splice(index, 1);
     setCompetencyFeedback(updatedFeedback);
   };
+  const renderCometencies = (array) => {
+    return array?.map((competency, index) =>
+      <div
+        key={index}
+        className="relative my-2 transition-all duration-1000 "
+      >
+        <div className="my-2">
+          <div className="flex items-center justify-between">
+            <Header
+              text={`${competency.label}`}
+              htmlFor="levelDescription"
+            />
+            {!fromId && <div
+              onClick={() => handleDeleteCompetency(index)}
+              className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500"
+            >
+              -
+            </div>}
+          </div>
 
+          <div className="mt-2">
+            <textarea
+              {...register(`competencyFeedback.${index}`, {
+                required: "Feedback is required",
+              })}
+              rows={4}
+              placeholder={`write your feedback on ${competency.label}`}
+              wrap="soft"
+              className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
+              onChange={(e) =>
+                handleCompetencyFeedbackChange(
+                  index,
+                  e.target.value,
+                )
+              }
+            />
+            {errors.competencyFeedback &&
+              errors.competencyFeedback[index] && (
+                <p className="text-red-500">
+                  {errors.competencyFeedback[index].message}
+                </p>
+              )}
+          </div>
+        </div>
+        <RatingScale
+          index={index}
+          value={competencyRatings[index]}
+          setValue={handleCompetencyRatingChange}
+        />
+        {competencyRatingsErrMsg && (
+          <p className="text-red-500">
+            Please rate the competency
+          </p>
+        )}
+      </div>
+    )
+  }
   return (
     <>
       <FormPopUp
@@ -420,65 +486,11 @@ const GiveNormalFeedback = ({ }) => {
                   )}
                 </div>
               )}
-
+              {/* give normal feed competencies and rate view*/}
               {userCompetencies.length !== 0 &&
-                userCompetencies?.map((competency, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className="relative my-2 transition-all duration-1000 "
-                    >
-                      <div className="my-2">
-                        <div className="flex items-center justify-between">
-                          <Header
-                            text={`${competency.label}`}
-                            htmlFor="levelDescription"
-                          />
-                          <div
-                            onClick={() => handleDeleteCompetency(index)}
-                            className=" cursor-pointer flex items-center justify-center rounded-sm  text-red-500 w-4 h-4  border border-red-500"
-                          >
-                            -
-                          </div>
-                        </div>
-
-                        <div className="mt-2">
-                          <textarea
-                            {...register(`competencyFeedback.${index}`, {
-                              required: "Feedback is required",
-                            })}
-                            rows={4}
-                            placeholder={`write your feedback on ${competency.label}`}
-                            wrap="soft"
-                            className="min-h-20 resize-none block max-h-20 bg-white w-full text-body1Size rounded-buttonRadius border-0  py-2.5 px-2  shadow-sm ring-1 ring-fontColor-outLineInputColor  placeholder:text-fontColor-placeHolderColor focus:ring-2   focus:ring-buttonColor-baseColor focus:outline-none sm:text-sm sm:leading-6"
-                            onChange={(e) =>
-                              handleCompetencyFeedbackChange(
-                                index,
-                                e.target.value,
-                              )
-                            }
-                          />
-                          {errors.competencyFeedback &&
-                            errors.competencyFeedback[index] && (
-                              <p className="text-red-500">
-                                {errors.competencyFeedback[index].message}
-                              </p>
-                            )}
-                        </div>
-                      </div>
-                      <RatingScale
-                        index={index}
-                        value={competencyRatings[index]}
-                        setValue={handleCompetencyRatingChange}
-                      />
-                      {competencyRatingsErrMsg && (
-                        <p className="text-red-500">
-                          Please rate the competency
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
+                renderCometencies(userCompetencies)
+              }
+            
             </div>
           </div>
           <div className="flex items-center justify-end border-t border-gray-200 py-3 mx-1 ">
