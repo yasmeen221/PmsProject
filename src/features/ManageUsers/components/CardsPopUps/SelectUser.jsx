@@ -130,16 +130,15 @@ const SelectUser = () => {
       reset();
     }
     if (userData.username) {
-      console.log("Level:", userData.level.levelName);
-      console.log("Team:", userData.team.teamName);
+      
       setValue("firstName", userData.firstName);
       setValue("lastName", userData.lastName);
       setValue("username", userData.username);
       setValue("email", userData.email);
       setValue("position", userData.position);
       setValue("role", userData.role);
-      setValue("level", userData.level.levelName);
-      setValue("team", userData.team.teamName);
+      setValue("level", userData.level._id);
+      setValue("team", userData.team._id);
     }
   }, [handleOpenPopUp]);
 

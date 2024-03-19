@@ -1,8 +1,10 @@
 import PropTypes from "prop-types";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
-function SideBarItem({ icon, title, isOpen ,to}) {
-  
+function SideBarItem({ icon, title, isOpen ,to , activeIcon=""}) {
+  const location = useLocation();
+  const isActive = location.pathname.replace(/^\/dashboard\//, '') == `${to}`;
+  console.log(isActive, location.pathname.replace(/^\/dashboard\//, ''), to);
   return (
     <NavLink
       to={to}
@@ -16,11 +18,11 @@ function SideBarItem({ icon, title, isOpen ,to}) {
     >
       {isOpen ? (
         <>
-          <span className="mr-4">{icon}</span>
+          <span className="mr-4">{ isActive ? activeIcon : icon}</span>
           <span className="text-body1Size">{title}</span>
         </>
       ) : (
-        <span>{icon}</span>
+        <span>{ isActive? activeIcon : icon}</span>
       )}
     </NavLink>
   );
