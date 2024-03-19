@@ -139,7 +139,7 @@ const GiveNormalFeedback = ({}) => {
       // axiosInstance.post(`/feedback`, requestData).then((res) => {
       //   console.log("feedback", res);
       // });
-      console.log(requestData, "requestData")
+      console.log(requestData, "requestData");
 
       fromId == ""
         ? axiosInstance.post(`/feedback`, requestData).then((res) => {

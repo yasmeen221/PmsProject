@@ -107,7 +107,6 @@ export default function RequestFeedbackSomeOne() {
         setUsersNameID(selectedUser._id);
       }
     }
-    console.log("fromm", selectedUserId);
   };
   // sennnderrrrrrrrrrrrrrrrrrr
   const getAllUsersDataTwo = async (selectedUserIdTwo) => {
@@ -139,13 +138,16 @@ export default function RequestFeedbackSomeOne() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = (value) => {
+  const onSubmit = async (value) => {
     try {
-      // console.log("hhh", competencies);
-      // to handel when the value.compentancy id selected make the name of it 
+      // to handel when the value.compentancy id selected make the name of it
       const selectedCompetency = competencies.data.teamCompetencies.find(
         (comp) => comp._id === value.competency,
       );
+      console.log("seletedComp",selectedCompetency)
+
+      const selectedName = usersName.find((name) => name._id === usersNameID);
+      console.log("selected", selectedName);
 
       const requestObject = {
         feedbackMainData: {
@@ -168,6 +170,7 @@ export default function RequestFeedbackSomeOne() {
           {
             name: "feedbackAbout",
             value: usersNameID,
+            name: selectedName.username,
           },
           {
             name: "feedbackStatus",
