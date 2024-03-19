@@ -159,7 +159,7 @@ export const GoalsIcon = () => {
     </svg>
   );
 };
-export const Feedback = () => {
+export const Feedback = ({color="#0D4D69"}) => {
   return (
     <svg
       width="24"
@@ -170,7 +170,7 @@ export const Feedback = () => {
     >
       <path
         d="M17 18.4297H13L8.54999 21.3897C7.88999 21.8297 7 21.3598 7 20.5598V18.4297C4 18.4297 2 16.4297 2 13.4297V7.42969C2 4.42969 4 2.42969 7 2.42969H17C20 2.42969 22 4.42969 22 7.42969V13.4297C22 16.4297 20 18.4297 17 18.4297Z"
-        stroke="#0D4D69"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
@@ -178,14 +178,14 @@ export const Feedback = () => {
       />
       <path
         d="M11.9998 11.3594V11.1494C11.9998 10.4694 12.4198 10.1094 12.8398 9.8194C13.2498 9.5394 13.6598 9.17941 13.6598 8.51941C13.6598 7.59941 12.9198 6.85938 11.9998 6.85938C11.0798 6.85938 10.3398 7.59941 10.3398 8.51941"
-        stroke="#0D4D69"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M11.9955 13.75H12.0045"
-        stroke="#0D4D69"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -193,7 +193,7 @@ export const Feedback = () => {
     </svg>
   );
 };
-export const Reviews = () => {
+export const Reviews = ({color="#0D4D69"}) => {
   return (
     <svg
       width="24"
@@ -204,28 +204,28 @@ export const Reviews = () => {
     >
       <path
         d="M13.3 8.11156L14.62 10.7516C14.8 11.1116 15.28 11.4716 15.68 11.5316L18.07 11.9316C19.6 12.1916 19.96 13.2916 18.86 14.3916L17 16.2516C16.69 16.5616 16.51 17.1716 16.61 17.6116L17.14 19.9216C17.56 21.7416 16.59 22.4516 14.98 21.5016L12.74 20.1716C12.33 19.9316 11.67 19.9316 11.26 20.1716L9.01996 21.5016C7.40996 22.4516 6.43995 21.7416 6.85995 19.9216L7.38998 17.6116C7.48998 17.1816 7.30997 16.5716 6.99997 16.2516L5.13998 14.3916C4.03998 13.2916 4.39996 12.1816 5.92996 11.9316L8.31997 11.5316C8.71997 11.4616 9.19997 11.1116 9.37997 10.7516L10.7 8.11156C11.41 6.68156 12.59 6.68156 13.3 8.11156Z"
-        stroke="#0D4D69"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M6 9V2"
-        stroke="#0D4D69"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M18 9V2"
-        stroke="#0D4D69"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M12 4V2"
-        stroke="#0D4D69"
+        stroke={`${color}`}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
