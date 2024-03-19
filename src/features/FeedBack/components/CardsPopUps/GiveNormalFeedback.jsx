@@ -73,7 +73,7 @@ const GiveNormalFeedback = ({}) => {
         ); //to make sure there is actual competencies
         if (arrayOfComp.length > 0) {
           arrayOfComp = arrayOfComp.map((item, index) => {
-            return { value: item.competencyId, label: item.competencyId };
+            return { value: item.competencyId, label: item.name };
           }); //to make it as if i select them from drop down list that exist in case of nornmal feed without pending
           console.log(arrayOfComp);
           setUserCompetencies(arrayOfComp); //set array as i choose comp rom the drop down list
