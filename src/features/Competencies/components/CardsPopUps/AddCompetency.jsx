@@ -4,7 +4,7 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
-import { set, useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
