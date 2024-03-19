@@ -100,6 +100,7 @@ export default function RequestFeedbackForMyself({ OnClose }) {
       }),
     );
     setCompetenciesData(competenciesData);
+    console.log("comptency data",competenciesData);
   };
 
   const fetchTeamLeaderAndCompetencies = (userId, teamId) => {
@@ -135,6 +136,8 @@ export default function RequestFeedbackForMyself({ OnClose }) {
 
   const formSubmit = (data) => {
     try {
+     
+
       const formData = {
         feedbackMainData: {
           userIdFrom: userIdFrom,
@@ -143,7 +146,10 @@ export default function RequestFeedbackForMyself({ OnClose }) {
           visibility: [userIdFrom, selectedUserId],
           feedbackType: "requested",
         },
-        feedBackMetaData: [],
+        feedBackMetaData: [
+
+
+        ],
       };
   
       if (selectedCompetencies.length > 0) {
@@ -151,9 +157,11 @@ export default function RequestFeedbackForMyself({ OnClose }) {
           name: "competency",
           value: selectedCompetencies.map((item) => ({
             competencyId: item.value,
+            name: item.label,
           })),
         });
       }
+      
       formData.feedBackMetaData.push({
         name: "feedbackStatus",
         value: "pending",
