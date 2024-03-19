@@ -112,7 +112,7 @@ function SideBar() {
             isOpen={isOpen}
             title="users&teams"
             to="users&teams"
-            activeIcon={<Icons.Review color="white" />}
+            activeIcon={<Icons.Reviews color="white" />}
           ></SideBarItem>
         ) : (
           ""
