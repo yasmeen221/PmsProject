@@ -17,7 +17,6 @@ const Pagination = ({ handlePageClick, numberOfPages }) => {
       nextLinkClassName=" px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
       breakLinkClassName="px-2 py-2 bg-white border-[1px]	 border-borderColor-baseBorderColor"
       activeLinkClassName="bg-cyan-700"
-      // {{ backgroundColor: "bg-slate-950" }}
     />
   );
 };

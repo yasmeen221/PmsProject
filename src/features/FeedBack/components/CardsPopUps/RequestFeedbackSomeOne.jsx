@@ -42,6 +42,7 @@ export default function RequestFeedbackSomeOne() {
   const [usersNameIDTwo, setUsersNameIDTwo] = useState("");
   const [competencies, setCompetencies] = useState([]);
   const [teamId, setTeamId] = useState("");
+
   console.log("team", teamId);
   const RequestFeedbackForSomeOnePopUp = useSelector(
     (state) => state.openPopUpSlice.requestFeedbackForSomeOne,
@@ -72,13 +73,14 @@ export default function RequestFeedbackSomeOne() {
         if (data) {
           setCompetencies(data);
         }
-        console.log("cccciiidid", data.data.teamCompetencies._id);
+        console.log("datanamecmp", data.teamCompetencies.name);
       } catch (error) {
         console.log("error from get compentancy", error);
       }
     };
     fetchData();
   }, [teamId]);
+  console.log("commm", competencies);
 
   // userIdloggggginnnnnnnn
   useEffect(() => {
@@ -139,9 +141,14 @@ export default function RequestFeedbackSomeOne() {
   });
   const onSubmit = (value) => {
     try {
+      // console.log("hhh", competencies);
+      // to handel when the value.compentancy id selected make the name of it 
+      const selectedCompetency = competencies.data.teamCompetencies.find(
+        (comp) => comp._id === value.competency,
+      );
+
       const requestObject = {
         feedbackMainData: {
-          // userID
           userIdFrom: userID,
           userIdTo: usersNameIDTwo,
           message: value.message,
@@ -151,7 +158,12 @@ export default function RequestFeedbackSomeOne() {
         feedBackMetaData: [
           {
             name: "competency",
-            value: [{ competencyId: value.competency }],
+            value: [
+              {
+                competencyId: value.competency,
+                name: selectedCompetency.name,
+              },
+            ],
           },
           {
             name: "feedbackAbout",
@@ -163,6 +175,8 @@ export default function RequestFeedbackSomeOne() {
           },
         ],
       };
+      console.log("value", value);
+      console.log("namec", value.competency);
       console.log("datasend", requestObject);
       postPraise(requestObject);
       toast.success("your respond is submitted successfully!");
