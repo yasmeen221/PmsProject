@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setDeleteShardCompentancy,
   setEditShardCompetancyDone,
+  setAddCompentancy,
 } from "../../slices/compentancySlice";
 
 const AccordingContent = ({
@@ -28,6 +29,9 @@ const AccordingContent = ({
   );
   const deleteShardCompentancy = useSelector(
     (state) => state.compentancySlice.deleteShardCompetancy,
+  );
+  const addNewCompentancy = useSelector(
+    (state) => state.compentancySlice.addNewComp,
   );
   const [searchResults, setSearchResults] = useState([]);
   const [sharedComp, setSharedComp] = useState([]);
@@ -50,13 +54,15 @@ const AccordingContent = ({
 
         dispatch(setEditShardCompetancyDone(false));
         dispatch(setDeleteShardCompentancy(false));
+        dispatch(setAddCompentancy(false));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         dispatch(setEditShardCompetancyDone(false));
         dispatch(setDeleteShardCompentancy(false));
+        dispatch(setAddCompentancy(false));
       });
-  }, [editShardCompentancy, deleteShardCompentancy]);
+  }, [editShardCompentancy, deleteShardCompentancy, addNewCompentancy]);
 
   useEffect(() => {
     if (searchTerm) {
