@@ -83,7 +83,7 @@ const GiveNormalFeedback = ({}) => {
         }
       }
     }
-  }, [fromName, fromId]);
+  }, [fromName, fromId , userCompetencies]);
 
   const formSubmit = (values) => {
     if (teamsBtnChecked && userCompetencies.length == 0) {
@@ -95,6 +95,7 @@ const GiveNormalFeedback = ({}) => {
       setCompetencyRatingsErrMsg(true);
       return;
     }
+    
     if (userId === "") {
       setUserIdsErrMsg(true);
       return;
@@ -189,7 +190,7 @@ const GiveNormalFeedback = ({}) => {
       .filter((user) => user._id === userId)
       .map((user) => user.team);
     setTeamId(team);
-  }, [userId]);
+  }, [userId,usernames]);
 
   useEffect(() => {
     if (userId === "") return;
@@ -220,7 +221,7 @@ const GiveNormalFeedback = ({}) => {
     } else {
       // handleUserNameChange()
     }
-  }, []);
+  }, [fromId]);
 
   useEffect(() => {
     if (!teamId) return;
@@ -248,14 +249,11 @@ const GiveNormalFeedback = ({}) => {
     dispatch(setCardId(""));
     dispatch(setFeedbackCompetencies(""));
   };
-
   const handleUserNameChange = (selectedOption) => {
     if (!fromId) {
       setUserId(selectedOption.value);
     }
   };
-  console.log(userCompetencies);
-
   const handleUserCompetencyChange = (selectedOption) => {
     setUserCompetencies(selectedOption);
     setCompetencyRatings(Array(selectedOption.length).fill(0)); //like this for the array of comp in pending
@@ -275,7 +273,6 @@ const GiveNormalFeedback = ({}) => {
     updatedFeedback[index] = feedback;
     setCompetencyFeedback(updatedFeedback);
   };
-
   const handleDeleteCompetency = (index) => {
     const updatedCompetencies = [...userCompetencies];
     updatedCompetencies.splice(index, 1);

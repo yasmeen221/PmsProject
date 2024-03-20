@@ -24,6 +24,9 @@ function AddCompetency() {
   const [categories, setCategories] = useState([]);
   const [levelErrorMsg, setLevelErrorMsg] = useState(false);
   const [teamsErrorMsg, setTeamsErrorMsg] = useState(false);
+  const [descriptionErrorMsg, setDescriptionErrorMsg] = useState(false);
+
+
   const seniorityLevels = formLevels?.map((level, index) => ({
     level: level.value,
     description: descriptions[index],
@@ -44,6 +47,7 @@ function AddCompetency() {
   });
 
   const { data: teamsNames } = useGetTeamsNameQuery();
+  console.log(teamsNames)
   const teamsArray = teamsNames?.data?.teamsNames;
   const teamsOptions = teamsArray?.map((team) => ({
     value: team._id,
@@ -61,13 +65,15 @@ function AddCompetency() {
   }));
 
   const handleTeamChange = (selectedOptions) => {
+  
     setTeamsAssigned(selectedOptions.map((option) => option.value));
+    
   };
-
+  
   const handleLevelChange = (selectedOptions) => {
     setFormLevels(selectedOptions);
   };
-
+ 
   const {
     register,
     handleSubmit,
@@ -79,7 +85,7 @@ function AddCompetency() {
 
   const formSubmit = async (values) => {
     try {
-      console.log(formLevels.length);
+    
 
       if (formLevels.length === 0) {
         setLevelErrorMsg(true);
@@ -91,18 +97,31 @@ function AddCompetency() {
         console.log("Please add teams first");
       }
 
+     
+      if (seniorityLevels.some(level => !level.description)) {
+        setDescriptionErrorMsg(true);
+        return;
+      }
+    
       if (
-        teamsAssigned.length === 0 &&
-        seniorityLevels.length === 0 &&
-        formLevels.length === 0
+        (teamsAssigned.length === 0 && teamsBtnChecked) ||
+        seniorityLevels.length === 0 ||
+        formLevels.length === 0 
       )
         return;
+ 
+        if (levelErrorMsg || teamsErrorMsg || descriptionErrorMsg) {
+          return;
+        }
+   
+      setDescriptionErrorMsg(false);
       const dataToSend = {
         ...values,
         seniorityLevels,
         teamsAssigned,
       };
       console.log("Data to send:", dataToSend);
+ 
       const response = await axiosInstance.post("/competency", dataToSend);
       console.log("Backend response:", response.data);
       toast.success("your respond is submitted successfully!");
@@ -112,12 +131,14 @@ function AddCompetency() {
       setTeamsAssigned([]);
       setTeamsBtnChecked(false);
       setPopupOpen(false);
+    
+      
     } catch (error) {
       console.error("Error sending data to the backend:", error);
       toast.error("your respond is not submitted successfully!");
     }
   };
-
+ 
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
@@ -127,11 +148,18 @@ function AddCompetency() {
   };
 
   const handleDescriptionChange = (index, value) => {
+ 
     const newDescriptions = [...descriptions];
     newDescriptions[index] = value;
     setDescriptions(newDescriptions);
-  };
+    
+    const areAllDescriptionsProvided = newDescriptions.every(description => !!description);
+  setDescriptionErrorMsg(!areAllDescriptionsProvided); // Update error state
 
+    console.log(newDescriptions, "newDescriptions")
+    console.log(descriptions, "descriptions")
+  };
+ 
   const handleRemoveDescription = (index) => {
     const newDescriptions = [...descriptions];
     newDescriptions.splice(index, 1);
@@ -318,6 +346,11 @@ function AddCompetency() {
                               handleDescriptionChange(index, e.target.value)
                             }
                           />
+                          {descriptionErrorMsg && (
+                            <p className="text-red-500">
+                              Please add description for each level
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -329,7 +362,6 @@ function AddCompetency() {
             <Button
               buttonText="Add"
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
-              // onClick={handleClosePopup}
             />
           </div>
         </form>
