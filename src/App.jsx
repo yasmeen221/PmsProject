@@ -31,7 +31,7 @@ const Dashboard = lazy(() => import("./components/Dashboard"));
 const NotFound = lazy(() => import("./components/NotFound"));
 
 function App() {
-  const [refreshToken, {}] = useRefreshTokenMutation(); //to   refresh token when the time of access token ended
+  const [refreshToken, { }] = useRefreshTokenMutation(); //to   refresh token when the time of access token ended
   const accessToken = useSelector(
     (state) => state.persistantReducer.userDataReducer.userData,
   ); //get access token (stored )from global state
@@ -50,21 +50,25 @@ function App() {
     // const interval = setInterval(() => {
     //   const refreshTokenValue = cookie.get("refreshToken");
     //   console.log("rrr", refreshTokenValue)
-    //   if (accessToken && jwtDecode(accessToken)?.exp < Date.now() / 1000) {
-    //     refreshToken(refreshTokenValue).unwrap().then((res) => {
-    //       console.log("ressssssssssssss",res)
-    //         if(res.status=="success"){
+    //   console.log(jwtDecode(accessToken)?.exp < Date.now() / 1000)
+    //   if (accessToken&&refreshTokenValue && jwtDecode(accessToken)?.exp < Date.now() / 1000) {
+    //   refreshToken(refreshTokenValue).unwrap().then((res) => {
+    //     console.log("ressssssssssssss", res)
+    //     if (res.status == "success") {
     //       cookie.update('refreshToken', res.data.accessToken, { expires: new Date(jwtDecode(accessToken).exp * 1000) });
-  //}else{
-  //  cookie.remove("userToken");
+    //     } else {
+    //       cookie.remove("userToken");
+    //       cookie.remove("refreshToken");
 
- // }
+    //       console.log("remove")
     //       console.log("refresh token done")
-    //       clearInterval(interval)
-    //     });
+
+    //     }
+    //     clearInterval(interval)
+    //   });
 
     //   }
-    // }, 60000) //EVERY 1 MINUTE
+    // }, 10000) //EVERY 1 MINUTE
     // return (() => {
     //   clearInterval(interval)
     // })
