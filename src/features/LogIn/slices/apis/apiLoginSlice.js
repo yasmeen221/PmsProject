@@ -18,7 +18,7 @@ export const apiLoginSlice = createApi({
     refreshToken: builder.mutation({
       query: (oldRefreshToken) => ({
         url: "/refresh-token", //,
-        method: "POST",
+        method: "POST", ///
         body: { refreshToken: oldRefreshToken },
       }),
     }),

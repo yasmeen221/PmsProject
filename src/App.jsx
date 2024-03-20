@@ -53,10 +53,13 @@ function App() {
     //   if (accessToken && jwtDecode(accessToken)?.exp < Date.now() / 1000) {
     //     refreshToken(refreshTokenValue).unwrap().then((res) => {
     //       console.log("ressssssssssssss",res)
-
+    //         if(res.status=="success"){
     //       cookie.update('refreshToken', res.data.accessToken, { expires: new Date(jwtDecode(accessToken).exp * 1000) });
+  //}else{
+  //  cookie.remove("userToken");
+
+ // }
     //       console.log("refresh token done")
-    //       console.log("ressssssssssssss",res)
     //       clearInterval(interval)
     //     });
 

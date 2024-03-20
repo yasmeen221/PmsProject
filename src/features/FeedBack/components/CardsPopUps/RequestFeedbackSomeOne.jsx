@@ -169,8 +169,8 @@ export default function RequestFeedbackSomeOne() {
           },
           {
             name: "feedbackAbout",
-            value: usersNameID,
-            name: selectedName.username,
+            value: {_id:usersNameID,userName:selectedName.username}
+            // name: selectedName.username,
           },
           {
             name: "feedbackStatus",

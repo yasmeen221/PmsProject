@@ -72,19 +72,19 @@ export default function PendingCards() {
                 fromName={
                   item.feedBackMetaData.find(
                     (item, index) => item.name == "feedbackAbout",
-                  )?.value
+                  )?.value.userName
                     ? item.feedBackMetaData.find(
                         (item, index) => item.name == "feedbackAbout",
-                      ).value
+                      ).value.userName
                     : item.feedbackMainData.userIdFrom.username
                 } //to put it in dropdown label when make normal feedback when press ✅ ==>(the name of the person that want feedback(it will be the name of the reciever when accept the request and send normal feedback))
                 fromId={
                   item.feedBackMetaData.find(
                     (item, index) => item.name == "feedbackAbout",
-                  )?.value
+                  )?.value._id
                     ? item.feedBackMetaData.find(
                         (item, index) => item.name == "feedbackAbout",
-                      ).value
+                      ).value._id
                     : item.feedbackMainData.userIdFrom._id
                 } //to put in normal feedback submit ==>(the id of the person that want feedback(it will be the id of the reciever when accept the request and send normal feedback))
                 getDataWithPagination={getDataWithPagination} //to refresh when delete  item when press delete in pendingcarditem page
