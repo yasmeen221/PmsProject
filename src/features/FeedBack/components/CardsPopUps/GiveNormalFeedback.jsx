@@ -83,7 +83,7 @@ const GiveNormalFeedback = ({}) => {
         }
       }
     }
-  }, [fromName, fromId , userCompetencies]);
+  }, [fromName, fromId ]);
 
   const formSubmit = (values) => {
     if (teamsBtnChecked && userCompetencies.length == 0) {
@@ -190,7 +190,7 @@ const GiveNormalFeedback = ({}) => {
       .filter((user) => user._id === userId)
       .map((user) => user.team);
     setTeamId(team);
-  }, [userId,usernames]);
+  }, [userId]);
 
   useEffect(() => {
     if (userId === "") return;
@@ -221,7 +221,7 @@ const GiveNormalFeedback = ({}) => {
     } else {
       // handleUserNameChange()
     }
-  }, [fromId]);
+  }, []);
 
   useEffect(() => {
     if (!teamId) return;
