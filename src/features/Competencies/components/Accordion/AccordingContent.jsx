@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   setDeleteShardCompentancy,
   setEditShardCompetancyDone,
+  setAddCompentancy,
 } from "../../slices/compentancySlice";
 
 const AccordingContent = ({
@@ -28,6 +29,9 @@ const AccordingContent = ({
   );
   const deleteShardCompentancy = useSelector(
     (state) => state.compentancySlice.deleteShardCompetancy,
+  );
+  const addNewCompentancy = useSelector(
+    (state) => state.compentancySlice.addNewComp,
   );
   const [searchResults, setSearchResults] = useState([]);
   const [sharedComp, setSharedComp] = useState([]);
@@ -50,13 +54,15 @@ const AccordingContent = ({
 
         dispatch(setEditShardCompetancyDone(false));
         dispatch(setDeleteShardCompentancy(false));
+        dispatch(setAddCompentancy(false));
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
         dispatch(setEditShardCompetancyDone(false));
         dispatch(setDeleteShardCompentancy(false));
+        dispatch(setAddCompentancy(false));
       });
-  }, [editShardCompentancy, deleteShardCompentancy]);
+  }, [editShardCompentancy, deleteShardCompentancy, addNewCompentancy]);
 
   useEffect(() => {
     if (searchTerm) {
@@ -75,10 +81,10 @@ const AccordingContent = ({
   }, [searchTerm]);
 
   const renderPosition = (itemm) => {
-    const allCompetencyLevelNames = itemm.seniorityLevels.map(
+    const allCompetencyLevelNames = itemm?.seniorityLevels?.map(
       //rerurn array of competency levels names
       (item, index) =>
-        item.level?.levelName ? item.level.levelName : "not found",
+        item.level?.levelName ? item.level?.levelName : "not found",
     );
     const uniqueLevelNames = Array.from(
       new Set(allCompetencyLevelNames.map((levelName) => levelName)), //use set to remove duplicated level names
@@ -86,7 +92,7 @@ const AccordingContent = ({
     return uniqueLevelNames.map((item) => item).join(", ");
   };
   const renderCatogry = (itemm) => {
-    return !itemm.category ? "not found" : itemm.category.categoryName;
+    return !itemm.category ? "not found" : itemm?.category?.categoryName;
   };
   const renderNoData = () => {
     return (

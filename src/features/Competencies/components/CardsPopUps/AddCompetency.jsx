@@ -4,7 +4,7 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
@@ -14,6 +14,8 @@ import axiosInstance from "../../../../components/GeneralApi/generalApi";
 
 import { getAllData } from "../../slices/Api/catgoryapi";
 import toast from "react-hot-toast";
+import { setAddCompentancy } from "../../slices/compentancySlice";
+import { useDispatch } from "react-redux";
 
 function AddCompetency() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -24,6 +26,8 @@ function AddCompetency() {
   const [categories, setCategories] = useState([]);
   const [levelErrorMsg, setLevelErrorMsg] = useState(false);
   const [teamsErrorMsg, setTeamsErrorMsg] = useState(false);
+  const [descriptionErrorMsg, setDescriptionErrorMsg] = useState(false);
+
   const seniorityLevels = formLevels?.map((level, index) => ({
     level: level.value,
     description: descriptions[index],
@@ -44,14 +48,13 @@ function AddCompetency() {
   });
 
   const { data: teamsNames } = useGetTeamsNameQuery();
+  console.log(teamsNames);
   const teamsArray = teamsNames?.data?.teamsNames;
   const teamsOptions = teamsArray?.map((team) => ({
     value: team._id,
     label: team.teamName,
   }));
-
-
-
+  const dispatch = useDispatch();
   const { data: levels } = useGetLevelQuery();
   const levelsArray = levels?.data?.levels;
 
@@ -79,8 +82,6 @@ function AddCompetency() {
 
   const formSubmit = async (values) => {
     try {
-      console.log(formLevels.length);
-
       if (formLevels.length === 0) {
         setLevelErrorMsg(true);
         console.log("Please add levels first");
@@ -91,21 +92,36 @@ function AddCompetency() {
         console.log("Please add teams first");
       }
 
+      if (seniorityLevels.some((level) => !level.description)) {
+        setDescriptionErrorMsg(true);
+        return;
+      }
+
       if (
-        teamsAssigned.length === 0 &&
-        seniorityLevels.length === 0 &&
+        (teamsAssigned.length === 0 && teamsBtnChecked) ||
+        seniorityLevels.length === 0 ||
         formLevels.length === 0
       )
         return;
+
+      if (levelErrorMsg || teamsErrorMsg || descriptionErrorMsg) {
+        return;
+      }
+
+      setDescriptionErrorMsg(false);
       const dataToSend = {
         ...values,
         seniorityLevels,
         teamsAssigned,
       };
       console.log("Data to send:", dataToSend);
+
       const response = await axiosInstance.post("/competency", dataToSend);
-      console.log("Backend response:", response.data);
+
+      dispatch(setAddCompentancy(true));
       toast.success("your respond is submitted successfully!");
+
+      console.log("Backend response:", response.data);
       reset();
       setFormLevels([]);
       setDescriptions([]);
@@ -130,6 +146,14 @@ function AddCompetency() {
     const newDescriptions = [...descriptions];
     newDescriptions[index] = value;
     setDescriptions(newDescriptions);
+
+    const areAllDescriptionsProvided = newDescriptions.every(
+      (description) => !!description,
+    );
+    setDescriptionErrorMsg(!areAllDescriptionsProvided); // Update error state
+
+    console.log(newDescriptions, "newDescriptions");
+    console.log(descriptions, "descriptions");
   };
 
   const handleRemoveDescription = (index) => {
@@ -318,6 +342,11 @@ function AddCompetency() {
                               handleDescriptionChange(index, e.target.value)
                             }
                           />
+                          {descriptionErrorMsg && (
+                            <p className="text-red-500">
+                              Please add description for each level
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -329,7 +358,6 @@ function AddCompetency() {
             <Button
               buttonText="Add"
               className="px-10 py-2.5 text-fontColor-whiteBaseColor"
-              // onClick={handleClosePopup}
             />
           </div>
         </form>

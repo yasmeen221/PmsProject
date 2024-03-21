@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { dropDownTeamHandle } from "../../slices/addTeamTogglePopUp";
 import { useForm } from "react-hook-form";
 import { editButtonTeamHandle } from "../../slices/editTemTogglePopUp";
-import {useAddTeamMutation,useEditTeamMutation,useGetTeamsNameQuery,} from "../../slices/apis/apiSlice";
+import {
+  useAddTeamMutation,
+  useEditTeamMutation,
+  useGetTeamsNameQuery,
+} from "../../slices/apis/apiSlice";
 import { useGetUsersQuery } from "../../../ManageUsers/slices/api/apiSlice";
 import toast from "react-hot-toast";
 function ManageTeamsForm() {
@@ -63,11 +67,17 @@ function ManageTeamsForm() {
     }
     // to check the data not empty and in page the teamsTable
     // add in button table the dispatch to  open pop up and return values that i want edit in it
-    if (itemToEdit.teamName) {
+    if (itemToEdit?.teamName) {
       // console.log(itemToEdit.teamLeader?.firstName)
       setValue("teamName", itemToEdit.teamName);
-      setValue("teamLeader", itemToEdit.teamLeader._id);
-      setValue("parentTeam", itemToEdit.parentTeam?itemToEdit.parentTeam._id:"");
+      setValue(
+        "teamLeader",
+        itemToEdit?.teamLeader?._id ? itemToEdit?.teamLeader?._id : "",
+      );
+      setValue(
+        "parentTeam",
+        itemToEdit?.parentTeam ? itemToEdit?.parentTeam?._id : "",
+      );
     }
   }, [handleOpen]);
 
@@ -82,7 +92,7 @@ function ManageTeamsForm() {
     //send data to backend
     // addTeam(data)
     itemToEdit.teamName
-      ? editTeam({ _id: itemToEdit._id, ...data })
+      ? editTeam({ _id: itemToEdit?._id, ...data })
       : addTeam(data).then((data) => {
           toast.success("Add Team successfully!");
         });
@@ -138,16 +148,19 @@ function ManageTeamsForm() {
             <div className="relative mt-2">
               <select
                 name="teamLeader"
-                {...register("teamLeader", { required: true,pattern:/^[a-zA-Z0-9_]+$/ })}
+                {...register("teamLeader", {
+                  required: true,
+                  pattern: /^[a-zA-Z0-9_]+$/,
+                })}
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.teamLeader?.type == "required" || !touchedFields.teamLeader ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
               >
                 <option value="">Select Team Leader</option>
                 {!isUsersLoading &&
                   !isUsersError &&
-                  users?.data.users.map((team, index) => {
+                  users?.data?.users?.map((team, index) => {
                     return (
                       <option key={index} value={team._id}>
-                        {team.username}
+                        {team?.username}
                       </option>
                     );
                   })}
@@ -157,7 +170,11 @@ function ManageTeamsForm() {
               </div>
             </div>
             <p className="text-deleteColor-50">
-              {errors.teamLeader?.type == "required" ? "requird" : errors.teamLeader?.type=="pattern"?"team leader name can contain letters and digits,underscores only":""}
+              {errors.teamLeader?.type == "required"
+                ? "requird"
+                : errors.teamLeader?.type == "pattern"
+                  ? "team leader name can contain letters and digits,underscores only"
+                  : ""}
             </p>
           </div>
           <div className="my-2 w-full">
@@ -165,13 +182,13 @@ function ManageTeamsForm() {
             <div className="relative mt-2">
               <select
                 name="parentTeam"
-                {...register("parentTeam", {pattern:/^[a-zA-Z0-9_]+$/})}
+                {...register("parentTeam", { pattern: /^[a-zA-Z0-9_]+$/ })}
                 className={`block appearance-none w-full bg-white border-0    py-2.5 px-2 ring-1 ring-inset ring-fontColor-outLineInputColor  rounded-buttonRadius shadow-sm   focus:shadow-outline focus:ring-2 focus:ring-buttonColor-baseColor focus:outline-none ${errors.parentTeam?.type == "required" || !touchedFields.parentTeam ? "text-fontColor-placeHolderColor" : "text-fontColor-blackBaseColor"} `}
               >
                 <option value="">Select Parent Team</option>
                 {!teamsDropDownLoading &&
                   !teamsDropDownIsError &&
-                  teamsData.data.teamsNames?.map((item, index) => {
+                  teamsData?.data?.teamsNames?.map((item, index) => {
                     return (
                       <option key={index} value={item._id}>
                         {item.teamName}
@@ -184,7 +201,11 @@ function ManageTeamsForm() {
               </div>
             </div>
             <p className="text-deleteColor-50">
-              {errors.parentTeam?.type == "required" ? "required" : errors.parentTeam?.type=="pattern"?"parent team can contain letters and digits,underscores only":""}
+              {errors.parentTeam?.type == "required"
+                ? "required"
+                : errors.parentTeam?.type == "pattern"
+                  ? "parent team can contain letters and digits,underscores only"
+                  : ""}
             </p>
           </div>
         </div>
