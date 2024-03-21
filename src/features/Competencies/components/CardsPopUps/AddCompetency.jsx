@@ -4,7 +4,7 @@ import Button from "../../../../components/Button/Button";
 import Icons from "../../../../themes/icons";
 import Header from "../../../../components/Header/Header";
 import TextInput from "../../../../components/TextInput/TextInput";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useGetTeamsNameQuery } from "../../../ManageTeams/slices/apis/apiSlice";
@@ -14,6 +14,8 @@ import axiosInstance from "../../../../components/GeneralApi/generalApi";
 
 import { getAllData } from "../../slices/Api/catgoryapi";
 import toast from "react-hot-toast";
+import { setAddCompentancy } from "../../slices/compentancySlice";
+import { useDispatch } from "react-redux";
 
 function AddCompetency() {
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -25,7 +27,6 @@ function AddCompetency() {
   const [levelErrorMsg, setLevelErrorMsg] = useState(false);
   const [teamsErrorMsg, setTeamsErrorMsg] = useState(false);
   const [descriptionErrorMsg, setDescriptionErrorMsg] = useState(false);
-
 
   const seniorityLevels = formLevels?.map((level, index) => ({
     level: level.value,
@@ -47,15 +48,13 @@ function AddCompetency() {
   });
 
   const { data: teamsNames } = useGetTeamsNameQuery();
-  console.log(teamsNames)
+  console.log(teamsNames);
   const teamsArray = teamsNames?.data?.teamsNames;
   const teamsOptions = teamsArray?.map((team) => ({
     value: team._id,
     label: team.teamName,
   }));
-
-
-
+  const dispatch = useDispatch();
   const { data: levels } = useGetLevelQuery();
   const levelsArray = levels?.data?.levels;
 
@@ -65,15 +64,13 @@ function AddCompetency() {
   }));
 
   const handleTeamChange = (selectedOptions) => {
-  
     setTeamsAssigned(selectedOptions.map((option) => option.value));
-    
   };
-  
+
   const handleLevelChange = (selectedOptions) => {
     setFormLevels(selectedOptions);
   };
- 
+
   const {
     register,
     handleSubmit,
@@ -85,8 +82,6 @@ function AddCompetency() {
 
   const formSubmit = async (values) => {
     try {
-    
-
       if (formLevels.length === 0) {
         setLevelErrorMsg(true);
         console.log("Please add levels first");
@@ -97,23 +92,22 @@ function AddCompetency() {
         console.log("Please add teams first");
       }
 
-     
-      if (seniorityLevels.some(level => !level.description)) {
+      if (seniorityLevels.some((level) => !level.description)) {
         setDescriptionErrorMsg(true);
         return;
       }
-    
+
       if (
         (teamsAssigned.length === 0 && teamsBtnChecked) ||
         seniorityLevels.length === 0 ||
-        formLevels.length === 0 
+        formLevels.length === 0
       )
         return;
- 
-        if (levelErrorMsg || teamsErrorMsg || descriptionErrorMsg) {
-          return;
-        }
-   
+
+      if (levelErrorMsg || teamsErrorMsg || descriptionErrorMsg) {
+        return;
+      }
+
       setDescriptionErrorMsg(false);
       const dataToSend = {
         ...values,
@@ -121,24 +115,25 @@ function AddCompetency() {
         teamsAssigned,
       };
       console.log("Data to send:", dataToSend);
- 
+
       const response = await axiosInstance.post("/competency", dataToSend);
-      console.log("Backend response:", response.data);
+
+      dispatch(setAddCompentancy(true));
       toast.success("your respond is submitted successfully!");
+
+      console.log("Backend response:", response.data);
       reset();
       setFormLevels([]);
       setDescriptions([]);
       setTeamsAssigned([]);
       setTeamsBtnChecked(false);
       setPopupOpen(false);
-    
-      
     } catch (error) {
       console.error("Error sending data to the backend:", error);
       toast.error("your respond is not submitted successfully!");
     }
   };
- 
+
   const handleOpenPopup = () => {
     setPopupOpen(true);
   };
@@ -148,18 +143,19 @@ function AddCompetency() {
   };
 
   const handleDescriptionChange = (index, value) => {
- 
     const newDescriptions = [...descriptions];
     newDescriptions[index] = value;
     setDescriptions(newDescriptions);
-    
-    const areAllDescriptionsProvided = newDescriptions.every(description => !!description);
-  setDescriptionErrorMsg(!areAllDescriptionsProvided); // Update error state
 
-    console.log(newDescriptions, "newDescriptions")
-    console.log(descriptions, "descriptions")
+    const areAllDescriptionsProvided = newDescriptions.every(
+      (description) => !!description,
+    );
+    setDescriptionErrorMsg(!areAllDescriptionsProvided); // Update error state
+
+    console.log(newDescriptions, "newDescriptions");
+    console.log(descriptions, "descriptions");
   };
- 
+
   const handleRemoveDescription = (index) => {
     const newDescriptions = [...descriptions];
     newDescriptions.splice(index, 1);

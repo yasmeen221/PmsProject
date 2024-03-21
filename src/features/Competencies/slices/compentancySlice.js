@@ -4,6 +4,7 @@ const initialState = {
   editShardCompentancy: false,
   deleteCompentancy: false,
   deleteShardCompetancy: false,
+  addNewComp: false,
 };
 const compentancySlice = createSlice({
   name: "compentancySlice",
@@ -21,6 +22,9 @@ const compentancySlice = createSlice({
     setDeleteShardCompentancy: (state, action) => {
       state.deleteShardCompetancy = action.payload;
     },
+    setAddCompentancy: (state, action) => {
+      state.addNewComp = action.payload;
+    },
   },
 });
 export const {
@@ -28,6 +32,7 @@ export const {
   setEditShardCompetancyDone,
   setDeleteCompentancy,
   setDeleteShardCompentancy,
+  setAddCompentancy,
 } = compentancySlice.actions;
 
 export default compentancySlice.reducer;

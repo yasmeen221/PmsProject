@@ -136,8 +136,8 @@ const SelectUser = () => {
       setValue("email", userData.email);
       setValue("position", userData.position);
       setValue("role", userData.role);
-      setValue("level", userData.level._id);
-      setValue("team", userData.team._id);
+      setValue("level", userData?.level?._id ? userData?.level?._id : "");
+      setValue("team", userData?.team?._id ? userData?.team?._id : "");
     }
   }, [handleOpenPopUp]);
 
