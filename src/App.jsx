@@ -39,41 +39,41 @@ function App() {
   const cookie = new Cookies();
 
   useEffect(() => {
-    // let refreshTokenValue = cookie.get("refreshToken")
 
-    if (accessToken && jwtDecode(accessToken)?.exp > Date.now() / 1000) {
-      const decodedUserToken = jwtDecode(accessToken);
-      console.log("nnnnnnn", decodedUserToken);
-      console.log(accessToken);
+    const refreshTokenValue = cookie.get("refreshToken");
+    console.log("Refresh Token:", refreshTokenValue);
+
+    if (accessToken && refreshTokenValue && jwtDecode(accessToken)?.exp < Date.now() / 1000) {
+      refreshToken(refreshTokenValue)
+        .unwrap()
+        .then((res) => {
+          console.log("Refresh Token Response:", res);
+          if (res.status === "success" && res.data.accessToken) {
+            const decodedAccessToken = jwtDecode(res.data.accessToken);
+            const accessTokenExpiry = decodedAccessToken.exp * 1000;
+
+            cookie.remove("userToken");
+            cookie.set('userToken', res.data.accessToken, { expires: new Date(accessTokenExpiry) });
+
+
+            console.log("Access token refreshed successfully.");
+          } else {
+            console.error("Failed to refresh access token:", res.error);
+            cookie.remove("userToken");
+            cookie.remove("refreshToken");
+            Navigate('/')
+          }
+        })
+        .catch((error) => {
+          console.error("Error refreshing access token:", error);
+          cookie.remove("userToken");
+          cookie.remove("refreshToken");
+          Navigate('/')
+        });
     }
-    //TRUE
-    // const interval = setInterval(() => {
-    //   const refreshTokenValue = cookie.get("refreshToken");
-    //   console.log("rrr", refreshTokenValue)
-    //   console.log(jwtDecode(accessToken)?.exp < Date.now() / 1000)
-    //   if (accessToken&&refreshTokenValue && jwtDecode(accessToken)?.exp < Date.now() / 1000) {
-    //   refreshToken(refreshTokenValue).unwrap().then((res) => {
-    //     console.log("ressssssssssssss", res)
-    //     if (res.status == "success") {
-    //       cookie.update('refreshToken', res.data.accessToken, { expires: new Date(jwtDecode(accessToken).exp * 1000) });
-    //     } else {
-    //       cookie.remove("userToken");
-    //       cookie.remove("refreshToken");
 
-    //       console.log("remove")
-    //       console.log("refresh token done")
 
-    //     }
-    //     clearInterval(interval)
-    //   });
-
-    //   }
-    // }, 10000) //EVERY 1 MINUTE
-    // return (() => {
-    //   clearInterval(interval)
-    // })
-    //END TRUE
-  }, []); //to ensure ypu get the updated role of user
+  }, [cookie, accessToken, refreshToken]);
   return (
     <Router>
       <Suspense
