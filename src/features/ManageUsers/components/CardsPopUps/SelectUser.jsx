@@ -130,7 +130,6 @@ const SelectUser = () => {
       reset();
     }
     if (userData.username) {
-      
       setValue("firstName", userData.firstName);
       setValue("lastName", userData.lastName);
       setValue("username", userData.username);

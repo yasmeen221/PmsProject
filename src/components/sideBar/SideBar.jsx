@@ -96,6 +96,7 @@ function SideBar() {
           isOpen={isOpen}
           title="Goals"
           to="goals" 
+          activeIcon={<Icons.GoalsIcon  color="white"/>}
         ></SideBarItem>
 
         <SideBarItem
@@ -123,24 +124,28 @@ function SideBar() {
           isOpen={isOpen}
           title="surveys"
           to="surveys"
+          activeIcon={<Icons.Surveys color="white" />}
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Learning />}
           isOpen={isOpen}
           title="learning"
           to="learnings"
+          activeIcon={<Icons.Learning color="white" />}
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Compensation />}
           isOpen={isOpen}
           title="compensation"
           to="compensations"
+          activeIcon={<Icons.Compensation color="white" />}
         ></SideBarItem>
         <SideBarItem
           icon={<Icons.Settings />}
           isOpen={isOpen}
           title="settings"
           to="settings"
+          activeIcon={<Icons.Settings color="white" />}
         ></SideBarItem>
       </ul>
       <button
