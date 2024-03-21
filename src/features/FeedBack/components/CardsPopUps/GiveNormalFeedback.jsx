@@ -198,7 +198,13 @@ const GiveNormalFeedback = ({}) => {
       try {
         const data = await getTeamLeaderId(userId);
         // console.log("data",data.data.teamLeader._id)
-        setMangerId(data.data.teamLeader._id);
+        if(data?.data?.teamLeader?._id){
+          setMangerId(data.data?.teamLeader?._id);
+        }else{
+          setMangerId("");
+
+        }
+        console.log(data,"data")
       } catch (error) {
         console.log("error from get", error);
       }
@@ -385,6 +391,8 @@ const GiveNormalFeedback = ({}) => {
                     {...register("visibility")}
                     className="w-4 h-4"
                     name="visibility"
+                    disabled={!mangerId?true:false}
+
                   />
 
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
@@ -413,6 +421,7 @@ const GiveNormalFeedback = ({}) => {
                     {...register("visibility")}
                     className="w-4 h-4"
                     name="visibility"
+                    disabled={!mangerId?true:false}
                   />
 
                   <span className="ml-2 font-custom text-buttonFontSize font-buttonWeight text-fontColor-blackBaseColor">
