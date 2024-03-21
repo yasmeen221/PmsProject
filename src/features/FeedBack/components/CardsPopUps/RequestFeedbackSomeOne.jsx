@@ -29,9 +29,7 @@ const schema = yup.object({
   userIdTo: yup.string().required("Please select an option"),
   message: yup.string().required("Message is required"),
   visibility: yup.string().required("Visibility is required"),
-  competency: yup
-    .string()
-    .required("competency is required when checkbox is checked"),
+  competency: yup.string(),
 });
 export default function RequestFeedbackSomeOne() {
   const dispatch = useDispatch();
@@ -73,7 +71,7 @@ export default function RequestFeedbackSomeOne() {
         if (data) {
           setCompetencies(data);
         }
-        console.log("datanamecmp", data.teamCompetencies.name);
+        console.log("datanamecmp", data.teamCompetencies?.name);
       } catch (error) {
         console.log("error from get compentancy", error);
       }
@@ -144,7 +142,7 @@ export default function RequestFeedbackSomeOne() {
       const selectedCompetency = competencies.data.teamCompetencies.find(
         (comp) => comp._id === value.competency,
       );
-      console.log("seletedComp",selectedCompetency)
+      console.log("seletedComp", selectedCompetency);
 
       const selectedName = usersName.find((name) => name._id === usersNameID);
       console.log("selected", selectedName);
@@ -162,14 +160,18 @@ export default function RequestFeedbackSomeOne() {
             name: "competency",
             value: [
               {
-                competencyId: value.competency,
-                name: selectedCompetency.name,
+                competencyId:
+                  value && value?.competency ? value?.competency : "",
+                name:
+                  selectedCompetency && selectedCompetency?.name
+                    ? selectedCompetency?.name
+                    : "",
               },
             ],
           },
           {
             name: "feedbackAbout",
-            value: {_id:usersNameID,userName:selectedName.username}
+            value: { _id: usersNameID, userName: selectedName.username },
             // name: selectedName.username,
           },
           {
@@ -354,11 +356,11 @@ export default function RequestFeedbackSomeOne() {
                       },
                     )}
                   </select>
-                  {errors.competency ? (
+                  {/* {errors.competency ? (
                     <p className="text-deleteColor-50">
                       {errors.competency.message}
                     </p>
-                  ) : null}
+                  ) : null} */}
                   <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                     <Icons.ArrowDownBlack />
                   </div>
