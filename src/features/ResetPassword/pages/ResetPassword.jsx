@@ -180,7 +180,7 @@ const ResetPassword = () => {
         <div className=" h-full">
             <img
               src={cover}
-              className="  h-full object-cover rounded-l-buttonRadius "
+              className="  h-full object-cover rounded-r-buttonRadius "
             />
           </div>
         </div>
