@@ -6,6 +6,14 @@
   background-color: #178CBF; /* Change this to your desired active background color */
   color: #ffffff; /* Change this to your desired active text color */
 }
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: #178CBF;
+  height: 23px;
+  width: 23px;
+  border-radius: 50%;
+  border: 5px solid #bae7fb;
+}
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
