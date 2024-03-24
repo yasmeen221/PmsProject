@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import Icons from "../../../themes/icons";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import logo from "../../../assets/images/logo/logo.png";
-import coverPass from "../../../assets/images/coverrestpass.svg";
+import cover from "../../../assets/images/1.png";
 import { useTitle } from "../../../components/Hooks/useTitle";
 import { useSetPasswordMutation } from "../slices/apis/apiSetPassSlice";
 
@@ -179,7 +179,7 @@ const ResetPassword = () => {
         <div className="w-[45%]  ">
         <div className=" h-full">
             <img
-              src="../../../../public/1.png"
+              src={cover}
               className="  h-full object-cover rounded-l-buttonRadius "
             />
           </div>

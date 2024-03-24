@@ -7,7 +7,8 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import cover from "../../../assets/images/cover2.svg";
+import cover from "../../../assets/images/1.png";
+
 import logo from "../../../assets/images/logo/logo.png";
 import Icons from "../../../themes/icons";
 import { useTitle } from "../../../components/Hooks/useTitle";
@@ -111,7 +112,7 @@ const LoginForm = ({}) => {
         <div className="w-[45%]">
           <div className=" h-full">
             <img
-              src="../../../../public/1.png"
+              src={cover}
               className="  h-full object-cover rounded-l-buttonRadius "
             />
           </div>
