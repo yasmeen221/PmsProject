@@ -21,10 +21,7 @@ const schema = yup.object({
     .string()
     // .email("Email must be valid")
     .required("user name is required")
-    .matches(
-      /^[a-zA-Z0-9_]+$/,
-      "Invalid username or password",
-    ),
+    .matches(/^[a-zA-Z0-9_]+$/, "Invalid username or password"),
   password: yup
     .string()
     .required("Password is required")
@@ -34,13 +31,14 @@ const schema = yup.object({
     ),
 });
 
-const LoginForm = ({ }) => {
+const LoginForm = ({}) => {
   useTitle("LogIn");
   const dispatch = useDispatch();
   const cookie = new Cookies((null, { path: "/" }));
   const [securePass, setSecurePass] = useState(true);
   const navigate = useNavigate(); // Add this line to get the navigate function
-  const [loginUser, { isLoading, isError, error, isSuccess }] = useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error, isSuccess }] =
+    useLoginUserMutation();
   const [loginError, setLoginError] = useState();
   const {
     register,
@@ -58,28 +56,31 @@ const LoginForm = ({ }) => {
   const formSubmit = (values) => {
     const objToSend = {
       username: values.email,
-      password: values.password
-    }
+      password: values.password,
+    };
 
-    loginUser(objToSend).unwrap().then((res) => {
-      if (res.status == "success") {
-        // console.log(res.data);
-        cookie.set("userToken", res.data.accesToken,); //to make cookies more secure 
-        cookie.set("refreshToken", res.data.refreshToken)
-        dispatch(changeUserDataValue(res.data.accesToken))
-        navigate("/dashboard/competencies", { replace: true });
-        reset();
-        setLoginError("")
-      }
-    }).catch((err) => {
-      if (err.data.data.message == "username or password is incorrect") {
-        setLoginError("username or password is incorrect")
-      } else if (err.status == 500) {
-        setLoginError("internal server error")
-      } else {
-        setLoginError("some thing went wrong")
-      }
-    })
+    loginUser(objToSend)
+      .unwrap()
+      .then((res) => {
+        if (res.status == "success") {
+          // console.log(res.data);
+          cookie.set("userToken", res.data.accesToken); //to make cookies more secure
+          cookie.set("refreshToken", res.data.refreshToken);
+          dispatch(changeUserDataValue(res.data.accesToken));
+          navigate("/dashboard/competencies", { replace: true });
+          reset();
+          setLoginError("");
+        }
+      })
+      .catch((err) => {
+        if (err.data.data.message == "username or password is incorrect") {
+          setLoginError("username or password is incorrect");
+        } else if (err.status == 500) {
+          setLoginError("internal server error");
+        } else {
+          setLoginError("some thing went wrong");
+        }
+      });
 
     loginUser(objToSend)
       .unwrap()
@@ -105,19 +106,25 @@ const LoginForm = ({ }) => {
       });
   };
   return (
-    <section className=" bg-gray-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
-      <div
-        className=" flex w-[60%]  shadow-lg h-auto m-auto  bg-drawerColor-100 rounded flex-col md:flex-row "
-        style={{ paddingBottom: "50px" }}
-      >
-        <div className="md:w-[50%]  items-center space-y-1 flex flex-col w-full  ">
-          <div className=" self-start my-9  ml-4 ">
+    <section className=" bg-slate-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
+      <div className=" flex w-[60%] bg-white shadow-lg h-[500px] m-auto   rounded-xl flex-col md:flex-row ">
+        <div className="w-[45%]">
+          <div className=" h-full">
+            <img
+              src="../../../../public/1.png"
+              className="  h-full object-cover rounded-l-buttonRadius "
+            />
+          </div>
+        </div>
+        <div className="md:w-[55%] p-5 justify-center items-center space-y-2 flex flex-col w-full  ">
+          <div className=" self-start  mb-5  ml-12 ">
             <img src={logo} />
           </div>
 
-          <p className="text-md ml-10 font-subTitle2Weight text-fontColor-800 capitalize self-start  ">
+          <p className="text-md ml-12 font-subTitle2Weight text-fontColor-800 capitalize self-start  ">
             welcome back! please login to tour account
           </p>
+
           <form className=" w-[80%] " onSubmit={handleSubmit(formSubmit)}>
             <div>
               <Header text="User Name" className="text-lg mb-1 mt-3" />
@@ -152,9 +159,15 @@ const LoginForm = ({ }) => {
             {loginError ? ( //error fron response feom server
               <p className="text-deleteColor-50">{loginError}</p>
             ) : null}
-            {!loginError && ((errors.email && errors.email.type != "required") || (errors.password && errors.password.type != "required")) ? //for validation errors
-              <p className="text-deleteColor-50">username or password is incorrect</p>
-              : ""}
+            {!loginError &&
+            ((errors.email && errors.email.type != "required") ||
+              (errors.password && errors.password.type != "required")) ? ( //for validation errors
+              <p className="text-deleteColor-50">
+                username or password is incorrect
+              </p>
+            ) : (
+              ""
+            )}
 
             <div className="mt-4">
               <Button
@@ -165,12 +178,6 @@ const LoginForm = ({ }) => {
               />
             </div>
           </form>
-        </div>
-        <div className="w-[50%] flex items-center justify-center  ">
-          <img
-            src={cover}
-            className="object-contain md:w-[90%] hidden md:block "
-          />
         </div>
       </div>
     </section>

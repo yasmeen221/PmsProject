@@ -58,13 +58,13 @@ const ResetPassword = () => {
 
   };
   return (
-    <section className="bg-gray-50 h-screen  text-fontColor-blackBaseColor flex items-center  justify-center ">
+    <section className="bg-slate-50  h-screen text-fontColor-blackBaseColor flex items-center   justify-center ">
       <div
-        className=" flex w-[60%] lg:h-auto  md:h-[70vh] shadow-lg h-auto m-auto  bg-drawerColor-100 rounded flex-col md:flex-row "
-        style={{ paddingBottom: "24px" }}
+        className=" flex w-[60%] bg-white shadow-lg h-[500px] m-auto   rounded-xl flex-col md:flex-row "
+       
       >
-        <div className="md:w-[50%]  items-center space-y-1 flex flex-col w-full  ">
-          <div className=" self-start my-9  ml-4 ">
+        <div className="md:w-[55%] p-5 justify-center items-center space-y-2 flex flex-col w-full ">
+          <div className=" self-start mb-5  ml-12 ">
             <img src={logo} />
           </div>
 
@@ -176,11 +176,13 @@ const ResetPassword = () => {
             </div>
           </form>
         </div>
-        <div className="w-[40%] flex items-center justify-center  ">
-          <img
-            src={coverPass}
-            className="object-contain md:w-[90%] hidden md:block "
-          />
+        <div className="w-[45%]  ">
+        <div className=" h-full">
+            <img
+              src="../../../../public/1.png"
+              className="  h-full object-cover rounded-l-buttonRadius "
+            />
+          </div>
         </div>
       </div>
     </section>
